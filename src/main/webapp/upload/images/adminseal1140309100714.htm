@@ -1,0 +1,696 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<title>印章管理</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<style type="text/css">
+body,div,ul,li,h2,h5,h6,form,input,p,td {
+	margin: 0;
+	padding: 0;
+	font-size: 12px;
+	list-style: none;
+}
+
+ul {
+	list-style: none;
+}
+
+h2,h5,h6 {
+	font-size: 100%;
+}
+
+h2 {
+	color: #5b3510;
+	padding-bottom: 10px;
+	font-size: 14px;
+}
+
+p {
+	color: #5b3510;
+	line-height: 22px;
+}
+
+.mc {
+	margin: 0 auto;
+}
+
+.fs-12 {
+	font-size: 12px;
+}
+
+a:focus {
+	outline: 0;
+}
+
+a {
+	blr: expression(this.onFocus = this.blur());
+}
+
+/* for IE7.0及以下版本*/
+:focus {
+	outline-style: none;
+}
+
+/* for Firefox，IE8.0等 */
+　 table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+body {
+	font: 12px/ 1.6 "宋体", Arial, Helvetica, sans-serif;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-align:center;
+}
+
+a {
+	text-decoration: none;
+	cursor: pointer;
+	color: #666;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+a:active,a:focus {
+	outline: none;
+}
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+	font-size: 0;
+}
+
+.clearfix {
+	zoom: 1;
+}
+
+.clear {
+	clear: both;
+	height: 0;
+	line-height: 0;
+	font-size: 0;
+}
+
+.fl {
+	float: left;
+}
+
+.fr {
+	float: right;
+}
+
+.zz-contentRight {
+	width: 780px;
+	height: auto !important;
+	height: 452px;
+	_height: expression(this.scrollHeight < 452 ? "652px" : "auto");
+	min-height: 225px;
+	margin: 0;
+	padding-bottom: 50px;
+}
+
+/*head----------------------------------style*/
+.zz-headBox {
+	width: 100%;
+	height: 94px;
+}
+
+.zz-head {
+	width: 986px;
+}
+
+.zz-head .logo {
+	width: 450px;
+	height: 61px;
+	padding-top: 30px;
+}
+
+.zz-head .headRight {
+	width: 248px;
+}
+
+.zz-head .headRight {
+	width: 493px;
+	height: 92px;
+	background-color: Gray;
+}
+
+.zz-head .headRight {
+	width: 140px;
+	height: 24px;
+	background-color: Gray;
+	margin: 0 10px 0 0;
+	_margin: 0 5px 0 0;
+}
+
+.zz-head .headRight ul {
+	width: 130px;
+}
+
+.zz-head .headRight ul li {
+	width: 42px;
+	height: 14px;
+	line-height: 14px;
+	margin-top: 5px;
+	float: left;
+	text-align: center;
+	border-left: 1px solid #999;
+}
+
+.zz-head .headRight ul li.bor {
+	border: none;
+}
+
+.zz-head .headRight ul li a {
+	color: #656565;
+	text-decoration: none;
+}
+
+.zz-head .headRight ul li a:hover {
+	color: #656565;
+	text-decoration: none;
+}
+
+/*head right*/
+.head-rightUl {
+	width: 248px;
+	margin-top: 35px;
+}
+
+.head-rightUl li {
+	width: 78px;
+	height: 14px;
+	line-height: 14px;
+	float: left;
+	text-align: center;;
+	border-right: 1px solid #d8d8d8;
+}
+
+.head-rightUl li.bor-0 {
+	border: none;
+}
+
+/*a title*/
+.topTitle {
+	width: 100%;
+	height: 28px;
+	background: #00517e;
+}
+
+.topTitle ul {
+	width: 986px;
+	margin: 0 auto;
+}
+
+.topTitle ul li {
+	overflow: hidden;
+	padding: 0 16px;
+	margin-top: 7px;
+	float: left;
+	line-height: 16px;
+	color: #fff;
+	border-left: 1px solid #2d7ca7;
+}
+
+.topTitle ul li.pd-left {
+	border: none;
+	padding-left: 0;
+	color: #d0eaf8;
+}
+
+.topTitle ul li font {
+	font-size: 12px;
+	font-weight: bold;
+	margin-right: 10px;
+	color: #d0eaf8;
+}
+
+/*left*/
+.left-ul {
+	width: 162px;
+	border: 1px solid #a4c8de;
+}
+
+.left-ul h2 {
+	width: 162px;
+	height: 34px;
+	line-height: 34px;
+	text-indent: 10px;
+	background: #6096b2;
+	padding: 0;
+	color: #fff;
+}
+
+.left-ul li {
+	width: 162px;
+	height: 34px;
+	margin: 0;
+	padding: 0;
+	line-height: 34px;
+	background: #edf8fe;
+	border-bottom: 1px solid #a4c8de;
+	display: block;
+	text-indent: 10px;
+}
+
+.left-ul li.bo-n {
+	border-bottom: none;
+}
+
+.left-ul li a {
+	text-decoration: none;
+	display: block;
+}
+
+.left-ul li a:hover {
+	text-decoration: none;
+	background: #d0eaf7;
+	display: block;
+}
+
+.zz-content {
+	width: 986px;
+	position: relative;
+}
+
+.zz-content.pd-28 {
+	padding: 28px 0;
+}
+
+/*图片居中*/ /*图片居中*/
+.frame {
+	float: left;
+	margin: 2px;
+	height: 160px;
+	width: 160px;
+	overflow: hidden;
+	background: white;
+	position: static !important;
+	position: relative;
+	display: table !important;
+	top: 0px;
+	left: 0px;
+	border: solid 1px gray;
+}
+
+/* 图片居中结束*/
+.addtr {
+	text-align: center;
+	color: #333333;
+	font-size: 12px;
+}
+
+.spanAdd {
+	font-size: 12px;
+}
+
+.inputAdd {
+	font-size: 12px;
+	width: 160px;
+}
+
+.titleAdd {
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+	border-bottom: dotted 1px #ccc;
+}
+
+.sealAdd {
+	width: 70px;
+	text-align: left;
+}
+</style>
+
+		<script type="text/javascript">
+		
+			// 添加印章时输入的信息追加在url中
+			function addParam(){
+				document.getElementById("UploadForm").action = "adminseal.do?op=upload"
+						+ "&sealName="+ encodeURI(encodeURI(document.getElementById("txtSealName").value))
+						+ "&singerName="+encodeURI(encodeURI(document.getElementById("txtSignerName").value))
+						+ "&deptName="+encodeURI(encodeURI(document.getElementById("txtDeptName").value))
+						+ "&sealType="+encodeURI(encodeURI(document.getElementById("SelectSealType").value));
+				document.getElementById("UploadForm").submit();
+			}
+			// 上传印章之后，重新把添加印章时输入的信息恢复到Input
+			function setParamToInput(){
+				document.getElementById("SelectSealType").value  = document.getElementById("ipt_SealType").value;
+			}
+			
+			//修改图片路径
+			function changeImgUrl(path){
+				document.getElementById("Image1").src = path;
+			}
+			
+			//清空印章信息
+			function clearContent(){
+				document.getElementById("txtSealName").value = "";	
+				document.getElementById("txtSignerName").value = "";
+				document.getElementById("txtDeptName").value = "";
+				document.getElementById("SelectSealType").value = "印章";
+				document.getElementById("ipt_SealType").value = "";
+				document.getElementById("ipt_ImageType").value = "";
+				document.getElementById("ipt_TmpPicPath").value = "";
+				
+				//清空 <input type="file" name="file1">的值
+				var file = document.getElementById("file1");
+				var form=document.createElement('form');
+			    document.body.appendChild(form);
+			    //记住file在旧表单中的的位置
+			    var pos=file.nextSibling;
+			    form.appendChild(file);
+			    form.reset();//重置
+			    pos.parentNode.insertBefore(file,pos);
+			    document.body.removeChild(form);
+				
+				//修改图片路径
+				changeImgUrl("");
+			}
+	
+		
+	        //显示列表
+	        function ShowList() {
+				if ('true'.toLowerCase()=="true") {
+					document.getElementById("deleteAll").style.display = "none";
+					document.getElementById("listDiv").style.display = "";
+					document.getElementById("addDiv").style.display = "none";
+					document.getElementById("addLi").style.backgroundColor = "#edf8fe";
+					document.getElementById("listLi").style.backgroundColor = "#d0eaf7";
+				} else {
+					ShowDelAll();
+				}
+				
+				//清空添加印章信息层的内容
+				clearContent();
+				//删除Cookie
+				//delCookie();
+			}
+	
+			//显示添加印章信息
+			function ShowAdd() {
+				document.getElementById("deleteAll").style.display = "none";
+				document.getElementById("addDiv").style.display = "";
+				document.getElementById("listDiv").style.display = "none";
+				document.getElementById("addLi").style.backgroundColor = "#d0eaf7";
+				document.getElementById("listLi").style.backgroundColor = "#edf8fe";
+			}
+		
+			//无印章时显示印章信息
+			function ShowDelAll() {
+				document.getElementById("deleteAll").style.display = "";
+				document.getElementById("listDiv").style.display = "none";
+				document.getElementById("addDiv").style.display = "none";
+				document.getElementById("addLi").style.backgroundColor = "#edf8fe";
+				document.getElementById("listLi").style.backgroundColor = "#d0eaf7";
+			}
+		
+			function checkImgSize() {
+				var file = document.getElementById("file1");
+				if (file.value != "") { 
+					//检测类型
+					var val = file.value;
+					if (/^.*?\.(gif|png|jpg|jpeg|bmp)$/.test(val)) {
+					} else {
+						document.getElementById("Image1").src = "";
+						alert("请上传类型为.gif|.png|.jpg|.bmp的图片");
+						return false;
+					}
+		
+					var img = new Image();
+					img.onreadystatechange = function() {
+						if (img.readyState == "complete") {
+							if (img.width > 300) {
+								alert("图片宽度已超过300像素");
+							} else if (img.height > 300) {
+								alert("图片高度已超过300像素");
+							} else {
+		
+								document.getElementById("Image1").src = val;
+								return true;
+							}
+						}
+					}
+		
+					img.src = val;
+				} else {
+					alert("请选择上传的图片!");
+					return false;
+				}
+			}
+		
+			function selectImage() {
+				checkImgSize();
+			}
+	</script>
+
+	</head>
+	<body>
+		<!--header-->
+		<div class="zz-headBox clearfix">
+        <div class="zz-head mc">
+            <!--logo-->
+            <div class="logo fl">
+                <span style="color: Gray; font: italic bolder 35px 宋体;">卓正电子印章简易管理平台</span></div>
+            <!--logo end-->
+            <ul class="head-rightUl fr">
+                <li><a href="http://www.zhuozhengsoft.com">卓正软件网站</a></li>
+                <li><a target="_blank" href="http://www.zhuozhengsoft.com/poask/index.asp">客户问吧</a></li>
+                <li class="bor-0"><a href="http://www.zhuozhengsoft.com/contact-us.html">联系我们</a></li>
+            </ul>
+        </div>
+    </div>
+		<!--header end-->
+		<!--a title-->
+		<div class=" topTitle">
+			<ul>
+				<li class="pd-left">
+					印章管理系统
+				</li>
+				<li>
+					<font>当前用户：</font>
+					admin
+				</li>
+				<li>
+					<font>当前系统日期：</font>
+					2014/01/17/星期五
+				</li>
+			</ul>
+		</div>
+		<!--content-->
+		<div class="zz-content mc clearfix pd-28">
+			<!--left-->
+			<div class="fl">
+				<ul class="left-ul">
+					<h2 class="fs-12">
+						用户功能区
+					</h2>
+					<li id="listLi" style="background: #d0eaf7">
+						<a href="#" onclick="ShowList()">印章列表</a>
+					</li>
+                	<li id="addLi">
+                		<a href="#" onclick="ShowAdd()">添加印章</a>
+                	</li>
+					<li class="bo-n">
+						<a href="loginseal.do?op=exit"> 退出系统 </a>
+					</li>
+				</ul>
+			</div>
+			<!--right-->
+			<div class="zz-contentRight fl" id="listDiv">
+				<!--表格内容-->
+					<div style="margin-left: 100px; width: 698px; clear: both; ">
+						<table cellspacing="0" cellpadding="3" rules="all" border="1"
+							id="Table1"
+							style="background-color: White; border-color: #A4C8DE; border-width: 1px; border-style: solid; font-size: 12px; font-family: 宋体; width: 100%; border-collapse: collapse;">
+							<tr style="color: White; background-color: #006699; font-weight: bold; height: 32px;">
+		                        <th scope="col" style="width: 120px;">
+		                            编号
+		                        </th>
+		                        <th scope="col" style="width: 160px;">
+		                            印章名称
+		                        </th>
+		                        <th scope="col" style="width: 100px;">
+		                            印章类型
+		                        </th>
+		                        <th scope="col" style="width: 140px;">
+		                            部门名称
+		                        </th>
+		                        <th scope="col" style="width: 100px;">
+		                            印章状态
+		                        </th>
+		                        <th scope="col" style="width: 120px;">
+		                            签章人
+		                        </th>
+		                        <th scope="col" style="width: 60px;">
+		                            操作
+		                        </th>
+		                    </tr>
+							<tr style="color: #000066; height: 25px; border-color: #A4C8DE; border-width: 1px; border-style: solid; height: 32px; color:#666666">
+<td style="text-align: left; height: 32px; border-color: #A4C8DE; border-width: 1px; border-style: solid;">2</td>
+<td style="text-align: left; height: 32px; border-color: #A4C8DE; border-width: 1px; border-style: solid;">公司公章</td>
+<td style="text-align: center; height: 32px; border-color: #A4C8DE; border-width: 1px; border-style: solid;">印章</td>
+<td style="text-align: left; height: 32px; border-color: #A4C8DE; border-width: 1px; border-style: solid;">1</td>
+<td style="text-align: center; height: 32px; border-color: #A4C8DE; border-width: 1px; border-style: solid;">颁发</td>
+<td style="text-align: left; height: 32px; border-color: #A4C8DE; border-width: 1px; border-style: solid;">李志</td>
+<td style="text-align: center; height: 32px; color:#3366CC; border-color: #A4C8DE; border-width: 1px; border-style: solid;"><a href="adminseal.do?op=delete&id=2" onclick="if(confirm('你确认要删除编号为“2”的印章吗？')) return true; return false;" style="color:#3366CC">删除</a></td>
+</tr>
+<tr style="color: #000066; height: 25px; border-color: #A4C8DE; border-width: 1px; border-style: solid; height: 32px; color:#666666">
+<td style="text-align: left; height: 32px; border-color: #A4C8DE; border-width: 1px; border-style: solid;">1</td>
+<td style="text-align: left; height: 32px; border-color: #A4C8DE; border-width: 1px; border-style: solid;">个人签名</td>
+<td style="text-align: center; height: 32px; border-color: #A4C8DE; border-width: 1px; border-style: solid;">手写</td>
+<td style="text-align: left; height: 32px; border-color: #A4C8DE; border-width: 1px; border-style: solid;">1</td>
+<td style="text-align: center; height: 32px; border-color: #A4C8DE; border-width: 1px; border-style: solid;">颁发</td>
+<td style="text-align: left; height: 32px; border-color: #A4C8DE; border-width: 1px; border-style: solid;">李志</td>
+<td style="text-align: center; height: 32px; color:#3366CC; border-color: #A4C8DE; border-width: 1px; border-style: solid;"><a href="adminseal.do?op=delete&id=1" onclick="if(confirm('你确认要删除编号为“1”的印章吗？')) return true; return false;" style="color:#3366CC">删除</a></td>
+</tr>
+
+						</table>
+					</div>
+			</div>
+			<div id="addDiv" class="zz-contentRight fl" style="display: none;">
+				<!--表格内容-->
+				<div
+					style="border: solid 1px #6096b2; margin-left: 0px; text-align: center; width: 580px; vertical-align: middle;">
+
+						<table style="margin: 20px 0px 20px 50px;">
+							<!-- 添加印章-->
+							<tr class="addtr">
+								<td colspan="2" style="vertical-align: top;">
+									<div class="titleAdd">
+										印章信息
+									</div>
+								</td>
+								<td rowspan="4"style="text-align: center; width: 220px; padding-left: 50px; ">
+									<div class="frame">
+										<table width="100%" style="height: 155px; ">
+											<tr>
+												<td style="text-align: center; vertical-align: middle;">
+													<img ID="Image1" Style="vertical-align: middle;"  />
+												</td>
+											</tr>
+										</table>
+									</div>
+									<div style="text-align:left; margin-right:40px;">
+										<form id="UploadForm" name="UploadForm" enctype="multipart/form-data" method="post"
+											action="adminseal.do?op=upload" style="text-align:center;">
+											<input type="file" id="file1" name="file1"
+												style="width: 140px; height: 20px; font-size: 12px;"
+												onchange="selectImage()" />
+												<input id="ipt_SealType" type="hidden" name="ipt_SealType" value=""/>
+											<input id="btnAddPic" type="button" value="上传" onclick="addParam();";
+												style="width: 35px; font-size: 12px;" />
+										</form>
+									</div>
+									
+								</td>
+							</tr>
+							<form action="adminseal.do?op=add" method="post"> 
+							<tr class="addtr">
+								<td class="sealAdd">
+									<span class="spanAdd">印章名称</span>
+								</td>
+								<td>
+									<input id="txtSealName" name="txtSealName" class="inputAdd" value="" />
+								</td>
+							</tr>
+							<tr class="addtr">
+								<td class="sealAdd">
+									<span class="spanAdd">签&nbsp;章&nbsp;人</span>
+								</td>
+								<td>
+									<input id="txtSignerName" name="txtSignerName" class="inputAdd" value="" />
+								</td>
+							</tr>
+							<tr class="addtr">
+								<td class="sealAdd">
+								<span class="spanAdd">部门名称</span>
+								</td>
+								<td>
+									<input id="txtDeptName" name="txtDeptName" class="inputAdd" value="" />
+								</td>
+							</tr>
+							<tr class="addtr">
+								<td class="sealAdd">
+									<span class="spanAdd">印章类型</span>
+								</td>
+								<td>
+									<select id="SelectSealType" name="SelectSealType" style="Width: 163px;">
+										<option value="印章">
+											印章
+										</option>
+										<option value="手写">
+											手写
+										</option>
+									</select>
+									<input id="ipt_ImageType" type="hidden" name="ipt_ImageType" value=""/>
+									<input id="ipt_TmpPicPath" type="hidden" name="ipt_TmpPicPath" value=""/>
+								</td>
+							</tr>
+							<tr class="addtr">
+								<td colspan="2"
+									style="text-align: right; vertical-align: bottom; height: 50px;">
+									<input type="submit" value="添加印章" style="Width: 80px; font-size: 12px;" />
+									<input id="Reset1" type="reset" style="width: 60px; font-size: 12px;" onclick="" value="重置" />
+								</td>
+								<td style="padding-left: 10px; vertical-align: top;">
+
+								</td>
+							</tr>
+							</form>
+						</table>
+					
+					
+				</div>
+			</div>
+			<div class="zz-contentRight fl" id="deleteAll" style="display: none;">
+				<!--表格内容-->
+				<div style="margin-left: 40px; width: 698px; clear: both;">
+					<table cellspacing="0" cellpadding="3" rules="all" border="1"
+						id="Table1"
+						style="background-color: White; border-color: #A4C8DE; border-width: 1px; border-style: solid; font-size: 12px; width: 100%; border-collapse: collapse;">
+						<tr
+							style="color: White; background-color: #006699; font-weight: bold; height: 32px;">
+							<th scope="col" style="width: 120px;">
+								编号
+							</th>
+							<th scope="col" style="width: 160px;">
+								印章名称
+							</th>
+							<th scope="col" style="width: 100px;">
+								印章类型
+							</th>
+							<th scope="col" style="width: 140px;">
+								部门名称
+							</th>
+							<th scope="col" style="width: 100px;">
+								印章状态
+							</th>
+							<th scope="col" style="width: 120px;">
+								签章人
+							</th>
+							<th scope="col" style="width: 60px;">
+								操作
+							</th>
+						</tr>
+						<tr style="color: #000066; height: 32px;">
+							<td colspan="7" style="text-align: center; color: #666666">
+								无印章。
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!--content end-->
+
+	</body>
+</html>
+ U_HKSCS-ExtB  溰쁼豈￿掰怒￿     ď 邰ۻ      ፐؔ￿濔쁼豈￿濴쁼豈￿滴쁼豈￿㓰   Regular lic 먂      찂   ꌂ      CHINESE_GB2312  찂   ꌂ      ꄂ   癤ࠀ  먂 ＞†        ! Ɛ   ` `  ￥□  㘀 @$Ā Ā    ࠎ       污ࠀ  Ǥ Ű         Ɛ  蘀ȃ㄁@隶书 gLiU_HKSCS-ExtB ʟ    ʟ ʠ Đ @隶书 gLiU_HKSCS-ExtB ʩ ď ɧ   ʩ ʪ ď ɦ   ʪ ʫ ď ɥ   ʫ ʬ ď ɤ  Regular lic  ʭ ʮ ď ɢ   ʮ ʯ ď CHINESE_GB2312   ʰ ʱ ď ɟ   ʱ 癤ࠀ  ɞ ＞†        ! Ɛ   ` `  ￥□  㘀ʆ @$Ā Ā    ࠎ       污ࠀ  Ǥ Ű  !      Ɛ  蘀ȃȁ华文彩云 thic    ʠ ʨ ď ə   ʨ ʩ ď 华文彩云 thic  d Italic ʫ ď ɥ   ʫ ʬ ď ɤ   ʬ ʭ ď ɣ   ʭ ʮ ď ɢ  Regular lic  ʯ ʰ ď ɠ   ʰ ʱ ď CHINESE_GB2312   ʲ ʳ ď ɝ   ʳ 癤ࠀ  ɜ ＞†!       % Ɛ   ` `  ￥□  ܀Ά @$Ϩ Ќ ƻ   ࠏ       污ࠀ  Ǥ Ű  !      Ɛ  蘀ȃȁ@华文彩云 thic   ʠ ʨ ď ə   ʨ ʩ ď @华文彩云 thic   Italic ʫ ď ɥ   ʫ ʬ ď ɤ   ʬ ʭ ď ɣ   ʭ ʮ ď ɢ  Regular lic  ʯ ʰ ď 

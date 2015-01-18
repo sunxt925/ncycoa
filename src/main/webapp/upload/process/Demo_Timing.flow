@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="GB2312"?>
+<emsflow>
+<model>
+	<a class="start" id="1" val="1" rect="66,59,33,33" attr="0">
+		<a class="port" id="2"/>
+	</a>
+	<a class="activity" id="3" val="2" rect="192,59,33,33" attr="0">
+		<a class="port" id="4"/>
+	</a>
+	<a class="activity" id="5" val="3" rect="322,59,33,33" attr="0">
+		<a class="port" id="6"/>
+	</a>
+	<a class="end" id="7" val="4" rect="439,59,33,33" attr="0">
+		<a class="port" id="8"/>
+	</a>
+	<a class="edge" id="9" val="5" src="2" tgt="4" pts="87,79,208,75" attr="1"/>
+	<a class="edge" id="10" val="6" src="4" tgt="6" pts="209,71,338,81" attr="1"/>
+	<a class="edge" id="11" val="7" src="6" tgt="8" pts="345,80,440,82" attr="1"/>
+</model>
+<attrs>
+	<map id="0">
+		<a key="font" val="新宋体,16,0"/>
+	</map>
+	<map id="1">
+		<a key="endFill" val="true"/>
+		<a key="lineEnd" val="1"/>
+		<a key="labelposition" val="500,500"/>
+		<a key="routing" val="simple"/>
+	</map>
+</attrs>
+<user>
+	<a key="6" val="x-jbpm-transition">
+<transition name="转移2">
+<TransitionModel id="Tra_2" name="转移2">
+<cellDesc></cellDesc>
+<fromCell>ManAct_1</fromCell>
+<toCell>ManAct_2</toCell>
+<conditionType>0</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express></express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="5" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_1" name="">
+<cellDesc></cellDesc>
+<fromCell>StartOfWorkflow</fromCell>
+<toCell>ManAct_1</toCell>
+<conditionType>0</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>1</flag>
+<express></express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="4" val="x-jbpm-end-state">
+<end-state name="结束"/>
+	</a>
+	<a key="3" val="x-jbpm-activity-state">
+<activity-state name="3分钟超时,流程挂起">
+<ActiveBaseModel id="ManAct_2" name="3分钟超时,流程挂起">
+<cellType>0</cellType>
+<cellDesc></cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>0</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveActionModel>
+<actionType>2</actionType>
+<actionName></actionName>
+<queryName></queryName>
+<modifyName></modifyName>
+<pkType>-1</pkType>
+<pkValue></pkValue>
+<modifyName></modifyName>
+<formName>LeaveForm</formName>
+<statusChanged>1</statusChanged>
+<module>customer</module>
+<pageName>DemoCustomer</pageName>
+</ActiveActionModel>
+<ActiveDataModel>
+<AssignmentStrategy>1</AssignmentStrategy>
+<CompletionStrategy>0</CompletionStrategy>
+<Number>0</Number>
+<Percent>0</Percent>
+</ActiveDataModel>
+<ActiveActorModel>
+<actorsType>0</actorsType>
+<selectActive>null</selectActive>
+<activeType></activeType>
+<a class="001001-王二" condition="必须是" actorType="用户" actorName="001001-王二"/>
+</ActiveActorModel>
+<ActiveLifeModel>
+<waitingTime>3</waitingTime>
+<workingTime>3</workingTime>
+<durationTime>3</durationTime>
+<timeFlag>true</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>3</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>1</splitType>
+<joinType>1</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+<ActiveBackModel>
+<allowBack>0</allowBack>
+<backType>0</backType>
+<backs></backs>
+</ActiveBackModel>
+</activity-state>
+	</a>
+	<a key="2" val="x-jbpm-activity-state">
+<activity-state name="2分钟超时,自动完成">
+<ActiveBaseModel id="ManAct_1" name="2分钟超时,自动完成">
+<cellType>0</cellType>
+<cellDesc></cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>0</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveActionModel>
+<actionType>2</actionType>
+<actionName></actionName>
+<queryName></queryName>
+<modifyName></modifyName>
+<pkType>-1</pkType>
+<pkValue></pkValue>
+<modifyName></modifyName>
+<formName>LeaveForm</formName>
+<statusChanged>0</statusChanged>
+<module>customer</module>
+<pageName>DemoCustomer</pageName>
+</ActiveActionModel>
+<ActiveDataModel>
+<AssignmentStrategy>1</AssignmentStrategy>
+<CompletionStrategy>0</CompletionStrategy>
+<Number>0</Number>
+<Percent>0</Percent>
+</ActiveDataModel>
+<ActiveActorModel>
+<actorsType>0</actorsType>
+<selectActive>null</selectActive>
+<activeType></activeType>
+<a class="001001-王二" condition="必须是" actorType="用户" actorName="001001-王二"/>
+</ActiveActorModel>
+<ActiveLifeModel>
+<waitingTime>2</waitingTime>
+<workingTime>2</workingTime>
+<durationTime>2</durationTime>
+<timeFlag>true</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>1</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>1</splitType>
+<joinType>1</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+<ActiveBackModel>
+<allowBack>0</allowBack>
+<backType>0</backType>
+<backs></backs>
+</ActiveBackModel>
+</activity-state>
+	</a>
+	<a key="1" val="x-jbpm-start-state">
+<start-state name="Start">
+<StartBaseModel id="StartOfWorkflow"  name="开始">
+<cellDesc></cellDesc>
+</StartBaseModel>
+</start-state>
+	</a>
+	<a key="7" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_3" name="">
+<cellDesc></cellDesc>
+<fromCell>ManAct_2</fromCell>
+<toCell>EndOfWorkflow</toCell>
+<conditionType>0</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>1</flag>
+<express></express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+</user>
+<view>
+	<a key="editable" val="true"/>
+	<a key="bendable" val="true"/>
+	<a key="cloneable" val="true"/>
+	<a key="connectable" val="true"/>
+	<a key="disconnectable" val="true"/>
+	<a key="disconnectOnMove" val="false"/>
+	<a key="doubleBuffered" val="true"/>
+	<a key="dragEnabled" val="false"/>
+	<a key="dropEnabled" val="true"/>
+	<a key="moveable" val="true"/>
+	<a key="sizeable" val="true"/>
+	<a key="selectNewCells" val="true"/>
+	<a key="gridVisible" val="false"/>
+	<a key="gridEnabled" val="false"/>
+	<a key="gridSize" val="10"/>
+	<a key="gridMode" val="0"/>
+	<a key="scale" val="1.0"/>
+	<a key="antiAlias" val="false"/>
+</view>
+<process-state name="Demo_Timing">
+<process-define>
+<ProcessBaseModel id="Demo_Timing" name="演示时间限制">
+<cellDesc>演示有时间限制的活动,人工活动1设置为2分钟超时，
+超时处理为 自动完成，人工活动2设置为3分钟超时，
+超时处理为挂起流程</cellDesc>
+<processType>0</processType>
+<processType>0</processType>
+<cycleFlag>false</cycleFlag>
+<dayFlag>true</dayFlag>
+<weekFlag>false</weekFlag>
+<monthFlag>false</monthFlag>
+<priority>3</priority>
+<dateTime>0</dateTime>
+<hourTime>0</hourTime>
+<minuteTime>0</minuteTime>
+<isFreeFlow>0</isFreeFlow>
+<runType>0</runType>
+<dymicSetUser>0</dymicSetUser>
+<activitySetUser>0</activitySetUser>
+<version>1.0</version>
+</ProcessBaseModel>
+<ProcessDataModel>
+<startFlag>0</startFlag>
+<a class="customer.DemoCustomer"  activity="ManAct_2"/>
+</ProcessDataModel>
+<ProcessLifeModel>
+<timeType>2</timeType>
+<limit>3</limit>
+<fromY>0</fromY>
+<fromM>0</fromM>
+<fromD>0</fromD>
+<fromH>1</fromH>
+<toY>3</toY>
+<toM>2</toM>
+<toD>2</toD>
+<toH>3</toH>
+<waitingTime>3</waitingTime>
+<workingTime>3</workingTime>
+<durationTime>3</durationTime>
+<timeFlag>true</timeFlag>
+</ProcessLifeModel>
+</process-define>
+<names-helper>
+<names>
+<a key="Process_1"/>
+<a key="ManAct_1"/>
+<a key="ManAct_2"/>
+<a key="Tra_1"/>
+<a key="Tra_2"/>
+<a key="Tra_3"/>
+</names>
+<process>
+</process>
+<count>
+<manAct>2</manAct>
+<autoAct>0</autoAct>
+<trans>3</trans>
+<subflow>0</subflow>
+<route>0</route>
+<process>1</process>
+</count>
+</names-helper>
+</process-state>
+</emsflow>

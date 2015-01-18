@@ -1,0 +1,1736 @@
+<?xml version="1.0" encoding="GB2312"?>
+<emsflow>
+<model>
+	<a class="start" id="1" val="1" rect="8,370,33,33" attr="0">
+		<a class="port" id="2"/>
+	</a>
+	<a class="activity" id="3" val="2" rect="162,124,33,33" attr="0">
+		<a class="port" id="4"/>
+	</a>
+	<a class="activity" id="5" val="3" rect="269,54,33,33" attr="0">
+		<a class="port" id="6"/>
+	</a>
+	<a class="edge" id="7" val="4" src="6" tgt="4" pts="285,70,178,70,178,140" attr="1"/>
+	<a class="activity" id="8" val="5" rect="405,94,33,33" attr="0">
+		<a class="port" id="9"/>
+	</a>
+	<a class="edge" id="11" val="6" src="6" tgt="10" pts="285,70,325,70,366,70" attr="2"/>
+	<a class="activity" id="12" val="7" rect="588,157,33,33" attr="0">
+		<a class="port" id="13"/>
+	</a>
+	<a class="edge" id="15" val="8" src="14" tgt="13" pts="603,81,603,127,604,173" attr="2"/>
+	<a class="edge" id="16" val="9" src="13" tgt="4" pts="670,148,416,144,163,140" attr="3"/>
+	<a class="activity" id="17" val="10" rect="684,157,33,33" attr="0">
+		<a class="port" id="18"/>
+	</a>
+	<a class="edge" id="19" val="11" src="13" tgt="18" pts="670,148,699,148,729,148" attr="2"/>
+	<a class="end" id="20" val="12" rect="781,283,33,33" attr="0">
+		<a class="port" id="21"/>
+	</a>
+	<a class="edge" id="22" val="13" src="18" tgt="21" pts="700,173,712,239,724,305" attr="2"/>
+	<a class="route" id="23" val="14" rect="68,370,33,33" attr="0">
+		<a class="port" id="24"/>
+	</a>
+	<a class="edge" id="25" val="15" src="2" tgt="24" pts="32,316,144,304" attr="2"/>
+	<a class="edge" id="26" val="16" src="24" tgt="4" pts="84,386,131,263,178,140" attr="2"/>
+	<a class="activity" id="27" val="17" rect="161,368,33,33" attr="0">
+		<a class="port" id="28"/>
+	</a>
+	<a class="edge" id="30" val="18" src="28" tgt="29" pts="162,384,285,384,285,314" attr="4"/>
+	<a class="activity" id="31" val="19" rect="269,298,33,33" attr="0">
+		<a class="port" id="29"/>
+	</a>
+	<a class="edge" id="32" val="20" src="29" tgt="28" pts="285,314,177,314,177,384" attr="5"/>
+	<a class="activity" id="33" val="21" rect="404,340,33,33" attr="0">
+		<a class="port" id="34"/>
+	</a>
+	<a class="edge" id="36" val="22" src="29" tgt="35" pts="285,314,325,314,366,314" attr="2"/>
+	<a class="activity" id="37" val="23" rect="588,405,33,33" attr="0">
+		<a class="port" id="38"/>
+	</a>
+	<a class="edge" id="40" val="24" src="39" tgt="38" pts="604,329,580,388,557,448" attr="2"/>
+	<a class="edge" id="41" val="25" src="38" tgt="28" pts="557,448,357,416,162,384" attr="6"/>
+	<a class="activity" id="42" val="26" rect="684,405,33,33" attr="0">
+		<a class="port" id="43"/>
+	</a>
+	<a class="edge" id="44" val="27" src="38" tgt="43" pts="557,448,628,448,710,448" attr="2"/>
+	<a class="edge" id="45" val="28" src="24" tgt="28" pts="84,386,130,385,177,384" attr="7"/>
+	<a class="edge" id="46" val="29" src="43" tgt="21" pts="703,421,713,363,724,305" attr="2"/>
+	<a class="edge" id="47" val="30" src="4" tgt="6" pts="178,140,285,140,285,70" attr="4"/>
+	<a class="route" id="48" val="31" rect="350,54,33,33" attr="0">
+		<a class="port" id="10"/>
+	</a>
+	<a class="activity" id="49" val="32" rect="405,25,33,33" attr="0">
+		<a class="port" id="50"/>
+	</a>
+	<a class="edge" id="51" val="33" src="10" tgt="50" pts="366,70,394,59,423,49" attr="2"/>
+	<a class="edge" id="52" val="34" src="10" tgt="9" pts="366,70,393,90,421,110" attr="2"/>
+	<a class="route" id="53" val="35" rect="587,65,33,33" attr="0">
+		<a class="port" id="14"/>
+	</a>
+	<a class="edge" id="54" val="36" src="50" tgt="14" pts="423,49,495,66,567,84" attr="2"/>
+	<a class="edge" id="55" val="37" src="9" tgt="14" pts="421,110,494,97,567,84" attr="2"/>
+	<a class="route" id="56" val="38" rect="350,298,33,33" attr="0">
+		<a class="port" id="35"/>
+	</a>
+	<a class="activity" id="57" val="39" rect="406,274,33,33" attr="0">
+		<a class="port" id="58"/>
+	</a>
+	<a class="edge" id="59" val="40" src="35" tgt="58" pts="366,314,394,302,422,290" attr="2"/>
+	<a class="edge" id="60" val="41" src="35" tgt="34" pts="366,314,393,338,421,362" attr="2"/>
+	<a class="route" id="61" val="42" rect="588,313,33,33" attr="0">
+		<a class="port" id="39"/>
+	</a>
+	<a class="edge" id="62" val="43" src="58" tgt="39" pts="434,291,610,336" attr="2"/>
+	<a class="edge" id="63" val="44" src="34" tgt="39" pts="420,356,515,346,610,336" attr="2"/>
+	<a class="subflow" id="64" val="45" rect="312,165,32,32" attr="0">
+		<a class="port" id="65"/>
+	</a>
+	<a class="edge" id="66" val="46" src="6" tgt="65" pts="285,70,306,125,328,181" attr="2"/>
+	<a class="subflow" id="67" val="47" rect="310,216,33,33" attr="0">
+		<a class="port" id="68"/>
+	</a>
+	<a class="edge" id="69" val="48" src="29" tgt="68" pts="285,314,328,376,371,439" attr="2"/>
+	<a class="activity" id="70" val="49" rect="162,445,33,33" attr="0">
+		<a class="port" id="71"/>
+	</a>
+	<a class="edge" id="72" val="50" src="24" tgt="71" pts="84,386,131,423,178,461" attr="2"/>
+	<a class="edge" id="73" val="51" src="71" tgt="21" pts="177,456,797,299" attr="2"/>
+</model>
+<attrs>
+	<map id="0">
+		<a key="font" val="新宋体,16,0"/>
+	</map>
+	<map id="1">
+		<a key="lineStyle" val="11"/>
+		<a key="endFill" val="true"/>
+		<a key="lineEnd" val="1"/>
+		<a key="labelposition" val="840,-169"/>
+		<a key="routing" val="simple"/>
+	</map>
+	<map id="2" pid="1">
+		<a key="lineStyle" val=""/>
+		<a key="labelposition" val="500,500"/>
+	</map>
+	<map id="3" pid="1">
+		<a key="lineStyle" val="12"/>
+		<a key="labelposition" val="264,345"/>
+	</map>
+	<map id="4" pid="1">
+		<a key="labelposition" val="500,500"/>
+	</map>
+	<map id="5" pid="1">
+		<a key="labelposition" val="846,-195"/>
+	</map>
+	<map id="6" pid="3">
+		<a key="labelposition" val="135,247"/>
+	</map>
+	<map id="7" pid="2">
+		<a key="labelposition" val="570,493"/>
+	</map>
+</attrs>
+<user>
+	<a key="29" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_17" name="">
+<cellDesc></cellDesc>
+<fromCell>FileAndCommentArchive_TJ</fromCell>
+<toCell>EndOfWorkflow</toCell>
+<conditionType>0</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>1</flag>
+<express></express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="28" val="x-jbpm-transition">
+<transition name="天津分行">
+<TransitionModel id="Tra_16" name="天津分行">
+<cellDesc></cellDesc>
+<fromCell>Route_1</fromCell>
+<toCell>LC_Make_TJ</toCell>
+<conditionType>1</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express>$BranchId$=='TNJ'</express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="27" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_25" name="">
+<cellDesc></cellDesc>
+<fromCell>ManagerApproval_TJ</fromCell>
+<toCell>FileAndCommentArchive_TJ</toCell>
+<conditionType>1</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express>$Flag1$=='1'</express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="26" val="x-jbpm-activity-state">
+<activity-state name="文件及批注归档">
+<ActiveBaseModel id="FileAndCommentArchive_TJ" name="文件及批注归档">
+<cellType>0</cellType>
+<cellDesc></cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>1</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveActionModel>
+<actionType>1</actionType>
+<actionName>FilereviewArchive.faces</actionName>
+<queryName></queryName>
+<modifyName></modifyName>
+<pkType>-1</pkType>
+<pkValue></pkValue>
+<modifyName></modifyName>
+<formName></formName>
+<statusChanged>0</statusChanged>
+<module>SMBCWEB</module>
+<pageName>filereview</pageName>
+</ActiveActionModel>
+<ActiveDataModel>
+<AssignmentStrategy>0</AssignmentStrategy>
+<CompletionStrategy>1</CompletionStrategy>
+<Number>0</Number>
+<Percent>0</Percent>
+</ActiveDataModel>
+<ActiveActorModel>
+<actorsType>0</actorsType>
+<selectActive>null</selectActive>
+<activeType></activeType>
+<a class="1998@SHA-郭明志" condition="必须是" actorType="用户" actorName="1998@SHA-郭明志"/>
+</ActiveActorModel>
+<ActiveLifeModel>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime></durationTime>
+<timeFlag>false</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>0</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>1</splitType>
+<joinType>1</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+<ActiveBackModel>
+<allowBack>0</allowBack>
+<backType>0</backType>
+<backs></backs>
+</ActiveBackModel>
+</activity-state>
+	</a>
+	<a key="25" val="x-jbpm-transition">
+<transition name="拒绝">
+<TransitionModel id="Tra_24" name="拒绝">
+<cellDesc></cellDesc>
+<fromCell>ManagerApproval_TJ</fromCell>
+<toCell>LC_Make_TJ</toCell>
+<conditionType>1</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express>$Flag1$=='0'</express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="24" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_23" name="">
+<cellDesc></cellDesc>
+<fromCell>Route_6</fromCell>
+<toCell>ManagerApproval_TJ</toCell>
+<conditionType>0</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express></express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="23" val="x-jbpm-activity-state">
+<activity-state name="分管管理层确认">
+<ActiveBaseModel id="ManagerApproval_TJ" name="分管管理层确认">
+<cellType>0</cellType>
+<cellDesc>如Ataka-San一人或多人确认</cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>1</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveActionModel>
+<actionType>1</actionType>
+<actionName>FilereviewManagerAppr.faces</actionName>
+<queryName></queryName>
+<modifyName></modifyName>
+<pkType>-1</pkType>
+<pkValue></pkValue>
+<modifyName></modifyName>
+<formName></formName>
+<statusChanged>0</statusChanged>
+<module>SMBCWEB</module>
+<pageName>filereview</pageName>
+</ActiveActionModel>
+<ActiveDataModel>
+<AssignmentStrategy>0</AssignmentStrategy>
+<CompletionStrategy>1</CompletionStrategy>
+<Number>0</Number>
+<Percent>0</Percent>
+</ActiveDataModel>
+<ActiveActorModel>
+<actorsType>0</actorsType>
+<selectActive>null</selectActive>
+<activeType></activeType>
+<a class="8888@SHA-木户胁雅生" condition="必须是" actorType="用户" actorName="8888@SHA-木户胁雅生"/>
+</ActiveActorModel>
+<ActiveLifeModel>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime></durationTime>
+<timeFlag>false</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>0</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>1</splitType>
+<joinType>1</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+<ActiveBackModel>
+<allowBack>0</allowBack>
+<backType>0</backType>
+<backs></backs>
+</ActiveBackModel>
+</activity-state>
+	</a>
+	<a key="22" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_22" name="">
+<cellDesc></cellDesc>
+<fromCell>Approval_TJ</fromCell>
+<toCell>Route_5</toCell>
+<conditionType>1</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express>$Flag1$=='1'</express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="21" val="x-jbpm-activity-state">
+<activity-state name="相关部门长或被授权人确认">
+<ActiveBaseModel id="OtherMinisterAppr_TJ" name="相关部门长或被授权人确认">
+<cellType>0</cellType>
+<cellDesc></cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>1</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveActionModel>
+<actionType>1</actionType>
+<actionName>FilereviewOtherAppr.faces</actionName>
+<queryName></queryName>
+<modifyName></modifyName>
+<pkType>-1</pkType>
+<pkValue></pkValue>
+<modifyName></modifyName>
+<formName></formName>
+<statusChanged>0</statusChanged>
+<module>SMBCWEB</module>
+<pageName>filereview</pageName>
+</ActiveActionModel>
+<ActiveDataModel>
+<AssignmentStrategy>0</AssignmentStrategy>
+<CompletionStrategy>1</CompletionStrategy>
+<Number>0</Number>
+<Percent>0</Percent>
+</ActiveDataModel>
+<ActiveActorModel>
+<actorsType>0</actorsType>
+<selectActive>null</selectActive>
+<activeType></activeType>
+<a class="5555@SHA-大和正幸" condition="必须是" actorType="用户" actorName="5555@SHA-大和正幸"/>
+<a class="7777@SHA-吉川千治" condition="必须是" actorType="用户" actorName="7777@SHA-吉川千治"/>
+<a class="6666@SHA-大岛清志" condition="必须是" actorType="用户" actorName="6666@SHA-大岛清志"/>
+</ActiveActorModel>
+<ActiveLifeModel>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime></durationTime>
+<timeFlag>false</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>0</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>1</splitType>
+<joinType>1</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+<ActiveBackModel>
+<allowBack>0</allowBack>
+<backType>0</backType>
+<backs></backs>
+</ActiveBackModel>
+</activity-state>
+	</a>
+	<a key="20" val="x-jbpm-transition">
+<transition name="驳回">
+<TransitionModel id="Tra_21" name="驳回">
+<cellDesc></cellDesc>
+<fromCell>Approval_TJ</fromCell>
+<toCell>LC_Make_TJ</toCell>
+<conditionType>1</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express>$Flag1$=='0'</express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="51" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_37" name="">
+<cellDesc></cellDesc>
+<fromCell>ManAct_10</fromCell>
+<toCell>EndOfWorkflow</toCell>
+<conditionType>0</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>1</flag>
+<express></express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="50" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_36" name="">
+<cellDesc></cellDesc>
+<fromCell>Route_1</fromCell>
+<toCell>ManAct_10</toCell>
+<conditionType>2</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express></express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="9" val="x-jbpm-transition">
+<transition name="拒绝">
+<TransitionModel id="Tra_9" name="拒绝">
+<cellDesc></cellDesc>
+<fromCell>ManagerApproval_SH</fromCell>
+<toCell>LC_Make_SH</toCell>
+<conditionType>1</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express>$Flag1$=='0'</express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="19" val="x-jbpm-activity-state">
+<activity-state name="文件回览(批准)">
+<ActiveBaseModel id="Approval_TJ" name="文件回览(批准)">
+<cellType>0</cellType>
+<cellDesc>文件回览(批准)</cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>1</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveActionModel>
+<actionType>1</actionType>
+<actionName>FilereviewConfirm.faces</actionName>
+<queryName></queryName>
+<modifyName></modifyName>
+<pkType>-1</pkType>
+<pkValue></pkValue>
+<modifyName></modifyName>
+<formName></formName>
+<statusChanged>0</statusChanged>
+<module>SMBCWEB</module>
+<pageName>filereview</pageName>
+</ActiveActionModel>
+<ActiveDataModel>
+<AssignmentStrategy>0</AssignmentStrategy>
+<CompletionStrategy>1</CompletionStrategy>
+<Number>0</Number>
+<Percent>0</Percent>
+</ActiveDataModel>
+<ActiveActorModel>
+<actorsType>0</actorsType>
+<selectActive>null</selectActive>
+<activeType></activeType>
+<a class="3333@SHA-陈海军" condition="必须是" actorType="用户" actorName="3333@SHA-陈海军"/>
+</ActiveActorModel>
+<ActiveLifeModel>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime></durationTime>
+<timeFlag>false</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>0</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>0</splitType>
+<joinType>1</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+<ActiveBackModel>
+<allowBack>0</allowBack>
+<backType>0</backType>
+<backs></backs>
+</ActiveBackModel>
+</activity-state>
+	</a>
+	<a key="8" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_8" name="">
+<cellDesc></cellDesc>
+<fromCell>Route_4</fromCell>
+<toCell>ManagerApproval_SH</toCell>
+<conditionType>1</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express></express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="18" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_17" name="">
+<cellDesc></cellDesc>
+<fromCell>LC_Make_TJ</fromCell>
+<toCell>Approval_TJ</toCell>
+<conditionType>1</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express>$Flag1$=='1'</express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="7" val="x-jbpm-activity-state">
+<activity-state name="分管管理层确认">
+<ActiveBaseModel id="ManagerApproval_SH" name="分管管理层确认">
+<cellType>0</cellType>
+<cellDesc>如Ataka-San一人或多人确认</cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>1</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveActionModel>
+<actionType>1</actionType>
+<actionName>FilereviewManagerAppr.faces</actionName>
+<queryName></queryName>
+<modifyName></modifyName>
+<pkType>-1</pkType>
+<pkValue></pkValue>
+<modifyName></modifyName>
+<formName></formName>
+<statusChanged>0</statusChanged>
+<module>SMBCWEB</module>
+<pageName>filereview</pageName>
+</ActiveActionModel>
+<ActiveDataModel>
+<AssignmentStrategy>0</AssignmentStrategy>
+<CompletionStrategy>1</CompletionStrategy>
+<Number>0</Number>
+<Percent>0</Percent>
+</ActiveDataModel>
+<ActiveActorModel>
+<actorsType>0</actorsType>
+<selectActive>null</selectActive>
+<activeType></activeType>
+<a class="8888@SHA-木户胁雅生" condition="必须是" actorType="用户" actorName="8888@SHA-木户胁雅生"/>
+</ActiveActorModel>
+<ActiveLifeModel>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime></durationTime>
+<timeFlag>false</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>0</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>1</splitType>
+<joinType>1</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+<ActiveBackModel>
+<allowBack>0</allowBack>
+<backType>0</backType>
+<backs></backs>
+</ActiveBackModel>
+</activity-state>
+	</a>
+	<a key="49" val="x-jbpm-activity-state">
+<activity-state name="提交文件回览申请(LC)">
+<ActiveBaseModel id="ManAct_10" name="提交文件回览申请(LC)">
+<cellType>0</cellType>
+<cellDesc></cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>1</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveActionModel>
+<actionType>1</actionType>
+<actionName></actionName>
+<queryName></queryName>
+<modifyName></modifyName>
+<pkType>-1</pkType>
+<pkValue></pkValue>
+<modifyName></modifyName>
+<formName></formName>
+<statusChanged>0</statusChanged>
+<module>null</module>
+<pageName>null</pageName>
+</ActiveActionModel>
+<ActiveDataModel>
+<AssignmentStrategy>0</AssignmentStrategy>
+<CompletionStrategy>0</CompletionStrategy>
+<Number>0</Number>
+<Percent>0</Percent>
+</ActiveDataModel>
+<ActiveActorModel>
+<actorsType>0</actorsType>
+<selectActive>null</selectActive>
+<activeType></activeType>
+<a class="1998@SHA-郭明志" condition="必须是" actorType="用户" actorName="1998@SHA-郭明志"/>
+</ActiveActorModel>
+<ActiveLifeModel>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime></durationTime>
+<timeFlag>false</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>0</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>1</splitType>
+<joinType>1</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+<ActiveBackModel>
+<allowBack>0</allowBack>
+<backType>0</backType>
+<backs></backs>
+</ActiveBackModel>
+</activity-state>
+	</a>
+	<a key="17" val="x-jbpm-activity-state">
+<activity-state name="提交文件回览申请(LC)">
+<ActiveBaseModel id="LC_Make_TJ" name="提交文件回览申请(LC)">
+<cellType>0</cellType>
+<cellDesc>LC_部门人员扫描文件并提交申请</cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>1</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveActionModel>
+<actionType>1</actionType>
+<actionName>FilereviewApply.faces</actionName>
+<queryName></queryName>
+<modifyName></modifyName>
+<pkType>-1</pkType>
+<pkValue></pkValue>
+<modifyName></modifyName>
+<formName></formName>
+<statusChanged>0</statusChanged>
+<module>SMBCWEB</module>
+<pageName>filereview</pageName>
+</ActiveActionModel>
+<ActiveDataModel>
+<AssignmentStrategy>0</AssignmentStrategy>
+<CompletionStrategy>1</CompletionStrategy>
+<Number>0</Number>
+<Percent>0</Percent>
+</ActiveDataModel>
+<ActiveActorModel>
+<actorsType>0</actorsType>
+<selectActive>null</selectActive>
+<activeType></activeType>
+<a class="1998@SHA-郭明志" condition="必须是" actorType="用户" actorName="1998@SHA-郭明志"/>
+</ActiveActorModel>
+<ActiveLifeModel>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime></durationTime>
+<timeFlag>false</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>0</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>1</splitType>
+<joinType>1</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+<ActiveBackModel>
+<allowBack>0</allowBack>
+<backType>0</backType>
+<backs></backs>
+</ActiveBackModel>
+</activity-state>
+	</a>
+	<a key="6" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_7" name="">
+<cellDesc></cellDesc>
+<fromCell>Approval_SH</fromCell>
+<toCell>Route_3</toCell>
+<conditionType>1</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express>$Flag1$=='1'</express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="48" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_33" name="">
+<cellDesc></cellDesc>
+<fromCell>Approval_TJ</fromCell>
+<toCell>SubFlow_2</toCell>
+<conditionType>1</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express>$Flag1$=='1'</express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="16" val="x-jbpm-transition">
+<transition name="上海分行">
+<TransitionModel id="Tra_15" name="上海分行">
+<cellDesc></cellDesc>
+<fromCell>Route_1</fromCell>
+<toCell>LC_Make_SH</toCell>
+<conditionType>1</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express>$BranchId$=='SHA'</express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="5" val="x-jbpm-activity-state">
+<activity-state name="相关部门长或被授权人确认">
+<ActiveBaseModel id="OtherMinisterAppr_SH" name="相关部门长或被授权人确认">
+<cellType>0</cellType>
+<cellDesc></cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>1</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveActionModel>
+<actionType>1</actionType>
+<actionName>FilereviewOtherAppr.faces</actionName>
+<queryName></queryName>
+<modifyName></modifyName>
+<pkType>-1</pkType>
+<pkValue></pkValue>
+<modifyName></modifyName>
+<formName></formName>
+<statusChanged>0</statusChanged>
+<module>SMBCWEB</module>
+<pageName>filereview</pageName>
+</ActiveActionModel>
+<ActiveDataModel>
+<AssignmentStrategy>0</AssignmentStrategy>
+<CompletionStrategy>1</CompletionStrategy>
+<Number>0</Number>
+<Percent>0</Percent>
+</ActiveDataModel>
+<ActiveActorModel>
+<actorsType>0</actorsType>
+<selectActive>null</selectActive>
+<activeType></activeType>
+<a class="5555@SHA-大和正幸" condition="必须是" actorType="用户" actorName="5555@SHA-大和正幸"/>
+<a class="7777@SHA-吉川千治" condition="必须是" actorType="用户" actorName="7777@SHA-吉川千治"/>
+<a class="6666@SHA-大岛清志" condition="必须是" actorType="用户" actorName="6666@SHA-大岛清志"/>
+</ActiveActorModel>
+<ActiveLifeModel>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime></durationTime>
+<timeFlag>false</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>0</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>1</splitType>
+<joinType>1</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+<ActiveBackModel>
+<allowBack>0</allowBack>
+<backType>0</backType>
+<backs></backs>
+</ActiveBackModel>
+</activity-state>
+	</a>
+	<a key="47" val="x-jbpm-subflow-state">
+<subflow-state name="公告">
+<ActiveBaseModel id="SubFlow_2" name="公告">
+<cellType>2</cellType>
+<cellDesc></cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>0</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveLifeModel>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime></durationTime>
+<timeFlag>false</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>0</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>1</splitType>
+<joinType>1</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+<SubflowDataModel>
+<processid>AdministrationNotice</processid>
+</SubflowDataModel>
+</subflow-state>
+	</a>
+	<a key="15" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_14" name="">
+<cellDesc></cellDesc>
+<fromCell>StartOfWorkflow</fromCell>
+<toCell>Route_1</toCell>
+<conditionType>0</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>1</flag>
+<express></express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="4" val="x-jbpm-transition">
+<transition name="驳回">
+<TransitionModel id="Tra_6" name="驳回">
+<cellDesc></cellDesc>
+<fromCell>Approval_SH</fromCell>
+<toCell>LC_Make_SH</toCell>
+<conditionType>1</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express>$Flag1$=='0'</express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="46" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_31" name="">
+<cellDesc></cellDesc>
+<fromCell>Approval_SH</fromCell>
+<toCell>SubFlow_1</toCell>
+<conditionType>1</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express>$Flag1$=='1'</express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="14" val="x-jbpm-route-state">
+<route-state name="">
+<ActiveBaseModel id="Route_1" name="">
+<cellType>1</cellType>
+<cellDesc></cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>1</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveLifeModel>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime></durationTime>
+<timeFlag>false</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>0</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>1</splitType>
+<joinType>1</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+</route-state>
+
+	</a>
+	<a key="3" val="x-jbpm-activity-state">
+<activity-state name="文件回览(批准)">
+<ActiveBaseModel id="Approval_SH" name="文件回览(批准)">
+<cellType>0</cellType>
+<cellDesc>文件回览(批准)</cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>1</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveActionModel>
+<actionType>1</actionType>
+<actionName>FilereviewConfirm.faces</actionName>
+<queryName></queryName>
+<modifyName></modifyName>
+<pkType>-1</pkType>
+<pkValue></pkValue>
+<modifyName></modifyName>
+<formName></formName>
+<statusChanged>0</statusChanged>
+<module>SMBCWEB</module>
+<pageName>filereview</pageName>
+</ActiveActionModel>
+<ActiveDataModel>
+<AssignmentStrategy>0</AssignmentStrategy>
+<CompletionStrategy>1</CompletionStrategy>
+<Number>0</Number>
+<Percent>0</Percent>
+</ActiveDataModel>
+<ActiveActorModel>
+<actorsType>0</actorsType>
+<selectActive>null</selectActive>
+<activeType></activeType>
+<a class="3333@SHA-陈海军" condition="必须是" actorType="用户" actorName="3333@SHA-陈海军"/>
+</ActiveActorModel>
+<ActiveLifeModel>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime></durationTime>
+<timeFlag>false</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>0</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>0</splitType>
+<joinType>1</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+<ActiveBackModel>
+<allowBack>0</allowBack>
+<backType>0</backType>
+<backs></backs>
+</ActiveBackModel>
+</activity-state>
+	</a>
+	<a key="45" val="x-jbpm-subflow-state">
+<subflow-state name="公告">
+<ActiveBaseModel id="SubFlow_1" name="公告">
+<cellType>2</cellType>
+<cellDesc></cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>0</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveLifeModel>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime></durationTime>
+<timeFlag>false</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>0</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>1</splitType>
+<joinType>1</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+<SubflowDataModel>
+<processid>AdministrationNotice</processid>
+</SubflowDataModel>
+</subflow-state>
+	</a>
+	<a key="13" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_12" name="">
+<cellDesc></cellDesc>
+<fromCell>FileAndCommentArchive_SH</fromCell>
+<toCell>EndOfWorkflow</toCell>
+<conditionType>0</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>1</flag>
+<express></express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="2" val="x-jbpm-activity-state">
+<activity-state name="提交文件回览申请(LC)">
+<ActiveBaseModel id="LC_Make_SH" name="提交文件回览申请(LC)">
+<cellType>0</cellType>
+<cellDesc>LC_部门人员扫描文件并提交申请</cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>1</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveActionModel>
+<actionType>1</actionType>
+<actionName>FilereviewApply.faces</actionName>
+<queryName></queryName>
+<modifyName></modifyName>
+<pkType>-1</pkType>
+<pkValue></pkValue>
+<modifyName></modifyName>
+<formName></formName>
+<statusChanged>0</statusChanged>
+<module>SMBCWEB</module>
+<pageName>filereview</pageName>
+</ActiveActionModel>
+<ActiveDataModel>
+<AssignmentStrategy>0</AssignmentStrategy>
+<CompletionStrategy>1</CompletionStrategy>
+<Number>0</Number>
+<Percent>0</Percent>
+</ActiveDataModel>
+<ActiveActorModel>
+<actorsType>0</actorsType>
+<selectActive>null</selectActive>
+<activeType></activeType>
+<a class="3299@SHA-袁俊" condition="必须是" actorType="用户" actorName="3299@SHA-袁俊"/>
+</ActiveActorModel>
+<ActiveLifeModel>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime></durationTime>
+<timeFlag>true</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>0</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>1</splitType>
+<joinType>1</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+<ActiveBackModel>
+<allowBack>0</allowBack>
+<backType>0</backType>
+<backs></backs>
+</ActiveBackModel>
+</activity-state>
+	</a>
+	<a key="44" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_30" name="">
+<cellDesc></cellDesc>
+<fromCell>OtherMinisterAppr_TJ</fromCell>
+<toCell>Route_6</toCell>
+<conditionType>0</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express></express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="12" val="x-jbpm-end-state">
+<end-state name="结束"/>
+	</a>
+	<a key="1" val="x-jbpm-start-state">
+<start-state name="Start">
+<StartBaseModel id="StartOfWorkflow"  name="开始">
+<cellDesc></cellDesc>
+</StartBaseModel>
+</start-state>
+	</a>
+	<a key="43" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_29" name="">
+<cellDesc></cellDesc>
+<fromCell>CCOtherMinisterAppr_TJ</fromCell>
+<toCell>Route_6</toCell>
+<conditionType>0</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express></express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="11" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_11" name="">
+<cellDesc></cellDesc>
+<fromCell>ManagerApproval_SH</fromCell>
+<toCell>FileAndCommentArchive_SH</toCell>
+<conditionType>1</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express>$Flag1$=='1'</express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="42" val="x-jbpm-route-state">
+<route-state name="">
+<ActiveBaseModel id="Route_6" name="">
+<cellType>1</cellType>
+<cellDesc></cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>1</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveLifeModel>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime></durationTime>
+<timeFlag>false</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>0</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>1</splitType>
+<joinType>0</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+</route-state>
+
+	</a>
+	<a key="10" val="x-jbpm-activity-state">
+<activity-state name="文件及批注归档">
+<ActiveBaseModel id="FileAndCommentArchive_SH" name="文件及批注归档">
+<cellType>0</cellType>
+<cellDesc></cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>1</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveActionModel>
+<actionType>1</actionType>
+<actionName>FilereviewArchive.faces</actionName>
+<queryName></queryName>
+<modifyName></modifyName>
+<pkType>-1</pkType>
+<pkValue></pkValue>
+<modifyName></modifyName>
+<formName></formName>
+<statusChanged>0</statusChanged>
+<module>SMBCWEB</module>
+<pageName>filereview</pageName>
+</ActiveActionModel>
+<ActiveDataModel>
+<AssignmentStrategy>0</AssignmentStrategy>
+<CompletionStrategy>1</CompletionStrategy>
+<Number>0</Number>
+<Percent>0</Percent>
+</ActiveDataModel>
+<ActiveActorModel>
+<actorsType>0</actorsType>
+<selectActive>null</selectActive>
+<activeType></activeType>
+<a class="3299@SHA-袁俊" condition="必须是" actorType="用户" actorName="3299@SHA-袁俊"/>
+</ActiveActorModel>
+<ActiveLifeModel>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime></durationTime>
+<timeFlag>false</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>0</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>1</splitType>
+<joinType>1</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+<ActiveBackModel>
+<allowBack>0</allowBack>
+<backType>0</backType>
+<backs></backs>
+</ActiveBackModel>
+</activity-state>
+	</a>
+	<a key="41" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_28" name="">
+<cellDesc></cellDesc>
+<fromCell>Route_5</fromCell>
+<toCell>OtherMinisterAppr_TJ</toCell>
+<conditionType>0</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express></express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="40" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_27" name="">
+<cellDesc></cellDesc>
+<fromCell>Route_5</fromCell>
+<toCell>CCOtherMinisterAppr_TJ</toCell>
+<conditionType>0</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express></express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="39" val="x-jbpm-activity-state">
+<activity-state name="相关部门长或被授权人确认(CC)">
+<ActiveBaseModel id="CCOtherMinisterAppr_TJ" name="相关部门长或被授权人确认(CC)">
+<cellType>0</cellType>
+<cellDesc></cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>1</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveActionModel>
+<actionType>1</actionType>
+<actionName>FilereviewOtherCCAppr.faces</actionName>
+<queryName></queryName>
+<modifyName></modifyName>
+<pkType>-1</pkType>
+<pkValue></pkValue>
+<modifyName></modifyName>
+<formName></formName>
+<statusChanged>0</statusChanged>
+<module>SMBCWEB</module>
+<pageName>filereview</pageName>
+</ActiveActionModel>
+<ActiveDataModel>
+<AssignmentStrategy>0</AssignmentStrategy>
+<CompletionStrategy>1</CompletionStrategy>
+<Number>0</Number>
+<Percent>0</Percent>
+</ActiveDataModel>
+<ActiveActorModel>
+<actorsType>0</actorsType>
+<selectActive>null</selectActive>
+<activeType></activeType>
+<a class="4444@SHA-洪卫华" condition="必须是" actorType="用户" actorName="4444@SHA-洪卫华"/>
+</ActiveActorModel>
+<ActiveLifeModel>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime>5</durationTime>
+<timeFlag>true</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>1</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>1</splitType>
+<joinType>1</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+<ActiveBackModel>
+<allowBack>0</allowBack>
+<backType>0</backType>
+<backs></backs>
+</ActiveBackModel>
+</activity-state>
+	</a>
+	<a key="38" val="x-jbpm-route-state">
+<route-state name="">
+<ActiveBaseModel id="Route_5" name="">
+<cellType>1</cellType>
+<cellDesc></cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>1</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveLifeModel>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime></durationTime>
+<timeFlag>false</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>0</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>0</splitType>
+<joinType>1</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+</route-state>
+
+	</a>
+	<a key="37" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_26" name="">
+<cellDesc></cellDesc>
+<fromCell>OtherMinisterAppr_SH</fromCell>
+<toCell>Route_4</toCell>
+<conditionType>0</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express></express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="36" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_25" name="">
+<cellDesc></cellDesc>
+<fromCell>CCOtherMinisterAppr_SH</fromCell>
+<toCell>Route_4</toCell>
+<conditionType>0</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express></express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="35" val="x-jbpm-route-state">
+<route-state name="">
+<ActiveBaseModel id="Route_4" name="">
+<cellType>1</cellType>
+<cellDesc></cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>1</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveLifeModel>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime></durationTime>
+<timeFlag>false</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>0</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>1</splitType>
+<joinType>0</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+</route-state>
+
+	</a>
+	<a key="34" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_24" name="">
+<cellDesc></cellDesc>
+<fromCell>Route_3</fromCell>
+<toCell>OtherMinisterAppr_SH</toCell>
+<conditionType>0</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express></express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="33" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_23" name="">
+<cellDesc></cellDesc>
+<fromCell>Route_3</fromCell>
+<toCell>CCOtherMinisterAppr_SH</toCell>
+<conditionType>0</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express></express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="32" val="x-jbpm-activity-state">
+<activity-state name="相关部门长或被授权人确认(CC)">
+<ActiveBaseModel id="CCOtherMinisterAppr_SH" name="相关部门长或被授权人确认(CC)">
+<cellType>0</cellType>
+<cellDesc></cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>1</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveActionModel>
+<actionType>1</actionType>
+<actionName>FilereviewOtherCCAppr.faces</actionName>
+<queryName></queryName>
+<modifyName></modifyName>
+<pkType>-1</pkType>
+<pkValue></pkValue>
+<modifyName></modifyName>
+<formName></formName>
+<statusChanged>0</statusChanged>
+<module>SMBCWEB</module>
+<pageName>filereview</pageName>
+</ActiveActionModel>
+<ActiveDataModel>
+<AssignmentStrategy>0</AssignmentStrategy>
+<CompletionStrategy>1</CompletionStrategy>
+<Number>0</Number>
+<Percent>0</Percent>
+</ActiveDataModel>
+<ActiveActorModel>
+<actorsType>0</actorsType>
+<selectActive>null</selectActive>
+<activeType></activeType>
+<a class="4444@SHA-洪卫华" condition="必须是" actorType="用户" actorName="4444@SHA-洪卫华"/>
+</ActiveActorModel>
+<ActiveLifeModel>
+<waitingTime>5</waitingTime>
+<workingTime></workingTime>
+<durationTime>5</durationTime>
+<timeFlag>true</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>1</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>1</splitType>
+<joinType>1</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+<ActiveBackModel>
+<allowBack>0</allowBack>
+<backType>0</backType>
+<backs></backs>
+</ActiveBackModel>
+</activity-state>
+	</a>
+	<a key="31" val="x-jbpm-route-state">
+<route-state name="">
+<ActiveBaseModel id="Route_3" name="">
+<cellType>1</cellType>
+<cellDesc></cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>1</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveLifeModel>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime></durationTime>
+<timeFlag>false</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>0</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>0</splitType>
+<joinType>1</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+</route-state>
+
+	</a>
+	<a key="30" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_22" name="">
+<cellDesc></cellDesc>
+<fromCell>LC_Make_SH</fromCell>
+<toCell>Approval_SH</toCell>
+<conditionType>1</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express>$Flag1$=='1'</express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+</user>
+<view>
+	<a key="editable" val="true"/>
+	<a key="bendable" val="true"/>
+	<a key="cloneable" val="true"/>
+	<a key="connectable" val="true"/>
+	<a key="disconnectable" val="true"/>
+	<a key="disconnectOnMove" val="false"/>
+	<a key="doubleBuffered" val="true"/>
+	<a key="dragEnabled" val="false"/>
+	<a key="dropEnabled" val="true"/>
+	<a key="moveable" val="true"/>
+	<a key="sizeable" val="true"/>
+	<a key="selectNewCells" val="true"/>
+	<a key="gridVisible" val="false"/>
+	<a key="gridEnabled" val="false"/>
+	<a key="gridSize" val="10"/>
+	<a key="gridMode" val="0"/>
+	<a key="scale" val="1.0"/>
+	<a key="antiAlias" val="false"/>
+</view>
+<process-state name="FileReview">
+<process-define>
+<ProcessBaseModel id="FileReview" name="文件回览">
+<cellDesc>文件回览</cellDesc>
+<processType>0</processType>
+<processType>0</processType>
+<cycleFlag>false</cycleFlag>
+<dayFlag>true</dayFlag>
+<weekFlag>false</weekFlag>
+<monthFlag>false</monthFlag>
+<priority>3</priority>
+<dateTime>0</dateTime>
+<hourTime>0</hourTime>
+<minuteTime>0</minuteTime>
+<isFreeFlow>0</isFreeFlow>
+<runType>1</runType>
+<dymicSetUser>1</dymicSetUser>
+<activitySetUser>0</activitySetUser>
+<version>1.1</version>
+</ProcessBaseModel>
+<ProcessDataModel>
+<startFlag>1</startFlag>
+</ProcessDataModel>
+<ProcessLifeModel>
+<timeType>1</timeType>
+<limit></limit>
+<fromY>-1</fromY>
+<fromM>-1</fromM>
+<fromD>-1</fromD>
+<fromH>-1</fromH>
+<toY>-1</toY>
+<toM>-1</toM>
+<toD>-1</toD>
+<toH>-1</toH>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime></durationTime>
+<timeFlag>false</timeFlag>
+</ProcessLifeModel>
+</process-define>
+<names-helper>
+<names>
+<a key="Process_1"/>
+<a key="ManAct_1"/>
+<a key="Tra_1"/>
+<a key="Tra_2"/>
+<a key="ManAct_2"/>
+<a key="Tra_3"/>
+<a key="ManAct_3"/>
+<a key="Tra_4"/>
+<a key="Tra_5"/>
+<a key="Tra_6"/>
+<a key="ManAct_4"/>
+<a key="Tra_7"/>
+<a key="ManAct_5"/>
+<a key="Tra_8"/>
+<a key="Tra_9"/>
+<a key="Tra_10"/>
+<a key="ManAct_6"/>
+<a key="Tra_11"/>
+<a key="Tra_12"/>
+<a key="Tra_13"/>
+<a key="Route_1"/>
+<a key="Tra_14"/>
+<a key="Tra_15"/>
+<a key="ManAct_7"/>
+<a key="Tra_16"/>
+<a key="Tra_17"/>
+<a key="Tra_18"/>
+<a key="Route_2"/>
+<a key="Tra_19"/>
+<a key="Tra_20"/>
+<a key="Tra_21"/>
+<a key="Tra_22"/>
+<a key="Route_3"/>
+<a key="ManAct_8"/>
+<a key="Tra_23"/>
+<a key="Tra_24"/>
+<a key="Route_4"/>
+<a key="Tra_25"/>
+<a key="Tra_26"/>
+<a key="Route_5"/>
+<a key="ManAct_9"/>
+<a key="Tra_27"/>
+<a key="Tra_28"/>
+<a key="Route_6"/>
+<a key="Tra_29"/>
+<a key="Tra_30"/>
+<a key="SubFlow_1"/>
+<a key="Tra_31"/>
+<a key="Tra_32"/>
+<a key="SubFlow_2"/>
+<a key="Tra_33"/>
+<a key="Tra_34"/>
+<a key="Tra_35"/>
+<a key="ManAct_10"/>
+<a key="Tra_36"/>
+<a key="Tra_37"/>
+<a key="Tra_38"/>
+</names>
+<process>
+</process>
+<count>
+<manAct>10</manAct>
+<autoAct>0</autoAct>
+<trans>38</trans>
+<subflow>2</subflow>
+<route>6</route>
+<process>1</process>
+</count>
+</names-helper>
+</process-state>
+</emsflow>

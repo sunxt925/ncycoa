@@ -1,0 +1,535 @@
+/* 网站链接总的CSS定义:可定义内容为链接字体颜色、样式等 */
+a{text-decoration: none;} /* 链接无下划线,有为underline */ 
+a:link {color: #000000;} /* 未访问的链接 */
+a:visited {color: #000000;} /* 已访问的链接 */
+a:hover{COLOR: #AE0927; text-decoration:none} /* 鼠标在链接上 有上线underline */ 
+a:active {color: #000000;} /* 点击激活链接 */
+table.gridtable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #666666;
+	border-collapse: collapse;
+}
+table.gridtable th {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #dedede;
+}
+table.gridtable td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	
+}
+.link
+{
+	text-decoration: none; /* 链接无下划线,有为underline */ 
+	color: #3E68BC;
+}
+.autocut {
+	width:50px;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	-o-text-overflow:ellipsis;
+	-icab-text-overflow: ellipsis;
+	-khtml-text-overflow: ellipsis;
+	-moz-text-overflow: ellipsis;
+	-webkit-text-overflow: ellipsis;
+}
+/* body的css定义:对应css中“body”，可定义内容为网页字体颜色、背景、浏览器边框等 */
+body
+{
+	margin:0px;
+	padding:0px;
+	font-family: "Verdana, Arial, 宋体"; /* 字体名称 */
+	color: #000000;                      /* 设置对象中字体的颜色 */
+	line-height: 150%;                   /* 行间距 */
+	background-color:#ffffff;            /* 网页背景颜色 */
+	font-size: 9pt;                      /* 网页字体大小 */
+	text-decoration: none;               /* 设置对象中的文本的装饰 */
+	/* 滚动条样式 */
+	scrollbar-face-color: #f6f6f6;       /* 立体滚动条凸出部分的颜色 */
+	scrollbar-highlight-color: #ffffff;  /* 滚动条空白部分的颜色 */ 
+	scrollbar-shadow-color: #cccccc;     /* 立体滚动条阴影的颜色 */
+	scrollbar-3dlight-color: #cccccc;    /* 立体滚动条亮边的颜色（设置滚动条的颜色） */
+	scrollbar-arrow-color: #330000;      /* 上下按钮上三角箭头的颜色 */
+	scrollbar-track-color: #f6f6f6;      /* 滚动条的背景颜色 */
+	scrollbar-darkshadow-color: #ffffff; /* 立体滚动条强阴影的颜色 */
+}
+.body1
+{
+	margin:0px;
+	padding:0px;
+	font-family: "Verdana, Arial, 宋体"; /* 字体名称 */
+	color: #000000;                      /* 设置对象中字体的颜色 */
+	line-height: 150%;                   /* 行间距 */
+	background-color:#98CCFE;            /* 网页背景颜色 */
+	font-size: 9pt;                      /* 网页字体大小 */
+	text-decoration: none;               /* 设置对象中的文本的装饰 */
+	/* 滚动条样式 */
+	scrollbar-face-color: #f6f6f6;       /* 立体滚动条凸出部分的颜色 */
+	scrollbar-highlight-color: #ffffff;  /* 滚动条空白部分的颜色 */ 
+	scrollbar-shadow-color: #cccccc;     /* 立体滚动条阴影的颜色 */
+	scrollbar-3dlight-color: #cccccc;    /* 立体滚动条亮边的颜色（设置滚动条的颜色） */
+	scrollbar-arrow-color: #330000;      /* 上下按钮上三角箭头的颜色 */
+	scrollbar-track-color: #f6f6f6;      /* 滚动条的背景颜色 */
+	scrollbar-darkshadow-color: #ffffff; /* 立体滚动条强阴影的颜色 */
+}
+table.maintable
+{	
+	border-collapse:collapse;  
+	border-spacing:0;  
+	padd:expression(this.cellPadding=10);  
+
+    border:0px;
+    
+    
+}
+.table1{
+	
+}	
+.mainbody
+{
+	margin:0px 0px 0px 0px;
+	padding:0px;
+	font-family: "Verdana, Arial, 宋体"; /* 字体名称 */
+	color: #000000;                      /* 设置对象中字体的颜色 */
+	line-height: 150%;                   /* 行间距 */
+	/*background-color:#98CCFE;            /* 网页背景颜色 */
+	font-size: 9pt;                      /* 网页字体大小 */
+	text-decoration: none;               /* 设置对象中的文本的装饰 */
+	/* 滚动条样式 */
+	scrollbar-face-color: #f6f6f6;       /* 立体滚动条凸出部分的颜色 */
+	scrollbar-highlight-color: #ffffff;  /* 滚动条空白部分的颜色 */ 
+	scrollbar-shadow-color: #cccccc;     /* 立体滚动条阴影的颜色 */
+	scrollbar-3dlight-color: #cccccc;    /* 立体滚动条亮边的颜色（设置滚动条的颜色） */
+	scrollbar-arrow-color: #330000;      /* 上下按钮上三角箭头的颜色 */
+	scrollbar-track-color: #f6f6f6;      /* 滚动条的背景颜色 */
+	scrollbar-darkshadow-color: #ffffff; /* 立体滚动条强阴影的颜色 */
+}
+.tree_body
+{
+	margin:0px;
+	padding:0px;
+	font-family: "Verdana, Arial, 宋体"; /* 字体名称 */
+	color: #000000;                      /* 设置对象中字体的颜色 */
+	line-height: 150%;                   /* 行间距 */
+	background-color:#F1F8FF;            /* 网页背景颜色 */
+	font-size: 9pt;                      /* 网页字体大小 */
+	text-decoration: none;               /* 设置对象中的文本的装饰 */
+	/* 滚动条样式 */
+	scrollbar-face-color: #f6f6f6;       /* 立体滚动条凸出部分的颜色 */
+	scrollbar-highlight-color: #ffffff;  /* 滚动条空白部分的颜色 */ 
+	scrollbar-shadow-color: #cccccc;     /* 立体滚动条阴影的颜色 */
+	scrollbar-3dlight-color: #cccccc;    /* 立体滚动条亮边的颜色（设置滚动条的颜色） */
+	scrollbar-arrow-color: #330000;      /* 上下按钮上三角箭头的颜色 */
+	scrollbar-track-color: #f6f6f6;      /* 滚动条的背景颜色 */
+	scrollbar-darkshadow-color: #ffffff; /* 立体滚动条强阴影的颜色 */
+}
+
+.list_body
+{
+	margin:0px;
+	padding:0px;
+	font-family: "Verdana, Arial, 宋体"; /* 字体名称 */
+	color: #000000;                      /* 设置对象中字体的颜色 */
+	line-height: 150%;                   /* 行间距 */
+	background-color:#C8E1FF;            /* 网页背景颜色 */
+	font-size: 9pt;                      /* 网页字体大小 */
+	text-decoration: none;               /* 设置对象中的文本的装饰 */
+	/* 滚动条样式 */
+	scrollbar-face-color: #f6f6f6;       /* 立体滚动条凸出部分的颜色 */
+	scrollbar-highlight-color: #ffffff;  /* 滚动条空白部分的颜色 */ 
+	scrollbar-shadow-color: #cccccc;     /* 立体滚动条阴影的颜色 */
+	scrollbar-3dlight-color: #cccccc;    /* 立体滚动条亮边的颜色（设置滚动条的颜色） */
+	scrollbar-arrow-color: #330000;      /* 上下按钮上三角箭头的颜色 */
+	scrollbar-track-color: #f6f6f6;      /* 滚动条的背景颜色 */
+	scrollbar-darkshadow-color: #ffffff; /* 立体滚动条强阴影的颜色 */
+}
+
+.list1_body
+{
+	margin:0px;
+	padding:0px;
+	font-family: "Verdana, Arial, 宋体"; /* 字体名称 */
+	color: #000000;                      /* 设置对象中字体的颜色 */
+	line-height: 150%;                   /* 行间距 */
+	background-color:#ffffff;            /* 网页背景颜色 */
+	font-size: 9pt;                      /* 网页字体大小 */
+	text-decoration: none;               /* 设置对象中的文本的装饰 */
+	/* 滚动条样式 */
+	scrollbar-face-color: #f6f6f6;       /* 立体滚动条凸出部分的颜色 */
+	scrollbar-highlight-color: #ffffff;  /* 滚动条空白部分的颜色 */ 
+	scrollbar-shadow-color: #cccccc;     /* 立体滚动条阴影的颜色 */
+	scrollbar-3dlight-color: #cccccc;    /* 立体滚动条亮边的颜色（设置滚动条的颜色） */
+	scrollbar-arrow-color: #330000;      /* 上下按钮上三角箭头的颜色 */
+	scrollbar-track-color: #f6f6f6;      /* 滚动条的背景颜色 */
+	scrollbar-darkshadow-color: #ffffff; /* 立体滚动条强阴影的颜色 */
+}
+
+/* 表格 */
+.table{width:100%;background:#E5E5E5;}
+.table tr th{line-height:22px;padding:0px 6px 0px 6px;color:#333333;font-size:12px;background:#ffffff;}
+.table tr td{line-height:22px;padding:0px 0px 0px 6px;color:#333333;font-size:12px;background:#ffffff;}
+.table tr.hover{background:#F2F3F9;}
+
+/* 单元格的css定义:对应css中的“td”，这里为总的表格定义，为一般表格的的单元格风格设置，可定义内容为背景、字体颜色、样式等 */
+td
+{
+	font-family:宋体;
+	font-size: 9pt;
+	line-height: 150%; 
+}
+/* 文本框的css定义:对应css中的“input”，这里为默认的文本框的风格设置，可定义内容为背景、字体、颜色、边框等 */
+input
+{
+	background-color:transparent; 
+	color: #000000;
+	font-size: 9pt;
+	vertical-align:middle;
+}
+/* 下拉列表框的css定义:对应css中的“select”，这里为下拉列表框的风格设置，可定义内容为背景、字体、颜色、边框等 */
+select
+{
+	font-size: 9pt;height: 20px;
+	background-color:transparent;
+}
+
+/*默认的多行表单框样式*/
+textarea{
+	font-size:9pt;
+	background-color:transparent;
+	border:1px solid #A4A9BD;
+	vertical-align:middle;
+	overflow:auto;
+}
+
+button{
+	filter:progid:DXImageTransform.Microsoft.Gradient(startColorStr='#F9FDFE', endColorStr='#CDDFF5', gradientType='0');
+	margin:0px;
+	padding:2px 5px 2px 5px;
+	background-color: #ffffff; 
+	border-bottom: #2A57A8 1px solid;
+	border-left: #2A57A8 1px solid;
+	border-right: #2A57A8 1px solid;
+	border-top: #2A57A8 1px solid;
+	color: #333333;
+	height: 20px;
+	border-color: #2A57A8 #2A57A8 #2A57A8 #2A57A8;
+	font-size: 9pt;
+	vertical-align:middle;
+}
+/*框架背景样式*/
+.topbg{
+	background-image:url(../images/top_bg.jpg);
+	height:70px;
+}
+.toolsbg{
+	background-image:url(../images/tools_bg.jpg);
+	height:23px;
+	border-bottom:1px solid #666666;
+	border-top:1px solid #666666;
+}
+.bottombg{
+	background-image:url(../images/bottom_bg.jpg);
+	height:20px;
+	border-bottom:1px solid #666666;
+	border-top:1px solid #666666;
+}
+
+.frame_tablebg{
+	background-color:#98CCFE;
+}
+
+.tree_centerbg{
+	border-left:1px solid #5486CF;
+	border-right:1px solid #5486CF;
+}
+
+.left_userinfo{
+	background-image:url(../images/view_user.jpg);
+	height:54px;
+	width:183px;
+	margin:6px 0px 6px 0px;
+}
+
+.main_table_topbg{
+	background-image:url(../images/table_ct.jpg);
+	height:31px; 
+}
+
+.main_table_centerbg{
+	background-color:#FFFFFF;
+	border-left:1px solid #5384D0;
+	border-right:1px solid #5384D0;
+	
+	
+}
+.main_table_centerbgtebie{
+	background-color:#FFFFFF;
+	border-left:1px solid #5384D0;
+	border-right:1px solid #5384D0;
+	height:30px;
+	
+}
+.main_table_centerbg2{
+	background-color:#B2D5FF;
+	border-left:1px solid #5384D0;
+	border-right:1px solid #5384D0;
+}
+
+.main_table_bottombg{
+	background-image:url(../images/table_cb.jpg);
+	height:5px;
+}
+.font1{
+	color:#3E68BC;
+}
+
+.table_td_jb{
+	/*filter:progid:DXImageTransform.Microsoft.Gradient(startColorStr='#FFFFFF', endColorStr='#E0ECFA', gradientType='0');
+	*/
+	background:url("img/t_bg.jpg");
+	background-repeat:1px;
+	border-top:1px solid #A7BEE7;
+	border-bottom:1px solid #A7BEE7;
+	border-left:1px solid #5384D0;
+	border-right:1px solid #5384D0;
+	height:30px;
+	color:#3C69BC;
+}
+
+.table_td_jb_iframe{
+	/*filter:progid:DXImageTransform.Microsoft.Gradient(startColorStr='#f1f1ef', endColorStr='#f1f1ef', gradientType='0');
+	*/
+	background:url("img/t_bg.jpg");
+	background-repeat:1px;
+	border-top:0px solid #A7BEE7;
+	border-bottom:1px solid #A7BEE7;
+	border-left:0px solid #5384D0;
+	border-right:0px solid #5384D0;
+	height:30px;
+	color:#3C69BC;
+}
+
+.table_td_describe{white-space:nowrap;}
+.table_search{
+	background-color:#B2D5FF;
+}
+.table_search td{
+	background-color:#EDF6FF;
+}
+.table_search_table_td1{
+	background-color:#B2D5FF;
+}
+.table_list_bg{
+	background-color:#E9F3FF;
+	
+}
+
+.table_list{
+	border-collapse:collapse;
+	border:1px solid #000000;
+	border-top:1px solid #ECE9D8;
+	border-left:1px solid #ECE9D8;
+	border-right:1px solid #ECE9D8;
+	border-bottom:1px solid #ECE9D8;
+	
+	
+	
+}
+.table1_bg{
+	background-color:#D0E9ED;
+}
+.table_list tr
+{
+	padding:2px;
+	cursor:hand;
+}
+.table_list1{
+	border-collapse:collapse;
+	border:1px solid #000000;
+}
+.table_listchao{
+	border-collapse:collapse;
+	border:1px solid #00BFFF;
+		border-top:1px solid #00BFFF;
+	border-left:1px solid #00BFFF;
+	border-right:1px solid #00BFFF;
+	border-bottom:1px solid #00BFFF;
+}
+.table_list1{
+	border-collapse:collapse;
+	border-top:1px solid #FFFFFF;
+	border-left:1px solid #FFFFFF;
+	border-right:1px solid #FFFFFF;
+	border-bottom:1px solid #ECE9D8;
+}
+.table_list1 tr
+{
+	background-color:expression((this.sectionRowIndex%2==0)?"#F5FAFA":"#FFFFFF");
+	padding:2px;
+	cursor:hand;
+}
+.input1
+{
+	margin:0px;
+	padding:2px 0px 0px 0px;
+	background-color:transparent;
+	border-bottom: #CACACA 1px solid;
+	border-left: #CACACA 1px solid;
+	border-right: #CACACA 1px solid;
+	border-top: #CACACA 1px solid;
+	color: #666666;
+	height: 18px;
+	font-size: 12px;
+	vertical-align:middle;
+}
+.input3
+{
+	margin:0px;
+	padding:2px 0px 0px 0px;
+	background-color:#FFFFFF;
+	border-bottom: #CACACA 1px solid;
+	border-left: #CACACA 1px solid;
+	border-right: #CACACA 1px solid;
+	border-top: #CACACA 1px solid;
+	color: #666666;
+	height: 18px;
+	font-size: 12px;
+	vertical-align:middle;
+}
+
+.input2
+{
+	margin:0px;
+	padding:2px 0px 0px 0px;
+	background-color:transparent;
+	border-bottom:none;
+	border-left: none;
+	border-right: none;
+	border-top:none;
+	color: #666666;
+	height: 18px;
+	font-size: 12px;
+	vertical-align:middle;
+}
+.inputkp{
+	background-color:#ffffff;
+	width:100%;
+}
+
+.checkbox1{
+	border:0px;
+	background-color:transparent;
+}
+.button1
+{
+	filter:progid:DXImageTransform.Microsoft.Gradient(startColorStr='#F9FDFE', endColorStr='#CDDFF5', gradientType='0');
+	margin:0px;
+	padding:2px 5px 2px 5px;
+	background-color: #ffffff; 
+	border-bottom: #2A57A8 1px solid;
+	border-left: #2A57A8 1px solid;
+	border-right: #2A57A8 1px solid;
+	border-top: #2A57A8 1px solid;
+	color: #333333;
+	height: 20px;
+	border-color: #2A57A8 #2A57A8 #2A57A8 #2A57A8;
+	font-size: 9pt;
+	vertical-align:middle;
+}
+.button2
+{
+	filter:progid:DXImageTransform.Microsoft.Gradient(startColorStr='#F8FAF5', endColorStr='#C0DFA6', gradientType='0');
+	margin:0px;
+	padding:2px 5px 2px 5px;
+	background-color: #ffffff; 
+	border-bottom: #7FBF4F 1px solid;
+	border-left: #7FBF4F 1px solid;
+	border-right: #7FBF4F 1px solid;
+	border-top: #7FBF4F 1px solid;
+	color: #333333;
+	height: 20px;
+	border-color: #7FBF4F #7FBF4F #7FBF4F #7FBF4F;
+	font-size: 9pt;
+	vertical-align:middle;
+}
+.button3
+{
+	margin:0px;
+	padding:2px 5px 2px 5px;
+	background-color:#ECE9D8;
+	border-bottom: #CACACA 1px solid;
+	border-left: #CACACA 1px solid;
+	border-right: #CACACA 1px solid;
+	border-top: #CACACA 1px solid;
+	color: #000000;
+	height: 18px;
+	font-size: 12px;
+	vertical-align:middle;
+}
+.button4
+{
+	/*filter:progid:DXImageTransform.Microsoft.Gradient(startColorStr='#F9FDFE', endColorStr='#CDDFF5', gradientType='0');
+	*/
+	background:url("img/t_bg.jpg");
+	margin:0px;
+	padding:0px 10px 0px 10px;
+	background-color: #ffffff; 
+	border-bottom: #2A57A8 1px solid;
+	border-left: #2A57A8 1px solid;
+	border-right: #2A57A8 1px solid;
+	border-top: #2A57A8 1px solid;
+	color: #000000;
+	height: 20px;
+	border-color: #2A57A8 #2A57A8 #2A57A8 #2A57A8;
+	font-size: 9pt;
+	vertical-align:middle;
+}
+
+
+/*******************************弹出窗口***************************************/
+.table_td1_top{
+	filter:progid:DXImageTransform.Microsoft.Gradient(startColorStr='#77AEF1', endColorStr='#99CCFF', gradientType='0');
+	border-top:1px solid #A7BEE7;
+	border-bottom:1px solid #A7BEE7;
+	height:25px;
+	color:#3C69BC;
+}
+.table_td1_bottom{
+	filter:progid:DXImageTransform.Microsoft.Gradient(startColorStr='#99CCFF', endColorStr='#86BBF5', gradientType='0');
+	border-top:1px solid #A7BEE7;
+	border-bottom:1px solid #A7BEE7;
+	height:38px;
+	color:#3C69BC;
+}
+.cjw
+{
+border-top: #B2D5FF  5px solid;
+border-left: #B2D5FF 5px solid;
+border-right: #B2D5FF 5px solid;
+}
+.table_bgse{
+	background-color:#B2D5FF;
+}
+.button5
+{
+	margin:0px;
+	padding:2px 5px 2px 5px;
+	background-color: #ededed; 
+	border-bottom: #CACACA 1px solid;
+	border-left: #666666 1px solid;
+	border-right: #CACACA 1px solid;
+	border-top: #666666 1px solid;
+	color: #666666;
+	height: 20px;
+	font-size: 9pt;
+	vertical-align:middle;
+}

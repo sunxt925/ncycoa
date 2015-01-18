@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="GB2312"?>
+<gpd-1.0>
+<model>
+	<a class="start" id="1" val="1" rect="71,63,33,33" attr="0">
+		<a class="port" id="2" val="2"/>
+	</a>
+	<a class="activity" id="3" val="3" rect="179,63,32,32" attr="0">
+		<a class="port" id="4" val="4"/>
+	</a>
+	<a class="activity" id="5" val="5" rect="282,63,33,33" attr="0">
+		<a class="port" id="6" val="6"/>
+	</a>
+	<a class="activity" id="7" val="7" rect="411,63,33,33" attr="0">
+		<a class="port" id="8" val="8"/>
+	</a>
+	<a class="edge" id="9" val="9" src="2" tgt="4" pts="87,79,195,79" attr="1"/>
+	<a class="edge" id="10" val="10" src="4" tgt="6" pts="195,79,298,79" attr="1"/>
+	<a class="edge" id="11" val="11" src="6" tgt="8" pts="298,79,427,79" attr="1"/>
+	<a class="activity" id="12" val="12" rect="542,63,33,33" attr="0">
+		<a class="port" id="13" val="13"/>
+	</a>
+	<a class="edge" id="14" val="14" src="8" tgt="13" pts="427,79,558,79" attr="1"/>
+	<a class="end" id="15" val="15" rect="666,63,33,33" attr="0">
+		<a class="port" id="16" val="16"/>
+	</a>
+	<a class="edge" id="17" val="17" src="13" tgt="16" pts="558,79,682,79" attr="1"/>
+</model>
+<attrs>
+	<map id="0">
+		<a key="lineStyle" val="12"/>
+		<a key="font" val="新宋体,16,0"/>
+	</map>
+	<map id="1">
+		<a key="lineStyle" val="12"/>
+		<a key="endFill" val="true"/>
+		<a key="lineEnd" val="1"/>
+		<a key="labelposition" val="500,500"/>
+		<a key="routing" val="simple"/>
+	</map>
+</attrs>
+<user>
+	<a key="9" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_2" name="">
+<cellDesc></cellDesc>
+<fromCell>StartOfWorkflow</fromCell>
+<toCell>ManAct_1</toCell>
+<conditionType>0</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>1</flag>
+<express></express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="17" val="x-jbpm-transition">
+<transition name="">
+<TransitionModel id="Tra_6" name="">
+<cellDesc></cellDesc>
+<fromCell>ManAct_4</fromCell>
+<toCell>EndOfWorkflow</toCell>
+<conditionType>0</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>1</flag>
+<express></express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="8" val=""/>
+	<a key="16" val=""/>
+	<a key="7" val="x-jbpm-activity-state">
+<activity-state name="填写库存申请单">
+<ActiveBaseModel id="ManAct_3" name="填写库存申请单">
+<cellType>0</cellType>
+<cellDesc></cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>1</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveActionModel>
+<actionType>2</actionType>
+<actionName></actionName>
+<queryName></queryName>
+<modifyName></modifyName>
+<pkType>0</pkType>
+<pkValue></pkValue>
+<modifyName></modifyName>
+<formName></formName>
+<statusChanged>0</statusChanged>
+<module>default</module>
+<pageName>DemoStockForm</pageName>
+</ActiveActionModel>
+<ActiveDataModel>
+<AssignmentStrategy>0</AssignmentStrategy>
+<CompletionStrategy>0</CompletionStrategy>
+<Number>0</Number>
+<Percent>0</Percent>
+</ActiveDataModel>
+<ActiveActorModel>
+<actorsType>2</actorsType>
+<selectActive>ManAct_1</selectActive>
+<activeType>ems_performer</activeType>
+</ActiveActorModel>
+<ActiveLifeModel>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime></durationTime>
+<timeFlag>false</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>0</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>1</splitType>
+<joinType>1</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+</activity-state>
+	</a>
+	<a key="15" val="x-jbpm-end-state">
+<end-state name="结束"/>
+	</a>
+	<a key="6" val=""/>
+	<a key="14" val="x-jbpm-transition">
+<transition name="转移5">
+<TransitionModel id="Tra_5" name="转移5">
+<cellDesc></cellDesc>
+<fromCell>ManAct_3</fromCell>
+<toCell>ManAct_4</toCell>
+<conditionType>0</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express></express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="5" val="x-jbpm-activity-state">
+<activity-state name="合同审批">
+<ActiveBaseModel id="ManAct_2" name="合同审批">
+<cellType>0</cellType>
+<cellDesc></cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>1</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveActionModel>
+<actionType>2</actionType>
+<actionName></actionName>
+<queryName></queryName>
+<modifyName></modifyName>
+<pkType>0</pkType>
+<pkValue></pkValue>
+<modifyName></modifyName>
+<formName></formName>
+<statusChanged>1</statusChanged>
+<module>default</module>
+<pageName>DemoContract</pageName>
+</ActiveActionModel>
+<ActiveDataModel>
+<AssignmentStrategy>0</AssignmentStrategy>
+<CompletionStrategy>0</CompletionStrategy>
+<Number>0</Number>
+<Percent>0</Percent>
+</ActiveDataModel>
+<ActiveActorModel>
+<actorsType>0</actorsType>
+<selectActive>null</selectActive>
+<activeType></activeType>
+<a class="001:43-值班主任" condition="必须是" actorType="角色" actorName="001:43-值班主任"/>
+</ActiveActorModel>
+<ActiveLifeModel>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime></durationTime>
+<timeFlag>false</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>0</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>1</splitType>
+<joinType>1</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+</activity-state>
+	</a>
+	<a key="13" val=""/>
+	<a key="4" val=""/>
+	<a key="12" val="x-jbpm-activity-state">
+<activity-state name="审核申请单">
+<ActiveBaseModel id="ManAct_4" name="审核申请单">
+<cellType>0</cellType>
+<cellDesc></cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>1</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveActionModel>
+<actionType>2</actionType>
+<actionName></actionName>
+<queryName></queryName>
+<modifyName></modifyName>
+<pkType>0</pkType>
+<pkValue></pkValue>
+<modifyName></modifyName>
+<formName></formName>
+<statusChanged>1</statusChanged>
+<module>default</module>
+<pageName>DemoStockForm</pageName>
+</ActiveActionModel>
+<ActiveDataModel>
+<AssignmentStrategy>0</AssignmentStrategy>
+<CompletionStrategy>0</CompletionStrategy>
+<Number>0</Number>
+<Percent>0</Percent>
+</ActiveDataModel>
+<ActiveActorModel>
+<actorsType>0</actorsType>
+<selectActive>null</selectActive>
+<activeType></activeType>
+<a class="001:43-值班主任" condition="必须是" actorType="角色" actorName="001:43-值班主任"/>
+</ActiveActorModel>
+<ActiveLifeModel>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime></durationTime>
+<timeFlag>false</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>0</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>1</splitType>
+<joinType>1</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+</activity-state>
+	</a>
+	<a key="3" val="x-jbpm-activity-state">
+<activity-state name="填写合同表">
+<ActiveBaseModel id="ManAct_1" name="填写合同表">
+<cellType>0</cellType>
+<cellDesc></cellDesc>
+<startType>0</startType>
+<finishType>0</finishType>
+<executionType>1</executionType>
+<dateTime>null</dateTime>
+<hourTime>null</hourTime>
+<minuteTime>null</minuteTime>
+<taskRule>0</taskRule>
+</ActiveBaseModel>
+<ActiveActionModel>
+<actionType>2</actionType>
+<actionName></actionName>
+<queryName></queryName>
+<modifyName></modifyName>
+<pkType>0</pkType>
+<pkValue></pkValue>
+<modifyName></modifyName>
+<formName></formName>
+<statusChanged>0</statusChanged>
+<module>default</module>
+<pageName>DemoContract</pageName>
+</ActiveActionModel>
+<ActiveDataModel>
+<AssignmentStrategy>0</AssignmentStrategy>
+<CompletionStrategy>0</CompletionStrategy>
+<Number>0</Number>
+<Percent>0</Percent>
+</ActiveDataModel>
+<ActiveActorModel>
+<actorsType>1</actorsType>
+<selectActive>null</selectActive>
+<activeType></activeType>
+</ActiveActorModel>
+<ActiveLifeModel>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime></durationTime>
+<timeFlag>false</timeFlag>
+<minuteTime></minuteTime>
+<alertType>0</alertType>
+<overTimeAction>0</overTimeAction>
+<cycle>0</cycle>
+</ActiveLifeModel>
+<JoinModel>
+<splitType>1</splitType>
+<joinType>1</joinType>
+<splitNum>0</splitNum>
+<joinNum>0</joinNum>
+</JoinModel>
+</activity-state>
+	</a>
+	<a key="11" val="x-jbpm-transition">
+<transition name="转移4">
+<TransitionModel id="Tra_4" name="转移4">
+<cellDesc></cellDesc>
+<fromCell>ManAct_2</fromCell>
+<toCell>ManAct_3</toCell>
+<conditionType>0</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express></express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="2" val=""/>
+	<a key="10" val="x-jbpm-transition">
+<transition name="转移3">
+<TransitionModel id="Tra_3" name="转移3">
+<cellDesc></cellDesc>
+<fromCell>ManAct_1</fromCell>
+<toCell>ManAct_2</toCell>
+<conditionType>0</conditionType>
+<conditionFlag>1</conditionFlag>
+<flag>0</flag>
+<express></express>
+<formID></formID>
+<actDymn>0</actDymn>
+</TransitionModel>
+</transition>
+	</a>
+	<a key="1" val="x-jbpm-start-state">
+<start-state name="Start">
+<StartBaseModel id="StartOfWorkflow"  name="开始">
+<cellDesc></cellDesc>
+</StartBaseModel>
+</start-state>
+	</a>
+</user>
+<view>
+	<a key="editable" val="true"/>
+	<a key="bendable" val="true"/>
+	<a key="cloneable" val="true"/>
+	<a key="connectable" val="true"/>
+	<a key="disconnectable" val="true"/>
+	<a key="disconnectOnMove" val="false"/>
+	<a key="doubleBuffered" val="true"/>
+	<a key="dragEnabled" val="false"/>
+	<a key="dropEnabled" val="true"/>
+	<a key="moveable" val="true"/>
+	<a key="sizeable" val="true"/>
+	<a key="selectNewCells" val="true"/>
+	<a key="gridVisible" val="false"/>
+	<a key="gridEnabled" val="false"/>
+	<a key="gridSize" val="10"/>
+	<a key="gridMode" val="0"/>
+	<a key="scale" val="1.0"/>
+	<a key="antiAlias" val="false"/>
+</view>
+<process-state name="StockFlow">
+<process-define>
+<ProcessBaseModel id="StockFlow" name="合同库存流程-演示启动时设置参与者">
+<cellDesc>启动的时候可以设置好执行人员</cellDesc>
+<processType>0</processType>
+<processType>0</processType>
+<cycleFlag>false</cycleFlag>
+<dayFlag>true</dayFlag>
+<weekFlag>false</weekFlag>
+<monthFlag>false</monthFlag>
+<priority>3</priority>
+<dateTime>0</dateTime>
+<hourTime>0</hourTime>
+<minuteTime>0</minuteTime>
+<isFreeFlow>0</isFreeFlow>
+<runType>0</runType>
+<dymicSetUser>1</dymicSetUser>
+<activitySetUser>0</activitySetUser>
+<version>1.0</version>
+</ProcessBaseModel>
+<ProcessDataModel>
+<startFlag>1</startFlag>
+<a class="default.DemoContract"  activity="ManAct_2"/>
+<a class="default.DemoStockForm"  activity="ManAct_4"/>
+</ProcessDataModel>
+<ProcessLifeModel>
+<timeType>0</timeType>
+<limit></limit>
+<fromY>-1</fromY>
+<fromM>-1</fromM>
+<fromD>-1</fromD>
+<fromH>-1</fromH>
+<toY>-1</toY>
+<toM>-1</toM>
+<toD>-1</toD>
+<toH>-1</toH>
+<waitingTime></waitingTime>
+<workingTime></workingTime>
+<durationTime></durationTime>
+<timeFlag>false</timeFlag>
+</ProcessLifeModel>
+</process-define>
+<names-helper>
+<names>
+<a key="Process_1"/>
+<a key="ManAct_1"/>
+<a key="ManAct_2"/>
+<a key="ManAct_3"/>
+<a key="Tra_1"/>
+<a key="Tra_2"/>
+<a key="Tra_3"/>
+<a key="Tra_4"/>
+<a key="ManAct_4"/>
+<a key="Tra_5"/>
+<a key="Tra_6"/>
+</names>
+<process>
+</process>
+<count>
+<manAct>4</manAct>
+<autoAct>0</autoAct>
+<trans>6</trans>
+<subflow>0</subflow>
+<route>0</route>
+<process>1</process>
+</count>
+</names-helper>
+</process-state>
+</gpd-1.0>
