@@ -26,7 +26,7 @@ public final class ConnectionPool
 	{
 		try
 		{
-			LoadConfig("/com/db/pool.properties");
+			LoadConfig("/dbconfig.properties");
 			DruidDataSource dds = new DruidDataSource();
 			//基本属性 url、user、password
 			dds.setUrl(DBUrl);
@@ -95,10 +95,10 @@ public final class ConnectionPool
 				// 装载配置文件
 				m_JDBCProperties.load(in);
 				// 得到配置内容
-				DBUrl = consume(m_JDBCProperties, "url");
-				DBUser = consume(m_JDBCProperties, "username");
-				DBPwd = consume(m_JDBCProperties, "password");
-				Debug = consume(m_JDBCProperties, "debug");
+				DBUrl = consume(m_JDBCProperties, "jdbc.url");
+				DBUser = consume(m_JDBCProperties, "jdbc.username");
+				DBPwd = consume(m_JDBCProperties, "jdbc.password");
+				Debug = "false";//consume(m_JDBCProperties, "debug");
 			}
 			finally
 			{

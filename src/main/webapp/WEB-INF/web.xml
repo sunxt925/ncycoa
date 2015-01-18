@@ -30,14 +30,8 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ncycoa</servlet-name>
-		<url-pattern>/</url-pattern>
+		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
-
-
-
-
-
-
 
 	<servlet>
 		<servlet-name>poserver</servlet-name>
