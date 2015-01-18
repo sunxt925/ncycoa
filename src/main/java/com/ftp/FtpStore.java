@@ -32,7 +32,7 @@ public class FtpStore
 		{
 			int reply;
 			ftp.setControlEncoding("GBK"); // 设置了编码
-			LoadConfig("/com/ftp/ftp.properties");
+			LoadConfig("/ftp.properties");
 			// 连接FTP服务器
 
 			// 如果采用默认端口，可以使用ftp.connect(url)的方式直接连接FTP服务器
