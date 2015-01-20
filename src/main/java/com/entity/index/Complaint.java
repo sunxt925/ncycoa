@@ -48,9 +48,21 @@ public class Complaint {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * 构建所有人员申诉列表
+	 * @return
+	 */
 	public String getComplaintJson(){
+		return getComplaintJson("");
+	}
+	/**
+	 * 根据staffcode构建个人申诉列表
+	 * @param staffcode
+	 * @return
+	 */
+	public String getComplaintJson(String staffcode){
 		try {
-			List<Complaint> complaintlist=getComplaintList();
+			List<Complaint> complaintlist=getComplaintList(staffcode);
 			StringBuilder sbuilder=new StringBuilder();
 			sbuilder.append("[");
 			for(Complaint complaint:complaintlist){
@@ -65,6 +77,7 @@ public class Complaint {
 				sbuilder.append("\"attachedfile\":").append("\"<a href='downweb.jsp?filename="+complaint.getAttachedfile()+"'>"+complaint.getAttachedfile()+"</a>\"").append(",");
 				sbuilder.append("\"enabledflag\":").append("\""+complaint.getEnableflag()+"\"").append(",");
 				sbuilder.append("\"memo\":").append("\""+complaint.getMemo()+"\"");
+				
 				sbuilder.append("}");
 				sbuilder.append(",");
 			}
@@ -76,9 +89,20 @@ public class Complaint {
 			
 		}
 	}
-	public List<Complaint> getComplaintList(){
+	/**
+	 * 获取申诉数据
+	 * @param staffcode
+	 * @return
+	 */
+	public List<Complaint> getComplaintList(String staffcode){
 		try{
-			String sql="select * from tbm_complaint";
+			String queryCondition="";
+			if(staffcode.equals("")){
+				queryCondition="1=1";
+			}else{
+				queryCondition="complaintercode='"+staffcode+"'";
+			}
+			String sql="select * from tbm_complaint where "+queryCondition;
 			DBObject db=new DBObject();
 			DataTable dt=db.runSelectQuery(sql);
 			List<Complaint> complaintlist=new ArrayList<Complaint>();
@@ -106,6 +130,11 @@ public class Complaint {
 			return null;
 		}
 	}
+	/**
+	 * 根据staffcode构建申诉列表，返回map数据
+	 * @param staffcode
+	 * @return
+	 */
 	public Map<String, String> getComplaintlistBystaff(String staffcode){
 		try {
 			String sql="select complaintno from tbm_complaint where complaintercode=?";
