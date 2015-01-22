@@ -16,9 +16,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </HEAD>
 <%
  
- com.cms.model.sysmng.login.User u=(com.cms.model.sysmng.login.User)request.getSession().getAttribute("USER");
- String orgcode = u.getYybdm();
- 
+ UserInfo user = (UserInfo)request.getSession().getAttribute("UserInfo");
+ Staff staff = new Staff(user.getStaffcode());
+ String orgcode = staff.getOrgcode();
 
  String taskno = request.getParameter("taskno");
  String date = Format.NullToBlank(request.getParameter("date"));

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=gb2312" language="java" import="java.util.*,java.sql.*,com.db.*,com.common.*,com.entity.system.*,com.emsflow.spi.model.AttributeInstance,org.wfmc.wapi.WMWorkflowException" errorPage="" %>
+<%@ page contentType="text/html; charset=gb2312" language="java" import="java.util.*,java.sql.*,com.db.*,com.common.*,com.entity.system.*" errorPage="" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <%
@@ -402,7 +402,7 @@ createwindowNoButton('企业标准修订申请表',url,'1000px','500px');
 	<div id="tab_menu2" style="text-align: center;position: relative; border:1px "></div>
 	<div id="page2" style="text-align: center;position: relative;  height:33%; width:100%; border:1px "></div> 
 
-		  <%@ include file="/page/controlHead.jsp"%>
+	<%@ include file="/page/controlHead.jsp"%>
 <flow:StepChoice table="1"/>
 
 </form>

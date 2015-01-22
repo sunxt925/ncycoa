@@ -3,7 +3,7 @@
 <%@ page import="com.entity.system.UserInfo"%>
 <%@ page import="java.io.*" %>
 <%@ page import="org.apache.poi.hssf.usermodel.HSSFWorkbook" %>
-<%@ page import="com.entity.index.Indexitem,net.sf.json.JSONObject"%>
+<%@ page import="com.entity.index.Indexitem,com.alibaba.fastjson.JSONObject"%>
 
 <%
 	response.setContentType("application/vnd.ms-excel;charset=gb2312");
@@ -11,7 +11,7 @@
 	OutputStream fOut = null;
 	try {
 		fOut = response.getOutputStream();
-		JSONObject obj = JSONObject.fromObject(request.getParameter("d"));
+		JSONObject obj = JSONObject.parseObject(request.getParameter("d"));
 		Indexitem item = new Indexitem(obj.getString("indexcode"));
 		
 		codedFileName = item.getIndexName() + "_" +ParaDataHelper.code2Name(obj.getString("periodcode")) + "_参数数据_" + java.text.DateFormat.getDateInstance().format(new java.util.Date());

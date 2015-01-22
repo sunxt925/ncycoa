@@ -16,7 +16,7 @@
 
 	var imagePath = "/ncycoa/images/";   //MessageBox的图片路径
 
-	var template = " /ncycoa/MessageBox_Template.html"; //MessageBox的模板路经
+	var template = " /ncycoa/MessageBox_Template.jsp"; //MessageBox的模板路经
 
 
 	MessageBox = {

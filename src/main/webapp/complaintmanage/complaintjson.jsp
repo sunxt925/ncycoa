@@ -1,4 +1,3 @@
-<%@page import="com.entity.index.Test"%>
 <%@page import="com.entity.index.Complaint"%>
 <%@page contentType="application/json;charset=gb2312" language="java"  errorPage="" %>
 <%

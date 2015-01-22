@@ -127,12 +127,9 @@ public class Bm
 						sql_bm = "select * from " + bm_bm;
 					}else if(r.getString("code_class").equals("00020003")){
 						sql_bm = "select prmcon as code_id,prmcnd as code_name from (select * from codctdep where prmcod=" + "'"+bm_bm+"')"+" order by prmcon" ;
-
-						//sql_bm = "select * from (select * from codctdep where prmcod=" + "'"+bm_bm+"')"+" order by prmcon" ;
 					}
 					else{
 						sql_bm = "select * from (select * from system_tablecodemeta_col where table_name=" + "'"+bm_bm+"')"+" order by code_id";
-						
 					}
 					//}
 					DataTable t = db.runSelectQuery(sql_bm);
