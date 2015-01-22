@@ -55,12 +55,7 @@ ComponentUtil cu=new ComponentUtil();
                        out.print(cu.print("TBM_COMPLAINT", "COMPLAINTREASON"));
                     %></td>
                 </tr>
-                <tr>
-                    <td>申诉日期:</td>
-                   <td><%
-                       out.print(cu.print("TBM_COMPLAINT", "COMPLAINTDATE"));
-                    %></td>
-                </tr>
+                
                 <tr>
                     <td>申诉材料附件:</td>
                    <td>
@@ -75,10 +70,12 @@ ComponentUtil cu=new ComponentUtil();
                     %></td>
                 </tr>
             </table>
-            <input type="button" id="btn_ok" style="display: " onclick="ret()">
+            <input type="button" id="btn_ok" style="display: " onclick="ret()" value="save">
 		   <input type="hidden" id="TBM_COMPLAINT.COMPLAINTNO" name="TBM_COMPLAINT.COMPLAINTNO" value="<%=IndexCode.getRecno("CM")%>">
             <input type="hidden" id="TBM_COMPLAINT.COMPLAINTERCODE" name="TBM_COMPLAINT.COMPLAINTERCODE" value="<%=u.getStaffcode()%>">
-            <input type="hidden" id="TBM_COMPLAINT.ENABLEDFLAG" name="TBM_COMPLAINT.ENABLEDFLAG" value="1">
+            <input type="hidden" id="TBM_COMPLAINT.ENABLEDFLAG" name="TBM_COMPLAINT.ENABLEDFLAG" value="0">
+            <input type="hidden" id="TBM_COMPLAINT.COMPLAINTDATE" name="TBM_COMPLAINT.COMPLAINTDATE" value="<%=Format.getNowtime2()%>">
+            
             <input name="entity" id="entity" type="hidden" value="TBM_COMPLAINT"/>
              <input name="act" type="hidden" id="act" value="add">
              <input name="action_class" type="hidden" id="action_class" value="com.action.index.ComplaintAction">
@@ -92,11 +89,12 @@ ComponentUtil cu=new ComponentUtil();
     <script>
     
       function ret(){
-    	   var api = frameElement.api;
+    	  var api = frameElement.api;
  		   if(sumbit_check())
 	   	     {       
  			   document.all("Submit").click();
  			   (api.data)({code:"refresh"});
+ 			   window.close();
 	   	     }
  		  
         }

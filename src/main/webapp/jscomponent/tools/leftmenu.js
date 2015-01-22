@@ -24,7 +24,7 @@
 	
 	$('#maintabs').tabs('add',{
 		title : '我的工作',
-		content : createFrame('page/webflow/server/process/WorkItemFrame.jsp'),
+		content : createFrame(''),
 		closable : false,
 	});
 

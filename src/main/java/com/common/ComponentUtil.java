@@ -152,7 +152,7 @@ public class ComponentUtil
 				
 				
 				//<input name="positiontime" type="Wdate" class="input1" id="positiontime"   size="40" maxlength="40" onfocus="new WdatePicker(this,null,false,'whyGreen')" >
-			       
+				
 				//sBuilder.append("");
 				//sBuilder.append("<script language=\"javascript\" type=\"text/javascript\" src=\"<%=request.getContextPath()%>/js/DatePicker/WdatePicker.js\">  </script>");
 				sBuilder.append("<input type='Wdate' onfocus=\"new WdatePicker(this,null,false,'whyGreen')\"     name=\"" + item_name

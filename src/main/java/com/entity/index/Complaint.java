@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import com.common.CodeDictionary;
 import com.common.Format;
 import com.db.DBObject;
@@ -15,6 +16,7 @@ import com.db.Parameter;
 
 public class Complaint {
 
+	private static Logger logger=Logger.getLogger(Complaint.class);
 	private String complaintno;
 	private String complaintrtcode;
 	private String complainttitle;
@@ -160,7 +162,22 @@ public class Complaint {
 			return null;
 		}
 	}
-	
+	/**
+	 * ÉêËß»Ø¸´£¬ÐÞ¸ÄÉêËß×´Ì¬
+	 * @param complaintno
+	 * @return
+	 */
+	public boolean modifyComplaint(String complaintno){
+		try {
+			String sql="update tbm_complaint set enabledflag=1 where complaintno='"+complaintno+"'";
+			DBObject db=new DBObject();
+			return db.run(sql);
+		} catch (Exception e) {
+			logger.info("ÐÞ¸ÄÉêËß×´Ì¬Ê§°Ü");
+			return false;
+		}
+		
+	}
 	public String getComplaintno() {
 		return complaintno;
 	}

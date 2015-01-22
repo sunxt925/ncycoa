@@ -1,14 +1,21 @@
 package com.business;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import org.apache.log4j.Logger;
+
+import com.common.CodeDictionary;
 import com.common.Format;
 import com.db.DBObject;
+import com.db.DataRow;
 import com.db.DataTable;
 import com.db.Parameter;
 
 public class BuyReportEvent {
 
+	private Logger logger=Logger.getLogger(BuyReportEvent.class);
 	public String EventNo="";//	事件流水号
 	public String EventType="";//	事件类别
 	public String EventDesc="";//	事件说明
@@ -108,6 +115,105 @@ public class BuyReportEvent {
 	public void setAuditFlag(int auditFlag) {
 		AuditFlag = auditFlag;
 	}
+	/**
+	 * 获取申请事件Json数据
+	 * @param q_flag
+	 * @param orgcode
+	 * @param summitdate
+	 * @param summitenddate
+	 * @param buymode
+	 * @return
+	 */
+	public String getBuyreporteventJson(String q_flag,String orgcode,String summitdate,String summitenddate,String buymode){
+		try {
+			List<BuyReportEvent> reportlist = getBuyreporteventlist(q_flag, orgcode, summitdate, summitenddate, buymode);
+			StringBuilder sbuilder = new StringBuilder();
+			sbuilder.append("[");
+			if(reportlist.size()>0){
+				for(BuyReportEvent reportEvent : reportlist){
+					sbuilder.append("{");
+					sbuilder.append("\"eventno\":").append("\""+reportEvent.getEventNo()+"\"").append(",");
+					sbuilder.append("\"eventdesc\":").append("\""+reportEvent.getEventDesc()+"\"").append(",");
+					sbuilder.append("\"numgoodsitem\":").append("\""+reportEvent.getNumGoodsItem()+"\"").append(",");
+					sbuilder.append("\"summitdate\":").append("\""+Format.dateToStr(reportEvent.getSummitDate())+"\"").append(",");
+					sbuilder.append("\"handler\":").append("\""+CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname", reportEvent.getHandler())+"\"").append(",");
+					sbuilder.append("\"buymode\":").append("\""+CodeDictionary.code_traslate("BUYMODE", reportEvent.getBuyMode())+"\"").append(",");
+					sbuilder.append("\"summitflag\":").append("\""+CodeDictionary.code_traslate("summitflag", String.valueOf(reportEvent.getSummitFlag()))+"\"");
+					sbuilder.append("}");
+					sbuilder.append(",");
+				}
+				sbuilder.delete(sbuilder.length()-1, sbuilder.length());
+			}
+			
+			sbuilder.append("]");
+			return sbuilder.toString();
+		} catch (Exception e) {
+			return "";
+			
+		}
+	}
+	/**
+	 * 获取申请事件列表
+	 * @param q_flag
+	 * @param orgcode
+	 * @param summitdate
+	 * @param summitenddate
+	 * @param buymode
+	 * @return
+	 */
+	public List<BuyReportEvent> getBuyreporteventlist(String q_flag,String orgcode,String summitdate,String summitenddate,String buymode){
+		try
+		{
+			DBObject db = new DBObject();
+			List<BuyReportEvent> list=new ArrayList<BuyReportEvent>();
+			    if(summitdate.equals("")&&summitenddate.equals(""))
+			    	summitdate="1=1";
+			    else if(!summitdate.equals("")&&summitenddate.equals(""))
+			    	summitdate="summitdate>=to_date('"+summitdate+"','yyyy-MM-dd')";
+			    else if(summitdate.equals("")&&!summitenddate.equals(""))
+					summitdate="summitdate<=to_date('"+summitenddate+"','yyyy-MM-dd')";
+			    else if(!summitdate.equals("")&&!summitenddate.equals(""))
+					summitdate="summitdate>=to_date('"+summitdate+"','yyyy-MM-dd') and summitdate<=to_date('"+summitenddate+"','yyyy-MM-dd')";
+			 	if(buymode.equals(""))
+			    	buymode="1=1";
+			    else 
+					buymode="buymode='"+buymode+"'";
+			    if(orgcode.equals(""))
+			    	orgcode="1=1";
+			    else 
+			    	orgcode="relatedorgcode='"+orgcode+"'";
+			    
+				DataTable dt = db.runSelectQuery("select * from com_buyreportevent where eventno like '"+q_flag+"%'  and  "+summitdate+"  and  "+buymode+" and "+orgcode+"");//+ and relatedorgcode='orgcode'";
+				if(dt!=null&&dt.getRowsCount()>=1){
+					DataRow row=null;
+					for(int i=0;i<dt.getRowsCount();i++){
+						row=dt.get(i);
+						BuyReportEvent buyReportEvent=new BuyReportEvent();
+						buyReportEvent.setEventNo(row.getString("eventno"));
+						buyReportEvent.setEventType(row.getString("eventtype"));
+						buyReportEvent.setEventDesc(row.getString("eventdesc"));
+						buyReportEvent.setNumGoodsItem(Integer.parseInt(row.getString("numgoodsitem")));
+						buyReportEvent.setBuyMode(row.getString("buymode"));
+						buyReportEvent.setRelatedOrgCode(row.getString("relatedorgcode"));
+						buyReportEvent.setHandler(row.getString("handler"));
+						buyReportEvent.setInputDate(Format.strToDate(row.getString("inputdate")));
+						buyReportEvent.setSummitDate(Format.strToDate(row.getString("summitdate")));
+						buyReportEvent.setSummitFlag(Integer.parseInt(row.getString("summitflag")));
+						buyReportEvent.setAuditOpinion(row.getString("auditopinion"));
+						buyReportEvent.setAuditDate(Format.strToDate(row.getString("auditdate")));
+						buyReportEvent.setAuditFlag(Integer.parseInt(row.getString("auditflag")));
+						list.add(buyReportEvent);
+					}
+				}
+				return list;
+			
+		}
+		catch (Exception e)
+		{
+			logger.info("查询申请事件列表出错");
+			return null;
+		}
+	}
 	 public DataTable getBuyreporteventlist(int pageno,int perpage,String q_flag,String orgcode,String summitdate,String summitenddate,String buymode){
 	    	
 	    	try {
@@ -180,9 +286,9 @@ public class BuyReportEvent {
 	{
 		try {
 			
-		    
+
 			DBObject db=new DBObject(); 
-			String sql="insert into com_buyreportevent (eventno,eventtype,numgoodsitem,buymode) values(?,?,?,?) ";
+			String sql="insert into com_buyreportevent (eventno,eventtype,numgoodsitem,buymode,) values(?,?,?,?) ";
 			String eventno=BuyGoodsApp.getEventno("COM_REPORTEVENT","RP");
 			Parameter.SqlParameter[] pp=new Parameter.SqlParameter[]{
 		

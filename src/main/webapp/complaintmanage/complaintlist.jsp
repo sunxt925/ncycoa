@@ -59,7 +59,11 @@ $("#btn_reload").click(function(){
 	    });
 $("#btn_add").click(function(){
 	var row = $('#dg').datagrid('getSelected');
-	createwindow("回复","complaintmanage/complaintreply.jsp?complaintno="+row.complaintno,400,500);
+	if(row.enabledflag==1){
+		alert("已经回复，无法进行重复回复");
+	}else{
+		createwindow("回复","complaintmanage/complaintreply.jsp?complaintno="+row.complaintno,400,500);
+	}
 	    });
 function createwindow(title, url, width, height) {
 	
@@ -72,13 +76,13 @@ function createwindow(title, url, width, height) {
 		height : height,
 		title : title,
 		opacity : 0.3,
-		cache : false,
-		ok : function() {
+		cache : false
+		/* ok : function() {
 			$('#btn_ok', this.iframe.contentWindow.document).click();
 			return true;
 		},
 		cancelVal : '关闭',
-		cancel : true/* 为true等价于function(){} */
+		cancel : true *//* 为true等价于function(){} */
 	});}
 function returnValue(data){
 	if(data.code=="refresh")

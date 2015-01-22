@@ -13,21 +13,7 @@
 <base target="_self">
 <%
  UserInfo u=(UserInfo)request.getSession().getAttribute("UserInfo");
-    /*
-	int page_no=Integer.parseInt(Format.NullToZero(request.getParameter("page_no")));
-	int per_page = u.getPerpage_full();
-	BuyReportItem buyreItem=new BuyReportItem(); 
-	
-	DataTable dt=buyreItem.getBuyreportList(page_no,per_page);
-	DataTable dtcount=buyreItem.getAllBuyreportList();
-	int pagecount=dtcount.getRowsCount()/per_page;
-	int ppp=dtcount.getRowsCount()%per_page;
-		if(pagecount!=0&&ppp!=0)
-			pagecount++;
-	if(pagecount==0)
-		pagecount=1;*/
-	
-		
+ 	
  %>
 <script language="javascript" src="../js/public/select.js"></script>
 <script language="javascript" src="../js/public/key.js"></script>

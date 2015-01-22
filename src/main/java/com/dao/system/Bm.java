@@ -51,27 +51,20 @@ public class Bm
 				
 				bm.add(bm_bm.toUpperCase());
 				mc.add(bm_mc);
-				//String code_class = r.getString("code_class");
 				String sql_bm = "";
 			
 				
-				if(r.getString("code_class").equals("00020002")){
+				if(r.getString("code_class").equals("00020002")||r.getString("code_class").equals("00020003")){
 					sql_bm = "select * from " + bm_bm;
-				}else if(r.getString("code_class").equals("00020003")){
-					sql_bm = "select prmcon as code_id,prmcnd as code_name from (select * from codctdep where prmcod=" + "'"+bm_bm+"')"+" order by prmcon" ;
-					//sql_bm = "select * from (select * from codctdep where prmcod=" + "'"+bm_bm+"')"+" order by prmcon" ;
 				}
 				else{
 					sql_bm = "select * from (select * from system_tablecodemeta_col where table_name=" + "'"+bm_bm+"')"+" order by code_id";
 				   
 				}
 					
-				
-				//}
 				DataTable t = db.runSelectQuery(sql_bm);
 				tb.add(t);
 				
-				//System.out.println("成功加载编码：" + table_name);
 			}
 		}
 		catch (Exception e)
@@ -120,24 +113,17 @@ public class Bm
 					String bm_mc = r.getString("table_title");
 					bm.add(bm_bm.toUpperCase());
 					mc.add(bm_mc);
-				//	String order = r.getString("code_class");
 					String sql_bm = "";
 				
 					if(r.getString("code_class").equals("00020002")){
 						sql_bm = "select * from " + bm_bm;
-					}else if(r.getString("code_class").equals("00020003")){
-						sql_bm = "select prmcon as code_id,prmcnd as code_name from (select * from codctdep where prmcod=" + "'"+bm_bm+"')"+" order by prmcon" ;
-
-						//sql_bm = "select * from (select * from codctdep where prmcod=" + "'"+bm_bm+"')"+" order by prmcon" ;
 					}
 					else{
 						sql_bm = "select * from (select * from system_tablecodemeta_col where table_name=" + "'"+bm_bm+"')"+" order by code_id";
 						
 					}
-					//}
 					DataTable t = db.runSelectQuery(sql_bm);
 					tb.add(t);
-					//System.out.println("成功加载编码：" + bm_bm);
 				}
 			}
 		}

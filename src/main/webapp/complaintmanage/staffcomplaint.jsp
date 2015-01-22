@@ -74,17 +74,16 @@ function createwindow(title, url, width, height) {
 		height : height,
 		title : title,
 		opacity : 0.3,
-		cache : false,
-		 ok : function() {
+		cache : false
+		/*  ok : function() {
 			$('#btn_ok', this.iframe.contentWindow.document).click();
 			return true;
-		}, 
+		} */
 		/* cancelVal : '关闭', */
 		//cancel : true/* 为true等价于function(){} */
 	});}
 function returnValue(data){
-	alert(data.code);
-    window.location.reload();
+	window.location.reload();
 }
 </script>
 </html>
