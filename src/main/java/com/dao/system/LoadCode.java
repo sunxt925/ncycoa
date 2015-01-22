@@ -75,16 +75,14 @@ public class LoadCode {
 
 	public static DataTable getSelectItem(String item)
 	{
-		
 		tb=Bm.tb;
+
 		int sm=Bm.bm.indexOf(item.toUpperCase());
 		try {
 			DataTable dt=(DataTable) tb.get(sm);
 			return dt;
-		
 		} catch (Exception e) {
 			e.printStackTrace();
-			
 		}
 		return null;
 		

@@ -13,8 +13,11 @@
 </HEAD>
 <base target="_self">
 <%
-    com.cms.model.sysmng.login.User user=(com.cms.model.sysmng.login.User)request.getSession().getAttribute("USER");
-    String orgcode= user.getYybdm();
+
+	UserInfo user=(UserInfo)request.getSession().getAttribute("UserInfo");
+	Staff staff = new Staff(user.getStaffcode());
+	String orgcode= staff.getOrgcode();
+
      MeetingInfo role=new MeetingInfo();
 	int page_no=Integer.parseInt(Format.NullToZero(request.getParameter("page_no")));
 	int per_page=1;

@@ -17,9 +17,10 @@
 	request.setCharacterEncoding("gb2312");
 	String no=Format.NullToBlank(request.getParameter("bm"));
 	MeetingInfo mo=new MeetingInfo(no);
-	com.cms.model.sysmng.login.User user=(com.cms.model.sysmng.login.User)request.getSession().getAttribute("USER");
-    String orgcode= user.getYybdm();
-     String name=user.getZgxm();
+	UserInfo user=(UserInfo)request.getSession().getAttribute("UserInfo");
+	Staff staff = new Staff(user.getStaffcode());
+    String orgcode= staff.getOrgcode();
+     String name= staff.getStaffname();
 	java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
  String data=df.format(new java.util.Date());
  %>
