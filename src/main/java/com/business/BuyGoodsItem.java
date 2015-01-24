@@ -409,7 +409,7 @@ public class BuyGoodsItem {
 					sbuilder.append("\"buygoodsdesc\":").append("\""+goodsItem.getBuyGoodsDesc()+"\"").append(",");
 					sbuilder.append("\"needmonth\":").append("\""+Format.dateToStr(goodsItem.getNeedMonth())+"\"").append(",");
 					
-					sbuilder.append("\"auditflag\":").append("\""+CodeDictionary.code_traslate("summitflag", goodsItem.getAuditFlag())+"\"");
+					sbuilder.append("\"auditflag\":").append("\""+CodeDictionary.code_traslate("Auditflag", goodsItem.getAuditFlag())+"\"");
 					sbuilder.append("}");
 					sbuilder.append(",");
 				}
@@ -506,7 +506,89 @@ public class BuyGoodsItem {
 		}
 
 	    */
-//获取指定项目对应物资列表
+	
+	
+	public String getBuyReportGoodsItemJson(String projectcode){
+		try {
+			List<BuyGoodsItem> goodslist = getBuyReportGoodsItemlist(projectcode);
+			StringBuilder sbuilder = new StringBuilder();
+			sbuilder.append("[");
+			if(goodslist.size()>0){
+				for(BuyGoodsItem goodsItem : goodslist){
+					sbuilder.append("{");
+					
+					sbuilder.append("\"buyno\":").append("\""+goodsItem.getBuyNo()+"\"").append(",");
+					sbuilder.append("\"projectname\":").append("\""+goodsItem.getProjectName()+"\"").append(",");
+					sbuilder.append("\"goodsname\":").append("\""+goodsItem.getGoodsName()+"\"").append(",");
+					sbuilder.append("\"goodstyle\":").append("\""+goodsItem.getGoodsStyle()+"\"").append(",");
+					sbuilder.append("\"goodsunit\":").append("\""+goodsItem.getGoodsUnit()+"\"").append(",");
+					sbuilder.append("\"goodsnumber\":").append("\""+goodsItem.getGoodsNumber()+"\"").append(",");
+					sbuilder.append("\"goodsprice\":").append("\""+goodsItem.getGoodsPrice()+"\"").append(",");
+					sbuilder.append("\"totalcost\":").append("\""+goodsItem.getTotalCost()+"\"").append(",");
+					sbuilder.append("\"buygoodsdesc\":").append("\""+goodsItem.getBuyGoodsDesc()+"\"").append(",");
+					sbuilder.append("\"needmonth\":").append("\""+Format.dateToStr(goodsItem.getNeedMonth())+"\"").append(",");
+					
+					sbuilder.append("\"auditflag\":").append("\""+CodeDictionary.code_traslate("summitflag", goodsItem.getAuditFlag())+"\"");
+					sbuilder.append("}");
+					sbuilder.append(",");
+				}
+				sbuilder.delete(sbuilder.length()-1, sbuilder.length());
+			}
+			
+			sbuilder.append("]");
+			return sbuilder.toString();
+		} catch (Exception e) {
+			return "";
+			
+		}
+	}
+	public List<BuyGoodsItem> getBuyReportGoodsItemlist(String projectcode){
+		try {
+			String sql="select * from com_buygoodsitem where summitflag='1' and auditflag='00' and projectcode='"+projectcode+"'";
+			DBObject db = new DBObject();
+			DataTable dt = db.runSelectQuery(sql);
+			List<BuyGoodsItem> list=new ArrayList<BuyGoodsItem>();
+			if(dt!=null&&dt.getRowsCount()>=1){
+				DataRow r=null;
+				for(int i=0;i<dt.getRowsCount();i++){
+					r=dt.get(i);
+					BuyGoodsItem buyGoodsItem=new BuyGoodsItem();
+					buyGoodsItem.setBuyNo(r.getString("buyno"));
+					buyGoodsItem.setEventNo(r.getString("eventno"));
+					buyGoodsItem.setProjectCode(r.getString("projectcode"));
+					buyGoodsItem.setProjectName(r.getString("projectname"));//	项目名称
+					buyGoodsItem.setGoodsCode(r.getString("goodscode"));//物资品名代码
+					buyGoodsItem.setGoodsName(r.getString("goodsname"));//	物资品名
+					buyGoodsItem.setGoodsStyle(r.getString("goodsstyle"));//	规格型号
+					buyGoodsItem.setGoodsUnit(r.getString("goodsunit"));//	计量单位
+					buyGoodsItem.setBuyGoodsDesc(r.getString("buygoodsdesc"));//	说明
+				
+					
+					buyGoodsItem.setGoodsPrice(Float.parseFloat(Format.NullToZero(r.getString("goodsprice"))));//	单价
+					
+					buyGoodsItem.setGoodsNumber(Integer.parseInt(Format.NullToZero(r.getString("goodsnumber"))));//	数量
+					buyGoodsItem.setTotalCost(Float.parseFloat(Format.NullToZero(r.getString("totalcost"))));//	金额
+					buyGoodsItem.setNeedMonth(Format.strToDate(r.getString("needmonth")));//	需求时间
+					
+					buyGoodsItem.setBuyMode(r.getString("buymode"));//	采购模式
+					buyGoodsItem.setBuyOrgCode(r.getString("buyorgcode"));//	申请部门
+					buyGoodsItem.setHandler(r.getString("handler"));//	经办人
+					buyGoodsItem.setInputDate(Format.strToDate(r.getString("inputdate")));//	填写时间
+					buyGoodsItem.setSummitDate(Format.strToDate(r.getString("summitdate")));//	提交时间
+					buyGoodsItem.setSummitFlag(Integer.parseInt(Format.NullToZero(r.getString("summitflag"))));//	提交标志
+					buyGoodsItem.setAuditOrgCode(r.getString("auditorgcode"));//	审核部门
+					buyGoodsItem.setAuditOpinion(r.getString("auditopinion"));//	审核意见
+					buyGoodsItem.setAuditFlag(r.getString("auditflag"));//	审核标志
+					list.add(buyGoodsItem);
+				}
+			}
+			return list;
+		} catch (Exception e) {
+			logger.info("获取采购物品列表出错");
+			return null;
+		}
+	}
+/*//获取指定项目对应物资列表
  public DataTable getBuyReportGoodsItemlist(String projectcode,int pageno,int perpage){
  	
  	try {
@@ -540,7 +622,7 @@ public class BuyGoodsItem {
 			e.printStackTrace();
 			return null;
 		}
-	}
+	}*/
 //获取呈报项目对应物资列表
  public DataTable getBuyReportitemlist(String reportno,String projectcode,int pageno,int perpage,String auditflag){
  	
@@ -559,6 +641,9 @@ public class BuyGoodsItem {
 		}
 	
  }
+ 
+
+ 
 	    public DataTable getAllBuyReportitemlist(String reportno,String projectcode,String auditflag)
 		{
 			try

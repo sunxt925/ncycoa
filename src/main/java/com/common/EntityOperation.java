@@ -361,8 +361,8 @@ public class EntityOperation {
   				    }
   					
   				}
-  			//	if(column_value.equals("")||column_value==null)
-  			//		continue;
+  				if(column_value.equals("")||column_value==null)
+  					continue;
   				updatesql.append(getSql(column_type,column_code,column_value));
   				updatesql.append(",");                    //Õý¼Û·Ö¸ô·û
   			}

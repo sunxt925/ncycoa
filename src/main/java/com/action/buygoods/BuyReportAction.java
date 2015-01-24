@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.action.ActionInterface;
 import com.business.BuyReportItem;
 import com.common.EntityOperation;
+import com.entity.system.UserInfo;
 
 public class BuyReportAction extends ActionInterface{
 	public String getResult(HttpServletRequest request) {
@@ -48,7 +49,7 @@ public class BuyReportAction extends ActionInterface{
 			String entity=request.getParameter("entity");
 			eo.setEntity(entity);
 			
-			String[] itemsStrings=request.getParameterValues("items");
+			String[] itemsStrings=request.getParameter("items").split(",");
 			
 				for(int i=0;i<itemsStrings.length;i++)
 				{
@@ -61,7 +62,7 @@ public class BuyReportAction extends ActionInterface{
 				}
 				res += "show('"+res0+"');";
 				res += "var rand=Math.floor(Math.random()*10000);";
-				res += "window.open('../buygoods/buyreportlist.jsp?sid='+rand,'_self');";
+				res += "window.open('../buygoods/reportmanage/reportmanage.jsp?sid='+rand,'_self');";
 			
 			
 			
@@ -71,22 +72,22 @@ public class BuyReportAction extends ActionInterface{
 			res0=BuyReportItem.AutoGetreport();
 			res += "show('"+res0+"');";
 			res += "var rand=Math.floor(Math.random()*10000);";
-			res += "window.open('../buygoods/buyreportlist.jsp?sid='+rand,'_self');";
+			res += "window.open('../buygoods/reportmanage/reportmanage.jsp?sid='+rand,'_self');";
 		}
 		//呈报
 		else if(action!=null&& action.equals("report"))
 		{
-			String[] itemsStrings=request.getParameterValues("items");
-			String buymode=request.getParameter("COM_BUYREPORTEVENT.BUYMODE");
+			String[] itemsStrings=request.getParameter("items").split(",");
+			String buymode=request.getParameter("buymode");
 			if(BuyReportItem.Reportcheck(itemsStrings))
 			{
-			res0=BuyReportItem.Report(itemsStrings,buymode,"11");
+			res0=BuyReportItem.Report(itemsStrings,buymode,"11",((UserInfo)request.getSession().getAttribute("UserInfo")).getStaffcode());
 			res += "show('"+res0+"');";}
 			else {
-				res += "MessageBox.Show(null,'呈报项目有空值，无法呈报',null,'LogOK','Error',1,'呈报项目有空值，无法呈报');";
+				res += "alert('呈报项目有空值，无法呈报');";
 			}
 			res += "var rand=Math.floor(Math.random()*10000);";
-			res += "window.open('../buygoods/buyreportlist.jsp?sid='+rand,'_self');";
+			res += "window.open('../buygoods/reportmanage/reportmanage.jsp?sid='+rand,'_self');";
 		}
 		//采购办审核
 		else if(action!=null&& action.equals("auditByOffice"))

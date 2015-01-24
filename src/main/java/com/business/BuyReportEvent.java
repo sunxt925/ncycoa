@@ -135,10 +135,12 @@ public class BuyReportEvent {
 					sbuilder.append("\"eventno\":").append("\""+reportEvent.getEventNo()+"\"").append(",");
 					sbuilder.append("\"eventdesc\":").append("\""+reportEvent.getEventDesc()+"\"").append(",");
 					sbuilder.append("\"numgoodsitem\":").append("\""+reportEvent.getNumGoodsItem()+"\"").append(",");
+					
 					sbuilder.append("\"summitdate\":").append("\""+Format.dateToStr(reportEvent.getSummitDate())+"\"").append(",");
 					sbuilder.append("\"handler\":").append("\""+CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname", reportEvent.getHandler())+"\"").append(",");
 					sbuilder.append("\"buymode\":").append("\""+CodeDictionary.code_traslate("BUYMODE", reportEvent.getBuyMode())+"\"").append(",");
-					sbuilder.append("\"summitflag\":").append("\""+CodeDictionary.code_traslate("summitflag", String.valueOf(reportEvent.getSummitFlag()))+"\"");
+					sbuilder.append("\"summitflag\":").append("\""+CodeDictionary.code_traslate("summitflag", String.valueOf(reportEvent.getSummitFlag()))+"\"").append(",");
+					sbuilder.append("\"op\":").append("\""+"<a href='#' onclick='detail()'>明细</a>"+"\"");
 					sbuilder.append("}");
 					sbuilder.append(",");
 				}
@@ -281,26 +283,27 @@ public class BuyReportEvent {
 				return null;
 			}
 		}
+	   
 	    //产生呈报事件
-	public static String getEventno(String[] str,String buymode)
+	public static String getEventno(String[] str,String buymode,String staffcode)
 	{
 		try {
 			
 
 			DBObject db=new DBObject(); 
-			String sql="insert into com_buyreportevent (eventno,eventtype,numgoodsitem,buymode,) values(?,?,?,?) ";
+			String sql="insert into com_buyreportevent (eventno,eventtype,numgoodsitem,buymode,handler,summitflag,auditflag,summitdate) values(?,?,?,?,?,?,?,to_date('"+Format.getNowtime2()+"','yyyy-mm-dd')) ";
 			String eventno=BuyGoodsApp.getEventno("COM_REPORTEVENT","RP");
 			Parameter.SqlParameter[] pp=new Parameter.SqlParameter[]{
 		
 				new Parameter.String(""+eventno),
 				new Parameter.String("呈报"),
 				new Parameter.Int(str.length),
-				new Parameter.String(buymode)
+				new Parameter.String(buymode),
+				new Parameter.String(staffcode),
 			//	new Parameter.String("12"),
 			//	new Parameter.String(""+str.length),
-			//	new Parameter.String("0"),
-			//	new Parameter.String("ss"),
-			//	new Parameter.String("li"),
+				new Parameter.String("1"),
+				new Parameter.String("1")
 			//	new Parameter.String("2010-10-10"),
 			//	new Parameter.String("2010-10-11")
 			};

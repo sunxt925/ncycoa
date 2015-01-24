@@ -80,9 +80,21 @@ CodeDictionary cd = new CodeDictionary();
 	   var starttime=$("#starttime").val();
 	   var endtime=$("#endtime").val();
 	   var buymode=$("#cc").val();
-	   $('#dg').datagrid({
-		  url:u+"?starttime="+starttime+"&endtime="+endtime+"&buymode="+buymode 
-	   });
+	   if(starttime==""||endtime==""){
+		   $('#dg').datagrid({
+				  url:u+"?starttime="+starttime+"&endtime="+endtime+"&buymode="+buymode 
+			   });
+	   }else{
+		   if(endtime<starttime){
+			   createalert("输入查询日期段无效，请重新输入");
+		   }else{
+			   $('#dg').datagrid({
+					  url:u+"?starttime="+starttime+"&endtime="+endtime+"&buymode="+buymode 
+				   });
+		   }
+	   }
+	   
+	  
 		});
    $("#btn_detial").click(function(){
 	   var row = $('#dg').datagrid('getSelected');
