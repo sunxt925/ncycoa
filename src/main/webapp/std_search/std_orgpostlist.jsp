@@ -105,7 +105,7 @@ function F8(positioncode,positionname,orgcode)
 <BODY class="mainbody" onLoad="this.focus()" style="background-color:white" style="height:100%;" >
 
 <form name="form1" id="form1" method="post" action="../servlet/PageHandler">
-<table width="100%" height="100%" class="maintable">
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td colspan="3" valign="top" class="main_table_centerbg" align="left">
     <table width="100%" height="30" border="0" cellspacing="0" cellpadding="0">
@@ -143,17 +143,19 @@ function F8(positioncode,positionname,orgcode)
         
       </table>
       <%}%>
-       <tr>
+      </td>
         <td><div align="right"><input name="act" type="hidden" id="act" value="del">
           <input name="orgcode" type="hidden" id="orgcode" value="<%=bm%>">
           <input name="url" type="hidden" id="url" value="">
           <input name="name" type="hidden" id="name" value="">
           <input name="flag" type="hidden" id="flag" value=""></div></td>
         <td><input name="action_class" type="hidden" id="action_class" value="com.action.system.SystemUnitPositionAction"></td>
-      </tr>
-       </td>
   </tr>
-  
+    <tr>
+    <td width="1%" height="5" class="main_table_bottombg"><img src="../images/table_lb.jpg" width="10" height="5"></td>
+    <td width="98%" height="5" class="main_table_bottombg"></td>
+    <td width="1%" height="5" align="right" class="main_table_bottombg"><img src="../images/table_rb.jpg" width="10" height="5"></td>
+  </tr>
  
   </table>
 

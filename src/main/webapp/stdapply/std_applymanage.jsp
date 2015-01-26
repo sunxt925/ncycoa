@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=gb2312" language="java" import="java.util.*,java.sql.*,com.db.*,com.common.*,com.entity.system.*,com.emsflow.spi.model.AttributeInstance,org.wfmc.wapi.WMWorkflowException" errorPage="" %>
-
+<%@ page contentType="text/html; charset=gb2312" language="java" import="java.util.*,java.sql.*,com.db.*,com.common.*,com.entity.system.*,com.workflow.std.jbpm.*" errorPage="" %>
+<%@ page import="org.jbpm.api.*,org.jbpm.api.task.Task" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <%
 //String path = request.getContextPath();
@@ -14,7 +14,6 @@ if (bm.equals("")) bm="NC";
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/style.css">
 <META http-equiv=Content-Type content="text/html; charset=gb2312">
 <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
-
 </HEAD>
 <%
 	//System.out.println(bm);
@@ -22,21 +21,28 @@ if (bm.equals("")) bm="NC";
    		 String year = "" + c.get(c.YEAR);
 		 String month = "" + (c.get(c.MONTH) + 1);
 		 String day = "" + c.get(c.DATE);
-		 String date=year+"-"+month+"-"+day;
+		 String date="";
 		UserInfo UserInfo=(UserInfo)request.getSession().getAttribute("UserInfo");
-	String staffcode=UserInfo.getStaffcode();
-	StaffInfo staffinfo=new StaffInfo(staffcode);
-	String staffname=staffinfo.getName();
-	OrgPosition orgPosition = new OrgPosition();
-	DataTable dTable = orgPosition.getOrgPositionCode(staffcode);//返回该员工对应的机构编码和岗位编码（这个会返回两条及以上的记录）
-	String orgcode = dTable.get(0).getString("orgcode");
-	Org org=new Org(orgcode);
-	String orgname=org.getName();
-	String applyid=request.getParameter("applyid");
-	if(applyid==null||applyid.equals("")){
-		SequenceUtil seq=new SequenceUtil();
-		applyid=String.valueOf(seq.getSequence("标准类"));
-	}
+		String staffcode=UserInfo.getStaffcode();
+		StaffInfo staffinfo=new StaffInfo(staffcode);
+		String staffname=staffinfo.getName();
+		OrgPosition orgPosition = new OrgPosition();
+		DataTable dTable = orgPosition.getOrgPositionCode(staffcode);//返回该员工对应的机构编码和岗位编码（这个会返回两条及以上的记录）
+		String orgcode = dTable.get(0).getString("orgcode");
+		Org org=new Org(orgcode);
+		String orgname=org.getName();
+		//////////////////////////////////////////////////////
+		String taskId=request.getParameter("id");
+		ProcessEngine pe = Configuration.getProcessEngine();
+		TaskService ts = pe.getTaskService();
+		String applyid=ts.getVariable(taskId, "applyid").toString();
+		if(applyid==null||applyid.equals("")){
+			SequenceUtil seq=new SequenceUtil();
+			applyid=String.valueOf(seq.getSequence("标准类"));
+			date=year+"-"+month+"-"+day;
+		}else{
+			date=ts.getVariable(taskId, "date").toString();
+		}
 	
 /*	int per_page=((UserInfo)request.getSession().getAttribute("UserInfo")).getPerpage_third();
 	DataTable dt=orgposition.getOrgPositionListstd(page_no,per_page,bm);  
@@ -341,70 +347,81 @@ createwindowNoButton('企业标准修订申请表',url,'1000px','500px');
 <BODY class="mainbody" onLoad="this.focus()" style="background-color:white" style="height:100%;" >
 
 <form name="form1" id="form1" method="post" style="background-color:white" action="<%=request.getContextPath()%>/servlet/PageHandler">
-<table width="100%" height="20%" border="0" cellpadding="0" cellspacing="0">
+<table width="100%" height="100%" border="0"  cellpadding="0" cellspacing="0">
+<tr>
+<td width="15%" height="80%"  class="main_table_centerbg">
+<table width="100%" height="35%" border="0" cellpadding="0" cellspacing="0">
        <tr>
     <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;<a href="#" onClick="F1()">提交[F1]</a>　<a href="#" onClick="F2()">重填[F2]</a>　<a href="#" onClick="F5()">刷新[F5]</a></td>
        </tr>
-  <tr>   
-  <td colspan="2" valign="middle">
-      <table width="100%" border="0" cellpadding="3" cellspacing="0">
+<!--  <tr>   -->
+<!--  <td colspan="2" valign="middle">-->
+<!--      <table width="100%" border="0" cellpadding="3" cellspacing="0">-->
 
         <tr>
-          <td width="20%" align="right"> 申请人</td>
-		  <td width="30%" ><input type="text" name="applyperson" value="<%=staffname %>" id="applyperson" size="30" maxlength="30"><input type="hidden" name="applyid" value="<%=applyid%>" id="applyid"></td>
-		            <td width="7%" align="right"> 申请事项</td>
-		  <td width="43%"><input type="radio" name="radio" value="new" >新建标准
-		         <input type="radio"  name="radio" value="modify">修订标准
-		         <input type="radio"  name="radio" value="dele">废除标准
+          <td width="30%" align="right"> 申请人</td>
+		  <td width="70%" ><input type="text" name="applyperson" value="<%=staffname %>" id="applyperson" size="20" maxlength="30"><input type="hidden" name="applyid" value="<%=applyid%>" id="applyid"></td>
+		  </tr>
+		  		 <tr>
+          <td width="30%" align="right"> 申请时间</td>
+           <td width="70%"><input name="applydate" type="text" class="Wdate" id="applydate" onFocus="new WdatePicker(this,null,false,'whyGreen')"   value="<%=date %>" size="20" maxlength="30"></td>
+        </tr>
+                <tr>
+          <td width="30%" align="right"> 申请部门</td>
+		  <td width="70%"><input type="text" name="applyapart" value="<%=orgname %>" id="applyapart" size="20" maxlength="60"></td>
+		  </tr>
+		  </table>
+		  <table width="100%" height="60%" border="0" cellpadding="0" cellspacing="0">
+		  <tr>          <td width="40%" align="center"> 申请事项:</td>
+		  </tr>
+		  <tr>
+		  <td width="100%"><input type="radio" name="radio" value="new" >新建
+		         <input type="radio"  name="radio" value="modify">修订
+		         <input type="radio"  name="radio" value="dele">废除
 		    <input type="button" name="button0" value="选择" onClick="checkradio()" >		 </td>
         </tr>
-        <tr>
-          <td width="20%" align="right"> 申请部门</td>
-		  <td width="30%"><input type="text" name="applyapart" value="<%=orgname %>" id="applyapart" size="30" maxlength="60"></td>
-		            <td width="7%" align="right"> 申请理由</td>
-		  <td width="43%">
-		    <label>
-		    <textarea name="applyreason" id="applyreason"  style="width:270px"></textarea>
-		    </label></td>
+
+		  <tr>
+		            <td width="100%" align="center"> 申请理由:</td>
+		            </tr><tr>
+		  <td width="100%"  align="center">
+		  <label>
+		    <textarea name="applyreason" id="applyreason"  style="width:150px;height:200px"></textarea>
+		   </label></td>
         </tr>
-		 <tr>
-          <td width="20%" align="right"> 申请时间</td>
-           <td width="30%"><input name="applydate" type="text" class="Wdate" id="applydate" onFocus="new WdatePicker(this,null,false,'whyGreen')"   value="<%=date %>" size="30" maxlength="30"></td>
-        <td width="6%" align="right"></td>
-		  <td width="44%">
+        <tr>
+		  <td width="100%" align="center">
 				 <input type="button" name="button0" value="查看申请表" onClick="appytablebutton()" >
 		 </td>
         </tr>
-      </table>
-      </td>
-      </tr>
-    <tr>
+          <tr>
         <td><div align="right"><input name="act" type="hidden" id="act" value="add">
           <input name="orgcode" type="hidden" id="orgcode" value="<%=orgcode%>">
+          <input name="taskid" type="hidden" id="taskid" value="<%=taskId %>">
           <input name="url" type="hidden" id="url" value="">
           <input name="name" type="hidden" id="name" value="">
           <input name="flag" type="hidden" id="flag" value="">
           <input type='hidden' name='applystaffcode' id='applystaffcode'  value="<%=staffcode %>">
           <input name="hidbutton" type="button" id="hidbutton" value="" onClick="page();" style="display:none">
-          <input name="hidbutton2" type="button" id="hidbutton2" value="" onClick="page2();" style="display:none"></div></td>
-        <td><input name="action_class" type="hidden" id="action_class" value="com.action.stdapply.StdApplyAction"></td>
+          <input name="hidbutton2" type="button" id="hidbutton2" value="" onClick="page2();" style="display:none"></div>
+        <input name="action_class" type="hidden" id="action_class" value="com.action.stdapply.StdApplyAction"></td>
     </tr>
-  <tr>
+    <tr>
     <td width="49%" height="5" class="main_table_bottombg"><img src="<%=request.getContextPath()%>/images/table_lb.jpg" width="10" height="5"></td>
     <td width="48%" height="5" class="main_table_bottombg"></td>
     <td width="3%" height="5" align="right" class="main_table_bottombg"><img src="<%=request.getContextPath()%>/images/table_rb.jpg" width="10" height="5"></td>
   </tr>
- 
-  </table>
-<!---->
- <div id="tab_menu" style="text-align: center; border:1px "></div>
-<div id="page" style="text-align: center;position: relative;  height:32%; width:100%; border:1px "></div> 
+      </table>
+      </td>
+  <td width="1%"></td>
+  <td width="84%"  height="100%"  class="main_table_centerbg">
+ 	<div id="tab_menu" style="text-align: center;position: relative; border:1px "></div>
+	<div id="page" style="text-align: center;position: relative;  height:45%; width:100%; border:1px "></div> 
 	<div id="tab_menu2" style="text-align: center;position: relative; border:1px "></div>
-	<div id="page2" style="text-align: center;position: relative;  height:33%; width:100%; border:1px "></div> 
-
-		  <%@ include file="/page/controlHead.jsp"%>
-<flow:StepChoice table="1"/>
-
+	<div id="page2" style="text-align: center;position: relative;  height:45%; width:100%; border:1px "></div> 
+	</td>
+</tr>
+</table>
 </form>
 </BODY>
 </HTML>

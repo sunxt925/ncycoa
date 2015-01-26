@@ -225,9 +225,9 @@ function datesort(){
     </td>
   </tr>
 </table>
- <table width="100%" height="85%" class="maintable">
+ <table width="100%" height="85%" border="0"  class="main_table_centerbg" cellpadding="0" cellspacing="0">
   <tr>
-    <td colspan="3" valign="top" class="main_table_centerbg" align="left">
+    <td colspan="3" valign="top" align="left">
     
     <%
 		//out.print(dt.getRowsCount());
@@ -271,6 +271,10 @@ function datesort(){
           
         <td><input name="action_class" type="hidden" id="action_class" value="com.action.std.StdManageAction"></td>
       </tr>
+        <tr>
+    <td width="3%" height="5" class="main_table_bottombg"><img src="../images/table_lb.jpg" width="10" height="5"></td>
+    <td width="94%" height="5" class="main_table_bottombg"></td>
+    <td width="3%" height="5" align="right" class="main_table_bottombg"><img src="../images/table_rb.jpg" width="10" height="5"></td>
   </tr>
 
   </table>

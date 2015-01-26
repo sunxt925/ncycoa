@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=gb2312" language="java" import="java.util.*,java.sql.*,com.db.*,com.common.*,com.entity.std.*,com.entity.system.*,com.entity.stdapply.*" errorPage="" %>
 <%@page import="com.entity.stdapply.DocApplyPerson"%>
-<%@page import="org.exolab.adaptx.xslt.ValueOf"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
@@ -63,6 +62,9 @@ function fun(DocClassName)
   	String orgcode=request.getParameter("orgcode");;
   	Org org=new Org(orgcode);
   	String orgname=org.getName();
+  	  	UserInfo UserInfo=(UserInfo)request.getSession().getAttribute("UserInfo");
+  	StaffInfo staff=new StaffInfo(UserInfo.getStaffcode());
+  	String drawupperson=staff.getName();
 %>
 <BODY class="mainbody"  scroll="no">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
@@ -132,7 +134,7 @@ function fun(DocClassName)
 <!--       </tr>-->
       <tr> 
 	  <td width="20%"><div align="right">编制人：</div></td>
-        <td width="80%"><input name="DrawUpPerson" type="text" class="input1" id="DrawUpPerson" onKeyDown="EnterKeyDo('')" value="" size="30" maxlength="30"></td>     
+        <td width="80%"><input name="DrawUpPerson" type="text" class="input1" id="DrawUpPerson" onKeyDown="EnterKeyDo('')" value="<%=drawupperson%>" size="30" maxlength="30" readonly="readonly"></td>     
        </tr>
       <tr>
 	  <td width="20%"><div align="right">编制部门：</div></td>

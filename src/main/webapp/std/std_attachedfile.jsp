@@ -127,11 +127,11 @@ function dele(docno)
 }
 </script>
 <BODY class="mainbody" onLoad="this.focus()" style="background-color:white" scroll="no">
-<table width="100%" height="100%" border="0"  cellpadding="0" cellspacing="0">
+<table width="100%" height="100%"  class="main_table_centerbg" border="0"  cellpadding="0" cellspacing="0">
 <form name="form1" id="form1" method="post" action="../servlet/PageHandler">
 
   <tr>
-    <td colspan="3" valign="top" class="main_table_centerbg" align="left">
+    <td colspan="3" valign="top" align="left">
     <table width="100%" height="30" border="0" cellspacing="0" cellpadding="0">
       <tr>
       <td class="table_td_jb_iframe">&nbsp;&nbsp;

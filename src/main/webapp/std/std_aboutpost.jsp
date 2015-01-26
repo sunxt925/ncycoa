@@ -133,10 +133,10 @@ function dele(recid)
 </tr>
 </table>
 
-<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="100%" height="90%" border="0"  class="main_table_centerbg" cellpadding="0" cellspacing="0">
 <form name="form1" id="form1" method="post" action="../servlet/PageHandler">
   <tr>
-    <td colspan="3" valign="top" class="main_table_centerbg" align="left">
+    <td colspan="3" valign="top" align="left">
    
     <%
 		//out.print(dt.getRowsCount());
@@ -175,13 +175,14 @@ function dele(recid)
        
         <td><input name="action_class" type="hidden" id="action_class" value="com.action.std.StdAboutPostAction"></td>
       </tr>
-      </td>
-  </tr>
-  <tr>
+        <tr>
     <td width="3%" height="5" class="main_table_bottombg"><img src="../images/table_lb.jpg" width="10" height="5"></td>
     <td width="94%" height="5" class="main_table_bottombg"></td>
     <td width="3%" height="5" align="right" class="main_table_bottombg"><img src="../images/table_rb.jpg" width="10" height="5"></td>
   </tr>
+      </td>
+  </tr>
+
 </form>
 </table>
 </BODY>

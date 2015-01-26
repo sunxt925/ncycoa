@@ -1,4 +1,5 @@
-<%@ page contentType="text/html; charset=gb2312" language="java" import="java.sql.*,com.db.*,com.common.*,com.entity.system.*,com.entity.stdapply.*,com.emsflow.spi.model.AttributeInstance,org.wfmc.wapi.WMWorkflowException" errorPage="" %>
+<%@ page contentType="text/html; charset=gb2312" language="java" import="java.sql.*,com.db.*,com.common.*,com.entity.system.*,com.entity.stdapply.*" errorPage="" %>
+<%@ page import="org.jbpm.api.*,org.jbpm.api.task.Task" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <%
 
@@ -12,9 +13,14 @@
 
 </HEAD>
 <%
-	String ApplyId=request.getParameter("applyid");
+		ProcessEngine pe = Configuration.getProcessEngine();
+ExecutionService es = pe.getExecutionService();
+	TaskService ts = pe.getTaskService();
+	String taskid = request.getParameter("id");
+	Task task = ts.getTask(taskid);
+	
+	String ApplyId=ts.getVariable(taskid, "applyid").toString();
 		int applyid=Integer.parseInt(ApplyId.toString());
-		String processid=request.getParameter("processid");
 		DocApplyPerson applyperson=new DocApplyPerson(applyid);
 	String staffcode=applyperson.getApplystaffcode();
 	String staffname=applyperson.getApplyperson();
@@ -183,40 +189,57 @@ function checkradio()
 		window.open(newurl,"stdlist");
 		window.open('/ncycoa/std_search/empty.jsp',"attachlist");
 }
+function appytablebutton()
+{
+var applyid=document.getElementById("applyid").value;
+var applyorg=document.getElementById("applyapart").value;
+var applydate=document.getElementById("applydate").value;
+var applyreason=document.getElementById("applyreason").value;
+var url='/ncycoa/stdapply/applytable2.jsp?applyid='+applyid+'&applyorg='+applyorg+'&applydate='+applydate+'&applyreason='+applyreason;
+createwindowNoButton('企业标准修订申请表',url,'1000px','500px');
+//window.open(url);
+}
 </script>
 <BODY class="mainbody" onLoad="this.focus()" style="background-color:white" style="height:100%;" >
 
 <form name="form1" id="form1" method="post" style="background-color:white" action="<%=request.getContextPath()%>/servlet/PageHandler">
-<table width="100%" height="20%" border="0" cellpadding="0" cellspacing="0">
+<table width="100%" height="100%" border="0"  cellpadding="0" cellspacing="0">
+<tr>
+<td width="15%" height="80%"  class="main_table_centerbg">
+<table width="100%" height="45%" border="0" cellpadding="0" cellspacing="0">
        <tr>
-    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;　<a href="#" onClick="F1()">发布并结束流程[F1]</a> <a href="#" onClick="F2()">重填[F2]</a>　<a href="#" onClick="F5()">刷新[F5]</a></td>
+    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;　<a href="#" onClick="F1()">发布标准[F1]</a> <a href="#" onClick="F5()">刷新[F5]</a></td>
        </tr>
-  <tr>
-    <td colspan="4" valign="top" class="main_table_centerbg" align="left">     
-      <table width="100%" border="0" cellpadding="3" cellspacing="0">
-
         <tr>
-          <td width="24%" align="right"> 申请人</td>
-		  <td width="24%" ><input type="text" name="applyperson" value="<%=staffname %>" id="applyperson" size="30" maxlength="30"><input type="hidden" name="applyid" value="<%=ApplyId %>" id="applyid"></td>
-		            <td width="7%" align="right"> 申请理由</td>
-		  <td width="45%">
-		    <label>
-		    <textarea name="applyreason" value="<%=applyreason %>"  style="width:260px"><%=applyreason%></textarea>
-		    </label></td>
-        </tr>
+          <td width="30%" align="right"> 申请人</td>
+		  <td width="70%" ><input type="text" name="applyperson" value="<%=staffname %>" id="applyperson" size="20" maxlength="30"></td>
+		  </tr>
         <tr>
-          <td width="24%" align="right"> 申请部门</td>
-		  <td width="24%"><input type="text" name="applyapart" id="applyapart" value="<%=applyapart %>" size="30" maxlength="60"></td>
+          <td width="30%" align="right"> 申请部门</td>
+		  <td width="70%"><input type="text" name="applyapart" id="applyapart" value="<%=applyapart %>" size="20" maxlength="60"></td>
         </tr>
 		 <tr>
-          <td width="24%" align="right"> 申请时间</td>
-		  <td width="24%"><input name="applydate" type="text" class="Wdate" id="applydate" onFocus="new WdatePicker(this,null,false,'whyGreen')"  value="<%=applydate %>" size="30" maxlength="30"></td>
-		            <td width="7%" align="right">查看标准</td>
-		  <td width="45%">
+          <td width="30%" align="right"> 申请时间</td>
+		  <td width="70%"><input name="applydate" type="text" class="Wdate" id="applydate" onFocus="new WdatePicker(this,null,false,'whyGreen')"  value="<%=applydate %>" size="20" maxlength="30"></td>
+		            </tr><tr>
+		            <td width="30%" align="right">查看标准</td>
+		  <td width="70%">
 				 <input type="button" name="button0" value="查看" onClick="checkradio()" >
 		 </td>
         </tr>
       </table>
+      <table width="100%" height="50%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+		            <td width="100%" align="right"> 申请理由</td>
+		            </tr><tr>
+		  <td width="100%">
+		    <label>
+		    <textarea name="applyreason" value="<%=applyreason %>"  style="width:150px;height:200px"><%=applyreason%></textarea>
+		    </label></td>
+        </tr>
+        <tr>
+		            <td width="100%" align="right"> <input type="button" name="button0" value="查看申请表" onClick="appytablebutton()" ></td>
+		            </tr>
     <tr>
         <td><div align="right"><input name="act" type="hidden" id="act" value="public">
           <input name="url" type="hidden" id="url" value="">
@@ -224,30 +247,27 @@ function checkradio()
           <input name="flag" type="hidden" id="flag" value="">
           <input type='hidden' name='applystaffcode'  value="<%=staffcode %>">
           <input type='hidden' name='applyid'  value="<%=ApplyId %>">
-          <input type='hidden' name='processid'  value="<%=processid %>">
+          <input type='hidden' name='taskid'  value="<%=taskid %>">
           <input name="hidbutton" type="button" id="hidbutton" value="" onClick="page();" style="display:none">
-          <input name="hidbutton2" type="button" id="hidbutton2" value="" onClick="page2();" style="display:none"></div></td>
-        <td><input name="action_class" type="hidden" id="action_class" value="com.action.stdapply.StdApplyAction"></td>
+          <input name="hidbutton2" type="button" id="hidbutton2" value="" onClick="page2();" style="display:none"></div>
+        <input name="action_class" type="hidden" id="action_class" value="com.action.stdapply.StdApplyAction"></td>
     </tr>
-
-       </td>
-  </tr>
   <tr>
     <td width="3%" height="5" class="main_table_bottombg"><img src="<%=request.getContextPath()%>/images/table_lb.jpg" width="10" height="5"></td>
     <td width="94%" height="5" class="main_table_bottombg"></td>
     <td width="3%" height="5" align="right" class="main_table_bottombg"><img src="<%=request.getContextPath()%>/images/table_rb.jpg" width="10" height="5"></td>
   </tr>
   </table>
-    		<table width="100%" height="80%" border="0" cellspacing="0" cellpadding="0">
-		  <tr >
-            <td ><iframe src="" name="stdlist" id="stdlist" width="100%" height="100%" scrolling="no" frameborder="2"></iframe></td>
-		  </tr>
-		  <tr >
-            <td ><iframe src="" name="attachlist" id="attachlist" width="100%" height="100%" scrolling="no" frameborder="2"></iframe></td>
-		  </tr>
-		</table>
+      </td>
+  <td width="1%"></td>
+  <td width="84%"  height="100%"  class="main_table_centerbg">
+            <iframe src="" name="stdlist" id="stdlist" width="100%" height="48%" scrolling="no" frameborder="2"></iframe>
+            <iframe src="" name="attachlist" id="attachlist" width="100%" height="48%" scrolling="no" frameborder="2"></iframe>
 		
-<flow:StepChoice table="1" />
+		</td>
+</tr>
+</table>
+		
 </form>
 </BODY>
 </HTML>

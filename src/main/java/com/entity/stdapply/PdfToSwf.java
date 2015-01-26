@@ -11,7 +11,8 @@ import java.io.InputStreamReader;
 public class PdfToSwf {
    
    
-   
+	private java.util.Properties m_ftpProperties;
+	private static String EXEPATH;
     public static synchronized void pdf2swf(String fileDir, String exePath) throws IOException {
    
         //文件路径
@@ -147,8 +148,69 @@ public class PdfToSwf {
         }
    
     }
-   
-   
+	public void LoadConfig(String name) 
+	{
+		try
+		{
+			ClassLoader cl = getClass().getClassLoader();
+			java.io.InputStream in;
+			if (cl != null)
+			{
+				in = cl.getResourceAsStream(name);
+			}
+			else
+			{
+				in = ClassLoader.getSystemResourceAsStream(name);
+			}
+			if (in == null)
+			{
+				// 用文件读写
+				in = new java.io.BufferedInputStream(
+						new java.io.FileInputStream(name));
+			}
+				
+			try
+			{
+				m_ftpProperties = new java.util.Properties();
+				// 装载配置文件
+				m_ftpProperties.load(in);
+				// 得到配置内容
+				EXEPATH = consume(m_ftpProperties, "EXEPATH");
+			}
+			finally
+			{
+				if (in != null)
+				{
+					try
+					{
+						in.close();
+					}
+					catch (Exception ex)
+					{
+						ex.printStackTrace();
+					}
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	private String consume(java.util.Properties p, String key)
+	{
+		String s = null;
+		if ((p != null) && (key != null))
+		{
+			s = p.getProperty(key);
+			// 找到，则从属性表中移去
+			if (s != null)
+			{
+				p.remove(key);
+			}
+		}
+		return s;
+	}
    
     public void PdfSwf(String file) {
    
@@ -156,8 +218,8 @@ public class PdfToSwf {
     	String FilePath="";
     	FilePath=file.replace('\\', '/');
     //	System.out.println("filename   ："+FilePath);  
-   
-        String exePath = "C:/Program Files (x86)/SWFTools/pdf2swf.exe";
+    	LoadConfig("/com/entity/stdapply/PdfToSwf.properties");
+        String exePath = EXEPATH;
    
         try {
    

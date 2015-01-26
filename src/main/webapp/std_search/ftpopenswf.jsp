@@ -41,7 +41,6 @@ request.setCharacterEncoding("gbk");
     }
     
         var startDocument = "Paper";
-
     $('#documentViewer').FlexPaperViewer(
             { config : {
 
@@ -91,13 +90,19 @@ request.setCharacterEncoding("gbk");
   
 
         $( function()  {
-                	alert("请等待。。。。（flash显示出来后点击确定）");
-	 		  // xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
-	 		  createXMLHttp();
+                //	alert("请等待。。。。（flash显示出来后点击确定）");
+                 var deleteswf=function(){
+        createXMLHttp();
 	 		   xmlHttp.open("POST","../servlet/DeleteDocFile",false);
 	 		   xmlHttp.onreadystatechange=CallBack;
-	           xmlHttp.send(null);     
+	           xmlHttp.send(null);
+        };
+                setTimeout(deleteswf,4000);
+                 
+	 		  // xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+   
         });
+        
 </script>
 </div>
 </body>
