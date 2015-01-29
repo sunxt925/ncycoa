@@ -10,16 +10,16 @@ import edu.cqu.gem.ncycoa.util.SystemUtils;
  */
 public class DataGrid {
 
-	private int page = 1;// 当前页
-	private int rows = 10;// 每页显示记录数
-	private String sort = null;// 排序字段名
-	private SortDirection order = SortDirection.asc;// 按什么排序(asc,desc)
-	private String field;// 字段
-	private String treefield;// 树形数据表文本字段
+	private int page = 1;					// 当前页
+	private int rows = 10;					// 每页显示记录数
+	private String sort = null;				// 排序字段名
+	private String order = "asc";	// 方向 asc, desc
+	private String field;			// 字段
+	
 	@SuppressWarnings("rawtypes")
-	private List results;// 结果集
-	private int total;// 总记录数
-	private String footer;// 合计列
+	private List results;			// 结果集
+	private int total;				// 总记录数
+	private String footer;			// 合计列
 
 	public int getTotal() {
 		return total;
@@ -73,28 +73,20 @@ public class DataGrid {
 		this.sort = sort;
 	}
 
-	public SortDirection getOrder() {
-		return order;
-	}
-
-	public void setOrder(SortDirection order) {
-		this.order = order;
-	}
-
-	public String getTreefield() {
-		return treefield;
-	}
-
-	public void setTreefield(String treefield) {
-		this.treefield = treefield;
-	}
-
 	public String getFooter() {
 		return footer;
 	}
 
 	public void setFooter(String footer) {
 		this.footer = footer;
+	}
+
+	public String getOrder() {
+		return order;
+	}
+
+	public void setOrder(String order) {
+		this.order = order;
 	}
 
 }

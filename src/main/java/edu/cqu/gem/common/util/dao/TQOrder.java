@@ -5,8 +5,7 @@ package edu.cqu.gem.common.util.dao;
  * </p>
  * <pre>
  * {@code
- * TypedQueryBuilder builder = new TypedQueryBuilder(com.MyClass, "item")
-     .addOrder("i.name", true);
+ * TypedQueryBuilder builder = new TypedQueryBuilder(com.MyClass, "item").addOrder("i.name", true);
  * }
  * </pre>
  * </p>
@@ -25,7 +24,7 @@ public class TQOrder {
         StringBuilder sb = new StringBuilder();
         sb.append(expression);
         sb.append(" ");
-        sb.append(ascending != null && ascending?"ASC":"DESC");
+        sb.append(ascending != null && ascending ? "ASC" : "DESC");
 
         return sb.toString();
     }

@@ -6,7 +6,6 @@ package edu.cqu.gem.common.dto;
 public class DataGridColumn {
 
 	protected String title; 		// 表格列名
-	protected String treefield; 	// TreeGrid时显示
 	protected String field; 		// 数据库对应字段
 	protected Integer width; 		// 宽度
 	protected String rowspan; 		// 跨列
@@ -19,12 +18,11 @@ public class DataGridColumn {
 	protected String dateFormatter; // 日期格式化器
 	protected boolean hidden; 		// 是否隐藏
 	protected boolean query; 		// 是否查询
-	protected String queryMode = "single"; 	// 查询模式：single单字段查询；group范围查询
-	protected boolean autoLoadData = true; 	// 列表是否自动加载数据
-	protected boolean frozenColumn = false; // 是否是冰冻列, 默认不是
-	protected String url; 					// 自定义链接
+	protected String queryMode = "single"; 	 // 查询模式：single单字段查询；group范围查询
+	protected boolean autoLoadData = true; 	 // 列表是否自动加载数据
+	protected boolean frozen = false;  // 是否是冰冻列, 默认不是
+	protected String url; 					 // 自定义链接
 	protected String funname = "openwindow"; // 自定义函数名称
-	protected String arg;
 	protected String dictionary;
 	protected String replace;
 	protected String extend;
@@ -53,14 +51,6 @@ public class DataGridColumn {
 		return query;
 	}
 
-	public String getArg() {
-		return arg;
-	}
-
-	public void setArg(String arg) {
-		this.arg = arg;
-	}
-
 	public void setQuery(boolean query) {
 		this.query = query;
 	}
@@ -71,14 +61,6 @@ public class DataGridColumn {
 
 	public void setImage(boolean image) {
 		this.image = image;
-	}
-
-	public String getTreefield() {
-		return treefield;
-	}
-
-	public void setTreefield(String treefield) {
-		this.treefield = treefield;
 	}
 
 	public void setTitle(String title) {
@@ -209,12 +191,12 @@ public class DataGridColumn {
 		this.autoLoadData = autoLoadData;
 	}
 
-	public boolean isFrozenColumn() {
-		return frozenColumn;
+	public boolean isFrozen() {
+		return frozen;
 	}
 
-	public void setFrozenColumn(boolean frozenColumn) {
-		this.frozenColumn = frozenColumn;
+	public void setFrozen(boolean frozenColumn) {
+		this.frozen = frozenColumn;
 	}
 
 	public String getExtend() {

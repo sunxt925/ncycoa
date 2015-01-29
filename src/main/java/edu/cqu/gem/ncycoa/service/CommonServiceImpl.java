@@ -9,6 +9,8 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.cqu.gem.common.dto.DataGridReturn;
+import edu.cqu.gem.common.dto.QueryDescriptor;
 import edu.cqu.gem.ncycoa.dao.CommonDao;
 
 @Service("commonService")
@@ -101,6 +103,10 @@ public class CommonServiceImpl implements CommonService {
 	@Override
 	public Object executeSqlReturnKey(String sql, Map<String, Object> params) {
 		return commonDao.executeSql(sql, params);
+	}
+	
+	public DataGridReturn getDataGridReturn(final QueryDescriptor cq, final boolean isOffset) {
+		return commonDao.getDataGridReturn(cq, isOffset);
 	}
 	
 }

@@ -26,7 +26,8 @@
 				<property name="excludeUrls">
 					<list>
 						<value>login.htm</value>
-						<value>init.htm</value>
+						<value>dgdata</value>
+						<value>dgtest</value>
 					</list>
 				</property>
 			</bean>

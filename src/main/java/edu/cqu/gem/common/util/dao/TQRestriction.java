@@ -81,7 +81,7 @@ public class TQRestriction {
             sb.append(expression).append(" ").append(operation);
 
             if (parameter != null) {
-                sb.append(' ');
+                sb.append(" ");
                 String pname = ':' + parameterName;
                 if (operation.equals("in")) {
                     pname = "(" + pname + ")";
