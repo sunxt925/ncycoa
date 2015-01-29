@@ -10,91 +10,30 @@ if (goodscode.equals("")) goodscode="WF";
 <HTML>
 <HEAD>
 <TITLE>四川省南充烟草公司</TITLE>
-<link rel="stylesheet" type="text/css" href="../../css/style.css">
+
+<script type="text/javascript" src="<%=path%>/jscomponent/jquery/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="<%=path%>/jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
+<script language="javascript" src="<%=path%>/js/public/select.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=path%>/css/style.css">
 <META http-equiv=Content-Type content="text/html; charset=gb2312">
 <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
 </HEAD>
 <%
 	Goods goods=new Goods();
-	//Org og=new Org();
 	int page_no=Integer.parseInt(Format.NullToZero(request.getParameter("page_no")));
 	int per_page=((UserInfo)request.getSession().getAttribute("UserInfo")).getPerpage_half();
 	DataTable dt=goods.getnextGoodsList(page_no,per_page,goodscode);
 	DataTable dtcount=goods.getAllnextgoodsList(goodscode);
-	//System.out.println(dtcount.getRowsCount()+"nihaoasdjfhkjasdhfjkh");
 	int pagecount=0;
 	if(dtcount.getRowsCount()%per_page==0)
 	    pagecount=dtcount.getRowsCount()/per_page;
 	else
 		pagecount=(dtcount.getRowsCount()/per_page)+1;
-	//String res=og.getTrack(goodscode,"");
 	String res="";
-	//System.out.println(pagecount);
-	/* DBObject db = new DBObject();
-	
-	String sql="select * from system_unit where unit_ccm like'"+ unitccm+"___' order by unit_ccm";
-	DataTable dt=db.runSelectQuery(sql); */
 %>
-<script language="javascript" src="../../js/public/select.js"></script>
-
-<script language="javascript">
-function F3()
-{
-	var rand=Math.floor(Math.random()*10000);
-	
-	showModalDialogWin("goodsnew.jsp?sid="+rand+"&goodscode="+"<%=goodscode%>",490,500);
-	
-	
-	parent.window.location.reload();
-	//parent.unittree.location.reload();
-	
-}
-function showModalDialogWin(url,wh,hg) {
-        var obj = window.showModalDialog(url, window,"status:false;dialogWidth:"+wh+"px;dialogHeight:"+hg+"px;scroll=no;help: no;resizable:no;status:no;");
-}
-function F4()
-{
-	if (CheckSelect("form1"))
-	{
-		if (confirm("父级菜单的删除将级联删除子菜单，是否继续？"))
-		{
-			document.all("form1").submit();
-		}
-	}
-	else
-	{
-		alert ("你没有选中要删除的内容！");
-	}
-}
-function F1(goodscode)
-{	
-	showModalDialogWin("goodsclass_mod.jsp?goodscode="+goodscode,490,500);
-	
-	//showModalDialogWin("unit_mod.jsp?bm="+orgcode,490,500);
-	parent.window.location.reload();
-	//parent.unittree.location.reload();
-}
-function F5()
-{
-	window.location.reload();
-}
-function dele(orgcode)
-{
-//alert(orgcode);
-document.getElementById("goodscode").value=orgcode;
-			//document.getElementsByName(orgcode).checked="checked";
-			//document.form1.docno.value=docno;
-			if (confirm("确定要删除吗？"))
-			{
-				document.all("Submit").click();
-			}
-			
-
-}
-</script>
 <BODY class="mainbody" onLoad="this.focus()">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
-<form name="form1" id="form1" method="post" action="../../servlet/PageHandler">
+<form name="form1" id="form1" method="post" action="../servlet/PageHandler">
  <tr>
  <td colspan="3" valign="top" class="main_table_centerbg" align="left">
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -106,7 +45,6 @@ document.getElementById("goodscode").value=orgcode;
       </tr>
     </table>
     <%
-		//out.print(dt.getRowsCount());
 		if (dt!=null && dt.getRowsCount()>0) {
 		TableUtil tableutil=new TableUtil();
 		tableutil.setDt(dt);
@@ -115,8 +53,6 @@ document.getElementById("goodscode").value=orgcode;
       
       <table width="100%" border="0" cellpadding="3" cellspacing="0">
         <tr>
-          <!--<td width="50%">【<a href="#" onClick="F4()">删除</a>】【<a href="#" onClick="SelectAll('form1')">全选</a>】【<a href="#" onClick="ChangeSelect('form1')">反选</a>】【<a href="#" onClick="UnSelectAll('form1')">清空</a>】</td>
-          -->
           <td align="right">
           <%
           String unitccmtemp="&goodscode="+goodscode;
@@ -132,12 +68,66 @@ document.getElementById("goodscode").value=orgcode;
         
       </table>
       <%}%>
-     
-         
       
 </td>
   </tr>
 </form>
 </table>
+
+<script language="javascript">
+function F3()
+{
+	var rand=Math.floor(Math.random()*10000);
+	var url="goodsmanage/goodsnew.jsp?sid="+rand+"&goodscode="+"<%=goodscode%>";
+	createwindow('新增', url, 490, 500);
+	
+	
+}
+function F1(goodscode)
+{	
+	var url="goodsmanage/goodsclass_mod.jsp?goodscode="+goodscode;
+	createwindow('修改', url, 490, 500);
+}
+function dele(orgcode)
+{
+         document.getElementById("goodscode").value=orgcode; 
+			if (confirm("确定要删除吗？"))
+			{
+				document.all("Submit").click();
+			}
+			
+
+}
+
+function createwindow(title, url, width, height) {
+		$.dialog({
+			id:'LHG1976D',
+			data:returnValue,
+			content : 'url:' + url,
+			lock : true,
+			width : width,
+			height : height,
+			title : title,
+			opacity : 0.3,
+			cache : false,
+			ok : function() {
+				$('#btn_ok', this.iframe.contentWindow.document).click();
+				return false;
+			},
+			cancelVal : '关闭',
+			cancel : true/* 为true等价于function(){} */
+		});
+	
+}
+function returnValue(data){
+    var f=data.code;
+    if(f=="refresh"){
+    	window.setTimeout(function(){
+    		window.location.reload();
+    	},1000);
+    	
+    }
+}
+</script>
 </BODY>
 </HTML>

@@ -260,10 +260,8 @@ public class SystemGoodsinformINAction extends ActionInterface
 			if(gse.Delete(ids[0]))//必须在删除之前更新库存内容
 			{
 				GoodsStoreEvent goodsse=new GoodsStoreEvent(request.getParameter("COM_INSTOREITEM.STOREEVENTNO"));//删除之后更新对应的事件信息
-				//System.out.println(request.getParameter("STOREEVENTNO"));
 				String number=Format.NullToZero(goodsse.getGoodsItemNum());
 				int newnumber=Integer.parseInt(number)-1;
-				//System.out.println(newnumber);
 				DBObject db = new DBObject();
 				String sql = "update com_storeevent set goodsitemnum=? where STOREEVENTNO=?";
 				Parameter.SqlParameter[] pp = new Parameter.SqlParameter[]
@@ -271,36 +269,18 @@ public class SystemGoodsinformINAction extends ActionInterface
 				try {
 					db.run(sql, pp);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				res += "alert('删除成功！');";
+				res += "window.open('../goodsmanage/goodsinformINList.jsp?detail=0&StoreEventNo="+request.getParameter("COM_INSTOREITEM.STOREEVENTNO")+"','goodsinformINList');";
 				
-				
-				res += "MessageBox.Show(null,'删除成功！',null,'LogOK',null,1,'删除成功');";
-				//res+="window.close();";
-				res += "window.open('../xtwh/goodsmanage/goodsinformINList.jsp?detail=0&StoreEventNo="+request.getParameter("COM_INSTOREITEM.STOREEVENTNO")+"','goodsinformINList');";
-				//res += "var rand=Math.floor(Math.random()*10000);";
-				//res +="var ccm=\""+request.getParameter("ParentOrgCode")+"\";";
-				//res += "parent.unittree.location.reload();";
-				//res += "window.open('../xtwh/system_unit/unit_list.jsp?sid='+rand+'&unitccm='+ccm,'_self');";
-				//RequestDispatcher rd=request.getRequestDispatcher("unitmanage.jsp");
-			    //rd.forward(request,response);
 			}
 			else
 			{
-				res += "MessageBox.Show(null,'删除失败！',null,'LogOK','Error',1,'删除失败，可能是有子单位请先删除子单位！');";
-				//res+="window.close();";
-				res += "window.open('../xtwh/goodsmanage/goodsinformINList.jsp?detail=0&StoreEventNo="+request.getParameter("COM_INSTOREITEM.STOREEVENTNO")+"','goodsinformINList');";
-				//res += "var rand=Math.floor(Math.random()*10000);";
-				//res +="var ccm=\""+request.getParameter("ParentOrgCode")+"\";";
-				//res += "window.open('../xtwh/system_unit/unit_list.jsp?sid='+rand+'&unitccm='+ccm,'_self');";
+				res += "alert('删除失败，可能是有子单位请先删除子单位！');";
+				res += "window.open('../goodsmanage/goodsinformINList.jsp?detail=0&StoreEventNo="+request.getParameter("COM_INSTOREITEM.STOREEVENTNO")+"','goodsinformINList');";
 			}
 		}
-		else
-		{
-
-		}
-//		System.out.println(res);
 		return res;
 	}
 }

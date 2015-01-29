@@ -3,17 +3,17 @@
 <HTML>
 <HEAD>
 <TITLE>四川省南充烟草公司</TITLE>
-<link rel="stylesheet" type="text/css" href="../../css/style.css">
+<link rel="stylesheet" type="text/css" href="../css/style.css">
 <META http-equiv=Content-Type content="text/html; charset=gb2312">
 <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
-<script type="text/javascript" src="../../js/DatePicker/WdatePicker.js"></script></HEAD>
+<script type="text/javascript" src="../js/DatePicker/WdatePicker.js"></script></HEAD>
 <base target=_self>
 
-<script language="javascript" type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js"></script>
-<script language="javascript" src="../../js/public/key.js"></script>
-<script language="javascript" src="../../js/public/check.js"></script>
-<script type="text/javascript" src="../../js/public/searchvalue.js"></script>
-<script language="javascript" src="../../js/public/Calendar1.js"></script>
+<script language="javascript" type="text/javascript" src="../js/My97DatePicker/WdatePicker.js"></script>
+<script language="javascript" src="../js/public/key.js"></script>
+<script language="javascript" src="../js/public/check.js"></script>
+<script type="text/javascript" src="../js/public/searchvalue.js"></script>
+<script language="javascript" src="../js/public/Calendar1.js"></script>
 
 <%
 String StoreEventNo=request.getParameter("StoreEventNo");
@@ -76,7 +76,7 @@ function blured()
 
 <BODY class="mainbody" onLoad="this.focus();">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
-<form name="form1" id="form1" method="post"  action="../../servlet/PageHandler">
+<form name="form1" id="form1" method="post"  action="../servlet/PageHandler">
 
 <tr>
 <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;<a href="#" onClick="F8()">保存[F8]</a>　<a href="#" onClick="F3()">重填[F3]</a></td>
@@ -192,9 +192,9 @@ function blured()
     </table></td>
   </tr>
   <tr>
-    <td height="5" class="main_table_bottombg"><img src="../../images/table_lb.jpg" width="10" height="5"></td>
+    <td height="5" class="main_table_bottombg"><img src="../images/table_lb.jpg" width="10" height="5"></td>
     <td height="5" class="main_table_bottombg"></td>
-    <td height="5" align="right" class="main_table_bottombg"><img src="../../images/table_rb.jpg" width="10" height="5"></td>
+    <td height="5" align="right" class="main_table_bottombg"><img src="../images/table_rb.jpg" width="10" height="5"></td>
   </tr>
 </form>
 </table>

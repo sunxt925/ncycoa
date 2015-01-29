@@ -3,7 +3,7 @@
 <HTML>
 <HEAD>
 <TITLE>四川省南充烟草公司</TITLE>
-<link rel="stylesheet" type="text/css" href="../../css/style.css">
+<link rel="stylesheet" type="text/css" href="../css/style.css">
 <META http-equiv=Content-Type content="text/html; charset=gb2312">
 <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
 </HEAD>
@@ -34,9 +34,9 @@ Goodsinstoreitem ginstoreitem=new Goodsinstoreitem();
 	
     
 %>
-<script language="javascript" src="../../js/public/select.js"></script>
-<script language="javascript" src="../../js/public/key.js"></script>
-<script type="text/javascript" src="../../js/public/searchvalue.js"></script>
+<script language="javascript" src="../js/public/select.js"></script>
+<script language="javascript" src="../js/public/key.js"></script>
+<script type="text/javascript" src="../js/public/searchvalue.js"></script>
 <base target="_self">
 <a id="reload" href="" style="display:none"></a>
 <script language="javascript">
@@ -119,7 +119,7 @@ document.getElementById("COM_INSTOREITEM.STOREEVENTNO").value="<%=StoreEventNo%>
 </script>
 <BODY class="mainbody" onLoad="this.focus()">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
-<form name="form1" id="form1" method="post" action="../../servlet/PageHandler">
+<form name="form1" id="form1" method="post" action="../servlet/PageHandler">
   <tr>
     <td colspan="3" valign="top" class="main_table_centerbg" align="left">
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -157,9 +157,9 @@ document.getElementById("COM_INSTOREITEM.STOREEVENTNO").value="<%=StoreEventNo%>
       <%}%>
      
   <tr>
-    <td width="3%" height="5" class="main_table_bottombg"><img src="../../images/table_lb.jpg" width="10" height="5"></td>
+    <td width="3%" height="5" class="main_table_bottombg"><img src="../images/table_lb.jpg" width="10" height="5"></td>
     <td width="94%" height="5" class="main_table_bottombg"></td>
-    <td width="3%" height="5" align="right" class="main_table_bottombg"><img src="../../images/table_rb.jpg" width="10" height="5"></td>
+    <td width="3%" height="5" align="right" class="main_table_bottombg"><img src="../images/table_rb.jpg" width="10" height="5"></td>
   </tr>
   </td>
   </tr>

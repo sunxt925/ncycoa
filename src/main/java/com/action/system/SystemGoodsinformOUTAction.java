@@ -169,9 +169,8 @@ public class SystemGoodsinformOUTAction extends ActionInterface
 		
 			
 			res += "show('"+res0+"');";
-			//res += "window.open('../xtwh/goodsmanage/goodsinformOUT.jsp?StoreEventNo="+request.getParameter("COM_OUTSTOREITEM.STOREEVENTNO")+"','goodsinformOUT');";
-			res += "window.open('../xtwh/goodsmanage/goodsinformOUTList.jsp?detail=0&StoreEventNo="+request.getParameter("COM_OUTSTOREITEM.STOREEVENTNO")+"','goodsinformOUTList');";
-			//res+="parent.window.open()";
+			res += "window.open('../goodsmanage/goodsinformOUTList.jsp?detail=0&StoreEventNo="+request.getParameter("COM_OUTSTOREITEM.STOREEVENTNO")+"','goodsinformOUTList');";
+			
 		}
 		else if (action!=null && action.equals("modify"))//更新对应的库存信息，此时只特殊处理物品的数量
 
@@ -179,9 +178,7 @@ public class SystemGoodsinformOUTAction extends ActionInterface
 			DBObject db = new DBObject();
 			GoodsStoreInfo gsi=new GoodsStoreInfo(request.getParameter("COM_OUTSTOREITEM.GOODSCODE"));//库存信息
 			Goodsoutstoreitem goodsoutitem=new Goodsoutstoreitem(request.getParameter("COM_OUTSTOREITEM.OUTNO"));//本次修改物品的信息
-			//Goodsinstoreitem goodsinitem=new Goodsinstoreitem(request.getParameter("COM_OUTSTOREITEM.GOODSCODE"));//本次修改物品的信息
 			String outnum=Integer.toString(Integer.parseInt(gsi.getOutNumber())-Integer.parseInt(goodsoutitem.getGOODSNUMBER()));
-			//String incount=Integer.toString(Integer.parseInt(gsi.getTotalNumber())+1);
 			String AvailableNumber=Integer.toString(Integer.parseInt(gsi.getAvailableNumber())+Integer.parseInt(goodsoutitem.getGOODSNUMBER()));
 			String sq4 = "update com_storeinfo set outNumber=?,AvailableNumber=?,GoodsName=?,GoodsDesc=?,GoodsStyle=?,MeasureUnit=?,Memo=? where goodscode=?";
 			Parameter.SqlParameter[] pp4 = new Parameter.SqlParameter[]
@@ -190,7 +187,6 @@ public class SystemGoodsinformOUTAction extends ActionInterface
 			try {
 				db.run(sq4,pp4);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			  String entity=request.getParameter("entity");
@@ -206,8 +202,6 @@ public class SystemGoodsinformOUTAction extends ActionInterface
 				
 				Goodsoutstoreitem goodsoutitemnew=new Goodsoutstoreitem(request.getParameter("COM_OUTSTOREITEM.OUTNO"));//本次修改物品的信息
 				String outnumnew=Integer.toString(Integer.parseInt(gsinew.getOutNumber())+Integer.parseInt(goodsoutitemnew.getGOODSNUMBER()));
-				//String outcount=Integer.toString(Integer.parseInt(gsinew.getOutCount())+1);
-				//String incount=Integer.toString(Integer.parseInt(gsi.getTotalNumber())+1);
 				String AvailableNumbernew=Integer.toString(Integer.parseInt(gsinew.getAvailableNumber())-Integer.parseInt(goodsoutitemnew.getGOODSNUMBER()));
 				String sq4new = "update com_storeinfo set outNumber=?,AvailableNumber=?,GoodsName=?,GoodsDesc=?,GoodsStyle=?,MeasureUnit=?,Memo=?,lastoutdate=to_date(?,'yyyy-mm-dd') where goodscode=?";
 				Parameter.SqlParameter[] pp4new = new Parameter.SqlParameter[]
@@ -216,7 +210,6 @@ public class SystemGoodsinformOUTAction extends ActionInterface
 				try {
 					db.run(sq4new,pp4new);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				res += "show('"+res0+"');";
@@ -226,21 +219,13 @@ public class SystemGoodsinformOUTAction extends ActionInterface
 		}
 		else if (action!=null && action.equals("del"))
 		{
-			//String[] ids=request.getParameterValues("items");//批量删除
 			String[] ids=request.getParameterValues("outno");//
-			
 			Goodsoutstoreitem gse=new Goodsoutstoreitem();
-			//System.out.println("运行到这里");
-			
-			
-			
 			if(gse.Delete(ids[0]))//必须在删除之前更新库存内容
 			{
 				GoodsStoreEvent goodsse=new GoodsStoreEvent(request.getParameter("COM_OUTSTOREITEM.STOREEVENTNO"));//删除之后更新对应的事件信息
-				//System.out.println(request.getParameter("STOREEVENTNO"));
 				String number=Format.NullToZero(goodsse.getGoodsItemNum());
 				int newnumber=Integer.parseInt(number)-1;
-				//System.out.println(newnumber);
 				DBObject db = new DBObject();
 				String sql = "update com_storeevent set goodsitemnum=? where STOREEVENTNO=?";
 				Parameter.SqlParameter[] pp = new Parameter.SqlParameter[]
@@ -248,34 +233,19 @@ public class SystemGoodsinformOUTAction extends ActionInterface
 				try {
 					db.run(sql, pp);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
 				
-				res += "MessageBox.Show(null,'删除成功！',null,'LogOK',null,1,'删除成功');";
-				//res+="window.close();";
-				res += "window.open('../xtwh/goodsmanage/goodsinformOUTList.jsp?detail=0&StoreEventNo="+request.getParameter("COM_OUTSTOREITEM.STOREEVENTNO")+"','goodsinformOUTList');";
-				//res += "var rand=Math.floor(Math.random()*10000);";
-				//res +="var ccm=\""+request.getParameter("ParentOrgCode")+"\";";
-				//res += "parent.unittree.location.reload();";
-				//res += "window.open('../xtwh/system_unit/unit_list.jsp?sid='+rand+'&unitccm='+ccm,'_self');";
-				//RequestDispatcher rd=request.getRequestDispatcher("unitmanage.jsp");
-			    //rd.forward(request,response);
+				res += "alert('删除成功！');";
+				res += "window.open('../goodsmanage/goodsinformOUTList.jsp?detail=0&StoreEventNo="+request.getParameter("COM_OUTSTOREITEM.STOREEVENTNO")+"','goodsinformOUTList');";
+				
 			}
 			else
 			{
-				res += "MessageBox.Show(null,'删除失败！',null,'LogOK','Error',1,'删除失败，可能是有子单位请先删除子单位！');";
-				//res+="window.close();";
-				res += "window.open('../xtwh/goodsmanage/goodsinformOUTList.jsp?detail=0&StoreEventNo="+request.getParameter("COM_OUTSTOREITEM.STOREEVENTNO")+"','goodsinformOUTList');";
-				//res += "var rand=Math.floor(Math.random()*10000);";
-				//res +="var ccm=\""+request.getParameter("ParentOrgCode")+"\";";
-				//res += "window.open('../xtwh/system_unit/unit_list.jsp?sid='+rand+'&unitccm='+ccm,'_self');";
-			}
-		}
-		else
-		{
-
+				res += "alert('删除失败，可能是有子单位请先删除子单位！');";
+				res += "window.open('../goodsmanage/goodsinformOUTList.jsp?detail=0&StoreEventNo="+request.getParameter("COM_OUTSTOREITEM.STOREEVENTNO")+"','goodsinformOUTList');";
+				}
 		}
 		return res;
 	}

@@ -118,8 +118,7 @@ public class ComponentUtil {
 					display_width = this.Width;
 				if (display_height == null)
 					display_height = this.Height_normal;
-
-				sBuilder.append("<input type='Wdate' onfocus=\"new WdatePicker(this,null,false,'whyGreen')\"     name=\"" + item_name
+			sBuilder.append("<input type='Wdate' onfocus=\"new WdatePicker({lang:'zh-cn'})\"     name=\"" + item_name
 						+ "\" id=\"" + item_name + "\" class=\"" + display_style + "\" style=\"width:" + display_width + ";height="
 						+ display_height + "\" value=\"" + default_value + "\"");
 				sBuilder.append(">");

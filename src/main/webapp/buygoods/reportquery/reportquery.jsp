@@ -23,7 +23,7 @@ String basePath = request.getScheme()+"://"+
 <script type="text/javascript" src="<%=path%>/jscomponent/jquery/jquery-1.8.0.min.js"></script>
 <script type="text/javascript" src="<%=path%>/jscomponent/easyui/jquery.easyui.min.js"></script>
 
-<script language="javascript" src="<%=path%>/js/DatePicker/WdatePicker.js"></script>
+<script language="javascript" src="<%=path%>/js/MyDatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="<%=path%>/jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
 </head>
 <%
@@ -38,13 +38,12 @@ CodeDictionary cd = new CodeDictionary();
 
    <form name="form1" id="form1" method="post" action="../../servlet/PageHandler">
    <div data-options="region:'north'" style="height:400px">
-			<div data-options="region:'north'" style="height:20px">
-				<label>查询时间段</label> <input name="starttime" type="Wdate"
-					class="input1" id="starttime" size="20" maxlength="20"
-					onfocus="new WdatePicker(this,null,false,'whyGreen')"> --
-				<input name="endtime" type="Wdate" class="input1" id="endtime"
-					size="20" maxlength="20"
-					onfocus="new WdatePicker(this,null,false,'whyGreen')"> <label>申报模式</label>
+			<div data-options="region:'north'" style="height:30px">
+				 <label>查询时间段</label> 
+				<input name="starttime" type="Wdate" class="input1" id="starttime" onfocus="new WdatePicker({lang:'zh-cn'})"  value="" size="20"  maxlength="30">
+				--
+				 <input name="endtime" type="Wdate" class="input1" id="endtime" onfocus="new WdatePicker({lang:'zh-cn'})"  value="" size="20"  maxlength="30">
+				   <label>申报模式</label>
 				<select id="cc" name="dept" style="width:200px; ">
 					<%=cd.getselectItem("BUYMODE")%>
 				</select> <a id="btn_search" href="#" class="easyui-linkbutton"

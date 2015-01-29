@@ -12,11 +12,11 @@ String StoreEventNo=Format.NullToBlank(request.getParameter("StoreEventNo"));
 
 <META http-equiv="Content-Type" content="text/html; charset=GB18030">
 <META http-equiv="Content-Style-Type" content="text/css">
-<link rel="stylesheet" href="../../images/ztree/zTreeStyle.css" type="text/css">
-<link rel="stylesheet" type="text/css" href="../../css/style.css">
-<script type="text/javascript" src="../../js/ztree/jquery-1.4.4.min.js"></script>
-<script type="text/javascript" src="../../js/ztree/jquery.ztree.core-3.5.js"></script>
-<script type="text/javascript" src="../../js/ztree/jquery.ztree.excheck-3.5.min.js"></script>
+<link rel="stylesheet" href="../images/ztree/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="../css/style.css">
+<script type="text/javascript" src="../js/ztree/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../js/ztree/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../js/ztree/jquery.ztree.excheck-3.5.min.js"></script>
 <SCRIPT type="text/javascript">
 function setCheck() {
 		var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
@@ -69,7 +69,7 @@ function select()
 <TITLE>这是一颗树</TITLE>
 </HEAD>
 <BODY bgcolor="#DBECFE" leftmargin="0" rightmargin="0" topmargin="0" bottommargin="0">
-<form name="form1" id="form1" method="post" action="../../servlet/PageHandler">
+<form name="form1" id="form1" method="post" action="../servlet/PageHandler">
 <div style="overflow-x: auto; overflow-y: auto; height: 480px;">
 	<ul id="treeDemo" class="ztree"></ul>
 </div>

@@ -71,8 +71,7 @@ public class BuyGoodsInAction extends ActionInterface{
 			String[] items=request.getParameter("goods").split(",");
 			String buymode=request.getParameter("buymode");
 			UserInfo user=(UserInfo)request.getSession().getAttribute("UserInfo");
-			
-			String eventno=BuyGoodsApp.appGetEventno(items,buymode,user.getStaffcode());
+			String eventno=BuyGoodsApp.appGetEventno(items, buymode, user.getStaffcode());
 		    res0=BuyGoodsApp.app(items, eventno,buymode);
 			res += "show('"+res0+"');";
 			res += "var rand=Math.floor(Math.random()*10000);";

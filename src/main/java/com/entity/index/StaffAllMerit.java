@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 import com.common.CodeDictionary;
 import com.common.Format;
 import com.dao.system.StaffDao;
@@ -107,7 +108,7 @@ public boolean insert(StaffAllMerit staffAllMerit){
 			conn.rollback();
 			
 		} catch (Exception e2) {
-			// TODO: handle exception
+			e2.printStackTrace();
 		}
 		return false;
 	}
@@ -275,10 +276,139 @@ public String getMeritJson(String year,String period,String flag){
 public String getMeritJson(String year,String period,String flag,String companycode){
 	return getMeritJson(year,period,flag,companycode,"");
 }
+public String getIndividualMeritJson(String year,String period,String end_mon,String staffcode){
+	try {
+		if(end_mon.equals("")||end_mon==null||end_mon.equals("null")){
+			end_mon=period;
+		}
+		String sql="select * from (select a.*,(select orgcode from base_orgmember where positioncode=a.positioncode and staffcode=a.staffcode) as stafforg from tbm_staffallmerit a) where   year=? and  period>=? and period<=?  and memo=? and staffcode=?";
+		Parameter.SqlParameter[] pp=new Parameter.SqlParameter[]{
+			new Parameter.String(year),
+			new Parameter.String(period),
+			new Parameter.String(end_mon),
+			new Parameter.String("staff"),
+			new Parameter.String(staffcode)
+		};
+		DBObject db=new DBObject();
+		DataTable dt=db.runSelectQuery(sql, pp);
+		StringBuilder sbuilder=new StringBuilder();
+		sbuilder.append("[");
+		if(dt!=null&&dt.getRowsCount()>=1){
+			DataRow row=null;
+			for(int i=0;i<dt.getRowsCount();i++){
+				row=dt.get(i);
+				StaffAllMerit staffAllMerit=getStaffAllMeritByRow(row);
+				String depart=CodeDictionary.syscode_traslate("base_org", "orgcode", "orgname",staffAllMerit.getDepartcode());
+				String company=CodeDictionary.syscode_traslate("base_org", "orgcode", "orgname",staffAllMerit.getCompanycode());
+				sbuilder.append("{");
+				//sbuilder.append("\"company\":").append("\""+company+"\"").append(",");
+				//sbuilder.append("\"depart\":").append("\""+depart+"\"").append(",");
+				//sbuilder.append("\"stafforg\":").append("\""+CodeDictionary.syscode_traslate("base_org", "orgcode", "orgname",staffAllMerit.getStafforg()).replace(depart, "")+"\"").append(",");
+		       // sbuilder.append("\"position\":").append("\""+CodeDictionary.syscode_traslate("base_position", "positioncode", "positionname",staffAllMerit.getPositioncode())+"\"").append(",");
+	           // sbuilder.append("\"name\":").append("\""+CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname",staffAllMerit.getStaffcode())+"\"").append(",");
+				sbuilder.append("\"mon\":").append("\""+MonthCovert.getMonth(row.getString("period"))+"\"").append(",");
+				sbuilder.append("\"companymerit\":").append("\""+staffAllMerit.getCvalue()+"\"").append(",");
+				sbuilder.append("\"departmerit\":").append("\""+staffAllMerit.getDvalue()+"\"").append(",");
+				sbuilder.append("\"keyindexscore\":").append("\""+staffAllMerit.getKeyindexscore()+"\"").append(",");
+				sbuilder.append("\"baseindexscore\":").append("\""+staffAllMerit.getBaseindexscore()+"\"").append(",");
+				sbuilder.append("\"commindexscore\":").append("\""+staffAllMerit.getCommindexscore()+"\"").append(",");
+				sbuilder.append("\"othermerit\":").append("\""+staffAllMerit.getOtherindexscore()+"\"").append(",");
+				sbuilder.append("\"addscore\":").append("\""+staffAllMerit.getChangevalue()+"\"").append(",");
+				sbuilder.append("\"staffallmerit\":").append("\""+staffAllMerit.getStaffallmerit()+"\"");
+				sbuilder.append("}").append(",");
+			}
+			sbuilder.delete(sbuilder.length()-1, sbuilder.length());
+			
+		}
+		sbuilder.append("]");
+		return sbuilder.toString();
+	} catch (Exception e) {
+		e.printStackTrace();
+		return "[]";
+	}
+}
+//通过返回的数据行数据row构造StaffAllMerit对象
+public StaffAllMerit getStaffAllMeritByRow(DataRow row){
+	try {
+		StaffAllMerit staffAllMerit=new StaffAllMerit();
+		staffAllMerit.setRecno(row.getString("recno"));
+		staffAllMerit.setYear(year);
+		staffAllMerit.setCompanycode(row.getString("companycode"));
+		staffAllMerit.setDepartcode(row.getString("departcode"));
+		staffAllMerit.setStaffcode(row.getString("staffcode"));
+		staffAllMerit.setPositioncode(row.getString("positioncode"));
+		staffAllMerit.setGroupno(row.getString("groupno"));
+		staffAllMerit.setAllmeritfunc(row.getString("allmeritfunc"));
+		staffAllMerit.setStaffallmerit(Double.parseDouble(row.getString("staffallmerit")));
+		staffAllMerit.setPeriod(period);
+		staffAllMerit.setCvalue(Double.parseDouble(row.getString("cvalue")));
+		staffAllMerit.setDvalue(Double.parseDouble(row.getString("dvalue")));
+		staffAllMerit.setSvalue(Double.parseDouble(row.getString("svalue")));
+		staffAllMerit.setChangevalue(Double.parseDouble(Format.NullToZero(row.getString("changevalue"))));
+		staffAllMerit.setKeyindexscore(Double.parseDouble(Format.NullToZero(row.getString("keyindexscore"))));
+		staffAllMerit.setBaseindexscore(Double.parseDouble(Format.NullToZero(row.getString("baseindexscore"))));
+		staffAllMerit.setCommindexscore(Double.parseDouble(Format.NullToZero(row.getString("commindexscore"))));
+		staffAllMerit.setOtherindexscore(Double.parseDouble(Format.NullToZero(row.getString("otherindexscore"))));
+		staffAllMerit.setMemo(row.getString("memo"));
+		staffAllMerit.setStafforg(row.getString("stafforg"));
+		return staffAllMerit;
+	} catch (Exception e) {
+		e.printStackTrace();
+		return null;
+	}
+	
+}
+public String getDepartMeritJson(String year,String period,String end_mon,String companycode,String departcode){
+	try {
+		if(end_mon.equals("")||end_mon==null||end_mon.equals("null")){
+			end_mon=period;
+		}
+		String filtercodition="companycode='"+companycode+"'  and  departcode='"+departcode+"'";
+		String sql="select * from (select a.*,(select orgcode from base_orgmember where positioncode=a.positioncode and staffcode=a.staffcode) as stafforg from tbm_staffallmerit a) where   year=? and  period>=? and period<=?  and memo=? and "+filtercodition+" order by companycode,departcode,stafforg,positioncode,staffcode";
+		Parameter.SqlParameter[] pp=new Parameter.SqlParameter[]{
+			new Parameter.String(year),
+			new Parameter.String(period),
+			new Parameter.String(end_mon),
+			new Parameter.String("depart")
+		};
+		DBObject db=new DBObject();
+		DataTable dt=db.runSelectQuery(sql, pp);
+		StringBuilder sbuilder=new StringBuilder();
+		sbuilder.append("[");
+		if(dt!=null&&dt.getRowsCount()>=1){
+			DataRow row=null;
+			for(int i=0;i<dt.getRowsCount();i++){
+				row=dt.get(i);
+				StaffAllMerit staffAllMerit=getStaffAllMeritByRow(row);
+				String depart=CodeDictionary.syscode_traslate("base_org", "orgcode", "orgname",staffAllMerit.getDepartcode());
+				String company=CodeDictionary.syscode_traslate("base_org", "orgcode", "orgname",staffAllMerit.getCompanycode());
+				sbuilder.append("{");
+				sbuilder.append("\"depart\":").append("\""+depart+"\"").append(",");
+				sbuilder.append("\"company\":").append("\""+company+"\"").append(",");
+				sbuilder.append("\"mon\":").append("\""+MonthCovert.getMonth(row.getString("period"))+"\"").append(",");
+				sbuilder.append("\"keyindexscore\":").append("\""+staffAllMerit.getKeyindexscore()+"\"").append(",");
+				sbuilder.append("\"baseindexscore\":").append("\""+staffAllMerit.getBaseindexscore()+"\"").append(",");
+				sbuilder.append("\"commindexscore\":").append("\""+staffAllMerit.getCommindexscore()+"\"").append(",");
+				sbuilder.append("\"otherindexscore\":").append("\""+staffAllMerit.getOtherindexscore()+"\"").append(",");
+				sbuilder.append("\"addscore\":").append("\""+staffAllMerit.getChangevalue()+"\"").append(",");
+				sbuilder.append("\"staffallmerit\":").append("\""+staffAllMerit.getStaffallmerit()+"\"");
+				sbuilder.append("}").append(",");
+			}
+			sbuilder.delete(sbuilder.length()-1, sbuilder.length());
+			
+		}
+		sbuilder.append("]");
+		return sbuilder.toString();
+	} catch (Exception e) {
+		e.printStackTrace();
+		return "[]";
+	}
+}
 public String getMeritJson(String year,String period,String flag,String companycode,String departcode){
 	try {
 		List<StaffAllMerit> staffAllMerits=getAllMerit(year, period,flag,companycode,departcode);
 		StringBuilder sbuilder=new StringBuilder();
+		
 		sbuilder.append("[");
 		for(int i=0;i<staffAllMerits.size();i++){
 		//for(StaffAllMerit staffAllMerit:staffAllMerits){
@@ -506,7 +636,7 @@ public boolean changescore(double changescore,String recno){
 			conn.rollback();
 			
 		} catch (Exception e2) {
-			// TODO: handle exception
+			e2.printStackTrace();
 		}
 		return false;
 	}

@@ -4,45 +4,38 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 String goodscode=Format.NullToBlank(request.getParameter("goodscode"));
-
-if (goodscode.equals("")) goodscode="WF";
+String styleIn=Format.NullToBlank(request.getParameter("styleIn"));
+String styleOut=Format.NullToBlank(request.getParameter("styleOut"));
+String department=Format.NullToBlank(request.getParameter("department"));
+String startdate=Format.NullToBlank(request.getParameter("startdate"));
+String enddate=Format.NullToBlank(request.getParameter("enddate"));
 %>
 <HTML>
 <HEAD>
 <TITLE>四川省南充烟草公司</TITLE>
-<link rel="stylesheet" type="text/css" href="../../css/style.css">
+<link rel="stylesheet" type="text/css" href="../css/style.css">
 <META http-equiv=Content-Type content="text/html; charset=gb2312">
 <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
 </HEAD>
 <%
-	String name=request.getParameter("name");
 	GoodsStoreInfo goodsStore=new GoodsStoreInfo();
-	//Org og=new Org();
 	int page_no=Integer.parseInt(Format.NullToZero(request.getParameter("page_no")));
 	int per_page=((UserInfo)request.getSession().getAttribute("UserInfo")).getPerpage_half();
-	DataTable dt=goodsStore.getNextGoodsStoreInfo(page_no,per_page,goodscode);
-	DataTable dtcount=goodsStore.getAllNextGoodsStoreInfo(goodscode);
-	//System.out.println(dtcount.getRowsCount()+"nihaoasdjfhkjasdhfjkh");
+	DataTable dt=goodsStore.getStoreInfoSearch(page_no,per_page,styleIn,styleOut,goodscode,startdate,enddate,department);
+	DataTable dtcount=goodsStore.getAllNextGoodsStoreInfo(styleIn,styleOut,goodscode,startdate,enddate,department);
 	int pagecount=0;
 	if(dtcount.getRowsCount()%per_page==0)
 	    pagecount=dtcount.getRowsCount()/per_page;
 	else
 		pagecount=(dtcount.getRowsCount()/per_page)+1;
-	//String res=og.getTrack(goodscode,"");
 	String res="";
 	Orgmember orgmember=new Orgmember(((UserInfo)request.getSession().getAttribute("UserInfo")).getStaffcode());
 	String newcode=AutoCoding.Codingnolevel("com_storeevent","StoreEventNo","OUT",6);
-	//System.out.println(newcode);
 	String username=orgmember.getStaffname();
 	Org og=new Org(orgmember.getOrgCode());
 	String orgname=og.getName();
-	//System.out.println(pagecount);
-	/* DBObject db = new DBObject();
-	
-	String sql="select * from system_unit where unit_ccm like'"+ unitccm+"___' order by unit_ccm";
-	DataTable dt=db.runSelectQuery(sql); */
 %>
-<script language="javascript" src="../../js/public/select.js"></script>
+<script language="javascript" src="../js/public/select.js"></script>
 
 <script language="javascript">
 function F3()
@@ -161,7 +154,7 @@ function dele(orgcode)
 </script>
 <BODY class="mainbody" onLoad="this.focus()">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
-<form name="form1" id="form1" method="post" action="../../servlet/PageHandler">
+<form name="form1" id="form1" method="post" action="../servlet/PageHandler">
  <tr>
  <td colspan="3" valign="top" class="main_table_centerbg" align="left">
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -170,9 +163,9 @@ function dele(orgcode)
       </tr>
       
     </table>
-    <%
-		//out.print(dt.getRowsCount());
-		if (dt!=null && dt.getRowsCount()>0) {
+    <%if(dt==null||dt.getRowsCount()==0){
+    	out.print("符合查询条件记录不存在");
+    }else if (dt!=null && dt.getRowsCount()>0) {
 		TableUtil tableutil=new TableUtil();
 		tableutil.setDt(dt);
 	   out.print(tableutil.DrawTable());
@@ -184,8 +177,9 @@ function dele(orgcode)
           -->
           <td align="right">
           <%
-          String unitccmtemp="&goodscode="+goodscode;
-      	out.print(PageUtil.DividePage(page_no,pagecount,"goods_list.jsp",unitccmtemp));
+          String unitccmtemp="&goodscode="+goodscode+"&styleIn="+styleIn+"&styleOut="+styleOut+"&startdate="+startdate+"&enddate="+enddate+"&department="+department;
+         
+      	out.print(PageUtil.DividePage(page_no,pagecount,"goodsStore_list.jsp",unitccmtemp));
        %>
        </td>
        <input type="submit" name="Submit" value="提交" style="display:none">

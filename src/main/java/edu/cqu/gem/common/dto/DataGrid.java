@@ -1,7 +1,6 @@
 package edu.cqu.gem.common.dto;
 
 import java.util.List;
-
 import edu.cqu.gem.ncycoa.util.SystemUtils;
 
 

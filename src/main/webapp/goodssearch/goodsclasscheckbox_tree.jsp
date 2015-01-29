@@ -12,11 +12,11 @@ String StoreEventNo=Format.NullToBlank(request.getParameter("StoreEventNo"));
 
 <META http-equiv="Content-Type" content="text/html; charset=GB18030">
 <META http-equiv="Content-Style-Type" content="text/css">
-<link rel="stylesheet" href="../../images/ztree/zTreeStyle.css" type="text/css">
-<link rel="stylesheet" type="text/css" href="../../css/style.css">
-<script type="text/javascript" src="../../js/ztree/jquery-1.4.4.min.js"></script>
-<script type="text/javascript" src="../../js/ztree/jquery.ztree.core-3.5.js"></script>
-<script type="text/javascript" src="../../js/ztree/jquery.ztree.excheck-3.5.min.js"></script>
+<link rel="stylesheet" href="../images/ztree/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="../css/style.css">
+<script type="text/javascript" src="../js/ztree/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../js/ztree/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../js/ztree/jquery.ztree.excheck-3.5.min.js"></script>
 
 <SCRIPT type="text/javascript"> 
 function setCheck() {
@@ -53,8 +53,8 @@ function select()
             var nodes = zTree.getCheckedNodes(true);
  			var orgname,orgcode="";
             //alert(nodes.length);
- 			var styleIn="OUT";
- 			var styleOut="IN";
+ 			var styleIn="";
+ 			var styleOut="";
  
  
             for (var i = 0; i < nodes.length; i++) {
@@ -62,8 +62,7 @@ function select()
 	 				orgcode+=nodes[i].id+";";
             }        
             
-            var chkIn = document.getElementById("0"); 
-
+            var chkIn = document.getElementById("0");
 			if(chkIn.checked)
 				 styleIn="IN";
 			else
@@ -74,23 +73,30 @@ function select()
 			     styleOut="OUT";
 			else
 				 styleOut="IN";
+			if(!chkIn.checked&&!chkOUT.checked){
+				styleIn="IN";
+	 			styleOut="OUT";
+			}
 			//alert("styleIn:"+styleIn+"styleOut:"+styleOut);
             var department=document.getElementById("department").value;
            var startdate=document.getElementById("startdate").value;
             var enddate=document.getElementById("enddate").value;
-            
-            parent.document.getElementById("goodsStorelist").contentWindow.location.href="goodsStore_list.jsp?styleIn="+styleIn+"&styleOut="+styleOut+"&department="+department+"&startdate="+startdate+"&enddate="+enddate+"&goodscode="+orgcode+""; 
-           // window.open("goodsStore_list.jsp?styleIn="+styleIn+"&styleOut="+styleOut+"&department="+department+"&startdate="+startdate+"&enddate="+enddate+"&goodscode="+orgcode+"","goodsStorelist");
-	
+            if(enddate<startdate){
+            	alert("查询日期非法,请重新输入");
+            }else{
+            	 parent.document.getElementById("goodsStorelist").contentWindow.location.href="goodsStore_list.jsp?styleIn="+styleIn+"&styleOut="+styleOut+"&department="+department+"&startdate="+startdate+"&enddate="+enddate+"&goodscode="+orgcode+""; 
+                 
+            }
+           
 }		
 </SCRIPT>
 <TITLE>这是一颗树</TITLE>
-<!--<script type="text/javascript" src="../../js/DatePicker/WdatePicker.js"></script>
+<!--<script type="text/javascript" src="../js/DatePicker/WdatePicker.js"></script>
 -->
 
-<script type="text/javascript" src="../../js/MyDatePicker/WdatePicker.js"></script></HEAD>
+<script type="text/javascript" src="../js/MyDatePicker/WdatePicker.js"></script></HEAD>
 <BODY bgcolor="#DBECFE" leftmargin="0" rightmargin="0" topmargin="0" bottommargin="0">
-<form name="form1" id="form1" method="post" action="../../servlet/PageHandler">
+<form name="form1" id="form1" method="post" action="../servlet/PageHandler">
 <div>
 
 <fieldset>
