@@ -1,19 +1,20 @@
 package edu.cqu.gem.ncycoa.web.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import edu.cqu.gem.common.dto.DataGrid;
+import edu.cqu.gem.common.dto.QueryDescriptor;
+import edu.cqu.gem.common.util.dao.QueryUtils;
+import edu.cqu.gem.common.util.dao.TQOrder;
+import edu.cqu.gem.common.util.dao.TypedQueryBuilder;
 import edu.cqu.gem.ncycoa.domain.DataDictionary;
-import edu.cqu.gem.ncycoa.domain.DataDictionaryItem;
 import edu.cqu.gem.ncycoa.service.CommonService;
-import edu.cqu.gem.ncycoa.util.ConverterUtils;
 import edu.cqu.gem.ncycoa.util.SystemUtils;
 
 @Controller
@@ -26,45 +27,26 @@ public class CommonController {
 		return url;
 	}
 	
-	@RequestMapping("/init")
+	@RequestMapping("/dgtest")
+	public String dgTest(HttpServletRequest request) {
+		return "listtest";
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/dgdata")
 	@ResponseBody
-	public void init(HttpServletRequest request) {
-		
+	public void dgData(DataDictionary dict, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
+		QueryDescriptor<DataDictionary> cq = new QueryDescriptor<DataDictionary>(DataDictionary.class, dg);
 		CommonService commonService = SystemUtils.getCommonService(request);
 		
-		List<Map<String, Object>> oldDicts = commonService.findSetBySql("select * from system_tablecodemeta");
-		
-		List<DataDictionaryItem> dictItems = new ArrayList<DataDictionaryItem>();
-		for(Map<String, Object> oldDict : oldDicts) {
-			DataDictionary dict = new DataDictionary();
-			dict.setCode(oldDict.get("table_name").toString());
-			dict.setName(oldDict.get("table_title").toString());
-			dict.setType(oldDict.get("code_class").toString());
-			dict.setIsLoad(ConverterUtils.getInt(oldDict.get("isload"), 0) == 1 ? true : false);
-			
-			dictItems.clear();
-			List<Map<String, Object>> oldDictItems = commonService.findSetBySql("select * from system_tablecodemeta_col where table_name='" + oldDict.get("table_name").toString() + "'");
-			
-			for(Map<String, Object> oldDictItem : oldDictItems) {
-				DataDictionaryItem item = new DataDictionaryItem();
-				item.setCode(oldDictItem.get("code_id").toString());
-				item.setName(oldDictItem.get("code_name").toString());
-				item.setDictionary(dict);
-				
-				dictItems.add(item);
-			}
-			dict.setDictItems(dictItems);
-			commonService.addEntity(dict);
+		//查询条件组装器
+		TypedQueryBuilder<DataDictionary> tqBuilder = QueryUtils.getTQBuilder(dict, request.getParameterMap());
+		if (StringUtils.isNotEmpty(dg.getSort())) {
+			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
 		}
-		
-		List<Map<String, Object>> oldDictItems = commonService.findSetBySql("select * from system_tablecodemeta_col");
-		for(Map<String, Object> oldDictItem : oldDictItems) {
-			if(oldDictItem.get("pcode_id") != null && !oldDictItem.get("pcode_id").equals("")) {
-				DataDictionaryItem item = commonService.findEntityByProperty("code", oldDictItem.get("pcode_id"), DataDictionaryItem.class);
-				commonService.executeSql("update ncycoa_data_dict_itm set parent_id=? where item_code=?", item.getId(), oldDictItem.get("code_id"));
-			}
-		}
-		
+		cq.setTqBuilder(tqBuilder);
+		commonService.getDataGridReturn(cq, true);
+		TagUtil.datagrid(response, dg);
 	}
 	
 }

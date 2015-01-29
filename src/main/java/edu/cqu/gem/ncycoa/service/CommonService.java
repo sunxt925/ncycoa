@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import edu.cqu.gem.common.dto.DataGridReturn;
+import edu.cqu.gem.common.dto.QueryDescriptor;
+
 public interface CommonService {
 
 	public <T> T findEntityById(Object id, Class<T> clazz);
@@ -39,5 +42,7 @@ public interface CommonService {
 	public int executeSql(String sql, Map<String, Object> params);
 
 	public Object executeSqlReturnKey(String sql, Map<String, Object> params);
-
+	
+	public DataGridReturn getDataGridReturn(final QueryDescriptor cq, final boolean isOffset);
+	
 }

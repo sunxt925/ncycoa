@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,12 +29,22 @@ public class AuthInterceptor implements HandlerInterceptor {
 	}
 
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
-			Object arg2) throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
 		
-		String requestPath = request.getRequestURI() + "?" + request.getQueryString();
+		System.out.print(request.getRequestURL());
+		System.out.print(request.getRequestURI());
+		
+		String requestPath = request.getRequestURI();
+		if( StringUtils.isNotEmpty(request.getQueryString()) ) {
+			requestPath += "?" + request.getQueryString();
+		}
+		
 		if (requestPath.indexOf("&") > -1) {// 去掉其他参数
 			requestPath = requestPath.substring(0, requestPath.indexOf("&"));
+		}
+		
+		if (requestPath.indexOf(".") > -1) {// 去掉其他参数
+			requestPath = requestPath.substring(0, requestPath.indexOf("."));
 		}
 		requestPath = requestPath.substring(request.getContextPath().length() + 1);// 去掉项目路径
 		

@@ -17,11 +17,16 @@ import javax.persistence.TypedQuery;
  * 
  * @param <T> the class that is being queried for
  */
+/**
+ * @author Hui
+ *
+ * @param <T>
+ */
 public class TypedQueryBuilder<T> {
     
     protected Class<T> rootClass;
     protected String rootAlias;
-    protected List<TQRestriction> restrictions = new ArrayList<TQRestriction>();
+	protected List<TQRestriction> restrictions = new ArrayList<TQRestriction>();
     protected List<TQJoin> joins = new ArrayList<TQJoin>();
     protected List<TQOrder> orders = new ArrayList<TQOrder>();
     protected Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -177,6 +182,13 @@ public class TypedQueryBuilder<T> {
     public Map<String, Object> getParamMap() {
         return paramMap;
     }
+    
+    /**
+     * @return 根类别名
+     */
+    public String getRootAlias() {
+		return rootAlias;
+	}
     
 }
 

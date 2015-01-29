@@ -1,6 +1,6 @@
 package edu.cqu.gem.common.dto;
 
-public class ColumnValue {
+public class ValueMapper {
 	
 	private String name;
 	private String text;

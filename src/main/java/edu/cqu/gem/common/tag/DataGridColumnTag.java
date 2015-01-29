@@ -19,23 +19,19 @@ public class DataGridColumnTag extends TagSupport {
 	protected String align;
 	protected boolean sortable = true;
 	protected boolean checkbox;
-	protected String formatter;
-	protected boolean hidden = true;
+	protected String dateFormatter;
+	protected boolean hidden = false;			
 	protected String replace;
-	protected String treefield;
-	protected boolean image;
-	protected boolean query = false;
+	protected boolean image;		
+	protected String imageSize;					// 自定义图片显示大小
+	protected boolean query = false;			// 是否用该字段查询
 	private String queryMode = "single";		// 字段查询模式：single单字段查询；scope范围查询
-	// protected boolean autoLoadData = true; 	// 列表是否自动加载数据
-	private boolean frozenColumn = false; 		// 是否是冰冻列 默认不是
-	protected boolean bSearchable = true;
+	private boolean frozen = false; 		    // 是否是冰冻列 默认不是
 	protected String url;						// 自定义链接
 	protected String funname = "openwindow";	// 自定义函数名称
-	protected String arg;						// 自定义链接传入参数字段
 	protected String dictionary; 				// 数据字典组编码
 	protected String extend; 					// 扩展属性
 	protected String style; 					// Td的CSS
-	protected String imageSize;					// 自定义图片显示大小
 	protected String downloadName;				// 附件下载
 	private boolean autocomplete = false;		// 自动完成
 	private String extendParams;				// 扩展参数
@@ -51,27 +47,25 @@ public class DataGridColumnTag extends TagSupport {
 		dataGridColumn.setAlign(align);
 		dataGridColumn.setSortable(sortable);
 		dataGridColumn.setCheckbox(checkbox);
-		dataGridColumn.setDateFormatter(formatter);
+		dataGridColumn.setDateFormatter(dateFormatter);
 		dataGridColumn.setHidden(hidden);
 		dataGridColumn.setReplace(replace);
-		dataGridColumn.setTreefield(treefield);
 		dataGridColumn.setImage(image);
-		dataGridColumn.setImageSize(imageSize);
 		dataGridColumn.setQuery(query);
+		dataGridColumn.setQueryMode(queryMode);
+		dataGridColumn.setFrozen(frozen);
 		dataGridColumn.setUrl(url);
 		dataGridColumn.setFunname(funname);
-		dataGridColumn.setArg(arg);
-		dataGridColumn.setQueryMode(queryMode);
 		dataGridColumn.setDictionary(dictionary);
-		dataGridColumn.setFrozenColumn(frozenColumn);
 		dataGridColumn.setExtend(extend);
 		dataGridColumn.setStyle(style);
+		dataGridColumn.setImageSize(imageSize);
 		dataGridColumn.setDownloadName(downloadName);
 		dataGridColumn.setAutocomplete(autocomplete);
 		dataGridColumn.setExtendParams(extendParams);
 		
 		DataGridTag parent = (DataGridTag) findAncestorWithClass(this, DataGridTag.class);
-		parent.setColumn(dataGridColumn);
+		parent.addColumn(dataGridColumn);
 		return EVAL_PAGE;
 	}
 
@@ -83,10 +77,6 @@ public class DataGridColumnTag extends TagSupport {
 		this.imageSize = imageSize;
 	}
 
-	public void setArg(String arg) {
-		this.arg = arg;
-	}
-
 	public void setUrl(String url) {
 		this.url = url;
 	}
@@ -95,20 +85,12 @@ public class DataGridColumnTag extends TagSupport {
 		this.funname = funname;
 	}
 
-	public void setbSearchable(boolean bSearchable) {
-		this.bSearchable = bSearchable;
-	}
-
 	public void setQuery(boolean query) {
 		this.query = query;
 	}
 
 	public void setImage(boolean image) {
 		this.image = image;
-	}
-
-	public void setTreefield(String treefield) {
-		this.treefield = treefield;
 	}
 
 	public void setReplace(String replace) {
@@ -147,16 +129,12 @@ public class DataGridColumnTag extends TagSupport {
 		this.checkbox = checkbox;
 	}
 
-	public void setFormatter(String formatter) {
-		this.formatter = formatter;
+	public void setDateFormatter(String formatter) {
+		this.dateFormatter = formatter;
 	}
 
 	public void setHidden(boolean hidden) {
 		this.hidden = hidden;
-	}
-
-	public int doStartTag() throws JspTagException {
-		return EVAL_PAGE;
 	}
 
 	public void setDictionary(String dictionary) {
@@ -171,12 +149,12 @@ public class DataGridColumnTag extends TagSupport {
 		this.queryMode = queryMode;
 	}
 
-	public boolean isFrozenColumn() {
-		return frozenColumn;
+	public boolean isFrozen() {
+		return frozen;
 	}
 
-	public void setFrozenColumn(boolean frozenColumn) {
-		this.frozenColumn = frozenColumn;
+	public void setFrozen(boolean frozenColumn) {
+		this.frozen = frozenColumn;
 	}
 
 	public String getExtend() {
