@@ -381,7 +381,61 @@ public class Review {
 		}
 		return returnTask;
 	}
-	
+	/**
+	 * 对该员工进行考核的考核任务，目前只支持一个员工对应一个指标体系
+	 * @param staffcode
+	 * @param date
+	 * @return
+	 */
+	public ReviewTask getReviewTask(String staffcode, ReviewDate date){
+		ReviewTask returnTask = ReviewTask.INVALID_TASK;
+		List<ReviewableObj> returnValue = new ArrayList<ReviewableObj>();
+		String archcode = "";
+		try {
+			Calendar dateMin = Calendar.getInstance();
+			dateMin.set(date.getYear(), date.getMin() - 1, 1);
+			
+			Calendar dateMax = Calendar.getInstance();
+			dateMax.set(date.getYear(), date.getMax() - 1, 1);
+			
+			DBObject db = new DBObject();
+			String sql = "select * from tbm_indexarchuser where objectcode='" + staffcode + "' and objecttype='staff'";
+			DataTable dt = db.runSelectQuery(sql);
+			if (dt != null) {
+				for (int i = 0; i < dt.getRowsCount(); i++) {
+					DataRow r = dt.get(i);
+					Calendar startdate = Calendar.getInstance();
+					startdate.setTime(DateFormat.getDateInstance().parse(r.getString("startdate"))); 
+					startdate.add(Calendar.DAY_OF_MONTH, -startdate.get(Calendar.DAY_OF_MONTH) + 1);
+					
+					Calendar enddate = Calendar.getInstance(); 
+					enddate.setTime(DateFormat.getDateInstance().parse(r.getString("enddate")));
+					enddate.add(Calendar.DAY_OF_MONTH, -enddate.get(Calendar.DAY_OF_MONTH) + 1);
+					enddate.add(Calendar.MONTH, 1);
+					
+					if(dateMin.getTimeInMillis() > enddate.getTimeInMillis() || dateMax.getTimeInMillis() < startdate.getTimeInMillis()){
+						continue;
+					}
+					
+					String objcode = r.getString("objectcode");
+					archcode = r.getString("indexarchcode");
+					ReviewableObj obj = null;
+					obj = new StaffInfo(objcode);
+					returnValue.add(obj);
+				}
+			}
+			
+			if(returnValue.size() > 0){
+				returnTask = new ReviewTask(null, "staff");
+				returnTask.setDate(date);
+				returnTask.setReviewees(returnValue);
+				returnTask.setIndexArch(new Indexitem(archcode));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return returnTask;
+	}
 	public ReviewTask getReviewTask(ReviewDate date, String archcode){
 		return getReviewTask(date, archcode, getTaskType(archcode));
 	}

@@ -48,13 +48,7 @@ ComponentUtil cu=new ComponentUtil();
                     %></td>
                 </tr>
               
-                <tr>
-                    <td>回应日期:</td>
-                   <td><%
-                       out.print(cu.print("TBM_COMPLAINTREPLY", "REPLYDATE"));
-                    %></td>
-                </tr>
-                <tr>
+               <tr>
                     <td>回复材料附件:</td>
                    <td>
                      <input type="text" id="TBM_COMPLAINTREPLY.REPLYFILE" name="TBM_COMPLAINTREPLY.REPLYFILE">
@@ -70,12 +64,14 @@ ComponentUtil cu=new ComponentUtil();
              <input type="hidden" id="TBM_COMPLAINTREPLY.REPLYNO" name="TBM_COMPLAINTREPLY.REPLYNO" value="<%=IndexCode.getRecno("CR")%>">
             <input type="hidden" id="TBM_COMPLAINTREPLY.COMPLAINTNO" name="TBM_COMPLAINTREPLY.COMPLAINTNO" value="<%=complaintno%>">
             <input type="hidden" id="TBM_COMPLAINTREPLY.ENABLEDFLAG" name="TBM_COMPLAINTREPLY.ENABLEDFLAG" value="1">
+             <input type="hidden" id="TBM_COMPLAINTREPLY.REPLYDATE" name="TBM_COMPLAINTREPLY.REPLYDATE" value="<%=Format.getNowtime2()%>">
+            
              <input name="entity" id="entity" type="hidden" value="TBM_COMPLAINTREPLY"/>
              <input name="act" type="hidden" id="act" value="add">
              <input name="action_class" type="hidden" id="action_class" value="com.action.index.ComplaintReplyAction">
              <input type="submit" name="Submit" value="提交" style="display:none">
              <input type="reset" name="reset" value="重置" style="display:none">
-              <input type="button" id="btn_ok" style="display: none" onclick="ret()">
+              <input type="button" id="btn_ok" style="display: " onclick="ret()" value="提交">
         </form>
        
         

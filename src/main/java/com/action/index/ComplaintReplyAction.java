@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.action.ActionInterface;
 import com.common.EntityOperation;
+import com.entity.index.Complaint;
 
 public class ComplaintReplyAction extends ActionInterface{
 	@Override
@@ -19,8 +20,7 @@ public class ComplaintReplyAction extends ActionInterface{
 			String entity=request.getParameter("entity");
 			eo.setEntity(entity);
 			res0 = eo.Add(request);
-			
-			//res += "show('"+res0+"');";
+			new Complaint().modifyComplaint(request.getParameter("TBM_COMPLAINTREPLY.COMPLAINTNO"));
 			res += "window.close();";
 		}
 		return res;

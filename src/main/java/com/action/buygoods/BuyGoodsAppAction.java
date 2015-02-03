@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.action.ActionInterface;
 import com.business.BuyGoodsApp;
 import com.common.EntityOperation;
+import com.entity.system.UserInfo;
 
 public class BuyGoodsAppAction extends ActionInterface{
 	
@@ -43,7 +44,7 @@ public class BuyGoodsAppAction extends ActionInterface{
 			String entity=request.getParameter("entity");
 			eo.setEntity(entity);
 			
-			String[] itemsStrings=request.getParameterValues("items");
+			String[] itemsStrings=request.getParameter("goods").split(",");
 			
 			for(int i=0;i<itemsStrings.length;i++)
 			{
@@ -56,17 +57,19 @@ public class BuyGoodsAppAction extends ActionInterface{
 			}
 			res += "show('"+res0+"');";
 			res += "var rand=Math.floor(Math.random()*10000);";
-			res += "window.open('../buygoods/buygoodsapp.jsp?sid='+rand,'_self');";
+			res += "window.open('../buygoods/buygoodscommit/buygoodsapp.jsp?sid='+rand,'_self');";
 		}
 		else if(action != null && action.equals("application"))
 		{
-			String[] items=request.getParameterValues("items");
-			String buymode=request.getParameter("COM_BUYGOODSITEM.BUYMODE");
-			String eventno=BuyGoodsApp.appGetEventno(items,buymode);
+			String[] items=request.getParameter("goods").split(",");
+			String buymode=request.getParameter("buymode");
+			UserInfo user=(UserInfo)request.getSession().getAttribute("UserInfo");
+			
+			String eventno=BuyGoodsApp.appGetEventno(items,buymode,user.getStaffcode());
 		    res0=BuyGoodsApp.app(items, eventno,buymode);
 			res += "show('"+res0+"');";
 			res += "var rand=Math.floor(Math.random()*10000);";
-			res += "window.open('../buygoods/buygoodsapp.jsp?sid='+rand,'_self');";
+			res += "window.open('../buygoods/buygoodscommit/buygoodsapp.jsp?sid='+rand,'_self');";
 		}
 		
 		return res;

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=GB18030" language="java" import="net.sf.json.*,java.sql.*,com.db.*, java.io.PrintWriter,com.common.*,java.util.regex.Pattern,java.util.regex.Matcher,java.util.ArrayList"  errorPage="" %> 
+<%@ page contentType="text/html; charset=GB18030" language="java" import="java.sql.*,com.db.*, java.io.PrintWriter,com.common.*,java.util.regex.Pattern,java.util.regex.Matcher,java.util.ArrayList"  errorPage="" %> 
 
 <%
 	response.setContentType("text/html;charset=GB18030"); 

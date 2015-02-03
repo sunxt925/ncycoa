@@ -1,39 +1,46 @@
 package com.business;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import org.apache.log4j.Logger;
+
+import com.common.CodeDictionary;
 import com.common.Format;
 import com.db.DBObject;
 import com.db.DataRow;
 import com.db.DataTable;
 import com.db.Parameter;
+import com.entity.system.UserInfo;
 
 public class BuyReportItem {
 
-	public String ReportNo="";//	呈报记录序号
-	public String EventNo="";//	事件流水号
-	public String ProcjetCode="";//	物资类别代码(项目大类)
-	public String ProjectName="";//	项目名称
-	public String relatedOrgCode="";//	实施部门
-	public String DealMode="";//	实施方式
-	public float TotalCost=0;//	涉及金额
-	public String CheckContents="";//	审核内容
-	public String FirstAuditOrg="";//	初审单位
-	public String FirstAuditor="";//	初审人
-	public String FirstAuditOpinion	="";//初审意见
-	public String FirstAuditSummary="";//	初审摘要
-	public Date FirstAuditDate=null;//	初审日期
-	public String FirstAuditFlag="";//	初审标志
-	public String SecondAuditOrg="";//	二审单位
-	public String SecondAuditor="";//二审人
-	public String SecondAudiOpiniont="";//终审意见
-	public Date SecondAuditDate=null;//	二审日期
-	public String SecondAuditFlag="";//	二审标志
-	public String FinalAuditOpinion="";//宗申意见
-	public Date FinalAuditDate=null;//	终审日期
-	public String FinalAuditFlag="";//	终审标志
-	public String des="";//备注
-	public String summitflag="";//呈报标志
+	private Logger logger = Logger.getLogger(BuyReportItem.class);
+	private String ReportNo="";//	呈报记录序号
+	private String EventNo="";//	事件流水号
+	private String ProcjetCode="";//	物资类别代码(项目大类)
+	private String ProjectName="";//	项目名称
+	private String relatedOrgCode="";//	实施部门
+	private String DealMode="";//	实施方式
+	private float TotalCost=0;//	涉及金额
+	private String CheckContents="";//	审核内容
+	private String FirstAuditOrg="";//	初审单位
+	private String FirstAuditor="";//	初审人
+	private String FirstAuditOpinion	="";//初审意见
+	private String FirstAuditSummary="";//	初审摘要
+	private Date FirstAuditDate=null;//	初审日期
+	private String FirstAuditFlag="";//	初审标志
+	private String SecondAuditOrg="";//	二审单位
+	private String SecondAuditor="";//二审人
+	private String SecondAudiOpiniont="";//终审意见
+	private Date SecondAuditDate=null;//	二审日期
+	private String SecondAuditFlag="";//	二审标志
+	private String FinalAuditOpinion="";//宗申意见
+	private Date FinalAuditDate=null;//	终审日期
+	private String FinalAuditFlag="";//	终审标志
+	private String des="";//备注
+	private String summitflag="";//呈报标志
 	public BuyReportItem(){
 		
 	}
@@ -283,7 +290,303 @@ public class BuyReportItem {
 			return null;
 		}
 	}
-	
+	/**
+	 * 构造呈报列表数据
+	 * @return
+	 */
+	public String getBuyreportJson(){
+		return getBuyreportJson(false);
+	}
+    public String getBuyreportJson(boolean state){
+		try {
+			List<BuyReportItem> list = getBuyreportList(state);
+			StringBuilder sbuilder = new StringBuilder();
+			sbuilder.append("[");
+			if(list.size()>0){
+				for(BuyReportItem reportItem : list){
+					sbuilder.append("{");
+				
+					sbuilder.append("\"reportno\":").append("\""+reportItem.getReportNo()+"\"").append(",");
+					sbuilder.append("\"eventno\":").append("\""+reportItem.getEventNo()+"\"").append(",");
+					sbuilder.append("\"projectcode\":").append("\""+reportItem.getProcjetCode()+"\"").append(",");
+					sbuilder.append("\"projectname\":").append("\""+reportItem.getProjectName()+"\"").append(",");
+					sbuilder.append("\"relatedorgcode\":").append("\""+reportItem.getRelatedOrgCode()+"\"").append(",");
+					sbuilder.append("\"dealmode\":").append("\""+CodeDictionary.code_traslate("dealmode", reportItem.getDealMode())+"\"").append(",");
+					sbuilder.append("\"totalcost\":").append("\""+reportItem.getTotalCost()+"\"").append(",");
+					sbuilder.append("\"checkcontents\":").append("\""+reportItem.getCheckContents()+"\"").append(",");
+					sbuilder.append("\"firstauditorg\":").append("\""+reportItem.getFirstAuditOrg()+"\"").append(",");
+					sbuilder.append("\"firstauditor\":").append("\""+reportItem.getFirstAuditor()+"\"").append(",");
+					sbuilder.append("\"firstauditopinion\":").append("\""+reportItem.getFirstAuditOpinion()+"\"").append(",");
+					sbuilder.append("\"firstauditsummary\":").append("\""+reportItem.getFirstAuditSummary()+"\"").append(",");
+					sbuilder.append("\"firstauditdate\":").append("\""+Format.dateToStr(reportItem.getFirstAuditDate())+"\"").append(",");
+					sbuilder.append("\"firstauditflag\":").append("\""+reportItem.getFirstAuditFlag()+"\"").append(",");
+					sbuilder.append("\"secondauditorg\":").append("\""+reportItem.getSecondAuditOrg()+"\"").append(",");
+					sbuilder.append("\"secondauditor\":").append("\""+reportItem.getSecondAuditor()+"\"").append(",");
+					sbuilder.append("\"secondaudiopiniont\":").append("\""+reportItem.getSecondAudiOpiniont()+"\"").append(",");
+					sbuilder.append("\"secondauditdate\":").append("\""+Format.dateToStr(reportItem.getSecondAuditDate())+"\"").append(",");
+					sbuilder.append("\"secondauditflag\":").append("\""+reportItem.getSecondAuditFlag()+"\"").append(",");
+					sbuilder.append("\"finalauditopinion\":").append("\""+reportItem.getFinalAuditOpinion()+"\"").append(",");
+					sbuilder.append("\"finalauditdate\":").append("\""+Format.dateToStr(reportItem.getFinalAuditDate())+"\"").append(",");
+					sbuilder.append("\"des\":").append("\""+reportItem.getDes()+"\"").append(",");
+					sbuilder.append("\"summitflag\":").append("\""+reportItem.getSummitflag()+"\"").append(",");
+					sbuilder.append("\"op\":").append("\""+"<a href='#' onclick='modify()'>修改</a>"+" "+"<a href='#' onclick='detail()'>明细</a>"+"\"").append(",");
+					sbuilder.append("\"op_office\":").append("\""+"<a href='#' onclick='audit()'>审核</a>"+"\"");
+					
+					sbuilder.append("}");
+					sbuilder.append(",");
+				}
+				sbuilder.delete(sbuilder.length()-1, sbuilder.length());
+			}
+			
+			sbuilder.append("]");
+			return sbuilder.toString();
+		} catch (Exception e) {
+			return "";
+		}
+	}
+    /**
+	 * 构造呈报列表数据
+     * @param state
+     * @return
+     */
+    public List<BuyReportItem> getBuyreportList(boolean state){
+    	try {
+    		List<BuyReportItem> list=new ArrayList<BuyReportItem>();
+    		DBObject db = new DBObject();
+			DataTable dt=new DataTable();
+			if(!state)
+			{	
+				dt = db.runSelectQuery("select * from com_buyreportitem");//+ and relatedorgcode='orgcode'";
+			}else{
+				 dt = db.runSelectQuery("select * from com_buyreportitem where summitflag='0'");//+ and relatedorgcode='orgcode'";
+			}
+			if(dt!=null&&dt.getRowsCount()>=1){
+				DataRow r=null;
+				for(int i=0;i<dt.getRowsCount();i++){
+					r=dt.get(i);
+					BuyReportItem buyReportItem = new BuyReportItem();
+					buyReportItem.setReportNo(r.getString("reportno"));//	呈报记录序号
+					buyReportItem.setProcjetCode(r.getString("projectcode"));//	物资类别代码(项目大类)
+					buyReportItem.setProjectName(r.getString("projectname"));//	项目名称
+					buyReportItem.setRelatedOrgCode(r.getString("relatedorgcode"));//	实施部门
+					buyReportItem.setDealMode(r.getString("dealmode"));//	实施方式
+					buyReportItem.setTotalCost(Float.parseFloat(Format.NullToZero(r.getString("totalcost"))));//	涉及金额
+					buyReportItem.setCheckContents(r.getString("checkcontents"));//	审核内容
+					buyReportItem.setFirstAuditOrg(r.getString("firstauditorg"));//	初审单位
+					buyReportItem.setFirstAuditor(r.getString("firstauditor"));//	初审人
+					buyReportItem.setFirstAuditOpinion(r.getString("firstauditopinion"));//初审意见
+					buyReportItem.setFirstAuditSummary(r.getString("firstauditsummary"));//	初审摘要
+					buyReportItem.setFirstAuditDate(Format.strToDate(r.getString("firstauditdate")));//	初审日期
+					buyReportItem.setFirstAuditFlag(r.getString("firstauditflag"));//	初审标志
+					buyReportItem.setSecondAuditOrg(r.getString("secondauditorg"));//	二审单位
+					buyReportItem.setSecondAuditor(r.getString("secondauditor"));//	二审人SECONDAUDIOPINIONT
+					buyReportItem.setSecondAudiOpiniont(r.getString("secondaudiopiniont"));//	终审意见
+					buyReportItem.setSecondAuditDate(Format.strToDate(r.getString("secondauditdate")));//	终审日期
+					buyReportItem.setSecondAuditFlag(r.getString("secondauditflag"));//	二审标志
+					buyReportItem.setFinalAuditOpinion(r.getString("finalauditopinion"));//	宗申意见
+					buyReportItem.setFinalAuditDate(Format.strToDate(r.getString("finalauditdate")));//	终审日期
+					buyReportItem.setFinalAuditFlag(r.getString("finalauditflag"));//	终审标志
+					buyReportItem.setDes(r.getString("memo"));//备注
+					buyReportItem.setSummitflag(r.getString("summitflag"));//呈报标志
+					list.add(buyReportItem);
+				}
+				
+			}
+			return list;
+		} catch (Exception e) {
+			logger.info("查询呈报项出错");
+			return null;
+		}
+    }
+    /**
+     * 
+     * @param reportno
+     * @param projectcode
+     * @param auditflag
+     * @return
+     */
+    public String getBuyReportitemJson(String reportno,String projectcode,String auditflag){
+   		try {
+   			List<BuyGoodsItem> goodslist = getBuyReportitemlist(reportno,projectcode,auditflag);
+   			StringBuilder sbuilder = new StringBuilder();
+   			sbuilder.append("[");
+   			if(goodslist.size()>0){
+   				for(BuyGoodsItem goodsItem : goodslist){
+   					sbuilder.append("{");
+   					sbuilder.append("\"buyno\":").append("\""+goodsItem.getBuyNo()+"\"").append(",");
+   					sbuilder.append("\"projectname\":").append("\""+goodsItem.getProjectName()+"\"").append(",");
+   					sbuilder.append("\"goodscode\":").append("\""+goodsItem.getGoodsCode()+"\"").append(",");
+   					sbuilder.append("\"goodsname\":").append("\""+goodsItem.getGoodsName()+"\"").append(",");
+   					sbuilder.append("\"goodstyle\":").append("\""+goodsItem.getGoodsStyle()+"\"").append(",");
+   					sbuilder.append("\"goodsunit\":").append("\""+goodsItem.getGoodsUnit()+"\"").append(",");
+   					sbuilder.append("\"goodsnumber\":").append("\""+goodsItem.getGoodsNumber()+"\"").append(",");
+   					sbuilder.append("\"goodsprice\":").append("\""+goodsItem.getGoodsPrice()+"\"").append(",");
+   					sbuilder.append("\"totalcost\":").append("\""+goodsItem.getTotalCost()+"\"").append(",");
+   					sbuilder.append("\"buymode\":").append("\""+goodsItem.getBuyMode()+"\"").append(",");
+   					sbuilder.append("\"buyorgcode\":").append("\""+goodsItem.getBuyOrgCode()+"\"").append(",");
+   					sbuilder.append("\"needmonth\":").append("\""+Format.dateToStr(goodsItem.getNeedMonth())+"\"");
+   					sbuilder.append("}");
+   					sbuilder.append(",");
+   				}
+   				sbuilder.delete(sbuilder.length()-1, sbuilder.length());
+   			}
+   			
+   			sbuilder.append("]");
+   			return sbuilder.toString();
+   		} catch (Exception e) {
+   			return "";
+   			
+   		}
+   	}
+    /**
+     * 
+     * @param reportno
+     * @param projectcode
+     * @param auditflag
+     * @return
+     */
+   	public List<BuyGoodsItem> getBuyReportitemlist(String reportno,String projectcode,String auditflag){
+   		try {
+   			String sql="select a.* from com_buygoodsitem a ,com_buygoodsreportrelation b   where b.reportno='"+reportno+"'  and a.projectcode='"+projectcode+"'  and a.auditflag='"+auditflag+"' and a.eventno=b.eventno order by a.buyno";
+   			DBObject db = new DBObject();
+   			DataTable dt = db.runSelectQuery(sql);
+   			List<BuyGoodsItem> list=new ArrayList<BuyGoodsItem>();
+   			if(dt!=null&&dt.getRowsCount()>=1){
+   				DataRow r=null;
+   				for(int i=0;i<dt.getRowsCount();i++){
+   					r=dt.get(i);
+   					BuyGoodsItem buyGoodsItem=new BuyGoodsItem();
+   					buyGoodsItem.setBuyNo(r.getString("buyno"));
+   					buyGoodsItem.setEventNo(r.getString("eventno"));
+   					buyGoodsItem.setProjectCode(r.getString("projectcode"));
+   					buyGoodsItem.setProjectName(r.getString("projectname"));//	项目名称
+   					buyGoodsItem.setGoodsCode(r.getString("goodscode"));//物资品名代码
+   					buyGoodsItem.setGoodsName(r.getString("goodsname"));//	物资品名
+   					buyGoodsItem.setGoodsStyle(r.getString("goodsstyle"));//	规格型号
+   					buyGoodsItem.setGoodsUnit(r.getString("goodsunit"));//	计量单位
+   					buyGoodsItem.setBuyGoodsDesc(r.getString("buygoodsdesc"));//	说明
+   				
+   					
+   					buyGoodsItem.setGoodsPrice(Float.parseFloat(Format.NullToZero(r.getString("goodsprice"))));//	单价
+   					
+   					buyGoodsItem.setGoodsNumber(Integer.parseInt(Format.NullToZero(r.getString("goodsnumber"))));//	数量
+   					buyGoodsItem.setTotalCost(Float.parseFloat(Format.NullToZero(r.getString("totalcost"))));//	金额
+   					buyGoodsItem.setNeedMonth(Format.strToDate(r.getString("needmonth")));//	需求时间
+   					
+   					buyGoodsItem.setBuyMode(r.getString("buymode"));//	采购模式
+   					buyGoodsItem.setBuyOrgCode(r.getString("buyorgcode"));//	申请部门
+   					buyGoodsItem.setHandler(r.getString("handler"));//	经办人
+   					buyGoodsItem.setInputDate(Format.strToDate(r.getString("inputdate")));//	填写时间
+   					buyGoodsItem.setSummitDate(Format.strToDate(r.getString("summitdate")));//	提交时间
+   					buyGoodsItem.setSummitFlag(Integer.parseInt(Format.NullToZero(r.getString("summitflag"))));//	提交标志
+   					buyGoodsItem.setAuditOrgCode(r.getString("auditorgcode"));//	审核部门
+   					buyGoodsItem.setAuditOpinion(r.getString("auditopinion"));//	审核意见
+   					buyGoodsItem.setAuditFlag(r.getString("auditflag"));//	审核标志
+   					list.add(buyGoodsItem);
+   				}
+   			}
+   			return list;
+   		} catch (Exception e) {
+   			logger.info("获取采购物品列表出错");
+   			return null;
+   		}
+   	}
+   	/**
+   	 * 
+   	 * @param eventno
+   	 * @return
+   	 */
+   	public String getReportEventitemJson(String eventno){
+   		try {
+			List<BuyReportItem> reportItems = getReportEventitemlist(eventno);
+			StringBuilder sbuilder = new StringBuilder();
+			sbuilder.append("[");
+			if(reportItems.size()>0){
+				for(BuyReportItem reportItem : reportItems){
+					sbuilder.append("{");
+					sbuilder.append("\"reportno\":").append("\""+reportItem.getReportNo()+"\"").append(",");
+					sbuilder.append("\"eventno\":").append("\""+reportItem.getEventNo()+"\"").append(",");
+					sbuilder.append("\"projectcode\":").append("\""+reportItem.getProcjetCode()+"\"").append(",");
+					sbuilder.append("\"projectname\":").append("\""+reportItem.getProjectName()+"\"").append(",");
+					sbuilder.append("\"relatedorgcode\":").append("\""+reportItem.getRelatedOrgCode()+"\"").append(",");
+					sbuilder.append("\"dealmode\":").append("\""+reportItem.getDealMode()+"\"").append(",");
+					sbuilder.append("\"totalcost\":").append("\""+reportItem.getTotalCost()+"\"").append(",");
+					sbuilder.append("\"checkcontents\":").append("\""+reportItem.getCheckContents()+"\"").append(",");
+					sbuilder.append("\"firstauditorg\":").append("\""+reportItem.getFirstAuditOrg()+"\"").append(",");
+					sbuilder.append("\"firstauditor\":").append("\""+reportItem.getFirstAuditor()+"\"").append(",");
+					sbuilder.append("\"firstauditopinion\":").append("\""+reportItem.getFirstAuditOpinion()+"\"").append(",");
+					sbuilder.append("\"firstauditsummary\":").append("\""+reportItem.getFirstAuditSummary()+"\"").append(",");
+					sbuilder.append("\"firstauditdate\":").append("\""+Format.dateToStr(reportItem.getFirstAuditDate())+"\"").append(",");
+					sbuilder.append("\"firstauditflag\":").append("\""+reportItem.getFirstAuditFlag()+"\"").append(",");
+					sbuilder.append("\"secondauditorg\":").append("\""+reportItem.getSecondAuditOrg()+"\"").append(",");
+					sbuilder.append("\"secondauditor\":").append("\""+reportItem.getSecondAuditor()+"\"").append(",");
+					sbuilder.append("\"secondaudiopiniont\":").append("\""+reportItem.getSecondAudiOpiniont()+"\"").append(",");
+					sbuilder.append("\"secondauditdate\":").append("\""+Format.dateToStr(reportItem.getSecondAuditDate())+"\"").append(",");
+					sbuilder.append("\"secondauditflag\":").append("\""+reportItem.getSecondAuditFlag()+"\"").append(",");
+					sbuilder.append("\"finalauditopinion\":").append("\""+reportItem.getFinalAuditOpinion()+"\"").append(",");
+					sbuilder.append("\"finalauditdate\":").append("\""+Format.dateToStr(reportItem.getFinalAuditDate())+"\"").append(",");
+					sbuilder.append("\"des\":").append("\""+reportItem.getDes()+"\"").append(",");
+					sbuilder.append("\"summitflag\":").append("\""+CodeDictionary.code_traslate("summitflag", reportItem.getSummitflag())+"\"").append(",");
+					sbuilder.append("\"op\":").append("\""+"<a href='#' onclick='detail()'>明细</a>"+"\"");
+					sbuilder.append("}");
+					sbuilder.append(",");
+				}
+				sbuilder.delete(sbuilder.length()-1, sbuilder.length());
+			}
+			
+			sbuilder.append("]");
+			return sbuilder.toString();
+		} catch (Exception e) {
+			return "";
+		}
+   	}
+   	/**
+   	 * 
+   	 * @param eventno
+   	 * @return
+   	 */
+   	public List<BuyReportItem> getReportEventitemlist(String eventno){
+   		try {
+   			List<BuyReportItem> reportItems = new ArrayList<BuyReportItem>();
+   			DBObject db = new DBObject();
+			DataTable dt=db.runSelectQuery("select * from com_buyreportitem where eventno='"+eventno+"'");
+			if(dt!=null&&dt.getRowsCount()>=1){
+				DataRow r=null;
+				for(int i=0;i<dt.getRowsCount();i++){
+					r=dt.get(i);
+					BuyReportItem buyReportItem = new BuyReportItem();
+					buyReportItem.setReportNo(r.getString("reportno"));//	呈报记录序号
+					buyReportItem.setProcjetCode(r.getString("projectcode"));//	物资类别代码(项目大类)
+					buyReportItem.setProjectName(r.getString("projectname"));//	项目名称
+					buyReportItem.setRelatedOrgCode(r.getString("relatedorgcode"));//	实施部门
+					buyReportItem.setDealMode(r.getString("dealmode"));//	实施方式
+					buyReportItem.setTotalCost(Float.parseFloat(Format.NullToZero(r.getString("totalcost"))));//	涉及金额
+					buyReportItem.setCheckContents(r.getString("checkcontents"));//	审核内容
+					buyReportItem.setFirstAuditOrg(r.getString("firstauditorg"));//	初审单位
+					buyReportItem.setFirstAuditor(r.getString("firstauditor"));//	初审人
+					buyReportItem.setFirstAuditOpinion(r.getString("firstauditopinion"));//初审意见
+					buyReportItem.setFirstAuditSummary(r.getString("firstauditsummary"));//	初审摘要
+					buyReportItem.setFirstAuditDate(Format.strToDate(r.getString("firstauditdate")));//	初审日期
+					buyReportItem.setFirstAuditFlag(r.getString("firstauditflag"));//	初审标志
+					buyReportItem.setSecondAuditOrg(r.getString("secondauditorg"));//	二审单位
+					buyReportItem.setSecondAuditor(r.getString("secondauditor"));//	二审人SECONDAUDIOPINIONT
+					buyReportItem.setSecondAudiOpiniont(r.getString("secondaudiopiniont"));//	终审意见
+					buyReportItem.setSecondAuditDate(Format.strToDate(r.getString("secondauditdate")));//	终审日期
+					buyReportItem.setSecondAuditFlag(r.getString("secondauditflag"));//	二审标志
+					buyReportItem.setFinalAuditOpinion(r.getString("finalauditopinion"));//	宗申意见
+					buyReportItem.setFinalAuditDate(Format.strToDate(r.getString("finalauditdate")));//	终审日期
+					buyReportItem.setFinalAuditFlag(r.getString("finalauditflag"));//	终审标志
+					buyReportItem.setDes(r.getString("memo"));//备注
+					buyReportItem.setSummitflag(r.getString("summitflag"));//呈报标志
+					reportItems.add(buyReportItem);
+				}
+			}
+			return reportItems;
+		} catch (Exception e) {
+			logger.info("查询呈报项数据出错");
+			return null;
+		}
+   	}
 	//获取呈报事件项
 	public DataTable getReportEventItemlist(int pageno, int perpage,String eventno){
 		try {
@@ -437,12 +740,13 @@ public class BuyReportItem {
 		}
 	}
 	//呈报
-public static String Report(String[] str,String buymode,String auditflag){
+public static String Report(String[] str,String buymode,String auditflag,String staffcode){
 	try {
 		
 	
 	BuyGoodsItem buyGoodsItem=new BuyGoodsItem();
-	String eventno=BuyReportEvent.getEventno(str, buymode);
+	 
+	String eventno=BuyReportEvent.getEventno(str, buymode,staffcode);
 	String sql="update com_buygoodsitem set auditflag=? where buyno=?";
 	String sql2="update com_buyreportitem set summitflag=? ,eventno=?,firstauditflag=? where reportno=?";
 	for(int i=0;i<str.length;i++)

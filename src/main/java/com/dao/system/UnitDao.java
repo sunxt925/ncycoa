@@ -151,25 +151,33 @@ public class UnitDao {
 		}
 	}
 	public String getCompanytreeJson(String flag){
+		return getCompanytreeJson(flag, "");
+	}
+	public String getCompanytreeJson(String flag,String orgcode){
 		try {
 			DBObject db=new DBObject();
-			String sql="select * from BASE_ORG t where orgcode like 'NC.01%' and adminclass='0' order by orgcode";
+			if(orgcode.equals("")){
+				orgcode="NC.01";
+			}
+			String sql="select * from BASE_ORG t where orgcode like '"+orgcode+"%' and adminclass='0' order by orgcode";
 			DataTable dt=db.runSelectQuery(sql);
 			StringBuilder sb=new StringBuilder();
 			sb.append("[");
 			if(dt!=null&&dt.getRowsCount()>=1){
-				sb.append("{");
-				sb.append("\"id\":").append("\"NC.00\"").append(",");
-				sb.append("\"orgcode\":").append("\"NC.00\"").append(",");
-				sb.append("\"orgname\":").append("\"市局公司部门\"").append(",");
-				   if(flag.equals("s")){
-				      sb.append("\"text\":").append("\"市局公司部门\"").append(",");
-				      sb.append("\"children\":").append(getCompanyChild("NC.00"));
-				   }else {
-					  sb.append("\"text\":").append("\"市局公司部门\"");
-				   }
-				sb.append("}");
-				sb.append(",");
+				if(orgcode.equals("NC.01")){
+					sb.append("{");
+					sb.append("\"id\":").append("\"NC.00\"").append(",");
+					sb.append("\"orgcode\":").append("\"NC.00\"").append(",");
+					sb.append("\"orgname\":").append("\"市局公司部门\"").append(",");
+					   if(flag.equals("s")){
+					      sb.append("\"text\":").append("\"市局公司部门\"").append(",");
+					      sb.append("\"children\":").append(getCompanyChild("NC.00"));
+					   }else {
+						  sb.append("\"text\":").append("\"市局公司部门\"");
+					   }
+					sb.append("}");
+					sb.append(",");
+				}
 				DataRow row=null;
 				for(int i=0;i<dt.getRowsCount();i++){
 					row=dt.get(i);
@@ -177,11 +185,11 @@ public class UnitDao {
 					sb.append("\"id\":").append("\""+row.getString("orgcode")+"\"").append(",");
 					sb.append("\"orgcode\":").append("\""+row.getString("orgcode")+"\"").append(",");
 					sb.append("\"orgname\":").append("\""+row.getString("orgname")+"\"").append(",");
-					if(flag.equals("s")){
-						sb.append("\"text\":").append("\""+row.getString("orgname")+"\"").append(",");
-						sb.append("\"children\":").append(getCompanyChild(row.getString("orgcode")));
+					   if(flag.equals("s")){
+						  sb.append("\"text\":").append("\""+row.getString("orgname")+"\"").append(",");
+						  sb.append("\"children\":").append(getCompanyChild(row.getString("orgcode")));
 					   }else {
-						 sb.append("\"text\":").append("\""+row.getString("orgname")+"\"");
+						  sb.append("\"text\":").append("\""+row.getString("orgname")+"\"");
 					   }
 					sb.append("}");
 					sb.append(",");

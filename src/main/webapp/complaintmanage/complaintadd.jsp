@@ -32,10 +32,10 @@ ComponentUtil cu=new ComponentUtil();
 <body>
 <center>
     <div style="margin:0px 0;"></div>
-    <div class="easyui-panel"  style="width:900px;padding:10px 0;margin:5px 0;">
+    <div class="easyui-panel"  style="width:500px;padding:10px 0;margin:5px 0;">
         <div style="padding:10px 60px 20px 60px">
-       <!--  <form name="form1" id="form1"  method="post" action="../servlet/PageHandler">
-         -->    <table cellpadding="20">
+         <form name="form1" id="form1"  method="post" action="../servlet/PageHandler">
+            <table cellpadding="20">
                 <tr>
                     <td>申诉标题:</td>
                     <td><%
@@ -55,12 +55,7 @@ ComponentUtil cu=new ComponentUtil();
                        out.print(cu.print("TBM_COMPLAINT", "COMPLAINTREASON"));
                     %></td>
                 </tr>
-                <tr>
-                    <td>申诉日期:</td>
-                   <td><%
-                       out.print(cu.print("TBM_COMPLAINT", "COMPLAINTDATE"));
-                    %></td>
-                </tr>
+                
                 <tr>
                     <td>申诉材料附件:</td>
                    <td>
@@ -75,41 +70,43 @@ ComponentUtil cu=new ComponentUtil();
                     %></td>
                 </tr>
             </table>
-            
-            <input type="hidden" id="TBM_COMPLAINT.COMPLAINTNO" name="TBM_COMPLAINT.COMPLAINTNO" value="<%=IndexCode.getRecno("CM")%>">
+            <input type="button" id="btn_ok" style="display: " onclick="ret()" value="save">
+		   <input type="hidden" id="TBM_COMPLAINT.COMPLAINTNO" name="TBM_COMPLAINT.COMPLAINTNO" value="<%=IndexCode.getRecno("CM")%>">
             <input type="hidden" id="TBM_COMPLAINT.COMPLAINTERCODE" name="TBM_COMPLAINT.COMPLAINTERCODE" value="<%=u.getStaffcode()%>">
-            <input type="hidden" id="TBM_COMPLAINT.ENABLEDFLAG" name="TBM_COMPLAINT.ENABLEDFLAG" value="1">
+            <input type="hidden" id="TBM_COMPLAINT.ENABLEDFLAG" name="TBM_COMPLAINT.ENABLEDFLAG" value="0">
+            <input type="hidden" id="TBM_COMPLAINT.COMPLAINTDATE" name="TBM_COMPLAINT.COMPLAINTDATE" value="<%=Format.getNowtime2()%>">
+            
             <input name="entity" id="entity" type="hidden" value="TBM_COMPLAINT"/>
              <input name="act" type="hidden" id="act" value="add">
              <input name="action_class" type="hidden" id="action_class" value="com.action.index.ComplaintAction">
-             <input type="submit" name="Submit" value="提交" style="display:none">
+             <input id="sss" type="submit" name="Submit" value="提交" style="display:none">
              <input type="reset" name="reset" value="重置" style="display:none">
-       <!--  </form>
-        --> <div style="text-align:center;padding:5px">
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">提交</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">取消</a>
-        </div>
-      
+             
+       </form>
+        
         </div>
     </div>
     <script>
-        function submitForm(){
-        	if(sumbit_check())
-	   	    {
-	    			 document.all("Submit").click();
-	   	   	  
-	   	    }
+    
+      function ret(){
+    	  var api = frameElement.api;
+ 		   if(sumbit_check())
+	   	     {       
+ 			   document.all("Submit").click();
+ 			   (api.data)({code:"refresh"});
+ 			   window.close();
+	   	     }
+ 		  
         }
-        function clearForm(){
-        	document.all("reset").click();
-        }
+        
         $("#btn_uploadfile").click(function(){
         	createwindow("文件上传","complaintmanage/fileupload.jsp",350,130);
         	    });
         function createwindow(title, url, width, height) {
-    		
-    		$.dialog({
+        	var api = frameElement.api, W = api.opener;
+    		 W.$.dialog({
     			data:returnValue,
+    			id:'CLHG1976D',
     			content : 'url:' + url,
     			lock : true,
     			width : width,
@@ -123,9 +120,11 @@ ComponentUtil cu=new ComponentUtil();
     			},
     			cancelVal : '关闭',
     			cancel : true/* 为true等价于function(){} */
-    		});}
+    		}); 
+    		}
         function returnValue(data){
            document.getElementById("TBM_COMPLAINT.ATTACHEDFILE").value=data.code;
+           
        }
     </script>
 </body>

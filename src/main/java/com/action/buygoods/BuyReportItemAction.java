@@ -48,15 +48,15 @@ public class BuyReportItemAction extends ActionInterface{
 			String entity=request.getParameter("entity");
 			eo.setEntity(entity);
 			
-			String[] itemsStrings=request.getParameterValues("items");
+			String[] itemsStrings=request.getParameter("items").split(",");
 			String reportno=request.getParameter("reportno");
+			String projectcode=request.getParameter("projectcode");
 				for(int i=0;i<itemsStrings.length;i++)
 				{
 					BuyGoodsItem.deleteReportgoods(itemsStrings[i]);
 				}
-				//res += "show('"+res0+"');";
 				res += "var rand=Math.floor(Math.random()*10000);";
-				res += "window.open('../buygoods/buyreportitemlist.jsp?reportno="+reportno+"&sid='+rand,'_self');";
+				res += "window.open('../buygoods/reportmanage/reportitemlist.jsp?reportno="+reportno+"&projectcode="+projectcode+"&sid='+rand,'_self');";
 			
 			
 			
@@ -64,23 +64,22 @@ public class BuyReportItemAction extends ActionInterface{
 		//手动增加呈报物资
 		else if(action != null && action.equals("add_goods"))
 		{
-			String[] itemsStrings=request.getParameterValues("items");
+			String[] itemsStrings=request.getParameter("items").split(",");
 			String reportno=request.getParameter("reportno");
 			res0=BuyReportItem.AddReportItem(itemsStrings, reportno);
-			
 			res += "show('"+res0+"');";
 			res += "var rand=Math.floor(Math.random()*10000);";
 			res +="window.close();";
-			//res += "window.open('../buygoods/buyreportitemlist.jsp?reportno="+reportno+"&sid='+rand,'_self');";
-		
 		}
 		//归口部门审核
 		else if(action != null && action.equals("audit"))
 		{
-			String[] itemsStrings=request.getParameterValues("items");
+			String[] itemsStrings=request.getParameter("items").split(",");
 			res0=BuyGoodsItem.audit(itemsStrings);
 			res += "show('"+res0+"');";
 			res += "var rand=Math.floor(Math.random()*10000);";
+			res += "window.open('../buygoods/reportmanage/reportitemlist.jsp?reportno="+request.getParameter("reportno")+"&projectcode="+request.getParameter("projectcode")+"&sid='+rand,'_self');";
+			
 		}
 		else if(action !=null && action.equals("first_audit"))
 		{

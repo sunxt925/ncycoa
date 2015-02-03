@@ -66,7 +66,6 @@ public class LoadCode {
 			return dt;
 		
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
 		}
@@ -76,21 +75,14 @@ public class LoadCode {
 
 	public static DataTable getSelectItem(String item)
 	{
-		//Bm.Init();
 		tb=Bm.tb;
-		//DBObject db = new DBObject();
-		int sss=tb.size();
+
 		int sm=Bm.bm.indexOf(item.toUpperCase());
 		try {
 			DataTable dt=(DataTable) tb.get(sm);
-			//DataTable dt = db
-			//		.runSelectQuery("select code_name from system_tablecodemeta_col where table_name='"+item+"'");
 			return dt;
-		
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			
 		}
 		return null;
 		

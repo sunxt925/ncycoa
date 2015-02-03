@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import com.common.CodeDictionary;
 import com.common.Format;
 import com.db.DBObject;
@@ -15,6 +16,7 @@ import com.db.Parameter;
 
 public class Complaint {
 
+	private static Logger logger=Logger.getLogger(Complaint.class);
 	private String complaintno;
 	private String complaintrtcode;
 	private String complainttitle;
@@ -48,9 +50,21 @@ public class Complaint {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * 构建所有人员申诉列表
+	 * @return
+	 */
 	public String getComplaintJson(){
+		return getComplaintJson("");
+	}
+	/**
+	 * 根据staffcode构建个人申诉列表
+	 * @param staffcode
+	 * @return
+	 */
+	public String getComplaintJson(String staffcode){
 		try {
-			List<Complaint> complaintlist=getComplaintList();
+			List<Complaint> complaintlist=getComplaintList(staffcode);
 			StringBuilder sbuilder=new StringBuilder();
 			sbuilder.append("[");
 			for(Complaint complaint:complaintlist){
@@ -65,6 +79,7 @@ public class Complaint {
 				sbuilder.append("\"attachedfile\":").append("\"<a href='downweb.jsp?filename="+complaint.getAttachedfile()+"'>"+complaint.getAttachedfile()+"</a>\"").append(",");
 				sbuilder.append("\"enabledflag\":").append("\""+complaint.getEnableflag()+"\"").append(",");
 				sbuilder.append("\"memo\":").append("\""+complaint.getMemo()+"\"");
+				
 				sbuilder.append("}");
 				sbuilder.append(",");
 			}
@@ -76,9 +91,20 @@ public class Complaint {
 			
 		}
 	}
-	public List<Complaint> getComplaintList(){
+	/**
+	 * 获取申诉数据
+	 * @param staffcode
+	 * @return
+	 */
+	public List<Complaint> getComplaintList(String staffcode){
 		try{
-			String sql="select * from tbm_complaint";
+			String queryCondition="";
+			if(staffcode.equals("")){
+				queryCondition="1=1";
+			}else{
+				queryCondition="complaintercode='"+staffcode+"'";
+			}
+			String sql="select * from tbm_complaint where "+queryCondition;
 			DBObject db=new DBObject();
 			DataTable dt=db.runSelectQuery(sql);
 			List<Complaint> complaintlist=new ArrayList<Complaint>();
@@ -106,6 +132,11 @@ public class Complaint {
 			return null;
 		}
 	}
+	/**
+	 * 根据staffcode构建申诉列表，返回map数据
+	 * @param staffcode
+	 * @return
+	 */
 	public Map<String, String> getComplaintlistBystaff(String staffcode){
 		try {
 			String sql="select complaintno from tbm_complaint where complaintercode=?";
@@ -131,7 +162,22 @@ public class Complaint {
 			return null;
 		}
 	}
-	
+	/**
+	 * 申诉回复，修改申诉状态
+	 * @param complaintno
+	 * @return
+	 */
+	public boolean modifyComplaint(String complaintno){
+		try {
+			String sql="update tbm_complaint set enabledflag=1 where complaintno='"+complaintno+"'";
+			DBObject db=new DBObject();
+			return db.run(sql);
+		} catch (Exception e) {
+			logger.info("修改申诉状态失败");
+			return false;
+		}
+		
+	}
 	public String getComplaintno() {
 		return complaintno;
 	}

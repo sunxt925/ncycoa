@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=gb2312" language="java" import="java.sql.*,com.db.*,com.common.*,com.entity.task.*,java.util.Calendar;" errorPage="" %>
+<%@ page contentType="text/html; charset=gb2312" language="java" import="java.sql.*,com.db.*,com.common.*,com.entity.task.*,com.entity.system.*,java.util.Calendar;" errorPage="" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
@@ -44,7 +44,10 @@ function F8()
 	String taskno = request.getParameter("taskno");
     String participantcode = request.getParameter("participantcode");
     
-    com.cms.model.sysmng.login.User u=(com.cms.model.sysmng.login.User)request.getSession().getAttribute("USER");
+    
+    UserInfo user = (UserInfo)request.getSession().getAttribute("UserInfo");
+    Staff staff = new Staff(user.getStaffcode());
+    
     
     Calendar cal=Calendar.getInstance();    
 	int y=cal.get(Calendar.YEAR);    
@@ -75,7 +78,7 @@ function F8()
          <input type="hidden" name="entity" id="entity" value="MONTHTASKPARTICIPANT"/>
           <input type="submit" name="Submit" value="Ìá½»" style="display:none">
             <input type="reset" name="reset" value="ÖØÖÃ" style="display:none">
-            <input type="hidden" name="MONTHTASKPARTICIPANT.AUDITOR" id="MONTHTASKPARTICIPANT.AUDITOR" value=<%=u.getZgdm() %>>
+            <input type="hidden" name="MONTHTASKPARTICIPANT.AUDITOR" id="MONTHTASKPARTICIPANT.AUDITOR" value=<%= staff.getStaffname() %>>
              <input type="hidden" name="MONTHTASKPARTICIPANT.AUDITDATE" id="MONTHTASKPARTICIPANT.AUDITDATE" value=<%=audittime %>>
             <input type="hidden" name="MONTHTASKPARTICIPANT.TASKNO" id="MONTHTASKPARTICIPANT.TASKNO" value=<%=taskno %>>
             <input type="hidden" name="old_TASKNO" id="old_TASKNO" value=<%=taskno %>>

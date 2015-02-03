@@ -9,6 +9,7 @@ import com.action.ActionInterface;
 import com.business.BuyGoodsApp;
 import com.business.BuyGoodsItem;
 import com.common.EntityOperation;
+import com.entity.system.UserInfo;
 
 public class BuyGoodsInAction extends ActionInterface{
 
@@ -24,8 +25,6 @@ public class BuyGoodsInAction extends ActionInterface{
 			
 		
 			String entity=request.getParameter("entity");
-			//String sequence=request.getParameter("sequence");
-		    //eo.setSequence(sequence);
 			String buyno=BuyGoodsItem.getBuyno();
 			String auditorgcode=BuyGoodsItem.getAuditorgcode(request.getParameter("COM_BUYGOODSITEM.GOODSCODE"));
 		    Map<String,String> map = new HashMap<String,String>();
@@ -52,7 +51,7 @@ public class BuyGoodsInAction extends ActionInterface{
 			String entity=request.getParameter("entity");
 			eo.setEntity(entity);
 			
-			String[] itemsStrings=request.getParameterValues("items");
+			String[] itemsStrings=request.getParameter("goods").split(",");
 			
 				for(int i=0;i<itemsStrings.length;i++)
 				{
@@ -65,20 +64,18 @@ public class BuyGoodsInAction extends ActionInterface{
 				}
 				res += "show('"+res0+"');";
 				res += "var rand=Math.floor(Math.random()*10000);";
-				res += "window.open('../buygoods/buygoodsin.jsp?sid='+rand,'_self');";
-			
-			
-			
+				res += "window.open('../buygoods/buygoodsin/buygoodsin.jsp?sid='+rand,'_self');";
 		}
 		else if(action != null && action.equals("application"))
 		{
-			String[] items=request.getParameterValues("items");
-			String buymode=request.getParameter("COM_BUYGOODSITEM.BUYMODE");
-			String eventno=BuyGoodsApp.appGetEventno(items,buymode);
+			String[] items=request.getParameter("goods").split(",");
+			String buymode=request.getParameter("buymode");
+			UserInfo user=(UserInfo)request.getSession().getAttribute("UserInfo");
+			String eventno=BuyGoodsApp.appGetEventno(items, buymode, user.getStaffcode());
 		    res0=BuyGoodsApp.app(items, eventno,buymode);
 			res += "show('"+res0+"');";
 			res += "var rand=Math.floor(Math.random()*10000);";
-			res += "window.open('../buygoods/buygoodsin.jsp?sid='+rand,'_self');";
+			res += "window.open('../buygoods/buygoodsin/buygoodsin.jsp?sid='+rand,'_self');";
 		}
 	
 		return res;
