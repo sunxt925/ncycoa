@@ -104,10 +104,16 @@ function F1()
 	//if (CkEmptyStr(document.all("DocNo"),"层次码不能为空！"))
 	//{
 		//alert (document.all("act"));
+		document.form1.result.value="审核通过";
 		document.all("form1").submit();
 	//}
 }
+function F2()
+{
 
+		document.form1.result.value="驳回";
+		document.all("form1").submit();
+}
 function F4()
 {
 	if (CheckSelect("form1"))
@@ -233,7 +239,11 @@ createwindowNoButton('企业标准修订申请表',url,'1000px','500px');
 <td width="15%" height="80%"  class="main_table_centerbg">
 <table width="100%" height="30%" border="0" cellpadding="0" cellspacing="0">
        <tr>
-    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;<input type="submit" value="审核通过" name="result"><input type="submit" value="驳回" name="result"></td>
+    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;<a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-reload',plain:true" 
+				        onclick="F1()">审核通过</a>&nbsp;&nbsp;<a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-reload',plain:true" 
+				        onclick="F2()">驳回</a></td>
        </tr>
         <tr>
           <td width="30%" align="right"> 申请人</td>
@@ -259,15 +269,15 @@ createwindowNoButton('企业标准修订申请表',url,'1000px','500px');
 		            <td width="100%" align="center"> 申请理由</td>
 		            </tr>
 		            <tr>
-		  <td width="100%">
+		  <td width="100%" align="center">
 		    <label>
 		    <textarea name="applyreason" id="applyreason" value="<%=applyreason %>"  style="width:150px;height:150px"><%=applyreason%></textarea>
 		    </label></td>
         </tr>
         <tr>
-        <td width="100%" align="right"> 审核意见</td></tr>
+        <td width="100%" align="center"> 审核意见</td></tr>
         <tr>
-		  <td width="100%">
+		  <td width="100%" align="center">
 		    <label>
 		    <textarea name="suggest" id="suggest"   style="width:150px;height:150px"></textarea>
 		    </label></td>
@@ -277,6 +287,7 @@ createwindowNoButton('企业标准修订申请表',url,'1000px','500px');
           <input name="url" type="hidden" id="url" value="">
           <input name="name" type="hidden" id="name" value="">
           <input name="flag" type="hidden" id="flag" value="">
+          <input name="result" type="hidden" id="result" value="">
           <input name="taskid" type="hidden" id="taskid" value="<%=taskId %>">
           <input name="towhere" type="hidden" id="towhere" value="<%=towhere %>">
           <input type='hidden' name='applystaffcode'  value="<%=staffcode %>">

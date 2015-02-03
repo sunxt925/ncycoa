@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=gb2312" language="java" import="java.sql.*,com.db.*,com.common.*,com.entity.system.*" errorPage="" %>
+<%@ page contentType="text/html; charset=gb2312" language="java" import="java.sql.*,java.util.*,com.db.*,com.common.*,com.entity.system.*,com.entity.stdapply.*" errorPage="" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <%
 String path = request.getContextPath();
@@ -15,8 +15,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	String staffcode=request.getParameter("applystaffcode");
 	String applyid=request.getParameter("applyid");
 	String type=request.getParameter("type");
-	Staff staff = new Staff();
-	DataTable dt = staff.getAllOrgByStaffCode(staffcode); 
+	ApplyModOrgList applymodOrgList = new ApplyModOrgList();
+	applymodOrgList.getListByStaffcode(staffcode); 
+	List<String> orgcodelist=applymodOrgList.getOrgcodelist();
+	List<String> orgnamelist=applymodOrgList.getOrgnamelist();
 	request.getSession().setAttribute("applyerid",applyid);
 	
 	
@@ -32,8 +34,9 @@ function F5()
 
 function changetopunit(unitccm)
 {
-
+alert(unitccm);
 var type=document.form1.type.value;
+alert(type);
 	//var newlisturl='/ncycoa/stdapply/std_orgpostlist.jsp?unitccm='+unitccm+'&type='+type;
 	                        //var newtreeurl='../tree/unit_tree.jsp?pageurl=../std_allunitsearch/std_orgpostlist.jsp&pagetarget=stdlist&unitccm='+unitccm;
 	//window.open(newlisturl,'postlist');
@@ -64,11 +67,11 @@ var type=document.form1.type.value;
             <td valign="top" bgcolor="#DBEAFD">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
             <%
-				if (dt!= null && dt.getRowsCount()>0)
+				if (orgcodelist!= null && orgcodelist.size()>0)
 				{
-					for (int i=0;i<dt.getRowsCount();i++)
+					for (int i=0;i<orgcodelist.size();i++)
 					{
-						out.print("<tr><td class='table_td_jb_iframe' align='center'><a href=\"#\" onclick=\"changetopunit('"+dt.get(i).getString("orgcode")+"')\">¡¾"+dt.get(i).getString("orgname")+"¡¿</a></td></tr>");	
+						out.print("<tr><td class='table_td_jb_iframe' align='center'><a href=\"#\" onclick=\"changetopunit('"+orgcodelist.get(i)+"')\">¡¾"+orgnamelist.get(i)+"¡¿</a></td></tr>");	
 					}
 				}
 			%>

@@ -59,15 +59,15 @@ for(int i=0;i<dt.getRowsCount();i++){
 	}else{
 		technologysug=technologysug+"  "+sugdate+sugstaffname+":"+suggest;
 		if(where.equals("yingxiao")){
-			apporgregion="营销技术委员会意见";
+			apporgregion="营销";
 		}else if(where.equals("wuliu")){
-			apporgregion="物流技术委员会意见";
+			apporgregion="物流";
 		}else if(where.equals("zhuanmai")){
-			apporgregion="专卖技术委员会意见";
+			apporgregion="专卖";
 		}else if(where.equals("anquan")){
-			apporgregion="安全技术委员会意见";
+			apporgregion="安全";
 		}else if(where.equals("jichu")){
-			apporgregion="基础管理技术委员会意见";
+			apporgregion="基础管理";
 		}
 	}
 }
@@ -109,7 +109,7 @@ copyFile(tempname,applytablepath);
 		doccode.setValue(doccodestring);
 		DataRegion docname = doc.openDataRegion("PO_docname");
 		docname.setValue(docnamestring);
-		DataRegion po_org = doc.openDataRegion("PO_org");
+		DataRegion po_org = doc.openDataRegion("PO_orgapp");
 		po_org.setValue(apporgregion);
 		DataRegion advise1 = doc.openDataRegion("PO_advise1");
 		advise1.setValue(technologysug);

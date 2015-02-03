@@ -232,6 +232,7 @@ public boolean Std_PublicInsert(String docno) throws Exception{
 	if(dt0.getRowsCount()!=0){
 		String s=Util.getSequence("±ê×¼Àà");
 		docmetaversioninfo.setDocNo(s);
+		docmetaversioninfo.setPartDocCount(docreviseinfo.getPartDocCount()+1);
 		filebelongdoc=s;
 		this.ismod=1;
 		String belongnum=docreviseinfo.getBelongDocNo();
@@ -249,6 +250,7 @@ public boolean Std_PublicInsert(String docno) throws Exception{
 		docmetaversioninfo2.Update();
 	}else{
 		docmetaversioninfo.setDocNo(docreviseinfo.getDocNo());
+		docmetaversioninfo.setPartDocCount(docreviseinfo.getPartDocCount());
 	}
 	docmetaversioninfo.setApproveDate(docreviseinfo.getApproveDate());
 	docmetaversioninfo.setApprover(docreviseinfo.getApprover());
@@ -275,7 +277,6 @@ public boolean Std_PublicInsert(String docno) throws Exception{
 	docmetaversioninfo.setDrawUpOrg(docreviseinfo.getDrawUpOrg());
 	docmetaversioninfo.setDrawUpPerson(docreviseinfo.getDrawUpPerson());
 	docmetaversioninfo.setMemo(docreviseinfo.getMemo());
-	docmetaversioninfo.setPartDocCount(docreviseinfo.getPartDocCount());
 	docmetaversioninfo.setStoreFileFlag(docreviseinfo.getStoreFileFlag());
 	docmetaversioninfo.setTempleteFlag(docreviseinfo.getTempleteFlag());
 	docmetaversioninfo.setUpdateFlag(docreviseinfo.getUpdateFlag());

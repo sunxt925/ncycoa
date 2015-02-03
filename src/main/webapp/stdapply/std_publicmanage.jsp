@@ -38,6 +38,7 @@ ExecutionService es = pe.getExecutionService();
 
 <script type="text/javascript" src="<%=request.getContextPath()%>/jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/tab/tab/tab.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/jscomponent/tools/outwindow.js"></script>
 <style type="text/css">
 @IMPORT url("<%=request.getContextPath()%>/js/tab/tab/tab.css");
 
@@ -197,7 +198,6 @@ var applydate=document.getElementById("applydate").value;
 var applyreason=document.getElementById("applyreason").value;
 var url='/ncycoa/stdapply/applytable2.jsp?applyid='+applyid+'&applyorg='+applyorg+'&applydate='+applydate+'&applyreason='+applyreason;
 createwindowNoButton('企业标准修订申请表',url,'1000px','500px');
-//window.open(url);
 }
 </script>
 <BODY class="mainbody" onLoad="this.focus()" style="background-color:white" style="height:100%;" >
@@ -212,7 +212,7 @@ createwindowNoButton('企业标准修订申请表',url,'1000px','500px');
        </tr>
         <tr>
           <td width="30%" align="right"> 申请人</td>
-		  <td width="70%" ><input type="text" name="applyperson" value="<%=staffname %>" id="applyperson" size="20" maxlength="30"></td>
+		  <td width="70%" ><input type="text" name="applyperson" value="<%=staffname %>" id="applyperson" size="20" maxlength="30"><input type="hidden" name="applyid" value="<%=ApplyId %>" id="applyid"></td>
 		  </tr>
         <tr>
           <td width="30%" align="right"> 申请部门</td>
@@ -224,22 +224,19 @@ createwindowNoButton('企业标准修订申请表',url,'1000px','500px');
 		            </tr><tr>
 		            <td width="30%" align="right">查看标准</td>
 		  <td width="70%">
-				 <input type="button" name="button0" value="查看" onClick="checkradio()" >
+				 <input type="button" name="button0" value="查看" onClick="checkradio()" >&nbsp;&nbsp;&nbsp;<input type="button" name="button0" value="查看申请表" onClick="appytablebutton()" >
 		 </td>
         </tr>
       </table>
       <table width="100%" height="50%" border="0" cellpadding="0" cellspacing="0">
       <tr>
-		            <td width="100%" align="right"> 申请理由</td>
+		            <td width="100%" align="center"> 申请理由</td>
 		            </tr><tr>
-		  <td width="100%">
+		  <td width="100%" align="center">
 		    <label>
-		    <textarea name="applyreason" value="<%=applyreason %>"  style="width:150px;height:200px"><%=applyreason%></textarea>
+		    <textarea name="applyreason" id="applyreason" value="<%=applyreason %>"  style="width:200px;height:200px"><%=applyreason%></textarea>
 		    </label></td>
         </tr>
-        <tr>
-		            <td width="100%" align="right"> <input type="button" name="button0" value="查看申请表" onClick="appytablebutton()" ></td>
-		            </tr>
     <tr>
         <td><div align="right"><input name="act" type="hidden" id="act" value="public">
           <input name="url" type="hidden" id="url" value="">

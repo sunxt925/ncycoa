@@ -109,7 +109,7 @@ copyFile(tempname,applytablepath);
 		doccode.setValue(doccodestring);
 		DataRegion docname = doc.openDataRegion("PO_docname");
 		docname.setValue(docnamestring);
-		DataRegion po_org = doc.openDataRegion("PO_org");
+		DataRegion po_org = doc.openDataRegion("PO_orgapp");
 		po_org.setValue(apporgregion);
 		DataRegion advise1 = doc.openDataRegion("PO_advise1");
 		advise1.setValue(technologysug);

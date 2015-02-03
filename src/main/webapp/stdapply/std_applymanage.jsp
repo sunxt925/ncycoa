@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=gb2312" language="java" import="java.util.*,java.sql.*,com.db.*,com.common.*,com.entity.system.*,com.workflow.std.jbpm.*" errorPage="" %>
+<%@ page contentType="text/html; charset=gb2312" language="java" import="java.util.*,java.sql.*,com.db.*,com.common.*,com.entity.stdapply.*,com.entity.system.*,com.workflow.std.jbpm.*" errorPage="" %>
 <%@ page import="org.jbpm.api.*,org.jbpm.api.task.Task" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <%
@@ -35,13 +35,16 @@ if (bm.equals("")) bm="NC";
 		String taskId=request.getParameter("id");
 		ProcessEngine pe = Configuration.getProcessEngine();
 		TaskService ts = pe.getTaskService();
-		String applyid=ts.getVariable(taskId, "applyid").toString();
-		if(applyid==null||applyid.equals("")){
+		String applyid="";
+		Object applyobject=ts.getVariable(taskId, "applyid");
+		if(applyobject==null){
 			SequenceUtil seq=new SequenceUtil();
 			applyid=String.valueOf(seq.getSequence("±ê×¼Àà"));
 			date=year+"-"+month+"-"+day;
 		}else{
-			date=ts.getVariable(taskId, "date").toString();
+			applyid=applyobject.toString();
+			DocApplyPerson person=new DocApplyPerson(Integer.parseInt(applyid));
+			date=person.getApplydate();
 		}
 	
 /*	int per_page=((UserInfo)request.getSession().getAttribute("UserInfo")).getPerpage_third();
