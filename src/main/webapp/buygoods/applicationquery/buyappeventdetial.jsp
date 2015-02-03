@@ -33,7 +33,7 @@ CodeDictionary cd = new CodeDictionary();
     <a id="btn_ref" href="#"    class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true">Ë¢ÐÂ</a>
     
     <div data-options="region:'center'">
-   <table id="dg" class="easyui-datagrid" style="width:800px;height:600px"
+   <table id="dg" class="easyui-datagrid"
     data-options="url:'<%=ul %>',fitColumns:true,singleSelect:true,collapsible:true">
     <thead>
     <tr>

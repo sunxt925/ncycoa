@@ -40,7 +40,6 @@ CodeDictionary cd = new CodeDictionary();
 		</div>
 		<div data-options="region:'center'">
 			<table id="dg" class="easyui-datagrid"
-				style="width:1000px;height:700px"
 				data-options="url:'<%=ul%>',fitColumns:true,singleSelect:true,collapsible:true">
 				<thead>
 					<tr>

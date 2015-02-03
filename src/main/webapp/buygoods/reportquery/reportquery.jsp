@@ -52,7 +52,6 @@ CodeDictionary cd = new CodeDictionary();
 			</div>
 			<div data-options="region:'center'" style="height:350px">
 				<table id="dg" class="easyui-datagrid"
-					style="width:900px;height:320px"
 					data-options="url:'<%=ul%>',fitColumns:true,singleSelect:false,collapsible:true">
 					<thead>
 						<tr>
@@ -74,7 +73,7 @@ CodeDictionary cd = new CodeDictionary();
 			</div>
 		</div>
        <div data-options="region:'center'" style="height:350px">
-           <iframe src=""  name="reportitem" width="98%" height="98%">
+           <iframe src=""  name="reportitem" width="99%" height="98%">
            </iframe>
        </div>
     

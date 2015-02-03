@@ -48,7 +48,7 @@ CodeDictionary cd = new CodeDictionary();
     
     <a id="btn_detial" href="#"    class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">Ã÷Ï¸</a>
     
-       <table id="dg" class="easyui-datagrid" style="width:1000px;height:700px"
+       <table id="dg" class="easyui-datagrid"
     data-options="url:'<%=ul %>',fitColumns:true,singleSelect:true,collapsible:true">
     <thead>
     <tr>

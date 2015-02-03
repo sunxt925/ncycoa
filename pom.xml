@@ -21,6 +21,19 @@
 						<target>1.6</target>
 					</configuration>
 				</plugin>
+				<!-- jetty配置 -->
+				<plugin>
+				    <groupId>org.mortbay.jetty</groupId>
+				    <artifactId>jetty-maven-plugin</artifactId>
+				    <version>7.1.6.v20100715</version>
+				    <configuration>
+				       <scanIntervalSeconds>10</scanIntervalSeconds>
+				     <webAppConfig>
+				         <contextPath>/test</contextPath>
+				     </webAppConfig>
+				     <classesDirectory>${project.basedir}/target/classes</classesDirectory>
+				     </configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -50,7 +63,6 @@
 			<artifactId>velocity</artifactId>
 			<version>1.7</version>
 			<type>jar</type>
-			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>
@@ -109,8 +121,24 @@
 			<artifactId>commons-beanutils</artifactId>
 			<version>1.8.3</version>
 		</dependency>
-
-
+		<!-- poi -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-scratchpad</artifactId>
+			<version>3.9</version>
+		</dependency>
+        
+        
 		<!-- servlet api -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -141,7 +169,50 @@
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
-
+	    <dependency>
+		<groupId>jcom2</groupId>
+		<artifactId>jcom2</artifactId>
+		<version>1.0</version>
+		<scope>system</scope>
+		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/JCom-2.2.0-1.jar</systemPath>
+	</dependency> 
+ 
+    <dependency>
+		<groupId>jcom</groupId>
+		<artifactId>jcom</artifactId>
+		<version>1.0</version>
+		<scope>system</scope>
+		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/jcom.jar</systemPath>
+	</dependency> 
+	<dependency>
+		<groupId>jspsmart</groupId>
+		<artifactId>jspsmart</artifactId>
+		<version>1.0</version>
+		<scope>system</scope>
+		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/jspSmartUpload.jar</systemPath>
+	</dependency> 
+	<dependency>
+		<groupId>ojdbc6</groupId>
+		<artifactId>ojdbc6</artifactId>
+		<version>1.0</version>
+		<scope>system</scope>
+		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/ojdbc6.jar</systemPath>
+	</dependency> 
+	<dependency>
+		<groupId>pageoffice</groupId>
+		<artifactId>pageoffice</artifactId>
+		<version>1.0</version>
+		<scope>system</scope>
+		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/pageoffice.jar</systemPath>
+	</dependency> 
+	
+	<dependency>
+		<groupId>smartupload</groupId>
+		<artifactId>smartupload</artifactId>
+		<version>1.0</version>
+		<scope>system</scope>
+		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/Smartupload.jar</systemPath>
+	</dependency>
 	</dependencies>
 
 </project>

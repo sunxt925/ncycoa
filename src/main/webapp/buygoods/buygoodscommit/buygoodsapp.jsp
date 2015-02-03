@@ -44,7 +44,7 @@ CodeDictionary cd = new CodeDictionary();
     </select>
     </div>
     <div data-options="region:'center'">
-       <table id="dg" class="easyui-datagrid" style="width:1000px;height:700px"
+       <table id="dg" class="easyui-datagrid"
     data-options="url:'<%=ul %>',fitColumns:true,singleSelect:false,collapsible:true">
     <thead>
     <tr>
