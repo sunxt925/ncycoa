@@ -1,9 +1,10 @@
 <%@ page language="java"
-	import="java.util.*,com.zhuozhengsoft.pageoffice.*,com.zhuozhengsoft.pageoffice.wordwriter.*,java.awt.*,com.ftp.*,com.entity.ftp.*,com.entity.stdapply.*,java.io.*"
+	import="java.util.*,com.zhuozhengsoft.pageoffice.*,com.zhuozhengsoft.pageoffice.wordwriter.*,com.entity.system.*,java.awt.*,com.ftp.*,com.entity.ftp.*,com.entity.stdapply.*,java.io.*"
 	pageEncoding="gb2312"%>
 <%@page import="com.zhuozhengsoft.pageoffice.ThemeType"%>
 <%@page import="com.zhuozhengsoft.pageoffice.wordwriter.DataRegion"%>
 <%@page import="com.zhuozhengsoft.pageoffice.wordwriter.WordDocument"%>
+<%@page import="com.db.DataTable"%>
 <%@ taglib uri="http://java.pageoffice.cn" prefix="po"%>
 <%!
 // 拷贝文件
@@ -41,11 +42,34 @@ DocReviseInifo revise=new DocReviseInifo();
 String doccodestring=revise.getProcessDoccode(applyid);
 String docnamestring=revise.getProcessDocname(applyid);
 
-String approveString ="";
-DocApplyPerson applyer=new DocApplyPerson(Integer.valueOf(applyid));
-String processinstanceid=applyer.getProcessInstanceId();
-if((!processinstanceid.equals(""))&&(!(processinstanceid==null))){
-approveString=applyer.getAudit(processinstanceid);
+DocApplySuggest applysuggest=new DocApplySuggest();
+DataTable dt=applysuggest.getAllApplySuggest(applyid);
+String technologysug="";
+String weiyuansug="";
+String apporgregion="";
+for(int i=0;i<dt.getRowsCount();i++){
+	String where=dt.get(i).getString("wheresug");
+	String approstaffcode=dt.get(i).getString("sugstaffcode");
+	StaffInfo staffinfo=new StaffInfo(approstaffcode);
+	String sugstaffname=staffinfo.getName();
+	String suggest=dt.get(i).getString("suggestion");
+	String sugdate=dt.get(i).getString("sugdate");
+	if(where.equals("weiyuan")){
+		weiyuansug=weiyuansug+"  "+sugdate+sugstaffname+":"+suggest;
+	}else{
+		technologysug=technologysug+"  "+sugdate+sugstaffname+":"+suggest;
+		if(where.equals("yingxiao")){
+			apporgregion="营销";
+		}else if(where.equals("wuliu")){
+			apporgregion="物流";
+		}else if(where.equals("zhuanmai")){
+			apporgregion="专卖";
+		}else if(where.equals("anquan")){
+			apporgregion="安全";
+		}else if(where.equals("jichu")){
+			apporgregion="基础管理";
+		}
+	}
 }
 
 
@@ -85,8 +109,12 @@ copyFile(tempname,applytablepath);
 		doccode.setValue(doccodestring);
 		DataRegion docname = doc.openDataRegion("PO_docname");
 		docname.setValue(docnamestring);
-		DataRegion advise = doc.openDataRegion("PO_advise");
-		advise.setValue(approveString);
+		DataRegion po_org = doc.openDataRegion("PO_orgapp");
+		po_org.setValue(apporgregion);
+		DataRegion advise1 = doc.openDataRegion("PO_advise1");
+		advise1.setValue(technologysug);
+		DataRegion advise2 = doc.openDataRegion("PO_advise2");
+		advise2.setValue(weiyuansug);
 		poCtrl1.setWriter(doc);
     String filename=applyid+".doc";
     	request.getSession().setAttribute("delpath",filename);//供删除临时文件夹使用.

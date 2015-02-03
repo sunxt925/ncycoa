@@ -1,4 +1,4 @@
-package edu.cqu.gem.ncycoa.web.controller;
+package edu.cqu.gem.common.tag;
 
 import java.io.IOException;
 import java.io.PrintWriter;

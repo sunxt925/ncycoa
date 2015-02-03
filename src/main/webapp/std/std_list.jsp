@@ -172,7 +172,7 @@ function dele(docno)
 {
 			document.getElementById("docno").value=docno;
 			//document.form1.docno.value=docno;
-		if (confirm("是否要删除文档流水号为"+docno+"的文档？"))
+		if (confirm('是否要删除标准？'))
 		{
 			document.all("Submit").click();
 		}
@@ -236,10 +236,10 @@ function datesort(){
 <BODY class="mainbody" onLoad="this.focus()" style="background-color:white" style="height:100%;">
 <form name="form1" id="form1" method="post" action="../servlet/PageHandler">
 
-<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="100%" height="100%" border="0" class="main_table_centerbg" cellpadding="0" cellspacing="0">
 
   <tr>
-    <td colspan="3" valign="top" class="main_table_centerbg" align="left">
+    <td colspan="3" valign="top" align="left">
         <table width="100%" height="30" border="0" cellspacing="0" cellpadding="0">
       <tr>
           <td class="table_td_jb">　&gt;&gt;当前单位：<%=res %></td>

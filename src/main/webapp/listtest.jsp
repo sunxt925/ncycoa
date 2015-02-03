@@ -13,7 +13,7 @@
 </head>
 
 <body>
-	<h:datagrid actionUrl="dgdata.htm?fake" queryMode="group" name="lstest">
+	<h:datagrid actionUrl="dgdata.htm?fake" fit="true" fitColumns="true" queryMode="group" name="lstest">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
 		<h:dgColumn field="code" title="编码" query="true"></h:dgColumn>
 		<h:dgColumn field="name" title="字典名" query="true"></h:dgColumn>
@@ -21,8 +21,8 @@
 		<h:dgColumn field="opt" title="操作"></h:dgColumn>
 		<h:dgDelOpt url="dgdata.htm?del" title="删除"></h:dgDelOpt>
 		<h:dgOpenOpt url="dgdata.htm?open" title="打开"></h:dgOpenOpt>
-		<h:dgToolBar url="dgdata.htm?add" funname="add" title="新增"></h:dgToolBar>
-		<h:dgToolBar url="dgdata.htm?del" funname="del" title="删除"></h:dgToolBar>
+		<h:dgToolBar url="dgdata.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
+		<h:dgToolBar url="dgdata.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
 	</h:datagrid>
 </body>
 </html>

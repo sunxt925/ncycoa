@@ -1,18 +1,25 @@
 package com.ftp;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 
+import com.common.Format;
 import com.common.Util;
+import com.db.DBObject;
+import com.db.Parameter;
+import com.entity.ftp.FtpFile;
 import com.entity.ftp.FtpStoreFile;
 
 public class FtpStore
@@ -32,7 +39,7 @@ public class FtpStore
 		{
 			int reply;
 			ftp.setControlEncoding("GBK"); // 设置了编码
-			LoadConfig("/ftp.properties");
+			LoadConfig("/com/ftp/ftp.properties");
 			// 连接FTP服务器
 
 			// 如果采用默认端口，可以使用ftp.connect(url)的方式直接连接FTP服务器

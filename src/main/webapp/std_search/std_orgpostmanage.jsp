@@ -48,7 +48,7 @@ function changetopunit(unitccm)
   <tr>
     <td colspan="3" valign="top" class="main_table_centerbg" align="center"><table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
-        <td width="15%" valign="top">
+        <td width="15%" height="100%" class="main_table_centerbg" colspan="3" valign="top">
           <table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td width="100%" valign="top" bgcolor="#DBEAFD">
@@ -66,20 +66,15 @@ function changetopunit(unitccm)
             </td>
           </tr>
           <tr>
-            <td valign="top" height="100%"><iframe src="../tree/unit_tree.jsp?pageurl=../std_search/std_orgposttab.jsp&pagetarget=postlist" name="unittree" id="unittree" width="100%" height="100%" scrolling="no" frameborder="0"></iframe></td>
+            <td valign="top" height="100%"><iframe src="../tree/unit_tree.jsp?pageurl=../std_search/std_orgposttab.jsp&pagetarget=postlist" name="unittree" id="unittree" width="100%" height="100%" scrolling="auto" frameborder="0"></iframe></td>
           </tr>
         </table></td>
+<td width="1%" height="100%">
+</td>
 
-
-            <td valign="top" height="100%"><iframe src="" name="postlist" id="postlist" width="100%" height="100%" scrolling="no" frameborder="2"></iframe></td>
+            <td valign="top" height="100%"><iframe src="" name="postlist" id="postlist" width="98%" height="98%" scrolling="no" frameborder="0"></iframe></td>
       </tr>
     </table></td>
-  </tr>
-  <tr>
-    <td height="5" class="main_table_bottombg"><img src="../images/table_lb.jpg" width="10" height="5"></td>
-    <td height="5" class="main_table_bottombg"></td>
-    <td height="5" align="right" class="main_table_bottombg"><img src="../images/table_rb.jpg" width="10" height="5"></td>
-  </tr>
 </form>
 </table>
 </BODY>

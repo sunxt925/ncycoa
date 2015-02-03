@@ -143,9 +143,11 @@ var id=index2+5;
 <tr>
 <td colspan="3" valign="top" class="main_table_centerbgtebie" align="left">
     <table width="100%" border="0" cellspacing="0" cellpadding="0" height="30px">
+    <tr>
 		    <td width="3%" class="main_table_topbg" ><img src="../images/table_lt.jpg" ></td>
 		    <td width="94%" valign="middle" class="main_table_topbg" >首页 &gt;&gt; 标准化管理 &gt;&gt; 个人标准查询&gt;&gt; 个人岗位列表 </td>
 		    <td width="3%" align="right" class="main_table_topbg" ><img src="../images/table_rt.jpg" ></td>
+		    </tr>
 	</table>
 	</td>
   

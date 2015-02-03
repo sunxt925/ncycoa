@@ -102,6 +102,10 @@ function fun(DocClassName)
 	  <td width="20%"><div align="right">附件数量：</div></td>
          <td width="80%"><input name="AttachDocCount" type="text" class="input1" id="ParentOrgName" onKeyDown="EnterKeyDo('')" value="<%=mo.getAttachDocCount()%>" size="30" maxlength="30"  readonly="readonly"></td>      
       </tr>
+            <tr>
+      	<td width="20%"><div align="right">修订次数：</div></td>
+        <td width="80%"><input name="PartDocCount" type="text" class="input1" id="ParentOrgCode" onKeyDown="EnterKeyDo('')" value="<%=mo.getPartDocCount()%>" size="30" maxlength="30" ></td>
+       </tr>
       <tr> 
 	  <td width="20%"><div align="right">编制人：</div></td>
         <td width="80%"><input name="DrawUpPerson" type="text" class="input1" id="DrawUpPerson" onKeyDown="EnterKeyDo('')" value="<%=mo.getDrawUpPerson()%>" size="30" maxlength="30"></td>     

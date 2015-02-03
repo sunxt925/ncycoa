@@ -12,9 +12,7 @@ import com.db.DataTable;
 import com.db.Parameter;
 import com.entity.ftp.FtpStoreFile;
 import com.entity.std.DocMetaVersionInfo;
-import com.entity.std.DocOrg;
 import com.entity.std.DocStoreFile;
-import com.entity.system.OrgPosition;
 import com.ftp.FtpStore;
 
 public class DocReviseInifo {
@@ -203,19 +201,19 @@ public boolean Std_Public(String docno,String applyid,String applyercode) throws
 				}
 			}
 		}
-		OrgPosition orgPosition = new OrgPosition();
-		DataTable dTable = orgPosition.getOrgPositionCode(applyercode);//返回该员工对应的机构编码和岗位编码（这个会返回两条及以上的记录）
-		String orgcode = dTable.get(0).getString("orgcode");
-		DocReviseInifo reviseinfo=new DocReviseInifo(docno);
-		DocOrg docorg=new DocOrg();
-		docorg.setDocCode(reviseinfo.getDocCode());
-		docorg.setOrgCode(orgcode);
-		docorg.setRelation("直接");
-		DataTable dt2=docorg.Have();
-		if(dt2.getRowsCount()==0){
-				if(!docorg.insert())
-					flag=false;
-		}
+//		OrgPosition orgPosition = new OrgPosition();
+//		DataTable dTable = orgPosition.getOrgPositionCode(applyercode);//返回该员工对应的机构编码和岗位编码（这个会返回两条及以上的记录）
+//		String orgcode = dTable.get(0).getString("orgcode");
+//		DocReviseInifo reviseinfo=new DocReviseInifo(docno);
+//		DocOrg docorg=new DocOrg();
+//		docorg.setDocCode(reviseinfo.getDocCode());
+//		docorg.setOrgCode(orgcode);
+//		docorg.setRelation("直接");
+//		DataTable dt2=docorg.Have();
+//		if(dt2.getRowsCount()==0){
+//				if(!docorg.insert())
+//					flag=false;
+//		}
 	}
 	if(flag){
 		if(!Delete(docno))
@@ -234,6 +232,7 @@ public boolean Std_PublicInsert(String docno) throws Exception{
 	if(dt0.getRowsCount()!=0){
 		String s=Util.getSequence("标准类");
 		docmetaversioninfo.setDocNo(s);
+		docmetaversioninfo.setPartDocCount(docreviseinfo.getPartDocCount()+1);
 		filebelongdoc=s;
 		this.ismod=1;
 		String belongnum=docreviseinfo.getBelongDocNo();
@@ -251,6 +250,7 @@ public boolean Std_PublicInsert(String docno) throws Exception{
 		docmetaversioninfo2.Update();
 	}else{
 		docmetaversioninfo.setDocNo(docreviseinfo.getDocNo());
+		docmetaversioninfo.setPartDocCount(docreviseinfo.getPartDocCount());
 	}
 	docmetaversioninfo.setApproveDate(docreviseinfo.getApproveDate());
 	docmetaversioninfo.setApprover(docreviseinfo.getApprover());
@@ -277,7 +277,6 @@ public boolean Std_PublicInsert(String docno) throws Exception{
 	docmetaversioninfo.setDrawUpOrg(docreviseinfo.getDrawUpOrg());
 	docmetaversioninfo.setDrawUpPerson(docreviseinfo.getDrawUpPerson());
 	docmetaversioninfo.setMemo(docreviseinfo.getMemo());
-	docmetaversioninfo.setPartDocCount(docreviseinfo.getPartDocCount());
 	docmetaversioninfo.setStoreFileFlag(docreviseinfo.getStoreFileFlag());
 	docmetaversioninfo.setTempleteFlag(docreviseinfo.getTempleteFlag());
 	docmetaversioninfo.setUpdateFlag(docreviseinfo.getUpdateFlag());
@@ -740,9 +739,9 @@ public DataTable getStdList(int pageno, int perpage, String applyid)
 	try
 	{
 		DBObject db = new DBObject();
-
+//<a href=\"#\" onClick=aboutpost(\"'||docno||'\",\"'||docversionname||'\") class=\"button4\">涉及岗位</a>
 		String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||docno||'\">' as 选择,doccode as 标准编号,DocVersionName as 标准名称,flag as 流程类型," +
-				"'<a href=\"#\" onClick=F1(\"'||docno||'\") class=\"button4\">修改</a> <a href=\"#\" onClick=dele(\"'||docno||'\") class=\"button4\">删除</a> <a href=\"#\" onClick=F7(\"'||docno||'\",\"'||docversionname||'\") class=\"button4\">附件查看</a> <a href=\"#\" onClick=F2(\"'||docno||'\") class=\"button4\">上传文件</a> <a href=\"#\" onClick=F9(\"'||docno||'\",\"'||docversionname||'\") class=\"button4\">文件查看</a><a href=\"#\" onClick=aboutpost(\"'||docno||'\",\"'||docversionname||'\") class=\"button4\">涉及岗位</a>' as 操作   from Std_DocReviseInfo where  applyid= '"+applyid+"' "+"and submitflag='no' "+"and belongdocno='no' order by docno";
+				"'<a href=\"#\" onClick=F1(\"'||docno||'\") class=\"button4\">修改</a> <a href=\"#\" onClick=dele(\"'||docno||'\") class=\"button4\">删除</a> <a href=\"#\" onClick=F7(\"'||docno||'\",\"'||docversionname||'\") class=\"button4\">附件查看</a> <a href=\"#\" onClick=F2(\"'||docno||'\") class=\"button4\">上传文件</a> <a href=\"#\" onClick=F9(\"'||docno||'\",\"'||docversionname||'\") class=\"button4\">文件查看</a>' as 操作   from Std_DocReviseInfo where  applyid= '"+applyid+"' "+"and submitflag='no' "+"and belongdocno='no' order by docno";
 		String sql_run = Format.getFySql(base_sql, pageno, perpage);
 		return db.runSelectQuery(sql_run);
 	}
@@ -757,9 +756,9 @@ public DataTable getStdListapp(int pageno, int perpage, String applyid)
 	try
 	{
 		DBObject db = new DBObject();
-
+//<a href=\"#\" onClick=aboutpost(\"'||docno||'\",\"'||docversionname||'\") class=\"button4\">涉及岗位</a>
 		String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||docno||'\">' as 选择,doccode as 标准编号,DocVersionName as 标准名称,flag as 流程类型,docno as 标准正文," +
-				"'<a href=\"#\" onClick=F1(\"'||docno||'\") class=\"button4\">修改</a> <a href=\"#\" onClick=dele(\"'||docno||'\") class=\"button4\">删除</a> <a href=\"#\" onClick=F7(\"'||docno||'\",\"'||docversionname||'\") class=\"button4\">附件查看</a><a href=\"#\" onClick=aboutpost(\"'||docno||'\",\"'||docversionname||'\") class=\"button4\">涉及岗位</a>' as 操作   from Std_DocReviseInfo where  applyid= '"+applyid+"' "+"and submitflag='no' "+"and belongdocno='no' order by docno";
+				"'<a href=\"#\" onClick=F1(\"'||docno||'\") class=\"button4\">修改</a> <a href=\"#\" onClick=dele(\"'||docno||'\") class=\"button4\">删除</a> <a href=\"#\" onClick=F7(\"'||docno||'\",\"'||docversionname||'\") class=\"button4\">附件查看</a>' as 操作   from Std_DocReviseInfo where  applyid= '"+applyid+"' "+"and submitflag='no' "+"and belongdocno='no' order by docno";
 		String sql_run = Format.getFySql(base_sql, pageno, perpage);
 		return db.runSelectQuery(sql_run);
 	}

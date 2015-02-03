@@ -30,7 +30,7 @@ function changetopunit(unitccm)
 
 	var newlisturl='std_tab.jsp?unitccm='+unitccm;
 	var newtreeurl='../tree/unit_tree.jsp?pageurl=../std/std_tab.jsp&pagetarget=stdlist&unitccm='+unitccm;
-	window.open(newlisturl,'stdlist');
+	//window.open(newlisturl,'stdlist');
 	window.open(newtreeurl,'unittree')
 }
 </script>
@@ -47,11 +47,11 @@ function changetopunit(unitccm)
     <td colspan="3" valign="top" class="main_table_centerbg" align="center">
     <table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
-        <td width="15%" valign="top">
+        <td width="15%" height="100%" colspan="3" valign="top">
           <table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td width="100%" valign="top" bgcolor="#DBEAFD">
-            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <table width="100%" border="0"  class="main_table_centerbg" cellspacing="0" cellpadding="0">
             <%
 				if (dt!= null && dt.getRowsCount()>0)
 				{
@@ -65,8 +65,10 @@ function changetopunit(unitccm)
             </td>
           </tr>
           <tr>
-            <td valign="top" height="100%"><iframe src="../tree/unit_tree.jsp?pageurl=../std/std_tab.jsp&pagetarget=stdlist" name="unittree" id="unittree" width="100%" height="100%" scrolling="auto" frameborder="0"></iframe></td>
+	<td valign="top" height="100%"><iframe src="../tree/unit_tree.jsp?pageurl=../std/std_tab.jsp&pagetarget=stdlist" name="unittree" id="unittree" width="100%" height="100%"  class="main_table_centerbg"  scrolling="auto" frameborder="0"></iframe></td>
           </tr>
+
+
         </table>
         </td>
         
@@ -74,8 +76,10 @@ function changetopunit(unitccm)
 <!--         <div id="tab_menu" style="text-align: center;position: absolute; top: 0%; height:100%; width:85%; border:2px  solid #7B7B7B;">-->
 <!--		<table width="100%" height="99%" border="0" cellspacing="0" cellpadding="0">-->
 <!--		  <tr valign="top">-->
-            <td valign="top" height="100%">
-            <iframe src="" name="stdlist" id="stdlist" width="100%" height="100%" scrolling="no" frameborder="0" ></iframe>
+<td width="1%" height="100%">
+</td>
+            <td width="80%" valign="center" height="100%" >
+            <iframe src="" name="stdlist" id="stdlist" width="98%" height="98%" scrolling="no" frameborder="0" ></iframe>
             </td>
 <!--		  </tr>-->
 <!--		</table>-->
@@ -87,11 +91,7 @@ function changetopunit(unitccm)
   
   
   
-  <tr>
-    <td height="5" class="main_table_bottombg"><img src="../images/table_lb.jpg" width="10" height="5"></td>
-    <td height="5" class="main_table_bottombg"></td>
-    <td height="5" align="right" class="main_table_bottombg"><img src="../images/table_rb.jpg" width="10" height="5"></td>
-  </tr>
+
 
 </form>
   </table>

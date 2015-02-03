@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=gb2312" language="java" import="java.sql.*,com.db.*,com.common.*,com.entity.system.*,com.entity.stdapply.*" errorPage="" %>
+<%@ page import="org.jbpm.api.*,org.jbpm.api.task.Task" %>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <%
 
@@ -12,13 +14,18 @@
 
 </HEAD>
 <%
-	//System.out.println(bm);
-		//UserInfo UserInfo=(UserInfo)request.getSession().getAttribute("UserInfo");
-	//	com.cms.model.sysmng.login.User user = (com.cms.model.sysmng.login.User)request.getSession().getAttribute("USER");
-		//		com.emsflow.server.webflow.manage.WebflowServer server = new com.emsflow.server.webflow.manage.WebflowServer(user.getZgdm());
-		//		String processInstanceId = server.createProcessInstance("stdApplicationFlow","my_process");
-	//	AttributeInstance ApplyId =    server.getParentProcessInstanceAttributeValue(processInstanceId, "applyid");
-	String ApplyId=request.getParameter("applyid");
+		UserInfo UserInfo=(UserInfo)request.getSession().getAttribute("UserInfo");
+		String sugstaffcode=UserInfo.getStaffcode();
+	
+		ProcessEngine pe = Configuration.getProcessEngine();
+ExecutionService es = pe.getExecutionService();
+	TaskService ts = pe.getTaskService();
+	String taskId = request.getParameter("id");
+	Task task = ts.getTask(taskId);
+	String parenttaskid=task.getName();
+	String ApplyId=ts.getVariable(parenttaskid, "applyid").toString();
+	String towhere=ts.getVariable(parenttaskid, "toWhere").toString();
+	
 		int applyid=Integer.parseInt(ApplyId.toString());
 		DocApplyPerson applyperson=new DocApplyPerson(applyid);
 	String staffcode=applyperson.getApplystaffcode();
@@ -26,23 +33,6 @@
 	String applyapart=applyperson.getApplyapart();
 	String applydate=(applyperson.getApplydate()).substring(0,10);
 	String applyreason=applyperson.getApplyreason();
-	
-	
-/*	int per_page=((UserInfo)request.getSession().getAttribute("UserInfo")).getPerpage_third();
-	DataTable dt=orgposition.getOrgPositionListstd(page_no,per_page,bm);  
-	DataTable dtcount=orgposition.getAllOrgPositionList(bm);
-	int pagecount=0;
-	if(dtcount.getRowsCount()%per_page==0)
-	    pagecount=dtcount.getRowsCount()/per_page;
-	else
-		pagecount=(dtcount.getRowsCount()/per_page)+1;
-	String trackName=og.getTrack(bm,"");*/
-	//System.out.println(trackName);
-	//System.out.println(page_no);
-	/* DBObject db = new DBObject();
-	
-	String sql="select * from system_unit where unit_ccm like'"+ unitccm+"___' order by unit_ccm";
-	DataTable dt=db.runSelectQuery(sql); */
 %>
 <script language=
                 "javascript" type="text/javascript" src="<%=request.getContextPath()%>/js/MyDatePicker/WdatePicker.js">  </script>
@@ -115,10 +105,16 @@ function F1()
 	//if (CkEmptyStr(document.all("DocNo"),"层次码不能为空！"))
 	//{
 		//alert (document.all("act"));
+		document.form1.result.value="审核通过";
 		document.all("form1").submit();
 	//}
 }
+function F2()
+{
 
+		document.form1.result.value="驳回";
+		document.all("form1").submit();
+}
 function F4()
 {
 	if (CheckSelect("form1"))
@@ -239,65 +235,82 @@ createwindowNoButton('企业标准修订申请表',url,'1000px','500px');
 <BODY class="mainbody" onLoad="this.focus()" style="background-color:white" style="height:100%;" >
 
 <form name="form1" id="form1" method="post" style="background-color:white" action="<%=request.getContextPath()%>/servlet/PageHandler">
-<table width="100%" height="20%" border="0" cellpadding="0" cellspacing="0">
+<table width="100%" height="100%" border="0"  cellpadding="0" cellspacing="0">
+<tr>
+<td width="15%" height="80%"  class="main_table_centerbg">
+<table width="100%" height="30%" border="0" cellpadding="0" cellspacing="0">
        <tr>
-    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;　<a href="#" onClick="F2()">重填[F2]</a>　<a href="#" onClick="F5()">刷新[F5]</a></td>
+    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;<a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-reload',plain:true" 
+				        onclick="F1()">审核通过</a>&nbsp;&nbsp;<a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-reload',plain:true" 
+				        onclick="F2()">驳回</a></td>
        </tr>
-  <tr>
-    <td colspan="3" valign="top" class="main_table_centerbg" align="left">     
-      <table width="100%" border="0" cellpadding="3" cellspacing="0">
-
         <tr>
-          <td width="23%" align="right"> 申请人</td>
-		  <td width="27%" ><input type="text" name="applyperson" value="<%=staffname %>" id="applyperson" size="30" maxlength="30"><input type="hidden" name="applyid" value="<%=ApplyId %>" id="applyid"></td>
-		            <td width="6%" align="right"> 申请理由</td>
-		  <td width="44%">
-		    <label>
-		    <textarea name="applyreason" id="applyreason" value="<%=applyreason %>"  style="width:260px"><%=applyreason%></textarea>
-		    </label></td>
-        </tr>
+          <td width="30%" align="right"> 申请人</td>
+		  <td width="70%" ><input type="text" name="applyperson" value="<%=staffname %>" id="applyperson" size="20" maxlength="30"><input type="hidden" name="applyid" value="<%=ApplyId %>" id="applyid"></td>
+		          </tr>
         <tr>
-          <td width="23%" align="right"> 申请部门</td>
-		  <td width="27%"><input type="text" name="applyapart" id="applyapart" value="<%=applyapart %>" size="30" maxlength="60"></td>
+          <td width="30%" align="right"> 申请部门</td>
+		  <td width="70%"><input type="text" name="applyapart" id="applyapart" value="<%=applyapart %>" size="20" maxlength="60"></td>
         </tr>
 		 <tr>
-          <td width="23%" align="right"> 申请时间</td>
-		  <td width="27%"><input name="applydate" type="text" class="Wdate" id="applydate" onFocus="new WdatePicker(this,null,false,'whyGreen')"  value="<%=applydate %>" size="30" maxlength="30"></td>
-		            <td width="6%" align="right">查看标准</td>
-		  <td width="5%">
+          <td width="30%" align="right"> 申请时间</td>
+		  <td width="70%"><input name="applydate" type="text" class="Wdate" id="applydate" onFocus="new WdatePicker(this,null,false,'whyGreen')"  value="<%=applydate %>" size="20" maxlength="30"></td>
+		         </tr>
+		         <tr>   
+		            <td width="30%" align="right">查看标准</td>
+		  <td width="70%">
 				 <input type="button" name="button0" value="查看" onClick="checkradio()" >&nbsp;&nbsp;&nbsp;<input type="button" name="button0" value="查看申请表" onClick="appytablebutton()" >
 		 </td>
         </tr>
-      </table>
+        </table>
+        <table width="100%" height="65%" border="0" cellpadding="3" cellspacing="0">
+        		          <tr>  
+		            <td width="100%" align="center"> 申请理由</td>
+		            </tr>
+		            <tr>
+		  <td width="100%" align="center">
+		    <label>
+		    <textarea name="applyreason" id="applyreason" value="<%=applyreason %>"  style="width:150px;height:150px"><%=applyreason%></textarea>
+		    </label></td>
+        </tr>
+        <tr>
+        <td width="100%" align="center"> 审核意见</td></tr>
+        <tr>
+		  <td width="100%" align="center">
+		    <label>
+		    <textarea name="suggest" id="suggest"   style="width:150px;height:150px"></textarea>
+		    </label></td>
+        </tr> 
     <tr>
         <td><div align="right"><input name="act" type="hidden" id="act" value="appro">
           <input name="url" type="hidden" id="url" value="">
           <input name="name" type="hidden" id="name" value="">
           <input name="flag" type="hidden" id="flag" value="">
+          <input name="result" type="hidden" id="result" value="">
+          <input name="taskid" type="hidden" id="taskid" value="<%=taskId %>">
+          <input name="towhere" type="hidden" id="towhere" value="<%=towhere %>">
           <input type='hidden' name='applystaffcode'  value="<%=staffcode %>">
+          <input type='hidden' name='sugstaffcode'  value="<%=sugstaffcode %>">
           <input name="hidbutton" type="button" id="hidbutton" value="" onClick="page();" style="display:none">
-          <input name="hidbutton2" type="button" id="hidbutton2" value="" onClick="page2();" style="display:none"></div></td>
-        <td><input name="action_class" type="hidden" id="action_class" value="com.action.stdapply.StdApplyAction"></td>
+          <input name="hidbutton2" type="button" id="hidbutton2" value="" onClick="page2();" style="display:none"></div>
+      <input name="action_class" type="hidden" id="action_class" value="com.action.stdapply.StdApplyAction"></td>
     </tr>
-       </td>
-  </tr>
-  <tr>
-    <td width="3%" height="5" class="main_table_bottombg"><img src="<%=request.getContextPath()%>/images/table_lb.jpg" width="10" height="5"></td>
-    <td width="94%" height="5" class="main_table_bottombg"></td>
+    <tr>
+    <td width="49%" height="5" class="main_table_bottombg"><img src="<%=request.getContextPath()%>/images/table_lb.jpg" width="10" height="5"></td>
+    <td width="48%" height="5" class="main_table_bottombg"></td>
     <td width="3%" height="5" align="right" class="main_table_bottombg"><img src="<%=request.getContextPath()%>/images/table_rb.jpg" width="10" height="5"></td>
   </tr>
- 
-  </table>
-      		<table width="100%" height="80%" border="0" cellspacing="0" cellpadding="0">
-		  <tr >
-            <td ><iframe src="" name="stdlist" id="stdlist" width="100%" height="100%" scrolling="no" frameborder="2"></iframe></td>
-		  </tr>
-		  <tr >
-            <td ><iframe src="" name="attachlist" id="attachlist" width="100%" height="100%" scrolling="no" frameborder="2"></iframe></td>
-		  </tr>
-		</table>
-		<%@ include file="/page/controlHead.jsp"%>
-<flow:StepChoice table="1" />
+      </table>
+    </td>
+  <td width="1%"></td>
+  <td width="84%"  height="100%"  class="main_table_centerbg">
+	<iframe src="" name="stdlist" id="stdlist" width="100%" height="48%" scrolling="no" frameborder="2"></iframe>
+	<iframe src="" name="attachlist" id="attachlist" width="100%" height="48%" scrolling="no" frameborder="2"></iframe>
+	</td>
+</tr>
+</table>
 
 </form>
 </BODY>
