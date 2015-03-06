@@ -10,6 +10,17 @@
 		<spring.version>3.2.11.RELEASE</spring.version>
 	</properties>
 
+	<repositories>
+		<repository>
+			<id>maven</id>
+			<url>http://repo1.maven.org/maven2/</url>
+		</repository>
+		<repository>
+			<id>Alfresco Maven Repository</id>
+			<url>https://maven.alfresco.com/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
+
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -23,16 +34,16 @@
 				</plugin>
 				<!-- jetty配置 -->
 				<plugin>
-				    <groupId>org.mortbay.jetty</groupId>
-				    <artifactId>jetty-maven-plugin</artifactId>
-				    <version>7.1.6.v20100715</version>
-				    <configuration>
-				       <scanIntervalSeconds>10</scanIntervalSeconds>
-				     <webAppConfig>
-				         <contextPath>/test</contextPath>
-				     </webAppConfig>
-				     <classesDirectory>${project.basedir}/target/classes</classesDirectory>
-				     </configuration>
+					<groupId>org.mortbay.jetty</groupId>
+					<artifactId>jetty-maven-plugin</artifactId>
+					<version>7.1.6.v20100715</version>
+					<configuration>
+						<scanIntervalSeconds>10</scanIntervalSeconds>
+						<webAppConfig>
+							<contextPath>/test</contextPath>
+						</webAppConfig>
+						<classesDirectory>${project.basedir}/target/classes</classesDirectory>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -57,27 +68,21 @@
 			<version>${spring.version}</version>
 		</dependency>
 
-		<!-- Velocity -->
-		<dependency>
-			<groupId>org.apache.velocity</groupId>
-			<artifactId>velocity</artifactId>
-			<version>1.7</version>
-			<type>jar</type>
-		</dependency>
-
+		<!-- Hibernate(JPA) -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>4.3.7.Final</version>
 		</dependency>
 
+		<!-- activiti -->
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.5</version>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-engine</artifactId>
+			<version>5.16.3</version>
 		</dependency>
 
-
+		<!-- alibaba -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
@@ -121,6 +126,12 @@
 			<artifactId>commons-beanutils</artifactId>
 			<version>1.8.3</version>
 		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+
 		<!-- poi -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -137,8 +148,14 @@
 			<artifactId>poi-scratchpad</artifactId>
 			<version>3.9</version>
 		</dependency>
-        
-        
+
+		<!-- Log -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+
 		<!-- servlet api -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -169,50 +186,7 @@
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
-	    <dependency>
-		<groupId>jcom2</groupId>
-		<artifactId>jcom2</artifactId>
-		<version>1.0</version>
-		<scope>system</scope>
-		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/JCom-2.2.0-1.jar</systemPath>
-	</dependency> 
- 
-    <dependency>
-		<groupId>jcom</groupId>
-		<artifactId>jcom</artifactId>
-		<version>1.0</version>
-		<scope>system</scope>
-		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/jcom.jar</systemPath>
-	</dependency> 
-	<dependency>
-		<groupId>jspsmart</groupId>
-		<artifactId>jspsmart</artifactId>
-		<version>1.0</version>
-		<scope>system</scope>
-		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/jspSmartUpload.jar</systemPath>
-	</dependency> 
-	<dependency>
-		<groupId>ojdbc6</groupId>
-		<artifactId>ojdbc6</artifactId>
-		<version>1.0</version>
-		<scope>system</scope>
-		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/ojdbc6.jar</systemPath>
-	</dependency> 
-	<dependency>
-		<groupId>pageoffice</groupId>
-		<artifactId>pageoffice</artifactId>
-		<version>1.0</version>
-		<scope>system</scope>
-		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/pageoffice.jar</systemPath>
-	</dependency> 
-	
-	<dependency>
-		<groupId>smartupload</groupId>
-		<artifactId>smartupload</artifactId>
-		<version>1.0</version>
-		<scope>system</scope>
-		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/Smartupload.jar</systemPath>
-	</dependency>
+
 	</dependencies>
 
 </project>

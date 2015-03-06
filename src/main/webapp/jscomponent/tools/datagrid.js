@@ -1,240 +1,212 @@
+//Ê±¼ä¸ñÊ½»¯
+Date.prototype.format = function (format,value) {
+	if (!format) {
+		format = "yyyy-MM-dd hh:mm:ss";
+	}
+	if(value==''||value==null){
+		return '';
+	}
+	var strdata=value.replace(/-/g,"/");
+	var index=strdata.indexOf(".");
+	if(index>0)
+	{
+		strdata=strdata.substr(0,index);
+	}
+	var date= new Date(Date.parse(strdata));
+	var o = {
+		"M+" : date.getMonth() + 1, // month
+		"d+" : date.getDate(), // day
+		"h+" : date.getHours(), // hour
+		"m+" : date.getMinutes(), // minute
+		"s+" : date.getSeconds(), // second
+		"q+" : Math.floor((date.getMonth() + 3) / 3), // quarter
+		"S" : date.getMilliseconds()
+		// millisecond
+	};
+	
+	if (/(y+)/.test(format)) {
+		format = format.replace(RegExp.$1, strdata.substr(4-RegExp.$1.length,RegExp.$1.length));
+	}
+	
+	for (var k in o) {
+		if (new RegExp("(" + k + ")").test(format)) {
+			format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+		}
+	}
+	return format;
+};
+
 /**
- * å¢åˆ æ”¹å·¥å…·æ 
+ * ÔöÉ¾¸Ä¹¤¾ßÀ¸
  */
 window.onerror = function() {
 	return true;
 };
-var iframe;// iframeæ“ä½œå¯¹è±¡
-var win;// çª—å£å¯¹è±¡
-var gridname = "";// æ“ä½œdatagridå¯¹è±¡åç§°
-var windowapi = frameElement.api, W = windowapi.opener;// å†…å®¹é¡µä¸­è°ƒç”¨çª—å£å®ä¾‹å¯¹è±¡æ¥å£
+var iframe;     // iframe²Ù×÷¶ÔÏó
+var win;        //´°¿Ú¶ÔÏó
+var gridname="";//²Ù×÷datagrid¶ÔÏóÃû³Æ
+var windowapi = frameElement.api;
+var W = windowapi.opener;//ÄÚÈİÒ³ÖĞµ÷ÓÃ´°¿ÚÊµÀı¶ÔÏó½Ó¿Ú
 function upload(curform) {
 	upload();
 }
 
-// æ™®é€šè¯¢é—®æ“ä½œè°ƒç”¨å‡½æ•°
-function confirm(url, content, name) {
-	createdialog('æç¤ºä¿¡æ¯ ', content, url, name);
-}
-
-// åˆ é™¤è°ƒç”¨å‡½æ•°
-function remove(url, name) {
-	createdialog('åˆ é™¤ç¡®è®¤ ', 'ç¡®å®šåˆ é™¤è¯¥è®°å½•å— ?', url, name);
+/**
+ * Ìí¼Óµ÷ÓÃº¯Êı
+ */
+function add(title, actionUrl, gname, width, height) {
+	gridname=gname;
+	createwindow(title, actionUrl, width, height);
 }
 
 /**
- * åˆ›å»ºä¸å¸¦æŒ‰é’®çš„çª—å£
+ * É¾³ıµ÷ÓÃº¯Êı
  */
-function openwindow(title, url, name, width, height) {
-	gridname = name;
-	if(!width) { width = 'auto'}
-	if(!height) { height = 'auto'}
+function del(title, actionUrl, gname) {
+	var rows = null;
+	try{rows=$('#'+gname).datagrid('getSelections');}catch(ex){}
+	try{rows=$('#'+gname).treegrid('getSelections');}catch(ex){}
 	
-	if(!windowapi) {
-		$.dialog({
-			content : 'url:' + url,
-			title : title,
-			cache : false,
-			lock : true,
-			width : width,
-			height : height
-		});
-	} else {
-		$.dialog({
-			content : 'url:' + url,
-			title : title,
-			cache : false,
-			parent : windowapi,
-			lock : true,
-			width : 'auto',
-			height : height
-		});
-	}
-}
-
-//æ·»åŠ æ ‡ç­¾
-function addOneTab(subtitle, url, icon) {
-	if (icon == '') {
-		icon = 'icon folder';
-	}
-	window.top.$.messager.progress({
-		text : 'é¡µé¢åŠ è½½ä¸­....',
-		interval : 300
-	});
-	window.top.$('#maintabs').tabs({
-		onClose : function(subtitle, index) {
-			window.top.$.messager.progress('close');
-		}
-	});
-	if (window.top.$('#maintabs').tabs('exists', subtitle)) {
-		window.top.$('#maintabs').tabs('select', subtitle);
-		window.top.$('#maintabs').tabs('update', {
-			tab : window.top.$('#maintabs').tabs('getSelected'),
-			options : {
-				title : subtitle,
-				href : url,
-				closable : true,
-				icon : icon
-			}
-		});
-	} else {
-		if (url.indexOf('isIframe') != -1) {
-			window.top.$('#maintabs').tabs('add', {
-				title : subtitle,
-				content : '<iframe src="' + url + '" frameborder="0" style="border:0;width:100%;height:99.4%;"></iframe>',
-				closable : true,
-				icon : icon
-			});
-		} else {
-			window.top.$('#maintabs').tabs('add', {
-				title : subtitle,
-				href : url,
-				closable : true,
-				icon : icon
-			});
-		}
-	}
-}
-
-/**
- * åˆ›å»ºè¯¢é—®çª—å£
- */
-function createdialog(title, content, url, name) {
-	$.dialog.confirm(content, function() {
-		doSubmit(url, name);
-		rowid = '';
-	}, function() {
-
-	});
-}
-
-/**
- * æ‰§è¡Œæ“ä½œ
- */
-function doSubmit(url, name) {
-	gridname = name;
-	$.ajax({
-		async : false,
-		cache : false,
-		type : 'POST',
-		url : url, // è¯·æ±‚çš„actionè·¯å¾„
-		error : function() {
-			// è¯·æ±‚å¤±è´¥å¤„ç†å‡½æ•°
-		},
-		success : function(data) {
-			var d = $.parseJSON(data);
-			if (d.success) {
-				var msg = d.msg;
-				tip(msg);
-				reloadTable();
-			}
-		}
-	});
-}
-
-/**
- * æ·»åŠ äº‹ä»¶æ‰“å¼€çª—å£
- * 
- * @param title
- *            ç¼–è¾‘æ¡†æ ‡é¢˜
- * @param addurl//ç›®æ ‡é¡µé¢åœ°å€
- */
-function add(title, addurl, gname, width, height) {
-	gridname = gname;
-	createwindow(title, addurl, width, height);
-}
-/**
- * æ ‘åˆ—è¡¨æ·»åŠ äº‹ä»¶æ‰“å¼€çª—å£
- * 
- * @param title
- *            ç¼–è¾‘æ¡†æ ‡é¢˜
- * @param addurl//ç›®æ ‡é¡µé¢åœ°å€
- */
-function addTreeNode(title, addurl, gname) {
-	if (rowid != '') {
-		addurl += '&id=' + rowid;
-	}
-	gridname = gname;
-	createwindow(title, addurl);
-}
-/**
- * æ›´æ–°äº‹ä»¶æ‰“å¼€çª—å£
- * 
- * @param title
- *            ç¼–è¾‘æ¡†æ ‡é¢˜
- * @param addurl//ç›®æ ‡é¡µé¢åœ°å€
- * @param id//ä¸»é”®å­—æ®µ
- */
-function update(title, url, id, width, height) {
-	gridname = id;
-	var rowsData = $('#' + id).datagrid('getSelections');
-	if (!rowsData || rowsData.length == 0) {
-		tip('è¯·é€‰æ‹©ç¼–è¾‘é¡¹ç›®');
+	if (!rows || rows.length==0) {
+		tip('ÇëÑ¡Ôñ');
 		return;
 	}
-	if (rowsData.length > 1) {
-		tip('è¯·é€‰æ‹©ä¸€æ¡è®°å½•å†ç¼–è¾‘');
+	
+	var ids = '';
+	for(var i=0; i<rows.length; i++) {
+		ids += rows[i].id + ',';
+	}
+	if(actionUrl.indexOf("?") == -1) {
+		actionUrl += '?id='+ ids;
+	} else {
+		actionUrl += '&id='+ ids;
+	}
+	
+	createdialog('É¾³ıÈ·ÈÏ ', 'È·¶¨É¾³ı¸Ã¼ÇÂ¼Âğ ?', actionUrl, gname);
+}
+
+/**
+ * ¸üĞÂµ÷ÓÃº¯Êı
+ */
+function update(title, actionUrl, gname, width, height) {
+	gridname=gname;
+	var rows;
+	try{rows=$('#'+gname).datagrid('getSelections');}catch(ex){}
+	try{rows=$('#'+gname).treegrid('getSelections');}catch(ex){}
+	
+	if (!rows || rows.length==0) {
+		tip('ÇëÑ¡Ôñ±à¼­ÏîÄ¿');
 		return;
 	}
-
-	url += '&id=' + rowsData[0].id;
+	if (rows.length > 1) {
+		tip('ÇëÑ¡ÔñÒ»Ìõ¼ÇÂ¼ÔÙ±à¼­');
+		return;
+	}
+	
+	if(actionUrl.indexOf("?") >= 0) {
+		actionUrl += '&id='+ rows[0].id;
+	} else {
+		actionUrl += '?id='+ rows[0].id;
+	}
 	createwindow(title, url, width, height);
 }
 
+//ÆÕÍ¨Ñ¯ÎÊ²Ù×÷µ÷ÓÃº¯Êı
+function confirm(actionUrl, content, name) {
+	createdialog('ÌáÊ¾ĞÅÏ¢ ', content, actionUrl, name);
+}
+
 /**
- * å¦‚æœé¡µé¢æ˜¯è¯¦ç»†æŸ¥çœ‹é¡µé¢ï¼Œæ— æ•ˆåŒ–æ‰€æœ‰è¡¨å•å…ƒç´ ï¼Œåªèƒ½è¿›è¡ŒæŸ¥çœ‹
+ * ´´½¨Ñ¯ÎÊ´°¿Ú
  */
-$(function() {
-	if (location.href.indexOf("load=detail") != -1) {
-		$(":input").attr("disabled", "true");
-		// $(":input").attr("style","border:0;border-bottom:1 solid
-		// black;background:white;");
+function createdialog(title, content, url, name) {
+	$.dialog.confirm(
+		content, 
+		function(){
+			doSubmit(url, name);
+			rowid = '';
+		}, 
+		function(){
+		
+		}
+	);	
+}
+
+function reloadTable(gname){
+	if(gname) {
+		try{$('#'+gname).datagrid('reload');}catch(ex){}
+		try{$('#'+gname).treegrid('reload');}catch(ex){}
+	} else {
+		try{$('#'+gridname).datagrid('reload');}catch(ex){}
+		try{$('#'+gridname).treegrid('reload');}catch(ex){}
+	}
+}
+
+
+
+/**
+ * Ê÷ÁĞ±íÌí¼ÓÊÂ¼ş´ò¿ª´°¿Ú
+ * @param title ±à¼­¿ò±êÌâ
+ * @param addurl//Ä¿±êÒ³ÃæµØÖ·
+ */
+function addTreeNode(title,addurl,gname) {
+	if (rowid != '') {
+		addurl += '&id='+rowid;
+	}
+	gridname=gname;
+	createwindow(title, addurl);
+}
+
+/**
+ * Èç¹ûÒ³ÃæÊÇÏêÏ¸²é¿´Ò³Ãæ£¬ÎŞĞ§»¯ËùÓĞ±íµ¥ÔªËØ£¬Ö»ÄÜ½øĞĞ²é¿´
+ */
+$(function(){
+	if(location.href.indexOf("load=detail")!=-1){
+		$(":input").attr("disabled","true");
+		//$(":input").attr("style","border:0;border-bottom:1 solid black;background:white;");
 	}
 });
 
 /**
- * æŸ¥çœ‹è¯¦ç»†äº‹ä»¶æ‰“å¼€çª—å£
- * 
- * @param title
- *            æŸ¥çœ‹æ¡†æ ‡é¢˜
- * @param addurl//ç›®æ ‡é¡µé¢åœ°å€
- * @param id//ä¸»é”®å­—æ®µ
+ * ²é¿´ÏêÏ¸ÊÂ¼ş´ò¿ª´°¿Ú
+ * @param title ²é¿´¿ò±êÌâ
+ * @param addurl//Ä¿±êÒ³ÃæµØÖ·
+ * @param id//Ö÷¼ü×Ö¶Î
  */
-function detail(title, url, id, width, height) {
-	var rowsData = $('#' + id).datagrid('getSelections');
-	// if (rowData.id == '') {
-	// tip('è¯·é€‰æ‹©æŸ¥çœ‹é¡¹ç›®');
-	// return;
-	// }
-
+function detail(title,url, id,width,height) {
+	var rowsData = $('#'+id).datagrid('getSelections');
+//	if (rowData.id == '') {
+//		tip('ÇëÑ¡Ôñ²é¿´ÏîÄ¿');
+//		return;
+//	}
+	
 	if (!rowsData || rowsData.length == 0) {
-		tip('è¯·é€‰æ‹©æŸ¥çœ‹é¡¹ç›®');
+		tip('ÇëÑ¡Ôñ²é¿´ÏîÄ¿');
 		return;
 	}
 	if (rowsData.length > 1) {
-		tip('è¯·é€‰æ‹©ä¸€æ¡è®°å½•å†æŸ¥çœ‹');
+		tip('ÇëÑ¡ÔñÒ»Ìõ¼ÇÂ¼ÔÙ²é¿´');
 		return;
 	}
-	url += '&load=detail&id=' + rowsData[0].id;
-	createdetailwindow(title, url, width, height);
+    url += '&load=detail&id='+rowsData[0].id;
+	createdetailwindow(title,url,width,height);
 }
 
 /**
- * å¤šè®°å½•åˆªé™¤è«‹æ±‚
- * 
+ * ¶à¼ÇÂ¼³ıÇó
  * @param title
  * @param url
  * @param gname
  * @return
  */
-function deleteALLSelect(title, url, gname) {
-	gridname = gname;
-	var ids = [];
-	var rows = $("#" + gname).datagrid('getSelections');
-	if (rows.length > 0) {
-		$.dialog.confirm('ä½ ç¡®å®šæ°¸ä¹…åˆ é™¤è¯¥æ•°æ®å—?', function(r) {
-			if (r) {
-				for (var i = 0; i < rows.length; i++) {
+function deleteALLSelect(title,url,gname) {
+	gridname=gname;
+    var ids = [];
+    var rows = $("#"+gname).datagrid('getSelections');
+    if (rows.length > 0) {
+    	$.dialog.confirm('ÄãÈ·¶¨ÓÀ¾ÃÉ¾³ı¸ÃÊı¾İÂğ?', function(r) {
+		   if (r) {
+				for ( var i = 0; i < rows.length; i++) {
 					ids.push(rows[i].id);
 				}
 				$.ajax({
@@ -250,89 +222,85 @@ function deleteALLSelect(title, url, gname) {
 							var msg = d.msg;
 							tip(msg);
 							reloadTable();
-							$("#" + gname).datagrid('unselectAll');
-							ids = '';
+							$("#"+gname).datagrid('unselectAll');
+							ids='';
 						}
 					}
 				});
 			}
 		});
 	} else {
-		tip("è¯·é€‰æ‹©éœ€è¦åˆ é™¤çš„æ•°æ®");
+		tip("ÇëÑ¡ÔñĞèÒªÉ¾³ıµÄÊı¾İ");
 	}
 }
 
 /**
- * æŸ¥çœ‹æ—¶çš„å¼¹å‡ºçª—å£
+ * ²é¿´Ê±µÄµ¯³ö´°¿Ú
  * 
  * @param title
  * @param addurl
  * @param saveurl
  */
-function createdetailwindow(title, addurl, width, height) {
-	width = width ? width : 700;
-	height = height ? height : 400;
-	if (width == "100%" || height == "100%") {
+function createdetailwindow(title, addurl,width,height) {
+	width = width?width:700;
+	height = height?height:400;
+	if(width=="100%" || height=="100%"){
 		width = document.body.offsetWidth;
-		height = document.body.offsetHeight - 100;
+		height =document.body.offsetHeight-100;
 	}
-	if (typeof (windowapi) == 'undefined') {
+	if(typeof(windowapi) == 'undefined'){
 		$.dialog({
-			content : 'url:' + addurl,
+			content: 'url:'+addurl,
 			lock : true,
-			width : width,
-			height : height,
-			title : title,
+			width:width,
+			height: height,
+			title:title,
 			opacity : 0.3,
-			cache : false,
-			cancelVal : 'å…³é—­',
-			cancel : true
-		/* ä¸ºtrueç­‰ä»·äºfunction(){} */
+			cache:false, 
+		    cancelVal: '¹Ø±Õ',
+		    cancel: true /*ÎªtrueµÈ¼ÛÓÚfunction(){}*/
 		});
-	} else {
+	}else{
 		W.$.dialog({
-			content : 'url:' + addurl,
+			content: 'url:'+addurl,
 			lock : true,
-			width : width,
-			height : height,
-			parent : windowapi,
-			title : title,
+			width:width,
+			height: height,
+			parent:windowapi,
+			title:title,
 			opacity : 0.3,
-			cache : false,
-			cancelVal : 'å…³é—­',
-			cancel : true
-		/* ä¸ºtrueç­‰ä»·äºfunction(){} */
+			cache:false, 
+		    cancelVal: '¹Ø±Õ',
+		    cancel: true /*ÎªtrueµÈ¼ÛÓÚfunction(){}*/
 		});
 	}
-
+	
 }
 /**
- * å…¨å±ç¼–è¾‘
- * 
- * @param title
- *            ç¼–è¾‘æ¡†æ ‡é¢˜
- * @param addurl//ç›®æ ‡é¡µé¢åœ°å€
- * @param id//ä¸»é”®å­—æ®µ
+ * È«ÆÁ±à¼­
+ * @param title ±à¼­¿ò±êÌâ
+ * @param addurl//Ä¿±êÒ³ÃæµØÖ·
+ * @param id//Ö÷¼ü×Ö¶Î
  */
-function editfs(title, url) {
-	var name = gridname;
-	if (rowid == '') {
-		tip('è¯·é€‰æ‹©ç¼–è¾‘é¡¹ç›®');
+function editfs(title,url) {
+	var name=gridname;
+	 if (rowid == '') {
+		tip('ÇëÑ¡Ôñ±à¼­ÏîÄ¿');
 		return;
 	}
-	url += '&id=' + rowid;
-	openwindow(title, url, name, 800, 500);
+	url += '&id='+rowid;
+	openwindow(title,url,name,800,500);
 }
 
-// åˆ é™¤è°ƒç”¨å‡½æ•°
+// É¾³ıµ÷ÓÃº¯Êı
 function confuploadify(url, id) {
-	$.dialog.confirm('ç¡®å®šåˆ é™¤å—', function() {
+	$.dialog.confirm('È·¶¨É¾³ıÂğ', function(){
 		deluploadify(url, id);
-	}, function() {
+	}, function(){
 	});
 }
 /**
- * æ‰§è¡Œåˆ é™¤é™„ä»¶
+ * Ö´ĞĞÉ¾³ı¸½¼ş
  * 
  * @param url
  * @param index
@@ -342,14 +310,14 @@ function deluploadify(url, id) {
 		async : false,
 		cache : false,
 		type : 'POST',
-		url : url,// è¯·æ±‚çš„actionè·¯å¾„
-		error : function() {// è¯·æ±‚å¤±è´¥å¤„ç†å‡½æ•°
+		url : url,// ÇëÇóµÄactionÂ·¾¶
+		error : function() {// ÇëÇóÊ§°Ü´¦Àíº¯Êı
 		},
 		success : function(data) {
 			var d = $.parseJSON(data);
 			if (d.success) {
-				$("#" + id).remove();// ç§»é™¤SPAN
-				m.remove(id);// ç§»é™¤MAPå¯¹è±¡å†…å­—ç¬¦ä¸²
+				$("#" + id).remove();// ÒÆ³ıSPAN
+				m.remove(id);// ÒÆ³ıMAP¶ÔÏóÄÚ×Ö·û´®
 			}
 
 		}
@@ -357,120 +325,122 @@ function deluploadify(url, id) {
 }
 
 /**
- * æç¤ºä¿¡æ¯
+ * ÌáÊ¾ĞÅÏ¢
  */
 function tip_old(msg) {
 	$.dialog.setting.zIndex = 1980;
 	$.dialog.tips(msg, 1);
 }
 /**
- * æç¤ºä¿¡æ¯
+ * ÌáÊ¾ĞÅÏ¢
  */
 function tip(msg) {
 	$.dialog.setting.zIndex = 1980;
 	$.messager.show({
-		title : 'æç¤ºä¿¡æ¯',
+		title : 'ÌáÊ¾ĞÅÏ¢',
 		msg : msg,
 		timeout : 1000 * 6
 	});
 }
 /**
- * æç¤ºä¿¡æ¯åƒalertä¸€æ ·
+ * ÌáÊ¾ĞÅÏ¢ÏñalertÒ»Ñù
  */
-function alertTip(msg, title) {
+function alertTip(msg,title) {
 	$.dialog.setting.zIndex = 1980;
-	title = title ? title : "æç¤ºä¿¡æ¯";
+	title = title?title:"ÌáÊ¾ĞÅÏ¢";
 	$.dialog({
-		title : title,
-		icon : 'tips.gif',
-		content : msg
-	});
+			title:title,
+			icon:'tips.gif',
+			content: msg
+		});
 }
 /**
- * åˆ›å»ºæ·»åŠ æˆ–ç¼–è¾‘çª—å£
+ * ´´½¨Ìí¼Ó»ò±à¼­´°¿Ú
  * 
  * @param title
  * @param addurl
  * @param saveurl
  */
-function createwindow(title, addurl, width, height) {
-	width = width ? width : 700;
+function createwindow(title, url,width,height) {
+	width =  width ? width : 700;
 	height = height ? height : 400;
-	if (width == "100%" || height == "100%") {
+	if(width=="100%" || height=="100%"){
 		width = document.body.offsetWidth;
-		height = document.body.offsetHeight - 100;
+		height =document.body.offsetHeight-100;
 	}
-	if (typeof (windowapi) == 'undefined') {
+	
+	if(typeof(windowapi) == 'undefined'){
 		$.dialog({
-			content : 'url:' + addurl,
+			content: 'url:' + url,
 			lock : true,
-			width : width,
-			height : height,
-			title : title,
+			width:width,
+			height:height,
+			title:title,
 			opacity : 0.3,
-			cache : false,
-			ok : function() {
-				iframe = this.iframe.contentWindow;
+			cache:false,
+		    ok: function(){
+		    	iframe = this.iframe.contentWindow;
 				saveObj();
 				return false;
-			},
-			cancelVal : 'å…³é—­',
-			cancel : true
-		/* ä¸ºtrueç­‰ä»·äºfunction(){} */
+		    },
+		    cancelVal: '¹Ø±Õ',
+		    cancel: true /*ÎªtrueµÈ¼ÛÓÚfunction(){}*/
 		});
-	} else {
+	}else{
 		W.$.dialog({
-			content : 'url:' + addurl,
+			content: 'url:'+url,
 			lock : true,
-			width : width,
-			height : height,
-			parent : windowapi,
-			title : title,
+			width:width,
+			height:height,
+			parent:windowapi,
+			title:title,
 			opacity : 0.3,
-			cache : false,
-			ok : function() {
-				iframe = this.iframe.contentWindow;
+			cache:false,
+		    ok: function(){
+		    	iframe = this.iframe.contentWindow;
 				saveObj();
 				return false;
-			},
-			cancelVal : 'å…³é—­',
-			cancel : true
-		/* ä¸ºtrueç­‰ä»·äºfunction(){} */
+		    },
+		    cancelVal: '¹Ø±Õ',
+		    cancel: true /*ÎªtrueµÈ¼ÛÓÚfunction(){}*/
 		});
 	}
-
+	
 }
 /**
- * åˆ›å»ºä¸Šä¼ é¡µé¢çª—å£
+ * ´´½¨ÉÏ´«Ò³Ãæ´°¿Ú
  * 
  * @param title
  * @param addurl
  * @param saveurl
  */
-function openuploadwin(title, url, name, width, height) {
-	gridname = name;
+function openuploadwin(title, url,name,width, height) {
+	gridname=name;
 	$.dialog({
-		content : 'url:' + url,
-		cache : false,
-		button : [ {
-			name : 'å¼€å§‹ä¸Šä¼ ',
-			callback : function() {
-				iframe = this.iframe.contentWindow;
-				iframe.upload();
-				return false;
-			},
-			focus : true
-		}, {
-			name : 'å–æ¶ˆä¸Šä¼ ',
-			callback : function() {
-				iframe = this.iframe.contentWindow;
-				iframe.cancel();
-			}
-		} ]
+	    content: 'url:'+url,
+	    cache:false,
+	    button: [
+	        {
+	            name: '¿ªÊ¼ÉÏ´«',
+	            callback: function(){
+	            	iframe = this.iframe.contentWindow;
+					iframe.upload();
+					return false;
+	            },
+	            focus: true
+	        },
+	        {
+	            name: 'È¡ÏûÉÏ´«',
+	            callback: function(){
+	            	iframe = this.iframe.contentWindow;
+					iframe.cancel();
+	            }
+	        }
+	    ]
 	});
 }
 /**
- * åˆ›å»ºæŸ¥è¯¢é¡µé¢çª—å£
+ * ´´½¨²éÑ¯Ò³Ãæ´°¿Ú
  * 
  * @param title
  * @param addurl
@@ -478,41 +448,142 @@ function openuploadwin(title, url, name, width, height) {
  */
 function opensearchdwin(title, url, width, height) {
 	$.dialog({
-		content : 'url:' + url,
+		content: 'url:'+url,
 		title : title,
 		lock : true,
 		height : height,
-		cache : false,
+		cache:false,
 		width : width,
 		opacity : 0.3,
 		button : [ {
-			name : 'æŸ¥è¯¢',
+			name : '²éÑ¯',
 			callback : function() {
 				iframe = this.iframe.contentWindow;
 				iframe.searchs();
 			},
 			focus : true
 		}, {
-			name : 'å–æ¶ˆ',
+			name : 'È¡Ïû',
 			callback : function() {
 
 			}
 		} ]
 	});
 }
+/**
+ * ´´½¨²»´ø°´Å¥µÄ´°¿Ú
+ * 
+ * @param title
+ * @param addurl
+ * @param saveurl
+ */
+function openwindow(title, url,name, width, height) {
+	gridname=name;
+	if (typeof (width) == 'undefined'&&typeof (height) != 'undefined')
+	{
+		if(typeof(windowapi) == 'undefined'){
+			$.dialog({
+				content: 'url:'+url,
+				title : title,
+				cache:false,
+				lock : true,
+				width: 'auto',
+			    height: height
+			});
+		}else{
+			$.dialog({
+				content: 'url:'+url,
+				title : title,
+				cache:false,
+				parent:windowapi,
+				lock : true,
+				width: 'auto',
+			    height: height
+			});
+		}
+	}
+	if (typeof (height) == 'undefined'&&typeof (width) != 'undefined')
+	{
+		if(typeof(windowapi) == 'undefined'){
+			$.dialog({
+				content: 'url:'+url,
+				title : title,
+				lock : true,
+				width: width,
+				cache:false,
+			    height: 'auto'
+			});
+		}else{
+			$.dialog({
+				content: 'url:'+url,
+				title : title,
+				lock : true,
+				parent:windowapi,
+				width: width,
+				cache:false,
+			    height: 'auto'
+			});
+		}
+	}
+	if (typeof (width) == 'undefined'&&typeof (height) == 'undefined')
+	{
+		if(typeof(windowapi) == 'undefined'){
+			$.dialog({
+				content: 'url:'+url,
+				title : title,
+				lock : true,
+				width: 'auto',
+				cache:false,
+			    height: 'auto'
+			});
+		}else{
+			$.dialog({
+				content: 'url:'+url,
+				title : title,
+				lock : true,
+				parent:windowapi,
+				width: 'auto',
+				cache:false,
+			    height: 'auto'
+			});
+		}
+	}
+	
+	if (typeof (width) != 'undefined'&&typeof (height) != 'undefined')
+	{
+		if(typeof(windowapi) == 'undefined'){
+			$.dialog({
+				width: width,
+			    height:height,
+				content: 'url:'+url,
+				title : title,
+				cache:false,
+				lock : true
+			});
+		}else{
+			$.dialog({
+				width: width,
+			    height:height,
+				content: 'url:'+url,
+				parent:windowapi,
+				title : title,
+				cache:false,
+				lock : true
+			});
+		}
+	}
+}
+
 
 /**
- * æ‰§è¡Œä¿å­˜
- * 
- * @param url
- * @param gridname
+ * Ö´ĞĞ±£´æ
  */
 function saveObj() {
 	$('#btn_sub', iframe.document).click();
 }
 
 /**
- * æ‰§è¡ŒAJAXæäº¤FORM
+ * Ö´ĞĞAJAXÌá½»FORM
  * 
  * @param url
  * @param gridname
@@ -524,13 +595,13 @@ function ajaxSubForm(url) {
 			iframe.editor.sync();
 		},
 		success : function(r) {
-			tip('æ“ä½œæˆåŠŸ');
+			tip('²Ù×÷³É¹¦');
 			reloadTable();
 		}
 	});
 }
 /**
- * æ‰§è¡ŒæŸ¥è¯¢
+ * Ö´ĞĞ²éÑ¯
  * 
  * @param url
  * @param gridname
@@ -542,20 +613,45 @@ function search() {
 }
 
 /**
- * é€€å‡ºç¡®è®¤æ¡†
+ * Ö´ĞĞ²Ù×÷
+ * 
+ * @param url
+ * @param index
+ */
+function doSubmit(url, gname) {
+	gridname=gname;
+	$.ajax({
+		async : false,
+		cache : false,
+		type : 'POST',
+		url : url,// ÇëÇóµÄactionÂ·¾¶
+		error : function() {// ÇëÇóÊ§°Ü´¦Àíº¯Êı
+		},
+		success : function(data) {
+			var d = $.parseJSON(data);
+			if (d.success) {
+				var msg = d.msg;
+				tip(msg);
+				reloadTable(gname);
+			}
+		}
+	});
+}
+/**
+ * ÍË³öÈ·ÈÏ¿ò
  * 
  * @param url
  * @param content
  * @param index
  */
 function exit(url, content) {
-	$.dialog.confirm(content, function() {
+	$.dialog.confirm(content, function(){
 		window.location = url;
-	}, function() {
+	}, function(){
 	});
 }
 /**
- * æ¨¡æ¿é¡µé¢ajaxæäº¤
+ * Ä£°åÒ³ÃæajaxÌá½»
  * 
  * @param url
  * @param gridname
@@ -567,12 +663,12 @@ function ajaxdoSub(url, formname) {
 			editor.sync();
 		},
 		success : function(r) {
-			tip('æ“ä½œæˆåŠŸ');
+			tip('²Ù×÷³É¹¦');
 		}
 	});
 }
 /**
- * ajaxæäº¤FORM
+ * ajaxÌá½»FORM
  * 
  * @param url
  * @param gridname
@@ -583,14 +679,14 @@ function ajaxdoForm(url, formname) {
 		onSubmit : function() {
 		},
 		success : function(r) {
-			tip('æ“ä½œæˆåŠŸ');
+			tip('²Ù×÷³É¹¦');
 		}
 	});
 }
 
 function opensubwin(title, url, saveurl, okbutton, closebutton) {
 	$.dialog({
-		content : 'url:' + url,
+		content: 'url:'+url,
 		title : title,
 		lock : true,
 		opacity : 0.3,
@@ -598,7 +694,7 @@ function opensubwin(title, url, saveurl, okbutton, closebutton) {
 			name : okbutton,
 			callback : function() {
 				iframe = this.iframe.contentWindow;
-				win = frameElement.api.opener;// æ¥æºé¡µé¢
+				win = frameElement.api.opener;// À´Ô´Ò³Ãæ
 				$('#btn_sub', iframe.document).click();
 				return false;
 			}
@@ -613,7 +709,7 @@ function opensubwin(title, url, saveurl, okbutton, closebutton) {
 
 function openauditwin(title, url, saveurl, okbutton, backbutton, closebutton) {
 	$.dialog({
-		content : 'url:' + url,
+		content: 'url:'+url,
 		title : title,
 		lock : true,
 		opacity : 0.3,
@@ -621,7 +717,7 @@ function openauditwin(title, url, saveurl, okbutton, backbutton, closebutton) {
 			name : okbutton,
 			callback : function() {
 				iframe = this.iframe.contentWindow;
-				win = $.dialog.open.origin;// æ¥æºé¡µé¢
+				win = $.dialog.open.origin;// À´Ô´Ò³Ãæ
 				$('#btn_sub', iframe.document).click();
 				return false;
 			}
@@ -629,14 +725,14 @@ function openauditwin(title, url, saveurl, okbutton, backbutton, closebutton) {
 			name : backbutton,
 			callback : function() {
 				iframe = this.iframe.contentWindow;
-				win = frameElement.api.opener;// æ¥æºé¡µé¢
+				win = frameElement.api.opener;// À´Ô´Ò³Ãæ
 				$('#formobj', iframe.document).form('submit', {
 					url : saveurl + "&code=exit",
 					onSubmit : function() {
 						$('#code').val('exit');
 					},
 					success : function(r) {
-						$.dialog.tips('æ“ä½œæˆåŠŸ', 2);
+						$.dialog.tips('²Ù×÷³É¹¦', 2);
 						win.location.reload();
 					}
 				});
@@ -650,220 +746,257 @@ function openauditwin(title, url, saveurl, okbutton, backbutton, closebutton) {
 
 	});
 }
-
-// å…³é—­è‡ªèº«TABåˆ·æ–°çˆ¶TABgrid
-function closetab(title) {
-	// æš‚æ—¶å…ˆä¸åˆ·æ–°
-	// window.top.document.getElementById('tabiframe').contentWindow.reloadTable();
-	// window.top.document.getElementById('maintabs').contentWindow.reloadTable();
-	window.top.$('#maintabs').tabs('close', title);
-	// tip("æ·»åŠ æˆåŠŸ");
-}
-
-// popup
-// object: this name:éœ€è¦é€‰æ‹©çš„åˆ—è¡¨çš„å­—æ®µ code:åŠ¨æ€æŠ¥è¡¨çš„code
-function inputClick(obj, name, code) {
-	$.dialog.setting.zIndex = 2000;
-	if (name == "" || code == "") {
-		alert("popupå‚æ•°é…ç½®ä¸å…¨");
-		return;
+// Ìí¼Ó±êÇ©
+function addOneTab(subtitle, url, icon) {
+	if (icon == '') {
+		icon = 'icon folder';
 	}
-	if (typeof (windowapi) == 'undefined') {
-		$.dialog({
-			content : "url:cgReportController.do?popup&id=" + code,
-			lock : true,
-			title : "é€‰æ‹©",
-			width : 800,
-			height : 400,
-			cache : false,
-			ok : function() {
-				iframe = this.iframe.contentWindow;
-				var selected = iframe.getSelectRows();
-				if (selected == '' || selected == null) {
-					alert("è¯·é€‰æ‹©");
-					return false;
-				} else {
-					var str = "";
-					$.each(selected, function(i, n) {
-						if (i == 0)
-							str += n[name];
-						else
-							str += "," + n[name];
-					});
-					$(obj).val("");
-					// $('#myText').searchbox('setValue', str);
-					$(obj).val(str);
-					return true;
-				}
-
-			},
-			cancelVal : 'å…³é—­',
-			cancel : true
-		/* ä¸ºtrueç­‰ä»·äºfunction(){} */
-		});
-	} else {
-		$.dialog({
-			content : "url:cgReportController.do?popup&id=" + code,
-			lock : true,
-			title : "é€‰æ‹©",
-			width : 800,
-			height : 400,
-			parent : windowapi,
-			cache : false,
-			ok : function() {
-				iframe = this.iframe.contentWindow;
-				var selected = iframe.getSelectRows();
-				if (selected == '' || selected == null) {
-					alert("è¯·é€‰æ‹©");
-					return false;
-				} else {
-					var str = "";
-					$.each(selected, function(i, n) {
-						if (i == 0)
-							str += n[name];
-						else
-							str += "," + n[name];
-					});
-					$(obj).val("");
-					// $('#myText').searchbox('setValue', str);
-					$(obj).val(str);
-					return true;
-				}
-
-			},
-			cancelVal : 'å…³é—­',
-			cancel : true
-		/* ä¸ºtrueç­‰ä»·äºfunction(){} */
-		});
-	}
-}
-/*
- * è‡ªå®šä¹‰urlçš„å¼¹å‡º obj:è¦å¡«å……çš„æ§ä»¶,å¯ä»¥ä¸ºå¤šä¸ªï¼Œä»¥é€—å·åˆ†éš” name:åˆ—è¡¨ä¸­å¯¹åº”çš„å­—æ®µ,å¯ä»¥ä¸ºå¤šä¸ªï¼Œä»¥é€—å·åˆ†éš”ï¼ˆä¸objè¦å¯¹åº”ï¼‰
- * urlï¼šå¼¹å‡ºé¡µé¢çš„Url
- */
-function popClick(obj, name, url) {
-	$.dialog.setting.zIndex = 2001;
-	var names = name.split(",");
-	var objs = obj.split(",");
-	if (typeof (windowapi) == 'undefined') {
-		$.dialog({
-			content : "url:" + url,
-			lock : true,
-			title : "é€‰æ‹©",
-			width : 700,
-			height : 400,
-			cache : false,
-			ok : function() {
-				iframe = this.iframe.contentWindow;
-				var selected = iframe.getSelectRows();
-				if (selected == '' || selected == null) {
-					alert("è¯·é€‰æ‹©");
-					return false;
-				} else {
-					for (var i1 = 0; i1 < names.length; i1++) {
-						var str = "";
-						$.each(selected, function(i, n) {
-							if (i == 0)
-								str += n[names[i1]];
-							else {
-								str += ",";
-								str += n[names[i1]];
-							}
-						});
-						if ($("#" + objs[i1]).length >= 1) {
-							$("#" + objs[i1]).val("");
-							$("#" + objs[i1]).val(str);
-						} else {
-							$("input[name='" + objs[i1] + "']").val("");
-							$("input[name='" + objs[i1] + "']").val(str);
-						}
-					}
-					return true;
-				}
-
-			},
-			cancelVal : 'å…³é—­',
-			cancel : true
-		/* ä¸ºtrueç­‰ä»·äºfunction(){} */
-		});
-	} else {
-		$.dialog({
-			content : "url:" + url,
-			lock : true,
-			title : "é€‰æ‹©",
-			width : 700,
-			height : 400,
-			parent : windowapi,
-			cache : false,
-			ok : function() {
-				iframe = this.iframe.contentWindow;
-				var selected = iframe.getSelectRows();
-				if (selected == '' || selected == null) {
-					alert("è¯·é€‰æ‹©");
-					return false;
-				} else {
-					for (var i1 = 0; i1 < names.length; i1++) {
-						var str = "";
-						$.each(selected, function(i, n) {
-							if (i == 0)
-								str += n[names[i1]];
-							else {
-								str += ",";
-								str += n[names[i1]];
-							}
-						});
-						if ($("#" + objs[i1]).length >= 1) {
-							$("#" + objs[i1]).val("");
-							$("#" + objs[i1]).val(str);
-						} else {
-							$("[name='" + objs[i1] + "']").val("");
-							$("[name='" + objs[i1] + "']").val(str);
-						}
-					}
-					return true;
-				}
-
-			},
-			cancelVal : 'å…³é—­',
-			cancel : true
-		/* ä¸ºtrueç­‰ä»·äºfunction(){} */
-		});
-	}
-}
-/**
- * Jeecg Excel å¯¼å‡º ä»£å…¥æŸ¥è¯¢æ¡ä»¶
- */
-function JeecgExcelExport(url, datagridId) {
-	var queryParams = $('#' + datagridId).datagrid('options').queryParams;
-	$('#' + datagridId + 'tb').find('*').each(function() {
-		queryParams[$(this).attr('name')] = $(this).val();
+	window.top.$.messager.progress({
+		text : 'Ò³Ãæ¼ÓÔØÖĞ....',
+		interval : 300
 	});
-	var params = '&';
-	$.each(queryParams, function(key, val) {
-		params += '&' + key + '=' + val;
-	});
-	var fields = '&field=';
-	$.each($('#' + datagridId).datagrid('options').columns[0], function(i, val) {
-		if (val.field != 'opt') {
-			fields += val.field + ',';
+	window.top.$('#maintabs').tabs({
+		onClose : function(subtitle, index) {
+			window.top.$.messager.progress('close');
 		}
 	});
-	window.location.href = url + encodeURI(fields + params);
+	if (window.top.$('#maintabs').tabs('exists', subtitle)) {
+		window.top.$('#maintabs').tabs('select', subtitle);
+		window.top.$('#maintabs').tabs('update', {
+			tab : window.top.$('#maintabs').tabs('getSelected'),
+			options : {
+				title : subtitle,
+				href:url,
+				//content : '<iframe name="tabiframe"  scrolling="no" frameborder="0"  src="' + url + '" style="width:100%;height:99%;"></iframe>',
+				closable : true,
+				icon : icon
+			}
+		});
+	} else {
+		if (url.indexOf('isIframe') != -1) {
+			window.top.$('#maintabs').tabs('add', {
+				title : subtitle,
+				content : '<iframe src="' + url + '" frameborder="0" style="border:0;width:100%;height:99.4%;"></iframe>',
+				closable : true,
+				icon : icon
+			});
+		}else {
+			window.top.$('#maintabs').tabs('add', {
+				title : subtitle,
+				href:url,
+				closable : true,
+				icon : icon
+			});
+		}
+	}
+}
+// ¹Ø±Õ×ÔÉíTABË¢ĞÂ¸¸TABgrid
+function closetab(title) {
+	//ÔİÊ±ÏÈ²»Ë¢ĞÂ
+	//window.top.document.getElementById('tabiframe').contentWindow.reloadTable();
+	//window.top.document.getElementById('maintabs').contentWindow.reloadTable();
+	window.top.$('#maintabs').tabs('close', title);
+	//tip("Ìí¼Ó³É¹¦");
+}
+
+//popup  
+//object: this  name:ĞèÒªÑ¡ÔñµÄÁĞ±íµÄ×Ö¶Î  code:¶¯Ì¬±¨±íµÄcode
+function inputClick(obj,name,code) {
+	 $.dialog.setting.zIndex = 2000;
+	 if(name==""||code==""){
+		 alert("popup²ÎÊıÅäÖÃ²»È«");
+		 return;
+	 }
+	 if(typeof(windowapi) == 'undefined'){
+		 $.dialog({
+				content: "url:cgReportController.do?popup&id="+code,
+				lock : true,
+				title:"Ñ¡Ôñ",
+				width:800,
+				height: 400,
+				cache:false,
+			    ok: function(){
+			    	iframe = this.iframe.contentWindow;
+			    	var selected = iframe.getSelectRows();
+			    	if (selected == '' || selected == null ){
+				    	alert("ÇëÑ¡Ôñ");
+			    		return false;
+				    }else {
+					    var str = "";
+				    	$.each( selected, function(i, n){
+					    	if (i==0)
+					    	str+= n[name];
+					    	else
+				    		str+= ","+n[name];
+				    	});
+				    	$(obj).val("");
+				    	//$('#myText').searchbox('setValue', str);
+					    $(obj).val(str);
+				    	return true;
+				    }
+					
+			    },
+			    cancelVal: '¹Ø±Õ',
+			    cancel: true /*ÎªtrueµÈ¼ÛÓÚfunction(){}*/
+			});
+		}else{
+			$.dialog({
+				content: "url:cgReportController.do?popup&id="+code,
+				lock : true,
+				title:"Ñ¡Ôñ",
+				width:800,
+				height: 400,
+				parent:windowapi,
+				cache:false,
+			    ok: function(){
+			    	iframe = this.iframe.contentWindow;
+			    	var selected = iframe.getSelectRows();
+			    	if (selected == '' || selected == null ){
+				    	alert("ÇëÑ¡Ôñ");
+			    		return false;
+				    }else {
+					    var str = "";
+				    	$.each( selected, function(i, n){
+					    	if (i==0)
+					    	str+= n[name];
+					    	else
+				    		str+= ","+n[name];
+				    	});
+				    	$(obj).val("");
+				    	//$('#myText').searchbox('setValue', str);
+					    $(obj).val(str);
+				    	return true;
+				    }
+					
+			    },
+			    cancelVal: '¹Ø±Õ',
+			    cancel: true /*ÎªtrueµÈ¼ÛÓÚfunction(){}*/
+			});
+		}
+}
+/*
+	×Ô¶¨ÒåurlµÄµ¯³ö
+	obj:ÒªÌî³äµÄ¿Ø¼ş,¿ÉÒÔÎª¶à¸ö£¬ÒÔ¶ººÅ·Ö¸ô
+	name:ÁĞ±íÖĞ¶ÔÓ¦µÄ×Ö¶Î,¿ÉÒÔÎª¶à¸ö£¬ÒÔ¶ººÅ·Ö¸ô£¨ÓëobjÒª¶ÔÓ¦£©
+	url£ºµ¯³öÒ³ÃæµÄUrl
+*/
+function popClick(obj,name,url) {
+	 $.dialog.setting.zIndex = 2001;
+	var names = name.split(",");
+	var objs = obj.split(",");
+	 if(typeof(windowapi) == 'undefined'){
+		 $.dialog({
+				content: "url:"+url,
+				lock : true,
+				title:"Ñ¡Ôñ",
+				width:700,
+				height: 400,
+				cache:false,
+			    ok: function(){
+			    	iframe = this.iframe.contentWindow;
+			    	var selected = iframe.getSelectRows();
+			    	if (selected == '' || selected == null ){
+				    	alert("ÇëÑ¡Ôñ");
+			    		return false;
+				    }else {
+				    	for(var i1=0;i1<names.length;i1++){
+						    var str = "";
+					    	$.each( selected, function(i, n){
+						    	if (i==0)
+						    	str+= n[names[i1]];
+						    	else{
+									str+= ",";
+									str+=n[names[i1]];
+								}
+					    	});
+							if($("#"+objs[i1]).length>=1){
+								$("#"+objs[i1]).val("");
+								$("#"+objs[i1]).val(str);
+							}else{
+								$("input[name='"+objs[i1]+"']").val("");
+								$("input[name='"+objs[i1]+"']").val(str);
+							}
+						 }
+				    	return true;
+				    }
+					 
+			    },
+			    cancelVal: '¹Ø±Õ',
+			    cancel: true /*ÎªtrueµÈ¼ÛÓÚfunction(){}*/
+			});
+		}else{
+			$.dialog({
+				content: "url:"+url,
+				lock : true,
+				title:"Ñ¡Ôñ",
+				width:700,
+				height: 400,
+				parent:windowapi,
+				cache:false,
+			     ok: function(){
+			    	iframe = this.iframe.contentWindow;
+			    	var selected = iframe.getSelectRows();
+			    	if (selected == '' || selected == null ){
+				    	alert("ÇëÑ¡Ôñ");
+			    		return false;
+				    }else {
+				    	for(var i1=0;i1<names.length;i1++){
+						    var str = "";
+					    	$.each( selected, function(i, n){
+						    	if (i==0)
+						    	str+= n[names[i1]];
+						    	else{
+									str+= ",";
+									str+=n[names[i1]];
+								}
+					    	});
+					    	if($("#"+objs[i1]).length>=1){
+								$("#"+objs[i1]).val("");
+								$("#"+objs[i1]).val(str);
+							}else{
+								$("[name='"+objs[i1]+"']").val("");
+								$("[name='"+objs[i1]+"']").val(str);
+							}
+						 }
+				    	return true;
+				    }
+					
+			    },
+			    cancelVal: '¹Ø±Õ',
+			    cancel: true /*ÎªtrueµÈ¼ÛÓÚfunction(){}*/
+			});
+		}
 }
 /**
- * è‡ªåŠ¨å®Œæˆçš„è§£æå‡½æ•°
- * 
+ * Jeecg Excel µ¼³ö
+ * ´úÈë²éÑ¯Ìõ¼ş
+ */
+function JeecgExcelExport(url,datagridId){
+	var queryParams = $('#'+datagridId).datagrid('options').queryParams;
+	$('#'+datagridId+'tb').find('*').each(function() {
+	    queryParams[$(this).attr('name')] = $(this).val();
+	});
+	var params = '&';
+	$.each(queryParams, function(key, val){
+		params+='&'+key+'='+val;
+	}); 
+	var fields = '&field=';
+	$.each($('#'+ datagridId).datagrid('options').columns[0], function(i, val){
+		if(val.field != 'opt'){
+			fields+=val.field+',';
+		}
+	}); 
+	window.location.href = url+ encodeURI(fields+params);
+}
+/**
+ * ×Ô¶¯Íê³ÉµÄ½âÎöº¯Êı
  * @param data
  * @returns {Array}
  */
-function jeecgAutoParse(data) {
+function jeecgAutoParse(data){
 	var parsed = [];
-	$.each(data.rows, function(index, row) {
-		parsed.push({
-			data : row,
-			result : row,
-			value : row.id
-		});
-	});
-	return parsed;
+    	$.each(data.rows,function(index,row){
+    		parsed.push({data:row,result:row,value:row.id});
+    	});
+			return parsed;
 }

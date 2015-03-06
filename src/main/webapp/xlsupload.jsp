@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=utf-8" language="java" import="java.util.*"%>
-<%@ taglib uri="/easyui-tags" prefix="t"%>
+<%@ taglib uri="/gem-tags" prefix="t"%>
 
 <!DOCTYPE html>
 <html lang="zh-CN">

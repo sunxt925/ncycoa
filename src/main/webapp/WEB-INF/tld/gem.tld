@@ -580,4 +580,75 @@
 			<description>是否生成查看删除链接默认false,如为true需要在后台返回JSON中添加查看参数(viewhref)和删除参数(delurl)</description>
 		</attribute>
 	</tag>
+	<tag>
+		<name>formvalid</name>
+		<tag-class>edu.cqu.gem.common.tag.FormValidationTag</tag-class>
+		<body-content>jsp</body-content>
+		<description>表单验证标签</description>
+		<attribute>
+			<name>action</name>
+			<rtexprvalue>true</rtexprvalue>
+			<description>表单提交路径</description>
+		</attribute>
+		<attribute>
+			<name>formid</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>Form Id</description>
+		</attribute>
+		<attribute>
+			<name>refresh</name>
+			<rtexprvalue>false</rtexprvalue>
+			<description>是否刷新父页面</description>
+		</attribute>
+		<attribute>
+			<name>callback</name>
+			<rtexprvalue>false</rtexprvalue>
+			<description>回调函数</description>
+		</attribute>
+		<attribute>
+			<name>beforeSubmit</name>
+			<rtexprvalue>false</rtexprvalue>
+			<description>提交之前处理函数</description>
+		</attribute>
+		<attribute>
+			<name>btnsub</name>
+			<rtexprvalue>false</rtexprvalue>
+			<description>触发提交事件按钮(默认值：btn_sub)</description>
+		</attribute>
+		<attribute>
+			<name>btnreset</name>
+			<rtexprvalue>false</rtexprvalue>
+			<description>触发表单重置事件按钮(默认值：btn_reset)</description>
+		</attribute>
+		<attribute>
+			<name>layout</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>表单布局</description>
+		</attribute>
+		<attribute>
+			<name>usePlugin</name>
+			<rtexprvalue>false</rtexprvalue>
+			<description>外调插件(可选插件,jqtransform:表单美化)</description>
+		</attribute>
+		<attribute>
+			<name>dialog</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>是否是弹出窗口模式</description>
+		</attribute>
+		<attribute>
+			<name>tabtitle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>表单选项卡分组标题</description>
+		</attribute>
+		<attribute>
+			<name>tiptype</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>表单校验提示方式 1:弹出方式,2-4：侧边提示</description>
+		</attribute>
+	</tag>
 </taglib>

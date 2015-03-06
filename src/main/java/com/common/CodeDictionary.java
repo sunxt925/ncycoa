@@ -8,8 +8,8 @@ import com.db.DataRow;
 import com.db.DataTable;
 import com.entity.query.QueryGroup;
 
-import edu.cqu.gem.ncycoa.domain.DataDictionary;
-import edu.cqu.gem.ncycoa.domain.DataDictionaryItem;
+import edu.cqu.ncycoa.domain.DataDictionary;
+import edu.cqu.ncycoa.domain.DataDictionaryItem;
 
 public class CodeDictionary {
 

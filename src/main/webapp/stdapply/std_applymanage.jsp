@@ -423,18 +423,11 @@ createwindowNoButton('企业标准修订申请表',url,'1000px','500px');
  	<div id="tab_menu" style="text-align: center;position: relative; border:1px "></div>
 	<div id="page" style="text-align: center;position: relative;  height:45%; width:100%; border:1px "></div> 
 	<div id="tab_menu2" style="text-align: center;position: relative; border:1px "></div>
-<<<<<<< HEAD
 	<div id="page2" style="text-align: center;position: relative;  height:45%; width:100%; border:1px "></div> 
 	</td>
 </tr>
 </table>
-=======
-	<div id="page2" style="text-align: center;position: relative;  height:33%; width:100%; border:1px "></div> 
 
-	<%@ include file="/page/controlHead.jsp"%>
-<flow:StepChoice table="1"/>
-
->>>>>>> 506dc99544674b05de05c3791b97dd3ae4edf817
 </form>
 </BODY>
 </HTML>

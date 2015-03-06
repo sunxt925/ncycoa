@@ -8,6 +8,7 @@
 		<class>edu.cqu.gem.ncycoa.domain.DataDictionary</class>
 		<class>edu.cqu.gem.ncycoa.domain.DataDictionaryItem</class>
 		<class>edu.cqu.gem.ncycoa.domain.Log</class>
+		<class>edu.cqu.gem.ncycoa.domain.Plan</class>
 	</persistence-unit>
 
 </persistence> 

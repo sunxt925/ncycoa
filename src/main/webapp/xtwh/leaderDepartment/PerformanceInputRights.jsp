@@ -14,7 +14,7 @@
 	TBM_AdminDept  tbm=new TBM_AdminDept();
 	DataTable dt=tbm.getMemberList();
 %>
-<script type="text/javascript" src="../../js/jquery-2.0.3.min.js"></script></HEAD>
+<script type="text/javascript" src="../../jscomponent/jquery/jquery-1.8.0.min.js"></script></HEAD>
 
 <script language="javascript" src="../../js/public/select.js"></script>
 

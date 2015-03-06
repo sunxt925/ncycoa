@@ -6,7 +6,7 @@
 <link rel="stylesheet" type="text/css" href="../../css/style.css">
 <META http-equiv=Content-Type content="text/html; charset=gb2312">
 <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
-<script type="text/javascript" src="../../js/jquery-2.0.3.min.js"></script></HEAD>
+<script type="text/javascript" src="../../jscomponent/jquery/jquery-1.8.0.min.js"></script></HEAD>
 <link rel="stylesheet" href="../../images/ztree/zTreeStyle.css" type="text/css">
 <script type="text/javascript" src="../../js/ztree/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="../../js/ztree/jquery.ztree.core-3.5.js"></script>

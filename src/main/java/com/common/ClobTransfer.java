@@ -85,18 +85,5 @@ public class ClobTransfer {
         else  
             return sb.toString();  
     }  
-      
-    public static String clobToString(oracle.sql.CLOB clob){  
-        try{  
-            Reader inStream = clob.getCharacterStream();  
-            char[] c = new char[(int) clob.length()];  
-            inStream.read(c);  
-            String data = new String(c);  
-            inStream.close();  
-            return data;  
-        }catch(Exception e){  
-            e.printStackTrace();  
-            return "";  
-        }  
-    }  
+    
 }  
