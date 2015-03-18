@@ -205,7 +205,7 @@ function F3()
 <a href='#' onClick="logininfo()" >登录信息</a>
 <a href='#' onClick="positioninfo()" ><%=org %></a>
 <a href='#' onClick="modstaff()" >基本信息</a>
-<%}else if(orgclass.equals("00080002")){ %>
+<%}else{ %>
 <a href='#' onClick="chooseuser('<%=orgcode %>')" >选择员工</a>
 <a href='#' onClick="positioninfo()" ><%=org %></a>
 

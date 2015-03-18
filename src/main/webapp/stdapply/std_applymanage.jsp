@@ -1,5 +1,9 @@
-<%@ page contentType="text/html; charset=gb2312" language="java" import="java.util.*,java.sql.*,com.db.*,com.common.*,com.entity.stdapply.*,com.entity.system.*,com.workflow.std.jbpm.*" errorPage="" %>
-<%@ page import="org.jbpm.api.*,org.jbpm.api.task.Task" %>
+<%@ page contentType="text/html; charset=gb2312" language="java" import="java.util.*,java.sql.*,com.db.*,com.common.*,com.entity.stdapply.*,com.entity.system.*" errorPage="" %>
+<%@page import="org.springframework.context.ApplicationContext"%>
+<%@page import="org.activiti.engine.*"%>
+
+<%@page import="org.activiti.engine.task.Task"%>
+<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
@@ -19,61 +23,35 @@ if (bm.equals("")) bm="NC";
 </HEAD>
 <%
 	//System.out.println(bm);
-	         Calendar c = Calendar.getInstance();
-   		 String year = "" + c.get(c.YEAR);
-		 String month = "" + (c.get(c.MONTH) + 1);
-		 String day = "" + c.get(c.DATE);
-		 String date="";
-		UserInfo UserInfo=(UserInfo)request.getSession().getAttribute("UserInfo");
-		String staffcode=UserInfo.getStaffcode();
-		StaffInfo staffinfo=new StaffInfo(staffcode);
-		String staffname=staffinfo.getName();
-		OrgPosition orgPosition = new OrgPosition();
-		DataTable dTable = orgPosition.getOrgPositionCode(staffcode);//返回该员工对应的机构编码和岗位编码（这个会返回两条及以上的记录）
-		String orgcode = dTable.get(0).getString("orgcode");
-		Org org=new Org(orgcode);
-		String orgname=org.getName();
-		//////////////////////////////////////////////////////
 		String taskId=request.getParameter("id");
-		ProcessEngine pe = Configuration.getProcessEngine();
-		TaskService ts = pe.getTaskService();
-		String applyid="";
-		Object applyobject=ts.getVariable(taskId, "applyid");
-		if(applyobject==null){
-			SequenceUtil seq=new SequenceUtil();
-			applyid=String.valueOf(seq.getSequence("标准类"));
-			date=year+"-"+month+"-"+day;
-		}else{
-			applyid=applyobject.toString();
-			DocApplyPerson person=new DocApplyPerson(Integer.parseInt(applyid));
-			date=person.getApplydate();
-		}
-	
-/*	int per_page=((UserInfo)request.getSession().getAttribute("UserInfo")).getPerpage_third();
-	DataTable dt=orgposition.getOrgPositionListstd(page_no,per_page,bm);  
-	DataTable dtcount=orgposition.getAllOrgPositionList(bm);
-	int pagecount=0;
-	if(dtcount.getRowsCount()%per_page==0)
-	    pagecount=dtcount.getRowsCount()/per_page;
-	else
-		pagecount=(dtcount.getRowsCount()/per_page)+1;
-	String trackName=og.getTrack(bm,"");*/
-	//System.out.println(trackName);
-	//System.out.println(page_no);
-	/* DBObject db = new DBObject();
-	
-	String sql="select * from system_unit where unit_ccm like'"+ unitccm+"___' order by unit_ccm";
-	DataTable dt=db.runSelectQuery(sql); */
+	    ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(application);
+		ProcessEngine processEngine = (ProcessEngine) ctx.getBean("processEngine");
+		TaskService taskService = processEngine
+				.getTaskService();
+		String ApplyId=taskService.getVariable(taskId, "applyid").toString();
+		int applyid=Integer.parseInt(ApplyId.toString());
+		DocApplyPerson applyperson=new DocApplyPerson(applyid);
+	String staffcode=applyperson.getApplystaffcode();
+	String staffname=applyperson.getApplyperson();
+	String applyapart=applyperson.getApplyapart();
+	String applydate=(applyperson.getApplydate()).substring(0,10);
+	String applyreason=applyperson.getApplyreason();
+	OrgPosition orgPosition = new OrgPosition();
+	DataTable dTable = orgPosition.getOrgPositionCode(staffcode);//返回该员工对应的机构编码和岗位编码（这个会返回两条及以上的记录）
+	String orgcode = dTable.get(0).getString("orgcode");
 %>
 
 <script language=
                 "javascript" type="text/javascript" src="<%=request.getContextPath()%>/js/MyDatePicker/WdatePicker.js">  </script>
 <script language="javascript" src="<%=request.getContextPath()%>/js/public/select.js"></script> 
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/tab/jquery.js"></script>
+                <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/jscomponent/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/jscomponent/easyui/themes/icon.css">
+<script type="text/javascript" src="<%=request.getContextPath()%>/jscomponent/easyui/jquery.easyui.min.js"></script>
  <script type="text/javascript" src="<%=request.getContextPath()%>/jscomponent/jquery/jquery-1.8.0.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
 
-<script type="text/javascript" src="../jscomponent/tools/outwindow.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/jscomponent/tools/stdapplyoutwindow.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/tab/tab/tab.js"></script>
 <style type="text/css">
 @IMPORT url("<%=request.getContextPath()%>/js/tab/tab/tab.css");
@@ -136,6 +114,7 @@ function F1()
 	//if (CkEmptyStr(document.all("DocNo"),"层次码不能为空！"))
 	//{
 		//alert (document.all("act"));
+		document.form1.result.value="1";
 		document.all("form1").submit();
 	//}
 }
@@ -253,7 +232,7 @@ function checkradio()
 		//			  createwindowNoButton('修订标准',stdupnewurl,'1000px','800px');
   		//			//window.open(stdupnewurl,"stdlist");
  // 						window.showModalDialog(stdupnewurl,window,"dialogWidth=1000px;dialogHeight=1000px");
-  		createwindowIframe("修订标准", stdupnewurl, "1000px", "800px","stdlist","修订")
+  		createwindowIframe("修订标准", stdupnewurl, "1000px", "700px","stdlist","修订")
   						
   						
 
@@ -261,7 +240,7 @@ function checkradio()
 				{
 					var applystaffcode = document.getElementById('applystaffcode').value;
 					  var stdupnewurl='/ncycoa/stdapply/std_applymodmanage.jsp?applystaffcode='+applystaffcode+'&applyid='+applyid+'&type='+'废除';
-		createwindowIframe("废除标准", stdupnewurl, "1000px", "800px","stdlist","废除")
+		createwindowIframe("废除标准", stdupnewurl, "1000px", "700px","stdlist","废除")
   					//window.open(stdupnewurl,"stdlist");
   		//				window.showModalDialog(stdupnewurl,window,"dialogWidth=1000px;dialogHeight=1000px");
   		//				window.location.reload();
@@ -274,19 +253,21 @@ function checkradio()
 
 }
 function createwindowIframe(title, url, width, height,siframe,buttonname) {
-		width = width ? width : 700;
-		height = height ? height : 400;
-		if (width == "100%" || height == "100%") {
-			width = document.body.offsetWidth;
-			height = document.body.offsetHeight - 100;
-		}
+// 		width = width ? width : 700;
+// 		height = height ? height : 400;
+// 		if (width == "100%" || height == "100%") {
+// 			width = document.body.offsetWidth;
+// 			height = document.body.offsetHeight - 100;
+// 		}
+var api = frameElement.api, W = api.opener;
 		var applyid = document.getElementById('applyid').value;
 		var orgcode=document.getElementById('orgcode').value;
 		if (typeof (windowapi) == 'undefined') {
-			$.dialog({
+			W.$.dialog({
 				//data:returnValue,
+				modal:true,
 				content : 'url:' + url,
-				lock : true,
+				lock : false, 
 				width : width,
 				height : height,
 				title : title,
@@ -357,30 +338,32 @@ createwindowNoButton('企业标准修订申请表',url,'1000px','500px');
 <td width="15%" height="80%"  class="main_table_centerbg">
 <table width="100%" height="35%" border="0" cellpadding="0" cellspacing="0">
        <tr>
-    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;<a href="#" onClick="F1()">提交[F1]</a>　<a href="#" onClick="F2()">重填[F2]</a>　<a href="#" onClick="F5()">刷新[F5]</a></td>
+    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;<a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-add',plain:true"  onClick="F1()">提交[F1]</a>　　<a href="#"  class="easyui-linkbutton"
+				        data-options="iconCls:'icon-reload',plain:true" onClick="F5()">刷新[F5]</a></td>
        </tr>
 <!--  <tr>   -->
 <!--  <td colspan="2" valign="middle">-->
 <!--      <table width="100%" border="0" cellpadding="3" cellspacing="0">-->
 
         <tr>
-          <td width="30%" align="right"> 申请人</td>
-		  <td width="70%" ><input type="text" name="applyperson" value="<%=staffname %>" id="applyperson" size="20" maxlength="30"><input type="hidden" name="applyid" value="<%=applyid%>" id="applyid"></td>
+          <td width="40%" align="center"> 申 请 人</td>
+		  <td width="60%" ><input type="text" name="applyperson" value="<%=staffname %>" id="applyperson" size="20" maxlength="30" readonly="readonly"><input type="hidden" name="applyid" value="<%=applyid%>" id="applyid"></td>
 		  </tr>
 		  		 <tr>
-          <td width="30%" align="right"> 申请时间</td>
-           <td width="70%"><input name="applydate" type="text" class="Wdate" id="applydate" onFocus="new WdatePicker(this,null,false,'whyGreen')"   value="<%=date %>" size="20" maxlength="30"></td>
+          <td width="40%" align="center"> 申请时间</td>
+           <td width="60%"><input name="applydate" type="text" class="Wdate" id="applydate" onFocus="new WdatePicker(this,null,false,'whyGreen')"   value="<%=applydate %>"  readonly="readonly" size="20" maxlength="30"></td>
         </tr>
                 <tr>
-          <td width="30%" align="right"> 申请部门</td>
-		  <td width="70%"><input type="text" name="applyapart" value="<%=orgname %>" id="applyapart" size="20" maxlength="60"></td>
+          <td width="40%" align="center"> 申请部门</td>
+		  <td width="60%"><input type="text" name="applyapart" value="<%=applyapart %>" id="applyapart" size="20" maxlength="60"></td>
 		  </tr>
 		  </table>
 		  <table width="100%" height="60%" border="0" cellpadding="0" cellspacing="0">
 		  <tr>          <td width="40%" align="center"> 申请事项:</td>
 		  </tr>
 		  <tr>
-		  <td width="100%"><input type="radio" name="radio" value="new" >新建
+		  <td width="100%" align="center"><input type="radio" name="radio" value="new" >新建
 		         <input type="radio"  name="radio" value="modify">修订
 		         <input type="radio"  name="radio" value="dele">废除
 		    <input type="button" name="button0" value="选择" onClick="checkradio()" >		 </td>
@@ -391,7 +374,7 @@ createwindowNoButton('企业标准修订申请表',url,'1000px','500px');
 		            </tr><tr>
 		  <td width="100%"  align="center">
 		  <label>
-		    <textarea name="applyreason" id="applyreason"  style="width:150px;height:200px"></textarea>
+		    <textarea name="applyreason" id="applyreason" value="<%=applyreason %>" style="width:150px;height:200px"><%=applyreason %></textarea>
 		   </label></td>
         </tr>
         <tr>
@@ -400,9 +383,11 @@ createwindowNoButton('企业标准修订申请表',url,'1000px','500px');
 		 </td>
         </tr>
           <tr>
-        <td><div align="right"><input name="act" type="hidden" id="act" value="add">
+        <td><div align="right"><input name="act" type="hidden" id="act" value="appro">
           <input name="orgcode" type="hidden" id="orgcode" value="<%=orgcode%>">
-          <input name="taskid" type="hidden" id="taskid" value="<%=taskId %>">
+          <input type='hidden' name='sugstaffcode'  value="<%=staffcode %>">
+          <input name="taskId" type="hidden" id="taskid" value="<%=taskId %>">
+          <input name="result" type="hidden" id="result" value="">
           <input name="url" type="hidden" id="url" value="">
           <input name="name" type="hidden" id="name" value="">
           <input name="flag" type="hidden" id="flag" value="">

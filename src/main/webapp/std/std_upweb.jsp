@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*,java.io.*,jp.ne.so_net.ga2.no_ji.jcom.*,com.entity.ftp.*,com.entity.stdapply.*,com.ftp.*,com.zhuozhengsoft.pageoffice.FileMakerCtrl,com.zhuozhengsoft.pageoffice.*,com.zhuozhengsoft.pageoffice.wordwriter.*" pageEncoding="utf-8"%>
+<%@ page contentType="text/html; charset=gb2312" language="java" import="java.util.*,java.io.*,jp.ne.so_net.ga2.no_ji.jcom.*,com.entity.ftp.*,com.entity.stdapply.*,com.ftp.*,com.zhuozhengsoft.pageoffice.FileMakerCtrl,com.zhuozhengsoft.pageoffice.*,com.zhuozhengsoft.pageoffice.wordwriter.*" pageEncoding="gb2312"%>
 <%@page import="com.jspsmart.upload.SmartUpload"%>
 <%@page import="javax.swing.JPanel"%>
 <%@page import="org.apache.commons.net.ftp.FTP"%>
@@ -8,30 +8,6 @@ request.setCharacterEncoding("UTF-8");
 String path0 = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path0+"/";
 %>
-<%!
-
-
-%>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
-  <script type="text/javascript">
-</script>
-    <base href="<%=basePath%>">
-    
-    <title>My JSP 'UpFtp.jsp' starting page</title>
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
-
-  </head>
 
 
 
@@ -54,7 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		officePath=pathtemp+"\\"+filename;
 		if(filename.equals("")||filename==null){
 			    String res=""; 
-			    res += "MessageBox.Show(null,'ä¸Šä¼ å¤±è´¥ï¼',null,'LogOK','Error',1,'ä¸Šä¼ å¤±è´¥,æ²¡æœ‰é€‰æ‹©ä¸Šä¼ çš„æ–‡ä»¶');";
+			    res += "MessageBox.Show(null,'ÉÏ´«Ê§°Ü£¡',null,'LogOK','Error',1,'ÉÏ´«Ê§°Ü,Ã»ÓÐÑ¡ÔñÉÏ´«µÄÎÄ¼þ');";
 			    res +="var api = frameElement.api;api.close();";
 			    //res +="window.close();";
 			    res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
@@ -72,6 +48,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				smart.save("UploadTemp");
 				docno=smart.getRequest().getParameter("DocNo");
 				docclass=smart.getRequest().getParameter("storetype");
+				if(docclass.equals("1")){
+					docclass="±ê×¼Àà";
+				}else if(docclass.equals("2")){
+					docclass="¸öÈËÀà";
+				}else{docclass="»ú¹¹Àà";}
 				type=filename.substring(filename.length()-4,filename.length());
 				if(type.equals(".doc")||type.equals(".dot")||type.equals(".ppt")||type.equals(".xls")){
 			        pdfname=filename.substring(0,filename.length()-4)+".pdf";
@@ -97,9 +78,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 
 		
-		 FtpStoreFile file=new FtpStoreFile();//ç”¨äºŽå­˜å‚¨officeæ–‡æ¡£
-	     FtpStoreFile pdffile = new FtpStoreFile();//ç”¨äºŽå­˜å‚¨pdfæ–‡æ¡£
-	     FtpStoreFile swffile = new FtpStoreFile();//ç”¨äºŽå­˜å‚¨flashæ–‡æ¡£
+		 FtpStoreFile file=new FtpStoreFile();//ÓÃÓÚ´æ´¢officeÎÄµµ
+	     FtpStoreFile pdffile = new FtpStoreFile();//ÓÃÓÚ´æ´¢pdfÎÄµµ
+	     FtpStoreFile swffile = new FtpStoreFile();//ÓÃÓÚ´æ´¢flashÎÄµµ
 		
          Calendar c = Calendar.getInstance();
    		 String year = "" + c.get(c.YEAR);
@@ -112,7 +93,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          		file.setDocno(docno);
          		//String docclass=smart.getRequest().getParameter("storetype");
 	      		file.setDocclass(docclass);
-	      		file.setFilecontenttpye("pdf");//3  ä»£è¡¨pdfæ–‡æ¡£ï¼ŒåŽé¢è¿˜è¦æ”¹çš„æ›´æ ‡å‡†ä¸€ç‚¹
+	      		file.setFilecontenttpye("pdf");//3  ´ú±ípdfÎÄµµ£¬ºóÃæ»¹Òª¸ÄµÄ¸ü±ê×¼Ò»µã
 	         	file.setFilename(filename);
 	         	FileInputStream in=new FileInputStream(officePath);
 	         	FtpStore ftp=new FtpStore();
@@ -127,7 +108,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          		swffile.setDocno(docno);
          		//String docclass=smart.getRequest().getParameter("storetype");
 	      		swffile.setDocclass(docclass);
-	      		swffile.setFilecontenttpye("swf");//3  ä»£è¡¨pdfæ–‡æ¡£ï¼ŒåŽé¢è¿˜è¦æ”¹çš„æ›´æ ‡å‡†ä¸€ç‚¹
+	      		swffile.setFilecontenttpye("swf");//3  ´ú±ípdfÎÄµµ£¬ºóÃæ»¹Òª¸ÄµÄ¸ü±ê×¼Ò»µã
 	         	swffile.setFilename(swfname);
 	         	FileInputStream in2=new FileInputStream(officePath);
 	         	FtpStore ftp2=new FtpStore();
@@ -135,7 +116,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	         	
 	         	 if(storefileno!=""&&storefileno!=null&&storefileno2!=""&&storefileno2!=null){
 	     				String res=""; 
-	     				res += "MessageBox.Show(null,'ä¸Šä¼ æˆåŠŸï¼',null,'LogOK',null,1,'ä¸Šä¼ æˆåŠŸï¼');";
+	     				res += "MessageBox.Show(null,'ÉÏ´«³É¹¦£¡',null,'LogOK',null,1,'ÉÏ´«³É¹¦£¡');";
 	     				res +="var api = frameElement.api;api.close();";
 						//res +="window.close();";
 						res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
@@ -155,7 +136,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    			f2.delete();			
 	     		}else{
 	     				String res=""; 
-	     				res += "MessageBox.Show(null,'ä¸Šä¼ å¤±è´¥ï¼',null,'LogOK','Error',1,'ä¸Šä¼ å¤±è´¥');";
+	     				res += "MessageBox.Show(null,'ÉÏ´«Ê§°Ü£¡',null,'LogOK','Error',1,'ÉÏ´«Ê§°Ü');";
 	     				res +="var api = frameElement.api;api.close();";
 						//res +="window.close();";
 						res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
@@ -204,7 +185,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		         file.setFilecontenttpye("xls");
 		         file.setFilename(filename.substring(0,filename.length()-4)+type);
 		        
-		     }//.VSDã€.VSSã€.VSTã€.VDXã€.VSX
+		     }//.VSD¡¢.VSS¡¢.VST¡¢.VDX¡¢.VSX
 		     else if(type.equals(".vsd")||type.equals(".vss")||type.equals(".vst")||type.equals(".vdx")||type.equals(".vsx")){
 		         file.setFilecontenttpye("vsd");
 		         file.setFilename(filename.substring(0,filename.length()-4)+type);
@@ -242,7 +223,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        
 	  	    if(storefileno!=""&&storefileno!=null&&storefileno1!=""&&storefileno1!=null&&storefileno2!=""&&storefileno2!=null){
 	     		String res=""; 
-	     				res += "MessageBox.Show(null,'ä¸Šä¼ æˆåŠŸï¼',null,'LogOK',null,1,'ä¸Šä¼ æˆåŠŸï¼');";
+	     				res += "MessageBox.Show(null,'ÉÏ´«³É¹¦£¡',null,'LogOK',null,1,'ÉÏ´«³É¹¦£¡');";
 	     				res +="var api = frameElement.api;api.close();";
 				//res +="window.close();";
 				res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
@@ -264,7 +245,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    				f2.delete();	
 	     }else{
 	     		String res=""; 
-	     				res += "MessageBox.Show(null,'ä¸Šä¼ å¤±è´¥ï¼',null,'LogOK','Error',1,'ä¸Šä¼ å¤±è´¥');";
+	     				res += "MessageBox.Show(null,'ÉÏ´«Ê§°Ü£¡',null,'LogOK','Error',1,'ÉÏ´«Ê§°Ü');";
 	     				res +="var api = frameElement.api;api.close();";
 				//res +="window.close();";
 				res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
@@ -289,12 +270,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    
 	    		}
 	      
-		//	request.getSession().setAttribute("savepdfname",pdfname);//å¿…é¡»ç”¨sessionï¼Œç”¨fs.getfilename()çš„è¯å¦‚æžœnameæœ‰ç©ºæ ¼å°±ä¼šåªèŽ·å¾—åˆ°ç©ºæ ¼
+		//	request.getSession().setAttribute("savepdfname",pdfname);//±ØÐëÓÃsession£¬ÓÃfs.getfilename()µÄ»°Èç¹ûnameÓÐ¿Õ¸ñ¾Í»áÖ»»ñµÃµ½¿Õ¸ñ
 
-			//fmCtrl.setTagId("FileMakerCtrl1"); //æ­¤è¡Œå¿…é¡»
+			//fmCtrl.setTagId("FileMakerCtrl1"); //´ËÐÐ±ØÐë
 	      
 %>
 
-
-
-</html>

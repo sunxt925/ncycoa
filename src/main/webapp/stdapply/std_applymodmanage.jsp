@@ -34,9 +34,7 @@ function F5()
 
 function changetopunit(unitccm)
 {
-alert(unitccm);
 var type=document.form1.type.value;
-alert(type);
 	//var newlisturl='/ncycoa/stdapply/std_orgpostlist.jsp?unitccm='+unitccm+'&type='+type;
 	                        //var newtreeurl='../tree/unit_tree.jsp?pageurl=../std_allunitsearch/std_orgpostlist.jsp&pagetarget=stdlist&unitccm='+unitccm;
 	//window.open(newlisturl,'postlist');

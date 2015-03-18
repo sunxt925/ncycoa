@@ -174,6 +174,7 @@ function search()
 	var urlsearch=document.form1.url.value;
 	var docname=document.form1.docname.value;
 	var doccode=document.form1.doccode.value;
+	var drawupperson=document.form1.drawupperson.value;
 	var url=urlsearch;
 	if(docname==''){
 		 url=url;
@@ -194,6 +195,11 @@ function search()
 		url=url;
 	}else{
 		url=url+'&doccode='+doccode;
+	}
+	if(drawupperson==''){
+		url=url;
+	}else{
+		url=url+'&drawupperson='+drawupperson;
 	}
 tab.close('tab1_id_index1');
 tab.close('tab1_id_index2');
@@ -268,6 +274,7 @@ function sort()
           <input name="flag" type="hidden" id="flag" value="">
           <input name="docname" type="hidden" id="docname" value="">
           <input name="doccode" type="hidden" id="doccode" value="">
+          <input name="drawupperson" type="hidden" id="drawupperson" value="">
           <input name="begin" type="hidden" id="begin" value="">
           <input name="end" type="hidden" id="end" value="">
           <input name="sorttype" type="hidden" id="sorttype" value="">

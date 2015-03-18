@@ -13,9 +13,15 @@
 	default-autowire="byName" default-lazy-init="false">
 	
 	<!-- 自动扫描dao和service包(自动注入) -->
+<<<<<<< HEAD
 	<context:component-scan base-package="edu.cqu.ncycoa.dao" />
 	<context:component-scan base-package="edu.cqu.ncycoa.common.service" />
 
+=======
+	<context:component-scan base-package="edu.cqu.ncycoa" />
+	<!-- 开启Spring的Annotation注解处理器 -->
+    <context:annotation-config />
+>>>>>>> 03c4b964a4f5ba203662bdc88878e826b8361efc
 	<!-- 引入属性文件 -->
 	<context:property-placeholder location="classpath:dbconfig.properties" />
 	<!-- 配置数据源 -->
@@ -106,10 +112,14 @@
 	
 	<!-- **********************配置Activiti***************************** -->
 	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
+		<property name="deploymentResources" value="classpath*:/diagrams/*.bpmn" />
+		<property name="deploymentMode" value="single-resource" />
 		<property name="dataSource" ref="dataSource" />
 		<property name="transactionManager" ref="transactionManager" />
     	<property name="databaseSchemaUpdate" value="true" />
     	<property name="jobExecutorActivate" value="false" />
+    	<property name="activityFontName" value="宋体"/>
+        <property name="labelFontName" value="宋体"/>
 	</bean>
 	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
   		<property name="processEngineConfiguration" ref="processEngineConfiguration" />

@@ -166,6 +166,7 @@ function search()
 	var url=urlsearch;
 	var docname=document.form1.docname.value;
 	var doccode=document.form1.doccode.value;
+	var drawupperson=document.form1.drawupperson.value;
 	if(docname==''){
 		url=url;
 	}else{
@@ -185,6 +186,11 @@ function search()
 		url=url;
 	}else{
 		url=url+'&doccode='+doccode;
+	}
+	if(drawupperson==''){
+		url=url;
+	}else{
+		url=url+'&drawupperson='+drawupperson;
 	}
 tab.close('tab1_id_index2');
 tab.close('tab1_id_index3');
@@ -258,12 +264,13 @@ function sort()
           <input name="begin" type="hidden" id="begin" value="">
           <input name="end" type="hidden" id="end" value="">
           <input name="doccode" type="hidden" id="doccode" value="">
+          <input name="drawupperson" type="hidden" id="drawupperson" value="">
           <input name="sorttype" type="hidden" id="sorttype" value="">
           <input name="hidbutton" type="button" id="hidbutton" value="" onclick="page();" style="display:none">
           <input name="hidbutton2" type="button" id="hidbutton2" value="" onclick="page2();" style="display:none">
           <input name="hidbutton3" type="button" id="hidbutton3" value="" onclick="search1();" style="display:none">
           <input name="hidbutton4" type="button" id="hidbutton4" value="" onclick="search2();" style="display:none">
-          <input name="hidbutton4" type="button" id="hidbutton0" value="" onclick="search();" style="display:none">
+          <input name="hidbutton0" type="button" id="hidbutton0" value="" onclick="search();" style="display:none">
           <input name="sortbutton" type="button" id="sortbutton" value="" onclick="sort()" style="display:none">
           </div></td>
         <td><input name="action_class" type="hidden" id="action_class" value="com.action.system.SystemUnitPositionAction"></td>

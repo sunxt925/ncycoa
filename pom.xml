@@ -83,10 +83,18 @@
 			<version>5.16.3</version>
 		</dependency>
 		<dependency>
+<<<<<<< HEAD
 			<groupId>org.activiti</groupId>
 			<artifactId>activiti-spring</artifactId>
 			<version>5.16.3</version>
 		</dependency>
+=======
+	  <groupId>org.activiti</groupId>
+	  		<artifactId>activiti-spring</artifactId>
+	  			<version>5.16.3</version>
+		</dependency>
+
+>>>>>>> 03c4b964a4f5ba203662bdc88878e826b8361efc
 		<!-- alibaba -->
 		<dependency>
 			<groupId>com.alibaba</groupId>

@@ -54,8 +54,8 @@ if (unitccm.equals("")) unitccm="NC";
 </script>
 <BODY class="mainbody" onLoad="this.focus()" style="background-color:white" style="height:100%;">
 <form name="form1" id="form1" method="post" action="../servlet/PageHandler">
-
-<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+<div style="width: 100%">
+<table width="100%" height="80%" border="0" cellpadding="0" cellspacing="0">
 
   <tr>
     <td colspan="3" valign="top" class="main_table_centerbg" align="left">
@@ -78,28 +78,14 @@ if (unitccm.equals("")) unitccm="NC";
 		tableutil.setDisplayCol("no");
 		out.print(tableutil.DrawTable());
 	%>
-      <table width="100%" border="0" cellpadding="3" cellspacing="0">
-        <tr>
-         
-          <td align="right">
-          <%// <td width="50%">【<a href="#" onClick="F4()">删除</a>】【<a href="#" onClick="SelectAll('form1')">全选</a>】【<a href="#" onClick="ChangeSelect('form1')">反选</a>】【<a href="#" onClick="UnSelectAll('form1')">清空</a>】</td>
-          String ccm="type="+type;
-      	out.print(PageUtil.DividePage(page_no,pagecount,"totalnum.jsp",ccm));
-       %>
-       </td>
-          
-        </tr>
-        
-      </table>
       <%}%>
       </td>
             </tr>
-  <tr>
-    <td width="3%" height="5" class="main_table_bottombg"><img src="../images/table_lb.jpg" width="10" height="5"></td>
-    <td width="94%" height="5" class="main_table_bottombg"></td>
-    <td width="3%" height="5" align="right" class="main_table_bottombg"><img src="../images/table_rb.jpg" width="10" height="5"></td>
-  </tr>
   </table>
+  </div>
+     <div align="right">
+   <input id="btnPrint" type="button" value="打印" onclick="javascript:window.print();"/>
+  </div>
 <!--        <div id="tab_menu" style="text-align: center;border:1px "></div>-->
 <!--		<div id="page"  style="text-align: center;position: relative;  height:45%; width:100%; border:1px "></div>-->
 <!--      <div id="tab_menu" style="text-align: center;position: absolute; top: 49.5%; height:28px; width:100%; border:1px "></div>-->

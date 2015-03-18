@@ -65,7 +65,7 @@ function fun(DocClassName)
 <!--    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;<a href="#" onClick="F8()">保存[F8]</a>　<a href="#" onClick="F3()">重填[F3]</a>　<a href="#" onClick="F5()">刷新[F5]</a></td>-->
 <!--  </tr>-->
   <tr>
-    <td colspan="3" valign="top" class="main_table_centerbg" align="center"><table width="100%" height="100%" border="1" cellspacing="0" cellpadding="0" class="table_list1">
+    <td colspan="3" valign="top" class="main_table_centerbg" align="center"><table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0" class="table_list1">
       <tr>
         <td width="20%"><div align="right">标准编号：</div></td>
         <td width="80%"><input name="DocCode" type="text" class="input1" id="DocCode" onKeyDown="EnterKeyDo('')" value="<%=mo.getDocCode()%>" size="30" maxlength="30" readonly="readonly"></td>

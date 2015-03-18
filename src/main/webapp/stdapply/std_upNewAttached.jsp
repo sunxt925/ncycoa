@@ -72,7 +72,7 @@ function fun(DocClassName)
 <!--  </tr>-->
   <tr>
     <td colspan="3" valign="top" class="main_table_centerbg" align="center">
-    <table width="100%" height="100%" border="1" cellspacing="0" cellpadding="0" class="table_list1">
+    <table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0" class="table_list1">
      <tr>
         <td width="20%"><div align="right">¸½¼þ±àºÅ£º</div></td>
         <td width="80%"><input name="DocCode" type="text" class="input1" id="DocCode" onKeyDown="EnterKeyDo('')" value="" size="30" maxlength="30" ></td>

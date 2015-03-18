@@ -57,7 +57,7 @@ function fun(DocClassName)
 <form name="form1" id="form1" method="post" action="../servlet/PageHandler">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0" >
   <tr>
-    <td colspan="3" valign="top" class="main_table_centerbg" align="center"><table width="100%" height="100%" border="1" cellspacing="0" cellpadding="0" class="table_listchao">
+    <td colspan="3" valign="top" class="main_table_centerbg" align="center"><table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0" class="table_listchao">
       <tr>
         <td width="20%"><div align="right">¸½¼þ±àºÅ£º</div></td>
         <td width="80%"><input name="DocCode" type="text" class="input1" id="DocCode" onKeyDown="EnterKeyDo('')" value="<%=mo.getDocCode()%>" size="30" maxlength="30"  readonly="readonly"></td>

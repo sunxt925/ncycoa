@@ -42,7 +42,7 @@ if (unitccm.equals("")) unitccm="NC";
 
 <script type="text/javascript" src="../jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
 
-<script type="text/javascript" src="../jscomponent/tools/outwindow.js"></script>
+<script type="text/javascript" src="../jscomponent/tools/tabletoexcel.js"></script>
                 
 <script language="javascript" src="../js/public/select.js"></script>
 

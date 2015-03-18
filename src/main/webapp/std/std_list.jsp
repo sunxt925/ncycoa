@@ -28,13 +28,16 @@ if(end==null)
 String docname=request.getParameter("docname");
 if(docname==null) 
 	docname="";
+String drawupperson=request.getParameter("drawupperson");
+if(drawupperson==null) 
+	drawupperson="";
 String doccode=request.getParameter("doccode");
 if(doccode==null) doccode=""; 
 	Org og=new Org();
 	int page_no=Integer.parseInt(Format.NullToZero(request.getParameter("page_no")));
 	int per_page=(((UserInfo)request.getSession().getAttribute("UserInfo")).getPerpage_full()-2)*4/5;
-	DataTable dt=og.getStdList(page_no,per_page,unitccm,begin,end,docname,doccode,sortkind);
-	DataTable dtcount=og.getAllStdList(unitccm,begin,end,docname,doccode);
+	DataTable dt=og.getStdList(page_no,per_page,unitccm,begin,end,docname,doccode,sortkind,drawupperson);
+	DataTable dtcount=og.getAllStdList(unitccm,begin,end,docname,doccode,drawupperson);
 	DataTable dtname=og.getOrgName(unitccm);
 	String name=dtname.get(0).get(1).toString();
 	int pagecount=0;
@@ -202,6 +205,7 @@ function search2(){
 }
 function search(){
 var docname=document.form1.docname.value;
+var drawupperson=document.form1.drawupperson.value;
 	var begin=document.form1.begin.value;
 	var end=document.form1.end.value;
 	var orgcode=document.form1.orgcode.value;
@@ -212,6 +216,7 @@ var docname=document.form1.docname.value;
 	window.parent.document.getElementById("end").value=end;
 	window.parent.document.getElementById("docname").value=docname;
 	window.parent.document.getElementById("doccode").value=doccode;
+	window.parent.document.getElementById("drawupperson").value=drawupperson;
          window.parent.document.getElementById("flag").value="";
          window.parent.document.getElementById("hidbutton0").click();
 }
@@ -249,12 +254,13 @@ function datesort(){
       <tr valign="middle">
       <td width="5%"></td>
           <td  width="60%"  colspan="3" valign="middle" >
-          时间段：<input name="begin" type="Wdate" class="input1" id="begin" onFocus="new WdatePicker({lang:'zh-cn'})"  value="" size="20" maxlength="30">
-     -- <input name="end" type="Wdate" class="input1" id="end" onFocus="new WdatePicker({lang:'zh-cn'})"  value="" size="20" maxlength="30">
+          时间段：<input name="begin" type="Wdate" class="input1" id="begin" onFocus="new WdatePicker({lang:'zh-cn'})"  value="" size="15" maxlength="30">
+     -- <input name="end" type="Wdate" class="input1" id="end" onFocus="new WdatePicker({lang:'zh-cn'})"  value="" size="15" maxlength="30">
 <!--     <button onClick="search1()">查询</button>-->
      
-     关键字<input name="docname" type="text" class="input1" id="docname" onKeyDown="EnterKeyDo('')" value="" size="30" maxlength="30" >
-   标准编号<input name="doccode" type="text" class="input1" id="doccode" onKeyDown="EnterKeyDo('')" value="" size="30" maxlength="30" >
+     关键字<input name="docname" type="text" class="input1" id="docname" onKeyDown="EnterKeyDo('')" value="" size="20" maxlength="30" >
+   标准编号<input name="doccode" type="text" class="input1" id="doccode" onKeyDown="EnterKeyDo('')" value="" size="20" maxlength="30" >
+   编制人<input name="drawupperson" type="text" class="input1" id="drawupperson" onKeyDown="EnterKeyDo('')" value="" size="20" maxlength="30" >
 <!--     <button onClick="search2()">查询</button>-->
  <button onClick="search()">查询</button>
           </td>

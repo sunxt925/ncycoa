@@ -28,6 +28,9 @@ String doccode=request.getParameter("doccode");
 if(doccode==null) doccode=""; 
 if(docname==null) 
 	docname="";
+String drawupperson=request.getParameter("drawupperson");
+if(drawupperson==null) 
+	drawupperson="";
 	String orgcode=request.getParameter("orgcode");
 	String positioncode=request.getParameter("positioncode");
 	Position position=new Position(positioncode);
@@ -35,8 +38,8 @@ if(docname==null)
 	DocOrgPost docorgpost=new DocOrgPost();
 	int page_no=Integer.parseInt(Format.NullToZero(request.getParameter("page_no")));
 	int per_page=((UserInfo)request.getSession().getAttribute("UserInfo")).getPerpage_full()-4;
-	DataTable dt=docorgpost.getStdList(page_no,per_page,orgcode,positioncode,begin,end,docname,doccode,sortkind);
-	DataTable dtcount=docorgpost.getAllStdList(orgcode,positioncode,begin,end,docname,doccode);
+	DataTable dt=docorgpost.getStdList(page_no,per_page,orgcode,positioncode,begin,end,docname,doccode,sortkind,drawupperson);
+	DataTable dtcount=docorgpost.getAllStdList(orgcode,positioncode,begin,end,docname,doccode,drawupperson);
 	int pagecount=(dtcount.getRowsCount()/per_page)+1;
 	//request.getSession().setAttribute("pageno",page_no);
 	//var belongno= document.getElementById ('items').value;
@@ -50,6 +53,7 @@ if(docname==null)
 <script type="text/javascript" src="../jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
 
 <script type="text/javascript" src="../jscomponent/tools/outwindow.js"></script>
+<script type="text/javascript" src="../jscomponent/tools/tabletoexcel.js"></script>
 
 
 <script language="javascript">
@@ -62,20 +66,6 @@ function F2(docno)
       window.location.reload();
 }
 
-function F4()
-{
-	if (CheckSelect("form1"))
-	{
-		if (confirm("父级菜单的删除将级联删除子菜单，是否继续？"))
-		{
-			document.all("form1").submit();
-		}
-	}
-	else
-	{
-		alert ("你没有选中要删除的内容！");
-	}
-}
 
 function F5()
 {
@@ -129,7 +119,7 @@ function OpenFile(storefileno,filecontenttype)
 }
 function F1(docno)
 {
-  var stdupnewurl='std_search/std_detail.jsp?bm='+docno;
+  var stdupnewurl='/ncycoa/std_search/std_detail.jsp?bm='+docno;
   createwindowNoButton('标准的信息',stdupnewurl,'450px','400px');
   //window.open(stdupnewurl,"stdlist");
 //  window.showModalDialog(stdupnewurl,window,"dialogWidth=500px;dialogHeight=600px");
@@ -166,6 +156,7 @@ var docname=document.form1.docname.value;
 	var end=document.form1.end.value;
 	var orgcode=document.form1.orgcode.value;
 	var positioncode=document.form1.positioncode.value;
+	var drawupperson=document.form1.drawupperson.value;
 	var doccode=document.form1.doccode.value;
 	var newurl='std_list.jsp?orgcode='+orgcode+'&positioncode='+positioncode;
 	window.parent.document.getElementById("url").value=newurl;
@@ -173,6 +164,7 @@ var docname=document.form1.docname.value;
 	window.parent.document.getElementById("end").value=end;
 	window.parent.document.getElementById("docname").value=docname;
 	window.parent.document.getElementById("doccode").value=doccode;
+	window.parent.document.getElementById("drawupperson").value=drawupperson;
          window.parent.document.getElementById("flag").value="";
          window.parent.document.getElementById("hidbutton0").click();
 }
@@ -192,9 +184,12 @@ function datesort(){
 	window.parent.document.getElementById("url").value=newurl;
 	window.parent.document.getElementById("sortbutton").click();
 }
+function toexcel(){
+	saveAsExcel('tableout');
+}
 </script>
 <BODY class="mainbody" onLoad="this.focus()" style="background-color:white">
-<form name="form1" id="form1" method="post" action="../servlet/PageHandler">
+<form name="form1" id="form1" method="post">
     <table width="100%" height="5%" border="0" cellspacing="0" cellpadding="0"  class="table_td_jb">
     <tr><td colspan="3" width="100%" height=30>
   <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -206,12 +201,13 @@ function datesort(){
       <tr>
       <td width="5%"></td>
           <td width="60%" colspan="3" valign="middle" >
-          时间段：<input name="begin" type="Wdate" class="input1" id="begin" onfocus="new WdatePicker({lang:'zh-cn'})"  value="" size="30" maxlength="30">
-     --- <input name="end" type="Wdate" class="input1" id="end" onfocus="new WdatePicker({lang:'zh-cn'})"  value="" size="30" maxlength="30">
+          时间段：<input name="begin" type="Wdate" class="input1" id="begin" onfocus="new WdatePicker({lang:'zh-cn'})"  value="" size="20" maxlength="30">
+     --- <input name="end" type="Wdate" class="input1" id="end" onfocus="new WdatePicker({lang:'zh-cn'})"  value="" size="20" maxlength="30">
 <!--     <button onclick="search1()">查询</button>-->
      
-     关键字 <input name="docname" type="text" class="input1" id="docname" onKeyDown="EnterKeyDo('')" value="" size="30" maxlength="30" >
-      标准编号<input name="doccode" type="text" class="input1" id="doccode" onKeyDown="EnterKeyDo('')" value="" size="30" maxlength="30" >
+     关键字 <input name="docname" type="text" class="input1" id="docname" onKeyDown="EnterKeyDo('')" value="" size="20" maxlength="30" >
+      标准编号<input name="doccode" type="text" class="input1" id="doccode" onKeyDown="EnterKeyDo('')" value="" size="20" maxlength="30" >
+  编制人<input name="drawupperson" type="text" class="input1" id="drawupperson" onKeyDown="EnterKeyDo('')" value="" size="20" maxlength="30" >
 <!--     <button onclick="search2()">查询</button>-->
 <button onclick="search()">查询</button>
           </td>
@@ -225,7 +221,7 @@ function datesort(){
     </td>
   </tr>
 </table>
- <table width="100%" height="85%" border="0"  class="main_table_centerbg" cellpadding="0" cellspacing="0">
+ <table id="table1" width="100%" height="85%" border="0"  class="main_table_centerbg" cellpadding="0" cellspacing="0">
   <tr>
     <td colspan="3" valign="top" align="left">
     
@@ -265,11 +261,11 @@ function datesort(){
       </table>
       <%}%>
        <tr>
-        <td><div align="right"><input name="act" type="hidden" id="act" value="del">
+        <td><div align="right">
         <input name="orgcode" type="hidden" id="orgcode" value="<%=orgcode%>">
         <input name="positioncode" type="hidden" id="positioncode" value="<%=positioncode%>"></div></td>
           
-        <td><input name="action_class" type="hidden" id="action_class" value="com.action.std.StdManageAction"></td>
+        <td></td>
       </tr>
         <tr>
     <td width="3%" height="5" class="main_table_bottombg"><img src="../images/table_lb.jpg" width="10" height="5"></td>

@@ -69,9 +69,9 @@ document.all("Submit").click();
     资源类：</td>
 <td width="70%">
     <select name="storetype"  id="storetype" style="width:140px">
-            <option value="标准类">标准类</option>
-            <option value="个人类">个人类</option>
-            <option value="机构类">机构类</option>
+            <option value="1">标准类</option>
+            <option value="2">个人类</option>
+            <option value="3">机构类</option>
     </select>
 
 </td>
@@ -90,7 +90,8 @@ document.all("Submit").click();
 <!--	 </td>-->
 <!--</tr>-->
 <tr>
-<td><a id="F8" style="display:none" href="#" onClick="F8()">上传</a><input type="submit"  name="Submit" value="上传"  style="display:none" ><input type="hidden" name="DocNo" value="<%=DocNo %>">
+<td><a id="F8" style="display:none" href="#" onClick="F8()">上传</a>
+</td><td><input type="submit"  name="Submit" value="上传"  style="display:none" ><input type="hidden" name="DocNo" value="<%=DocNo %>">
 	    </td>
 </tr>
 
