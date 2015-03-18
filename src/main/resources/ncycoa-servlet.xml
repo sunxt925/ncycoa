@@ -9,12 +9,12 @@
         http://www.springframework.org/schema/mvc
 		http://www.springframework.org/schema/mvc/spring-mvc.xsd ">
 
-	<context:component-scan base-package="edu.cqu.gem.ncycoa.web.controller"></context:component-scan>
+	<context:component-scan base-package="edu.cqu.ncycoa.web.controller"></context:component-scan>
 
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<property name="cacheSeconds" value="0" />
 		<property name="webBindingInitializer">
-			<bean class="edu.cqu.gem.ncycoa.interceptors.MyWebBinding" />
+			<bean class="edu.cqu.ncycoa.interceptors.MyWebBinding" />
 		</property>
 	</bean>
 
@@ -27,7 +27,7 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
-			<bean class="edu.cqu.gem.ncycoa.interceptors.AuthInterceptor">
+			<bean class="edu.cqu.ncycoa.interceptors.AuthInterceptor">
 				<property name="excludeUrls">
 					<list>
 						<value>login.htm</value>

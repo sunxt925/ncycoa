@@ -6,7 +6,7 @@
 <link rel="stylesheet" type="text/css" href="../../css/style.css">
 <META http-equiv=Content-Type content="text/html; charset=gb2312">
 <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
-<script type="text/javascript" src="../../js/DatePicker/WdatePicker.js"></script></HEAD>
+<script type="text/javascript" src="../../js/MyDatePicker/WdatePicker.js"></script></HEAD>
 <base target=_self>
 <% 
 

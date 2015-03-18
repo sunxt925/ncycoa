@@ -5,10 +5,10 @@
     http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 
 	<persistence-unit name="ncycoaPU" transaction-type="RESOURCE_LOCAL">
-		<class>edu.cqu.gem.ncycoa.domain.DataDictionary</class>
-		<class>edu.cqu.gem.ncycoa.domain.DataDictionaryItem</class>
-		<class>edu.cqu.gem.ncycoa.domain.Log</class>
-		<class>edu.cqu.gem.ncycoa.domain.Plan</class>
+		<class>edu.cqu.ncycoa.domain.DataDictionary</class>
+		<class>edu.cqu.ncycoa.domain.DataDictionaryItem</class>
+		<class>edu.cqu.ncycoa.domain.Log</class>
+		<class>edu.cqu.ncycoa.domain.Plan</class>
 	</persistence-unit>
 
 </persistence> 
