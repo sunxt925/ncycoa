@@ -1,19 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ page import="java.util.*,java.sql.*,com.db.*,com.common.*,com.entity.system.*,com.workflow.std.jbpm.*" %>
-<%@ page import="org.jbpm.api.*,org.jbpm.api.task.Task" %>
+<%@ page import="java.util.*,java.sql.*,com.db.*,com.common.*,com.entity.system.*,com.workflow.serviceimpl.*" %>
+<%@page import="org.springframework.context.ApplicationContext"%>
+<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
+<%@page import="org.activiti.engine.*"%>
+<%@page import="org.activiti.engine.repository.*"%>
+<%@page import="org.activiti.engine.runtime.*"%>
+<%@page import="org.activiti.engine.task.*"%>
+<%@page import="com.entity.system.TbmSumlog"%>
+<%@page import="org.activiti.engine.form.*"%>
 <%
 	UserInfo UserInfo=(UserInfo)request.getSession().getAttribute("UserInfo");
 	String staffcode=UserInfo.getStaffcode();
 	ProcessHandler processhandler=new ProcessHandler();
-	Boolean flag=processhandler.startProcessinstance(staffcode);
+	ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(application);
+	ProcessEngine processEngine = (ProcessEngine) ctx.getBean("processEngine");
+	Boolean flag=processhandler.startProcessinstance(staffcode,processEngine);
 	String url="";
 	if(flag){
-		ProcessEngine processEngine=Configuration.getProcessEngine();
-		TaskService taskService=processEngine.getTaskService();  
-		List<Task> groupTaskList=taskService.findPersonalTasks(staffcode);
-		int length=groupTaskList.size();
-		Task task=groupTaskList.get(length-1);
-		url="std_applymanage.jsp?id="+task.getId();
+		
+		TaskService taskService = processEngine
+				.getTaskService();
+		List<Task> groupTaskList=taskService.createTaskQuery().taskAssignee(staffcode).orderByTaskCreateTime().desc().list();
+		Task task=groupTaskList.get(0);
+		url="pro_apply.jsp?id="+task.getId();
 	}else{
 		url="sorry.jsp";
 	}

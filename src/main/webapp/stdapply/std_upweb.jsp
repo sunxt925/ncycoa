@@ -48,6 +48,11 @@ temp=pathtemp+"\\"+filename;
 docno=smart.getRequest().getParameter("DocNo");
 
          docclass=smart.getRequest().getParameter("storetype");
+         if(docclass.equals("1")){
+				docclass="标准类";
+			}else if(docclass.equals("2")){
+				docclass="个人类";
+			}else{docclass="机构类";}
          //System.out.println("filename    :"+filename+"dcoclass    :"+docclass);
 	     type=filename.substring(filename.length()-4,filename.length());
 

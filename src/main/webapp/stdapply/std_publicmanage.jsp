@@ -1,5 +1,9 @@
 <%@ page contentType="text/html; charset=gb2312" language="java" import="java.sql.*,com.db.*,com.common.*,com.entity.system.*,com.entity.stdapply.*" errorPage="" %>
-<%@ page import="org.jbpm.api.*,org.jbpm.api.task.Task" %>
+<%@page import="org.springframework.context.ApplicationContext"%>
+<%@page import="org.activiti.engine.*"%>
+
+<%@page import="org.activiti.engine.task.Task"%>
+<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <%
@@ -14,13 +18,13 @@
 
 </HEAD>
 <%
-		ProcessEngine pe = Configuration.getProcessEngine();
-ExecutionService es = pe.getExecutionService();
-	TaskService ts = pe.getTaskService();
-	String taskid = request.getParameter("id");
-	Task task = ts.getTask(taskid);
+		String taskId=request.getParameter("id");
+	    ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(application);
+		ProcessEngine processEngine = (ProcessEngine) ctx.getBean("processEngine");
+		TaskService taskService = processEngine
+				.getTaskService();
+		String ApplyId=taskService.getVariable(taskId, "applyid").toString();
 	
-	String ApplyId=ts.getVariable(taskid, "applyid").toString();
 		int applyid=Integer.parseInt(ApplyId.toString());
 		DocApplyPerson applyperson=new DocApplyPerson(applyid);
 	String staffcode=applyperson.getApplystaffcode();
@@ -34,12 +38,14 @@ ExecutionService es = pe.getExecutionService();
 <script language=
                 "javascript" type="text/javascript" src="<%=request.getContextPath()%>/js/MyDatePicker/WdatePicker.js">  </script>
 <script language="javascript" src="<%=request.getContextPath()%>/js/public/select.js"></script> 
-
+                <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/jscomponent/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/jscomponent/easyui/themes/icon.css">
+<script type="text/javascript" src="<%=request.getContextPath()%>/jscomponent/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/jscomponent/jquery/jquery-1.8.0.min.js"></script>
 
 <script type="text/javascript" src="<%=request.getContextPath()%>/jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/tab/tab/tab.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/jscomponent/tools/outwindow.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/jscomponent/tools/stdapplyoutwindow.js"></script>
 <style type="text/css">
 @IMPORT url("<%=request.getContextPath()%>/js/tab/tab/tab.css");
 
@@ -209,7 +215,9 @@ createwindowNoButton('企业标准修订申请表',url,'1000px','500px');
 <td width="15%" height="80%"  class="main_table_centerbg">
 <table width="100%" height="45%" border="0" cellpadding="0" cellspacing="0">
        <tr>
-    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;　<a href="#" onClick="F1()">发布标准[F1]</a> <a href="#" onClick="F5()">刷新[F5]</a></td>
+    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;　<a href="#" onClick="F1()" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-add',plain:true">发布标准[F1]</a> <a href="#" onClick="F5()" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-reload',plain:true">刷新[F5]</a></td>
        </tr>
         <tr>
           <td width="30%" align="right"> 申请人</td>
@@ -245,7 +253,7 @@ createwindowNoButton('企业标准修订申请表',url,'1000px','500px');
           <input name="flag" type="hidden" id="flag" value="">
           <input type='hidden' name='applystaffcode'  value="<%=staffcode %>">
           <input type='hidden' name='applyid'  value="<%=ApplyId %>">
-          <input type='hidden' name='taskid'  value="<%=taskid %>">
+          <input type='hidden' name='taskid'  value="<%=taskId %>">
           <input name="hidbutton" type="button" id="hidbutton" value="" onClick="page();" style="display:none">
           <input name="hidbutton2" type="button" id="hidbutton2" value="" onClick="page2();" style="display:none"></div>
         <input name="action_class" type="hidden" id="action_class" value="com.action.stdapply.StdApplyAction"></td>

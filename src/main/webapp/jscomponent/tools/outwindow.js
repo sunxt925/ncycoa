@@ -9,7 +9,7 @@
 			$.dialog({
 				//data:returnValue,
 				content : 'url:' + url,
-				lock : true,
+				lock : false,
 				width : width,
 				height : height,
 				title : title,
@@ -165,9 +165,9 @@ function createwindowNoButton(title, url, width, height) {
 		}
 		if (typeof (windowapi) == 'undefined') {
 			$.dialog({
-				//data:returnValue,
 				content : 'url:' + url,
-				lock : true,
+				lock : false,
+				modal:true, 
 				width : width,
 				height : height,
 				title : title,

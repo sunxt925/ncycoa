@@ -122,7 +122,7 @@ function OpenFile(storefileno,filecontenttype)
 }
 function F1(docno)
 {
-  var stdupnewurl='std_search/std_attachdetail.jsp?bm='+docno;
+  var stdupnewurl='/ncycoa/std_search/std_attachdetail.jsp?bm='+docno;
     createwindowNoButton('附件的信息',stdupnewurl,'450px','300px');
   //window.open(stdupnewurl,"stdlist");
 //  window.showModalDialog(stdupnewurl,window,"dialogWidth=500px;dialogHeight=600px");

@@ -23,17 +23,6 @@
 		<description>spring监听器</description>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-
-  <servlet>
-    <servlet-name>StdFlowDeploy</servlet-name>
-    <servlet-class>com.servlet.StdFlowDeploy</servlet-class>
-    <load-on-startup>0</load-on-startup>
-  </servlet>
-    <servlet-mapping>
-    <servlet-name>StdFlowDeploy</servlet-name>
-    <url-pattern>/servlet/StdFlowDeploy</url-pattern>
-  </servlet-mapping>
-
 	<listener>
 		<description>Introspector缓存清除监听器</description>
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
@@ -44,7 +33,7 @@
 	</listener>
 
 	<listener>
-		<listener-class>edu.cqu.gem.ncycoa.web.listener.InitListener</listener-class>
+		<listener-class>edu.cqu.ncycoa.web.listener.InitListener</listener-class>
 	</listener>
 
 	<!-- Spring MVC -->

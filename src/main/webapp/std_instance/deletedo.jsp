@@ -1,25 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@page import="com.workflow.serviceimpl.InstanceServiceImpl"%>
-<%@page import="java.util.* " %>
-<%@ page import="org.jbpm.api.* " %>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
+<%@page contentType="text/html;charset=UTF-8"%>
+<%@page import="org.springframework.context.ApplicationContext"%>
+<%@page import="org.activiti.engine.*"%>
+<%@page import="org.activiti.engine.repository.ProcessDefinition"%>
+
+<%@page import="org.activiti.engine.task.Task"%>
+<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
+<%@page import="java.util.*"%>
+
 
 <%
-String pid=request.getParameter("pid");
-InstanceServiceImpl instance=new InstanceServiceImpl();
-boolean flag=instance.deleteById(pid);
-
-ProcessEngine processEngine=Configuration.getProcessEngine();
-ExecutionService executionService = processEngine.getExecutionService();
-executionService.deleteProcessInstanceCascade(pid); 
-if(flag){
-response.getWriter().write("删除成功");
-}else{
-response.getWriter().write("删除失败");
-}
-response.getWriter().flush();
-	response.getWriter().close();
+    ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(application);
+	ProcessEngine processEngine = (ProcessEngine) ctx.getBean("processEngine");
+	
+	RepositoryService repositoryService = processEngine.getRepositoryService();
+	TaskService taskService = processEngine.getTaskService();
+	RuntimeService runtimeService = processEngine.getRuntimeService();
+	String instanceid=request.getParameter("pid");
+	runtimeService.deleteProcessInstance(instanceid,"f");
+	//runtimeService.suspendProcessInstanceById(instanceid);//挂起
+	
 %>
