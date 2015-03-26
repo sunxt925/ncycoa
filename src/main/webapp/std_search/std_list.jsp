@@ -11,6 +11,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <HEAD>
 <TITLE>南充市烟草局</TITLE>
 <link rel="stylesheet" type="text/css" href="../css/style.css">
+<link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/default/easyui.css">
 <META http-equiv=Content-Type content="text/html; charset=gb2312">
 <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
 </HEAD>
@@ -28,6 +30,9 @@ String doccode=request.getParameter("doccode");
 if(doccode==null) doccode=""; 
 if(docname==null) 
 	docname="";
+String getType=request.getParameter("gettype");
+if(getType==null)
+	getType="";
 String drawupperson=request.getParameter("drawupperson");
 if(drawupperson==null) 
 	drawupperson="";
@@ -38,8 +43,8 @@ if(drawupperson==null)
 	DocOrgPost docorgpost=new DocOrgPost();
 	int page_no=Integer.parseInt(Format.NullToZero(request.getParameter("page_no")));
 	int per_page=((UserInfo)request.getSession().getAttribute("UserInfo")).getPerpage_full()-4;
-	DataTable dt=docorgpost.getStdList(page_no,per_page,orgcode,positioncode,begin,end,docname,doccode,sortkind,drawupperson);
-	DataTable dtcount=docorgpost.getAllStdList(orgcode,positioncode,begin,end,docname,doccode,drawupperson);
+	DataTable dt=docorgpost.getStdList(page_no,per_page,orgcode,positioncode,begin,end,docname,doccode,sortkind,drawupperson,getType);
+	DataTable dtcount=docorgpost.getAllStdList(orgcode,positioncode,begin,end,docname,doccode,drawupperson,getType);
 	int pagecount=(dtcount.getRowsCount()/per_page)+1;
 	//request.getSession().setAttribute("pageno",page_no);
 	//var belongno= document.getElementById ('items').value;
@@ -49,7 +54,7 @@ if(drawupperson==null)
 <script language="javascript" src="../js/public/select.js"></script>
 
  <script type="text/javascript" src="../jscomponent/jquery/jquery-1.8.0.min.js"></script>
-
+<script type="text/javascript" src="<%=path%>/jscomponent/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="../jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
 
 <script type="text/javascript" src="../jscomponent/tools/outwindow.js"></script>
@@ -79,17 +84,57 @@ function F6(orgcode)
   window.showModalDialog(stdupnewurl,"dialogWidth=500px;dialogHeight=1000px");
   window.location.reload();
 }
-function F7(docno,docversionname)
-{ 
-         var newurl='std_attachedfile.jsp?docNo='+docno+'&docversionname='+docversionname;
-         var name='文档'+docversionname+'的附件:';
+function F7()
+{ 	
+	var check_array=document.getElementsByName("items");
+	var select_array=new Array();
+	var j=0;
+	for(var i=0;i<check_array.length;i++)
+    {
+        if(check_array[i].checked==true)
+        {   
+        	select_array[j]=check_array[i].value;
+        	j=j+1;
+        }
+    }
+	if(select_array.length==0){
+		alert('请在第二列<选择>中勾选一个标准！！！');
+	}else if(select_array.length>1){
+		alert('不能同时选多个标准！！！');
+	}else{
+        // var newurl='std_attachedfile.jsp?docNo='+docno+'&docversionname='+docversionname;
+        var newurl='std_attachedfile.jsp?docNo='+select_array[0];
+         var name='附件列表';
          window.parent.document.getElementById("url").value=newurl;
          window.parent.document.getElementById("name").value=name;
          window.parent.document.getElementById("flag").value="std";
          window.parent.document.getElementById("hidbutton2").click();
+	}
 
 }
-
+function F8()
+{ 
+	var check_array=document.getElementsByName("items");
+	var select_array=new Array();
+	var j=0;
+	for(var i=0;i<check_array.length;i++)
+    {
+        if(check_array[i].checked==true)
+        {   
+        	select_array[j]=check_array[i].value;
+        	j=j+1;
+        }
+    }
+	if(select_array.length==0){
+		alert('请在第二列<选择>中勾选一个标准！！！');
+	}else if(select_array.length>1){
+		alert('不能同时选多个标准！！！');
+	}else{
+		var orgcode=document.getElementById("orgcode").value;
+  		var newurl='/ncycoa/std_search/std_aboutpost.jsp?docno='+select_array[0]+'&orgcode='+orgcode;
+		  createwindowNoButton('关联岗位',newurl,'450px','400px');
+	}
+}
 
 function F9(docno,docversionname)
 {
@@ -117,10 +162,28 @@ function OpenFile(storefileno,filecontenttype)
      //window.location.reload();
     }
 }
-function F1(docno)
-{
-  var stdupnewurl='/ncycoa/std_search/std_detail.jsp?bm='+docno;
-  createwindowNoButton('标准的信息',stdupnewurl,'450px','400px');
+function F1()
+{	
+	var check_array=document.getElementsByName("items");
+	var select_array=new Array();
+	var j=0;
+	for(var i=0;i<check_array.length;i++)
+    {
+        if(check_array[i].checked==true)
+        {   
+        	select_array[j]=check_array[i].value;
+        	j=j+1;
+        }
+    }
+	if(select_array.length==0){
+		alert('请在第二列<选择>中勾选一个标准！！！');
+	}else if(select_array.length>1){
+		alert('不能同时选多个标准！！！');
+	}else{
+		var docno=select_array[0];
+  		var stdupnewurl='/ncycoa/std_search/std_detail.jsp?bm='+docno;
+  		createwindowNoButton('标准的信息',stdupnewurl,'450px','400px');
+	}
   //window.open(stdupnewurl,"stdlist");
 //  window.showModalDialog(stdupnewurl,window,"dialogWidth=500px;dialogHeight=600px");
 //  window.location.reload();
@@ -184,6 +247,14 @@ function datesort(){
 	window.parent.document.getElementById("url").value=newurl;
 	window.parent.document.getElementById("sortbutton").click();
 }
+function gettype(gettype){
+	window.parent.document.getElementById("gettype").value=gettype;
+	var orgcode=document.form1.orgcode.value;
+	var positioncode=document.form1.positioncode.value;
+	var newurl='std_list.jsp?orgcode='+orgcode+'&positioncode='+positioncode;
+	window.parent.document.getElementById("url").value=newurl;
+	window.parent.document.getElementById("sortbutton").click();
+}
 function toexcel(){
 	saveAsExcel('tableout');
 }
@@ -199,8 +270,7 @@ function toexcel(){
   </table>
   </td></tr>
       <tr>
-      <td width="5%"></td>
-          <td width="60%" colspan="3" valign="middle" >
+          <td width="100%" colspan="3" align="center" >
           时间段：<input name="begin" type="Wdate" class="input1" id="begin" onfocus="new WdatePicker({lang:'zh-cn'})"  value="" size="20" maxlength="30">
      --- <input name="end" type="Wdate" class="input1" id="end" onfocus="new WdatePicker({lang:'zh-cn'})"  value="" size="20" maxlength="30">
 <!--     <button onclick="search1()">查询</button>-->
@@ -211,13 +281,26 @@ function toexcel(){
 <!--     <button onclick="search2()">查询</button>-->
 <button onclick="search()">查询</button>
           </td>
-          <td width="5%"></td>
       </tr>
   </table>
   <table width="100%" height="30" border="0" cellpadding="0" cellspacing="0">
    <tr>
-    <td class="table_td_jb_iframe">&nbsp;&nbsp; 
-      <a href="#" onClick="doccodesort()" >标准编号排序</a>&nbsp;&nbsp; <a href="#" onClick="datesort()" >日期排序</a>
+    <td class="table_td_jb_iframe" align="left"> 
+    <a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-reload',plain:true" onClick="F1()" >标准信息</a>
+				        <a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-reload',plain:true" onClick="F7()" >附件查看</a>
+				        <a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-reload',plain:true" onClick="F8()" >涉及岗位</a>
+    </td>
+        <td class="table_td_jb_iframe" align="left">&nbsp;&nbsp; 
+<!--       <a href="#" onClick="doccodesort()" >标准编号排序</a>&nbsp;&nbsp; <a href="#" onClick="datesort()" >日期排序</a> -->
+<a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-search',plain:true" onClick="gettype('gl')" >管理标准</a>
+				        <a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-search',plain:true" onClick="gettype('gz')" >工作标准</a>
+				        <a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-search',plain:true" onClick="gettype('js')" >技术标准</a>
     </td>
   </tr>
 </table>
@@ -230,13 +313,13 @@ function toexcel(){
 		if (dt!=null && dt.getRowsCount()>0) {
 				TableUtil tableutil=new TableUtil();
 		tableutil.setDt(dt);
-		tableutil.setHeadWidth("序号","5%");
-		tableutil.setHeadWidth("标准编号","10%");
-		tableutil.setHeadWidth("标准名称","25%");
-		tableutil.setHeadWidth("编制日期","10%");
-		tableutil.setHeadWidth("有/无附件","12%");
-		tableutil.setHeadWidth("标准正文","15%");
-		tableutil.setHeadWidth("操作","25%");
+// 		tableutil.setHeadWidth("序号","5%");
+// 		tableutil.setHeadWidth("标准编号","10%");
+// 		tableutil.setHeadWidth("标准名称","25%");
+// 		tableutil.setHeadWidth("编制日期","10%");
+// 		tableutil.setHeadWidth("有/无附件","12%");
+// 		tableutil.setHeadWidth("标准正文","15%");
+// 		tableutil.setHeadWidth("操作","25%");
 		tableutil.setRowreadLink("标准正文","@标准正文@");
 		tableutil.setHaveAttach("有无附件","@有无附件@");
 		tableutil.setDisplayCol("no");
@@ -251,7 +334,7 @@ function toexcel(){
         <tr>
           <td width="50%"></td>
           <td align="right">
-          <%String para="orgcode="+orgcode+"&positioncode="+positioncode+"&begin="+begin+"&end="+end+"&doccode="+doccode+"&docname="+docname+"&sortkind="+sortkind;
+          <%String para="orgcode="+orgcode+"&positioncode="+positioncode+"&begin="+begin+"&end="+end+"&doccode="+doccode+"&docname="+docname+"&sortkind="+sortkind+"&gettype="+getType;
       	out.print(PageUtil.DividePage(page_no,pagecount,"std_list.jsp",para));
        %>
        </td>

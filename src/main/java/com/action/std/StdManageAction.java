@@ -169,23 +169,15 @@ public class StdManageAction extends ActionInterface
 		else if (action!=null && action.equals("del"))
 		{
 		
-			/*			String[] ids=request.getParameterValues("items");
-			String para="";
+			String[] ids=request.getParameterValues("items");
+			stdinfo=new DocMetaVersionInfo();
+			boolean flag=false;
 			for (int i=0;i<ids.length;i++)
 			{
-				if (i==ids.length-1)
-				{
-		     		para=para+ids[i];
-				}
-				else
-				{
-					para=para+ids[i]+",";
-				}
+				flag=stdinfo.Delete(ids[i]);
 			}
-			System.out.println("del     :::::"+para);*/
 			String del=request.getParameter("docno");
-			stdinfo=new DocMetaVersionInfo();
-			if(stdinfo.Delete(del))
+			if(flag)
 			{
 				res += "MessageBox.Show(null,'删除成功！',null,'LogOK',null,1,'删除成功');";
 				res += "var rand=Math.floor(Math.random()*10000);";

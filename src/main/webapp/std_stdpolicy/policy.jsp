@@ -33,7 +33,7 @@ String basePath = request.getScheme()+"://"+
     <body class="easyui-layout">
     <div data-options="region:'north'" style="height:30px;">
        <a href="#" onClick="uppolicy()" class="easyui-linkbutton"
-				        data-options="iconCls:'icon-add',plain:true" >上传企业方针目标</a>
+				        data-options="iconCls:'icon-add',plain:true" >上传标准化方针目标</a>
     </div>
     <div data-options="region:'center',split:true" style="padding:5px;background:#fff;">
 		<iframe src="policylist.jsp" name="policylist" style="border: 0px;width: 70%;height: 70%;scrolling="auto"">
@@ -42,7 +42,7 @@ String basePath = request.getScheme()+"://"+
     </body>
     <script type="text/javascript">
         function uppolicy(){
-        	var newurl='std_policy/local_up.jsp';
+        	var newurl='std_stdpolicy/local_up.jsp';
       	  createwindowUpFile('上传企业方针目标',newurl,'300px','200px');
         }
        

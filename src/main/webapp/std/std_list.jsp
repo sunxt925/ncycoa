@@ -13,6 +13,8 @@ if (unitccm.equals("")) unitccm="NC";
 <HEAD>
 <TITLE>重庆市地方税务局</TITLE>
 <link rel="stylesheet" type="text/css" href="../css/style.css">
+<link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/default/easyui.css">
 <META http-equiv=Content-Type content="text/html; charset=gb2312">
 <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
 </HEAD>
@@ -28,6 +30,9 @@ if(end==null)
 String docname=request.getParameter("docname");
 if(docname==null) 
 	docname="";
+String getType=request.getParameter("gettype");
+if(getType==null)
+	getType="";
 String drawupperson=request.getParameter("drawupperson");
 if(drawupperson==null) 
 	drawupperson="";
@@ -36,8 +41,8 @@ if(doccode==null) doccode="";
 	Org og=new Org();
 	int page_no=Integer.parseInt(Format.NullToZero(request.getParameter("page_no")));
 	int per_page=(((UserInfo)request.getSession().getAttribute("UserInfo")).getPerpage_full()-2)*4/5;
-	DataTable dt=og.getStdList(page_no,per_page,unitccm,begin,end,docname,doccode,sortkind,drawupperson);
-	DataTable dtcount=og.getAllStdList(unitccm,begin,end,docname,doccode,drawupperson);
+	DataTable dt=og.getStdList(page_no,per_page,unitccm,begin,end,docname,doccode,sortkind,drawupperson,getType);
+	DataTable dtcount=og.getAllStdList(unitccm,begin,end,docname,doccode,drawupperson,getType);
 	DataTable dtname=og.getOrgName(unitccm);
 	String name=dtname.get(0).get(1).toString();
 	int pagecount=0;
@@ -53,7 +58,7 @@ if(doccode==null) doccode="";
                 "javascript" type="text/javascript" src="../js/MyDatePicker/WdatePicker.js">  </script>
                 
  <script type="text/javascript" src="../jscomponent/jquery/jquery-1.8.0.min.js"></script>
-
+<script type="text/javascript" src="<%=path%>/jscomponent/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="../jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
 
 <script type="text/javascript" src="../jscomponent/tools/outwindow.js"></script>
@@ -66,13 +71,28 @@ if(doccode==null) doccode="";
 <script language="javascript">
 
 
-function F2(docno)
-{
+function F2()
+{	
+	var check_array=document.getElementsByName("items");
+	var select_array=new Array();
+	var j=0;
+	for(var i=0;i<check_array.length;i++)
+    {
+        if(check_array[i].checked==true)
+        {   
+        	select_array[j]=check_array[i].value;
+        	j=j+1;
+        }
+    }
+	if(select_array.length==0){
+		alert('请在第二列<选择>中勾选一个标准！！！');
+	}else if(select_array.length>1){
+		alert('不能同时选多个标准！！！');
+	}else{
+		var docno=select_array[0];
 	  var newurl='std/std_localup.jsp?docNo='+docno;
 	  createwindowUpFile('为标准上传文件',newurl,'300px','200px');
-  	  //window.open(newurl,"stdlist");
-//  	  window.showModalDialog(newurl,window,"dialogWidth=300px;dialogHeight=150px");
-//      window.location.reload();
+	}
 }
 
 function F4()
@@ -109,53 +129,84 @@ function F6(orgcode)
 //    window.location.reload();
 //}
 var index=1;
-function F7(docno,docversionname)
+function F7()
 {
-//{ 		while(index>1)
-//		{
-//			tab.close(index);
-//			index=index-5;
-//		}
-  var newurl='std_attachedfile.jsp?docNo='+docno;
-  var name='文档：'+docversionname+'的附件';
-//  	    var id=index+5;
-//		tab.add( {
-//		id :id,
-//		title :name==""?("标签页面"+(index+1)):name,
-//		url :newurl,
-//		isClosed :true
-//	});
-//	index=index+5;
+	var check_array=document.getElementsByName("items");
+	var select_array=new Array();
+	var j=0;
+	for(var i=0;i<check_array.length;i++)
+    {
+        if(check_array[i].checked==true)
+        {   
+        	select_array[j]=check_array[i].value;
+        	j=j+1;
+        }
+    }
+	if(select_array.length==0){
+		alert('请在第二列<选择>中勾选一个标准！！！');
+	}else if(select_array.length>1){
+		alert('不能同时选多个标准！！！');
+	}else{
+ 		 var newurl='std_attachedfile.jsp?docNo='+select_array[0];
+  		var name='附件列表';
          window.parent.document.getElementById("url").value=newurl;
          window.parent.document.getElementById("name").value=name;
          window.parent.document.getElementById("flag").value="";
          window.parent.document.getElementById("hidbutton").click();
-  //window.open(newurl,"attachposlist");
+	}
 }
 
-function F8(docno,docversionname,orgcode)
+function F8()
 { 
-  var newurl='std_aboutpost.jsp?docno='+docno+'&docversionname='+docversionname+'&orgcode='+orgcode;
-    var name='文档：'+docversionname+'的相关岗位';
-//  	    var id=index+5;
-//		tab.add( {
-//		id :id,
-//		title :name==""?("标签页面"+(index+1)):name,
-//		url :newurl,
-//		isClosed :true
-//	});
-//	index=index+5;
+	
+	
+	var check_array=document.getElementsByName("items");
+	var select_array=new Array();
+	var j=0;
+	for(var i=0;i<check_array.length;i++)
+    {
+        if(check_array[i].checked==true)
+        {   
+        	select_array[j]=check_array[i].value;
+        	j=j+1;
+        }
+    }
+	if(select_array.length==0){
+		alert('请在第二列<选择>中勾选一个标准！！！');
+	}else if(select_array.length>1){
+		alert('不能同时选多个标准！！！');
+	}else{
+		var orgcode=document.getElementById("orgcode").value;
+  		var newurl='std_aboutpost.jsp?docno='+select_array[0]+'&orgcode='+orgcode;
+    	var name='关联岗位';
          window.parent.document.getElementById("url").value=newurl;
          window.parent.document.getElementById("name").value=name;
          window.parent.document.getElementById("flag").value="";
          window.parent.document.getElementById("hidbutton2").click();
-  //window.open(newurl,"attachposlist");
+	}
 }
 
-function F9(docno,docversionname)
-{
-	  var newurl='std/std_filelist.jsp?docNo='+docno;
+function F9()
+{		
+	var check_array=document.getElementsByName("items");
+	var select_array=new Array();
+	var j=0;
+	for(var i=0;i<check_array.length;i++)
+    {
+        if(check_array[i].checked==true)
+        {   
+        	select_array[j]=check_array[i].value;
+        	j=j+1;
+        }
+    }
+	if(select_array.length==0){
+		alert('请在第二列<选择>中勾选一个标准！！！');
+	}else if(select_array.length>1){
+		alert('不能同时选多个标准！！！');
+	}else{
+	  var newurl='std/std_filelist.jsp?docNo='+select_array[0];
 	  createwindowNoButton('标准的文件列表',newurl,'800px','500px');
+	}
 
 //  window.showModalDialog(newurl,window,"dialogWidth=800px;dialogHeight=500px");
 //  window.location.reload();
@@ -163,22 +214,44 @@ function F9(docno,docversionname)
 }
 
 
-function F1(docno)
+function F1()
 {	
-	//var orgcode=document.form1.orgcode.value;
-  var stdupnewurl='std/std_modlist.jsp?bm='+docno;
-  createwindow('修改标准信息',stdupnewurl,'450px','380px');
-  //window.showModalDialog(stdupnewurl,window,"dialogWidth=500px;dialogHeight=500px");
-  //window.location.reload();
+	
+	var check_array=document.getElementsByName("items");
+	var select_array=new Array();
+	var j=0;
+	for(var i=0;i<check_array.length;i++)
+    {
+        if(check_array[i].checked==true)
+        {   
+        	select_array[j]=check_array[i].value;
+        	j=j+1;
+        }
+    }
+	if(select_array.length==0){
+		alert('请在第二列<选择>中勾选一个标准！！！');
+	}else if(select_array.length>1){
+		alert('不能同时选多个标准！！！');
+	}else{
+		var docno=select_array[0];
+ 		 var stdupnewurl='std/std_modlist.jsp?bm='+docno;
+  		createwindow('修改标准信息',stdupnewurl,'450px','380px');
+	}
 }
-function dele(docno)
+function dele()
 {
-			document.getElementById("docno").value=docno;
 			//document.form1.docno.value=docno;
-		if (confirm('是否要删除标准？'))
+	if (CheckSelect("form1"))
+	{
+		if (confirm("父级菜单的删除将级联删除子菜单，是否继续？"))
 		{
-			document.all("Submit").click();
+			document.all("form1").submit();
 		}
+	}
+	else
+	{
+		alert ("你没有选中要删除的内容！");
+	}
 			
 }
 function search1(){
@@ -234,6 +307,13 @@ function datesort(){
 	window.parent.document.getElementById("url").value=newurl;
 	window.parent.document.getElementById("sortbutton").click();
 }
+function gettype(gettype){
+	window.parent.document.getElementById("gettype").value=gettype;
+	var orgcode=document.form1.orgcode.value;
+	var newurl='std_list.jsp?unitccm='+orgcode;
+	window.parent.document.getElementById("url").value=newurl;
+	window.parent.document.getElementById("sortbutton").click();
+}
 </script>
 <script type="text/javascript">
 
@@ -252,8 +332,7 @@ function datesort(){
   </table>
         <table width="100%" height="5%"  border="0" cellspacing="0" cellpadding="0"  class="table_td_jb">
       <tr valign="middle">
-      <td width="5%"></td>
-          <td  width="60%"  colspan="3" valign="middle" >
+          <td  width="100%"  colspan="3" align="center" >
           时间段：<input name="begin" type="Wdate" class="input1" id="begin" onFocus="new WdatePicker({lang:'zh-cn'})"  value="" size="15" maxlength="30">
      -- <input name="end" type="Wdate" class="input1" id="end" onFocus="new WdatePicker({lang:'zh-cn'})"  value="" size="15" maxlength="30">
 <!--     <button onClick="search1()">查询</button>-->
@@ -264,7 +343,6 @@ function datesort(){
 <!--     <button onClick="search2()">查询</button>-->
  <button onClick="search()">查询</button>
           </td>
-           <td width="5%"></td>
       </tr>
      
   </table>
@@ -272,7 +350,30 @@ function datesort(){
 <table width="100%" height="30" border="0" cellpadding="0" cellspacing="0">
    <tr>
     <td class="table_td_jb_iframe">&nbsp;&nbsp; 
-     <a href="#" onClick="F6('<%=unitccm%>')" >上传新标准</a>&nbsp;&nbsp; <a href="#" onClick="doccodesort()" >标准编号排序</a>&nbsp;&nbsp; <a href="#" onClick="datesort()" >日期排序</a>
+     <a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-add',plain:true" onClick="F6('<%=unitccm%>')" >上传新标准</a>&nbsp;&nbsp;
+	
+<a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-reload',plain:true" onClick="F1()" >修改</a>
+				        <a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-reload',plain:true" onClick="dele()" >删除</a>
+				        <a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-reload',plain:true" onClick="F2()" >上传文件</a>
+				        <a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-reload',plain:true" onClick="F7()" >附件查看</a>
+				        <a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-reload',plain:true" onClick="F8()" >涉及岗位</a>
+				        <a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-reload',plain:true" onClick="F9()" >文件查看</a>
+    </td>
+            <td class="table_td_jb_iframe" align="left">&nbsp;&nbsp; 
+<!--       <a href="#" onClick="doccodesort()" >标准编号排序</a>&nbsp;&nbsp; <a href="#" onClick="datesort()" >日期排序</a> -->
+<a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-search',plain:true" onClick="gettype('gl')" >管理</a>
+				        <a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-search',plain:true" onClick="gettype('gz')" >工作</a>
+				        <a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-search',plain:true" onClick="gettype('js')" >技术</a>
     </td>
   </tr>
 </table>
@@ -282,17 +383,17 @@ function datesort(){
 		if (dt!=null && dt.getRowsCount()>0) {
 		TableUtil tableutil=new TableUtil();
 		tableutil.setDt(dt);
-		tableutil.setHeadWidth("序号","5%");
-		tableutil.setHeadWidth("标准编号","15%");
-		tableutil.setHeadWidth("标准名称","20%");
-		tableutil.setHeadWidth("编制日期","10%");
-		tableutil.setHeadWidth("有/无附件","10%");
+// 		tableutil.setHeadWidth("序号","5%");
+// 		tableutil.setHeadWidth("标准编号","15%");
+// 		tableutil.setHeadWidth("标准名称","20%");
+// 		tableutil.setHeadWidth("编制日期","10%");
+// 		tableutil.setHeadWidth("有/无附件","10%");
 		/*
 		tableutil.setRowCode("文档类名称","@文档类名称@"+",std_docclass");
 		tableutil.setHeadWidth("文档版本状态","15%");
 		tableutil.setRowCode("文档版本状态","@文档版本状态@"+",std_versionstatus");
 		*/
-		tableutil.setHeadWidth("操作","40%");
+// 		tableutil.setHeadWidth("操作","40%");
 		tableutil.setHaveAttach("有无附件","@有无附件@");
 		tableutil.setDisplayCol("no");
 		tableutil.setSort1("标准编号");
@@ -306,7 +407,7 @@ function datesort(){
          
           <td align="right">
           <%// <td width="50%">【<a href="#" onClick="F4()">删除</a>】【<a href="#" onClick="SelectAll('form1')">全选</a>】【<a href="#" onClick="ChangeSelect('form1')">反选</a>】【<a href="#" onClick="UnSelectAll('form1')">清空</a>】</td>
-          String ccm="unitccm="+unitccm+"&begin="+begin+"&end="+end+"&doccode="+doccode+"&docname="+docname+"&sortkind="+sortkind;
+          String ccm="unitccm="+unitccm+"&begin="+begin+"&end="+end+"&doccode="+doccode+"&docname="+docname+"&sortkind="+sortkind+"&gettype="+getType;
       	out.print(PageUtil.DividePage(page_no,pagecount,"std_list.jsp",ccm));
        %>
        </td>

@@ -20,18 +20,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	DocMetaVersionInfo docVersionInfo = new DocMetaVersionInfo(docno);	
 	String doccode=docVersionInfo.getDocCode();
 		String orgcode=request.getParameter("orgcode");
-	if(doccode==null||doccode=="")
-	{
-		 DocReviseInifo docreviseinfo=new DocReviseInifo(docno);
-	     doccode=docreviseinfo.getDocCode();
-	     if(doccode!=null&&!(doccode.equals(""))){
-				DocOrg docorg=new DocOrg();
-				docorg.setDocCode(doccode);
-				docorg.setOrgCode(orgcode);
-				docorg.setRelation("直接");
-				docorg.insert();
-		}
-	}
 	//System.out.println("doccode   :"+doccode);
 	DocOrgPost docorgpost = new DocOrgPost();
 	int page_no = Integer.parseInt(Format.NullToZero(request.getParameter("page_no")));
@@ -43,7 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		per_page=((UserInfo)request.getSession().getAttribute("UserInfo")).getPerpage_third()-2;
 	}
 	String name="";
-	DataTable dt=docorgpost.getStdPostList(page_no,per_page,orgcode,doccode);
+	DataTable dt=docorgpost.getStdPostListsearch(page_no,per_page,orgcode,doccode);
 	DataTable dtcount=docorgpost.getAllStdPostList(orgcode,doccode);
 	//if(request.getSession().getAttribute("docversionname")==null){
 	name=docVersionInfo.getDocVersionName();
@@ -124,14 +112,6 @@ function dele(recid)
 </script>
 <BODY class="mainbody" onLoad="this.focus()" style="background-color:white">
 
-<table width="100%" height="30" border="0" cellpadding="0" cellspacing="0">
-<tr>
-<td class="table_td_jb_iframe">&nbsp;&nbsp; 
-    <a href="#" onClick="F6('<%=orgcode %>','<%=doccode%>')">新增岗位（本机构）</a>
-    <a href="#" onClick="F7('<%=orgcode %>','<%=doccode%>')">新增岗位（全局）</a>
-</td>
-</tr>
-</table>
 
 <table width="100%" height="90%" border="0"  class="main_table_centerbg" cellpadding="0" cellspacing="0">
 <form name="form1" id="form1" method="post" action="../servlet/PageHandler">

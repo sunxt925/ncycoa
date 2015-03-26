@@ -44,9 +44,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			 String minute=""+c.get(c.MINUTE);
 			 String date=year+"-"+month+"-"+day+" "+hour+":"+minute;
 				String policyname="",classs="";
-				if(type.equals("1")){
-					policyname="企业方针、目标";
-					classs="goal";
+				if(type.equals("3")){
+					policyname="标准化方针、目标";
+					classs="stdgoal";
 					}
 			 String savename=classs+year+month+day+hour+minute+"."+ext;
 			smart.getFiles().getFile(0).saveAs(pathtemp+java.io.File.separator+savename);

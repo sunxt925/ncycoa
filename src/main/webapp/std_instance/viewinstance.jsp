@@ -58,7 +58,7 @@ TaskService taskService = processEngine
     <th data-options="field:'instancename',width:100">实例名称</th>
     <th data-options="field:'initstaffname',width:100">发起人</th>
     <th data-options="field:'initdate',width:100">发起时间</th>
-     <th data-options="field:'op',width:100">操作</th>
+     <th data-options="field:'op',width:180">操作</th>
     </tr>
     </thead>
     <tbody>
@@ -75,7 +75,7 @@ TaskService taskService = processEngine
 			     %>
 			    <td><%=instance.getInstancename() %></td>
 			    <td><%=instance.getInitstaffname() %></td>
-			    <td><%=instance.getInitdate()%></td>
+			    <td><%=instance.getInitdate().substring(0, 10)%></td>
 			    <td><a href="#" class="easyui-linkbutton"
 				        data-options="iconCls:'icon-reload',plain:true" 
 				        onclick="view('<%= processInstance.getId()%>')">查看实例图</a>

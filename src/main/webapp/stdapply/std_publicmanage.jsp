@@ -253,7 +253,7 @@ createwindowNoButton('企业标准修订申请表',url,'1000px','500px');
           <input name="flag" type="hidden" id="flag" value="">
           <input type='hidden' name='applystaffcode'  value="<%=staffcode %>">
           <input type='hidden' name='applyid'  value="<%=ApplyId %>">
-          <input type='hidden' name='taskid'  value="<%=taskId %>">
+          <input type='hidden' name='taskId'  value="<%=taskId %>">
           <input name="hidbutton" type="button" id="hidbutton" value="" onClick="page();" style="display:none">
           <input name="hidbutton2" type="button" id="hidbutton2" value="" onClick="page2();" style="display:none"></div>
         <input name="action_class" type="hidden" id="action_class" value="com.action.stdapply.StdApplyAction"></td>

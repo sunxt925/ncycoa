@@ -16,9 +16,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <%
 
 	String docNo=request.getParameter("docNo");
-	String docversionname=request.getParameter("docversionname");
+	
 	String name="";
-	DocMetaVersionInfo docVersionInfo = new DocMetaVersionInfo();
+	DocMetaVersionInfo docVersionInfo = new DocMetaVersionInfo(docNo);
+	String docversionname=docVersionInfo.getDocVersionName();
 	int page_no = Integer.parseInt(Format.NullToZero(request.getParameter("page_no")));
 	
 	//request.getSession().setAttribute("docno",docNo);

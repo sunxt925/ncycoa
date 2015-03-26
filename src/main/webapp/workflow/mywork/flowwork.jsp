@@ -85,7 +85,7 @@ UserInfo UserInfo=(UserInfo)request.getSession().getAttribute("UserInfo");
       function view(taskurl,id)
 { 
 var url=taskurl+'?id='+id;
-createwindowNoButton('流程处理',url,'1200px','800px');
+createwindowNoButton('流程处理',url,'1200px','630px');
 }
       function picture(taskurl,id)
       { 
