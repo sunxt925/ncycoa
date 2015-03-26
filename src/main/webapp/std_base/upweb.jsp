@@ -12,7 +12,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		SmartUpload smart=new SmartUpload(); 
 		smart.initialize(pageContext);
-		smart.setAllowedFilesList("doc,docx");
+		smart.setAllowedFilesList("doc,docx,xls,xlsx");
 		smart.upload();
 		String filename = smart.getFiles().getFile(0).getFileName();
 		String type=smart.getRequest().getParameter("type");
