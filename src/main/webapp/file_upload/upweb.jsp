@@ -39,7 +39,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
 <%
-		String docno="";
+	String docno="";
 		String docclass="";
 		String pdfname="";
 		String pdfPath="";
@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		String type="";
 		String taskno="";
 		
-		com.cms.model.sysmng.login.User u=(com.cms.model.sysmng.login.User)request.getSession().getAttribute("USER");
+		Role.sysmng.login.User u=(Role.sysmng.login.User)request.getSession().getAttribute("USER");
 		String participant = u.getZgdm();
 		
 		byte[] imageBytes = new byte[1024];
@@ -59,26 +59,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		String pathtemp = getServletContext().getRealPath("/")+"UploadTemp";
 		officePath=pathtemp+"\\"+filename;
 		if(filename.equals("")||filename==null){
-			    String res=""; 
-			    res += "MessageBox.Show(null,'上传失败！',null,'LogOK','Error',1,'上传失败,没有选择上传的文件');";
-			    res +="window.close();";
-			    res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
+	    String res=""; 
+	    res += "MessageBox.Show(null,'上传失败！',null,'LogOK','Error',1,'上传失败,没有选择上传的文件');";
+	    res +="window.close();";
+	    res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
                 res += "parent.unittree.location.reload();";
-				PrintWriter Out = response.getWriter();
-				Out.print("<HTML><head>");
-				Out.print("<META http-equiv=\"Content-Type\" content=\"text/html; charset=GB18030\">");
-				Out.print("<TITLE>pagehandler</TITLE></head>");
-				Out.print("<script src=\"../js/public/MessageBox.js\"></script>");
-				Out.print("<script src=\"../js/public/Dialog.js\"></script>");
-				Out.print("<body><script language='javascript'>");
-				Out.print(res);
-				Out.print("</script></body></html>");						  		
+		PrintWriter Out = response.getWriter();
+		Out.print("<HTML><head>");
+		Out.print("<META http-equiv=\"Content-Type\" content=\"text/html; charset=GB18030\">");
+		Out.print("<TITLE>pagehandler</TITLE></head>");
+		Out.print("<script src=\"../js/public/MessageBox.js\"></script>");
+		Out.print("<script src=\"../js/public/Dialog.js\"></script>");
+		Out.print("<body><script language='javascript'>");
+		Out.print(res);
+		Out.print("</script></body></html>");						  		
 		}else{
-				smart.save("UploadTemp");
-				docno=smart.getRequest().getParameter("DocNo");
-				docclass=smart.getRequest().getParameter("storetype");
-				type=filename.substring(filename.length()-4,filename.length());
-			    taskno = smart.getRequest().getParameter("taskno");
+		smart.save("UploadTemp");
+		docno=smart.getRequest().getParameter("DocNo");
+		docclass=smart.getRequest().getParameter("storetype");
+		type=filename.substring(filename.length()-4,filename.length());
+	    taskno = smart.getRequest().getParameter("taskno");
 	
 		
 
@@ -93,7 +93,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 String date=year+"-"+month+"-"+day;
 		 if(type.equals(".pdf")){
 		        file.setCreatedate(date);
-				file.setLastupdatedate(date);
+		file.setLastupdatedate(date);
          		file.setDocno(docno);
          		//String docclass=smart.getRequest().getParameter("storetype");
 	      		file.setDocclass(docclass);
@@ -105,35 +105,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	         	 if(storefileno!=""&&storefileno!=null){
 	     				String res=""; 
 	     				res += "MessageBox.Show(null,'上传成功！',null,'LogOK',null,1,'上传成功！');";
-						res +="window.close();";
-						res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
-				  		res += "parent.unittree.location.reload();";
+				res +="window.close();";
+				res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
+		  		res += "parent.unittree.location.reload();";
 	    				PrintWriter Out = response.getWriter();
 	     				Out.print("<HTML><head>");
-						Out.print("<META http-equiv=\"Content-Type\" content=\"text/html; charset=GB18030\">");
-						Out.print("<TITLE>pagehandler</TITLE></head>");
-						Out.print("<script src=\"../js/public/MessageBox.js\"></script>");
-						Out.print("<script src=\"../js/public/Dialog.js\"></script>");
-						Out.print("<body><script language='javascript'>");
-						Out.print(res);
-						Out.print("</script></body></html>");
+				Out.print("<META http-equiv=\"Content-Type\" content=\"text/html; charset=GB18030\">");
+				Out.print("<TITLE>pagehandler</TITLE></head>");
+				Out.print("<script src=\"../js/public/MessageBox.js\"></script>");
+				Out.print("<script src=\"../js/public/Dialog.js\"></script>");
+				Out.print("<body><script language='javascript'>");
+				Out.print(res);
+				Out.print("</script></body></html>");
 	     				File f=new File(officePath);
 		    			f.delete();			
 	     		}else{
 	     				String res=""; 
 	     				res += "MessageBox.Show(null,'上传失败！',null,'LogOK','Error',1,'上传失败');";
-						res +="window.close();";
-						res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
-				  		res += "parent.unittree.location.reload();";
+				res +="window.close();";
+				res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
+		  		res += "parent.unittree.location.reload();";
 	     				PrintWriter Out = response.getWriter();
 	     				Out.print("<HTML><head>");
-						Out.print("<META http-equiv=\"Content-Type\" content=\"text/html; charset=GB18030\">");
-						Out.print("<TITLE>pagehandler</TITLE></head>");
-						Out.print("<script src=\"../js/public/MessageBox.js\"></script>");
-						Out.print("<script src=\"../js/public/Dialog.js\"></script>");
-						Out.print("<body><script language='javascript'>");
-						Out.print(res);
-						Out.print("</script></body></html>");
+				Out.print("<META http-equiv=\"Content-Type\" content=\"text/html; charset=GB18030\">");
+				Out.print("<TITLE>pagehandler</TITLE></head>");
+				Out.print("<script src=\"../js/public/MessageBox.js\"></script>");
+				Out.print("<script src=\"../js/public/Dialog.js\"></script>");
+				Out.print("<body><script language='javascript'>");
+				Out.print(res);
+				Out.print("</script></body></html>");
 	     				File f=new File(officePath);
 		    		    f.delete();	
 	     		}
@@ -212,18 +212,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  	    
 	     		String res=""; 
 	     				res += "MessageBox.Show(null,'上传成功！',null,'LogOK',null,1,'上传成功！');";
-				res +="window.close();";
-			//	res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
-			//	  res += "parent.unittree.location.reload();";
+		res +="window.close();";
+	//	res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
+	//	  res += "parent.unittree.location.reload();";
 	     PrintWriter Out = response.getWriter();
 	     			Out.print("<HTML><head>");
-			Out.print("<META http-equiv=\"Content-Type\" content=\"text/html; charset=GB18030\">");
-			Out.print("<TITLE>pagehandler</TITLE></head>");
-			Out.print("<script src=\"../js/public/MessageBox.js\"></script>");
-			Out.print("<script src=\"../js/public/Dialog.js\"></script>");
-			Out.print("<body><script language='javascript'>");
-			Out.print(res);
-			Out.print("</script></body></html>");
+	Out.print("<META http-equiv=\"Content-Type\" content=\"text/html; charset=GB18030\">");
+	Out.print("<TITLE>pagehandler</TITLE></head>");
+	Out.print("<script src=\"../js/public/MessageBox.js\"></script>");
+	Out.print("<script src=\"../js/public/Dialog.js\"></script>");
+	Out.print("<body><script language='javascript'>");
+	Out.print(res);
+	Out.print("</script></body></html>");
 	     				    File f=new File(officePath);
 		    				f.delete();		
 		    				 File f1=new File(pdfPath);
@@ -231,18 +231,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	     }else{
 	     		String res=""; 
 	     				res += "MessageBox.Show(null,'上传失败！',null,'LogOK','Error',1,'上传失败');";
-				res +="window.close();";
-				res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
-				  res += "parent.unittree.location.reload();";
+		res +="window.close();";
+		res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
+		  res += "parent.unittree.location.reload();";
 	     PrintWriter Out = response.getWriter();
 	     			Out.print("<HTML><head>");
-			Out.print("<META http-equiv=\"Content-Type\" content=\"text/html; charset=GB18030\">");
-			Out.print("<TITLE>pagehandler</TITLE></head>");
-			Out.print("<script src=\"../js/public/MessageBox.js\"></script>");
-			Out.print("<script src=\"../js/public/Dialog.js\"></script>");
-			Out.print("<body><script language='javascript'>");
-			Out.print(res);
-			Out.print("</script></body></html>");
+	Out.print("<META http-equiv=\"Content-Type\" content=\"text/html; charset=GB18030\">");
+	Out.print("<TITLE>pagehandler</TITLE></head>");
+	Out.print("<script src=\"../js/public/MessageBox.js\"></script>");
+	Out.print("<script src=\"../js/public/Dialog.js\"></script>");
+	Out.print("<body><script language='javascript'>");
+	Out.print(res);
+	Out.print("</script></body></html>");
 	     				    File f=new File(officePath);
 		    				f.delete();	
 		    				File f1=new File(pdfPath);
@@ -254,8 +254,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	      
 		//	request.getSession().setAttribute("savepdfname",pdfname);//必须用session，用fs.getfilename()的话如果name有空格就会只获得到空格
 
-			//fmCtrl.setTagId("FileMakerCtrl1"); //此行必须
-	      
+	//fmCtrl.setTagId("FileMakerCtrl1"); //此行必须
 %>
 
 

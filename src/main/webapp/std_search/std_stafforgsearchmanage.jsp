@@ -16,7 +16,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	String staffcode=UserInfo.getStaffcode();
 	Staff staff = new Staff();
 	DataTable dt = staff.getAllOrgByStaffCode(staffcode); 
-	
+	String pageheight=UserInfo.getAvalilheight();
+	  int pageHeight=(int)(Integer.parseInt(pageheight)*0.8);
 	
 %>
 <script language="javascript" src="../js/public/select.js"></script>
@@ -75,7 +76,7 @@ function changetopunit(unitccm)
          </td>
 <td width="1%">
 </td>
-            <td valign="top" height="100%"><iframe src="" name="postlist" id="postlist" width="98%" height="98%" scrolling="no" frameborder="0"></iframe></td>
+            <td valign="top" height="<%=pageHeight%>px"><iframe src="" name="postlist" id="postlist" width="98%" height="98%" scrolling="no" frameborder="0"></iframe></td>
       </tr>
     </table></td>
   </tr>

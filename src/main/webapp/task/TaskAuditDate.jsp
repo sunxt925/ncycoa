@@ -5,11 +5,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 
 <%
-com.cms.model.sysmng.login.User u=(com.cms.model.sysmng.login.User)request.getSession().getAttribute("USER");
+	Role.sysmng.login.User u=(Role.sysmng.login.User)request.getSession().getAttribute("USER");
 UserInfo uinfo=(UserInfo)request.getSession().getAttribute("UserInfo");
 
 String date = request.getParameter("date");
- %>
+%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>

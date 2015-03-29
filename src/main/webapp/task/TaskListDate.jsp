@@ -1,16 +1,15 @@
 <%@ page contentType="text/html; charset=gb2312" language="java" import="java.sql.*,com.db.*,com.common.*,com.entity.system.UserInfo,com.entity.task.*,com.dao.system.*" errorPage="" %>
 <%
-String path = request.getContextPath();
+	String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 
 
 
 UserInfo uinfo=(UserInfo)request.getSession().getAttribute("UserInfo");
-com.cms.model.sysmng.login.User u=(com.cms.model.sysmng.login.User)request.getSession().getAttribute("USER");
+Role.sysmng.login.User u=(Role.sysmng.login.User)request.getSession().getAttribute("USER");
 
 String date = Format.NullToBlank(request.getParameter("date"));
 //System.out.println(date.equals(""));
-
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">

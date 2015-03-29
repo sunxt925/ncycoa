@@ -54,10 +54,10 @@ function uploadfile(taskno)
 <%
 	request.setCharacterEncoding("gb2312");
 	String taskno = request.getParameter("taskno");
-	com.cms.model.sysmng.login.User u=(com.cms.model.sysmng.login.User)request.getSession().getAttribute("USER");
+	Role.sysmng.login.User u=(Role.sysmng.login.User)request.getSession().getAttribute("USER");
 	String participantcode = u.getZgdm();
 	ComponentUtil cu=new ComponentUtil();
-	Participant pt = new Participant(taskno,participantcode); 
+	Participant pt = new Participant(taskno,participantcode);
 %>
 <BODY class="mainbody" onLoad="this.focus();">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
