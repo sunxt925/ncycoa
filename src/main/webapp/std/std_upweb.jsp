@@ -30,7 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		officePath=pathtemp+"\\"+filename;
 		if(filename.equals("")||filename==null){
 			    String res=""; 
-			    res += "MessageBox.Show(null,'上传失败！',null,'LogOK','Error',1,'上传失败,没有选择上传的文件');";
+			    res += "alert('上传失败,没有选择上传的文件');";
 			    res +="var api = frameElement.api;api.close();";
 			    //res +="window.close();";
 			    res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
@@ -116,7 +116,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	         	
 	         	 if(storefileno!=""&&storefileno!=null&&storefileno2!=""&&storefileno2!=null){
 	     				String res=""; 
-	     				res += "MessageBox.Show(null,'上传成功！',null,'LogOK',null,1,'上传成功！');";
+	     				res += "alert('上传成功！');";
 	     				res +="var api = frameElement.api;api.close();";
 						//res +="window.close();";
 						res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
@@ -136,7 +136,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    			f2.delete();			
 	     		}else{
 	     				String res=""; 
-	     				res += "MessageBox.Show(null,'上传失败！',null,'LogOK','Error',1,'上传失败');";
+	     				res += "alert('上传失败');";
 	     				res +="var api = frameElement.api;api.close();";
 						//res +="window.close();";
 						res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
@@ -223,7 +223,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        
 	  	    if(storefileno!=""&&storefileno!=null&&storefileno1!=""&&storefileno1!=null&&storefileno2!=""&&storefileno2!=null){
 	     		String res=""; 
-	     				res += "MessageBox.Show(null,'上传成功！',null,'LogOK',null,1,'上传成功！');";
+	     				res += "alert('上传成功！');";
 	     				res +="var api = frameElement.api;api.close();";
 				//res +="window.close();";
 				res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
@@ -245,7 +245,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    				f2.delete();	
 	     }else{
 	     		String res=""; 
-	     				res += "MessageBox.Show(null,'上传失败！',null,'LogOK','Error',1,'上传失败');";
+	     				res += "alert('上传失败');";
 	     				res +="var api = frameElement.api;api.close();";
 				//res +="window.close();";
 				res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";

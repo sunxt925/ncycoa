@@ -105,9 +105,9 @@ public class StdApplyAction extends ActionInterface{
 					map.put("applyid",applyidString);
 					taskService.complete(taskid,map);
 
-				res += "MessageBox.Show(null,'保存成功！',null,'LogOK',null,1,'保存成功');";
+				res += "alert('保存成功');";
 			} else {
-				res += "MessageBox.Show(null,'保存失败！',null,'LogOK','Error',1,'保存失败，请检查！');";
+				res += "alert('保存失败，请检查！');";
 			}
 		} else if (action != null && action.equals("appro")) {
 				
@@ -140,11 +140,11 @@ public class StdApplyAction extends ActionInterface{
 					map.put("go", true);//批准
 					map.put("back", false);//驳回
 					taskService.setVariables(taskid,map); 
-					res += "MessageBox.Show(null,'审核通过！',null,'LogOK',null,1,'审核通过');";
+					res += "alert('审核通过');";
 				}else{
 					map.put("go", false);//批准
 					map.put("back", true);//驳回
-					res += "MessageBox.Show(null,'已驳回！',null,'LogOK','Error',1,'已驳回！');";
+					res += "alert('已驳回！');";
 				}
 				taskService.complete(taskid,map);//执行  有参
 
@@ -158,7 +158,7 @@ public class StdApplyAction extends ActionInterface{
 				Map map = new HashMap();
 				map.put("public", true);
 				taskService.complete(taskid,map);
-				res += "MessageBox.Show(null,'发布成功！',null,'LogOK',null,1,'发布成功');";
+				res += "alert('发布成功');";
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

@@ -33,19 +33,19 @@ public class StdPublicAction extends ActionInterface{
 					}
 				}
 				if(flag){
-					res += "MessageBox.Show(null,'发布成功！',null,'LogOK',null,1,'发布成功');";
+					res += "alert('发布成功');";
 					res += "var rand=Math.floor(Math.random()*10000);";
 					res +="var applyid=\""+applyid+"\";";
 					res += "window.open('../stdapply/std_publiclist.jsp?applyid='+applyid,'_self');";
 					res += "parent.unittree.location.reload();";
 				}else{
-					res += "MessageBox.Show(null,'发布失败！',null,'LogOK','Error',1,'发布失败，请与管理员联系！');";
+					res += "alert('发布失败，请与管理员联系！');";
 					res += "var rand=Math.floor(Math.random()*10000);";
 					res +="var applyid=\""+request.getParameter("applyid")+"\";";
 					res += "window.open('../stdapply/std_publiclist.jsp?sid='+rand+'&applyid='+applyid,'stdlist');";
 				}
 			}else{
-				res += "MessageBox.Show(null,'请选择要发布的标准！',null,'LogOK',null,1,'请选择要发布的标准');";
+				res += "alert('请选择要发布的标准');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res +="var applystaffcode=\""+request.getParameter("applystaffcode")+"\";";
 				res += "window.open('../stdapply/std_publiclist.jsp?sid='+rand+'&applystaffcode='+applystaffcode,'_self');";

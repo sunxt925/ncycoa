@@ -62,7 +62,7 @@ public class StdManageAction extends ActionInterface
 							docorg.insert();
 						}
 				}else if(dt1.getRowsCount()!=0){//如果输入的标准文档编码与附件文档编码相同则报错
-					res += "MessageBox.Show(null,'添加失败！',null,'LogOK','Error',1,'添加失败，文档编码与某附件编码相同！');";
+					res += "alert('添加失败，文档编码与某附件编码相同！');";
 					res +="window.close();";
 					res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
 					  res += "parent.unittree.location.reload();";
@@ -102,7 +102,7 @@ public class StdManageAction extends ActionInterface
 			
 			if (stdinfo.Insert())
 			{
-				res += "MessageBox.Show(null,'添加成功！',null,'LogOK',null,1,'添加成功');";
+				res += "alert('添加成功');";
 				//res +="var api = frameElement.api;api.close();";
 				res +="window.close();";
 				res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
@@ -115,7 +115,7 @@ public class StdManageAction extends ActionInterface
 			}
 			else
 			{
-				res += "MessageBox.Show(null,'添加失败！',null,'LogOK','Error',1,'添加失败，可能是由于编码重复，请检查！');";
+				res += "alert('添加失败，可能是由于编码重复，请检查！');";
 				res +="window.close();";
 				res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
 				  res += "parent.unittree.location.reload();";
@@ -153,14 +153,14 @@ public class StdManageAction extends ActionInterface
 			
 			if (stdinfo.Update())
 			{
-				res += "MessageBox.Show(null,'修改成功！',null,'LogOK',null,1,'修改成功');";
+				res += "alert('修改成功');";
 				  res +="window.close();";
 					res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
 					  res += "parent.unittree.location.reload();";
 			}
 			else
 			{
-				res += "MessageBox.Show(null,'修改失败！',null,'LogOK','Error',1,'修改失败，可能是由于编码重复，请检查！');";
+				res += "alert('修改失败，可能是由于编码重复，请检查！');";
 				res +="window.close();";
 				res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
 				  res += "parent.unittree.location.reload();";
@@ -179,7 +179,7 @@ public class StdManageAction extends ActionInterface
 			String del=request.getParameter("docno");
 			if(flag)
 			{
-				res += "MessageBox.Show(null,'删除成功！',null,'LogOK',null,1,'删除成功');";
+				res += "alert('删除成功');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res +="var ccm=\""+request.getParameter("orgcode")+"\";";
 				res += "window.open('../std/std_list.jsp?sid='+rand+'&unitccm='+ccm,'_self');";
@@ -189,7 +189,7 @@ public class StdManageAction extends ActionInterface
 			}
 			else
 			{
-				res += "MessageBox.Show(null,'删除失败！',null,'LogOK','Error',1,'删除失败，请与管理员联系！');";
+				res += "alert('删除失败，请与管理员联系！');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res +="var ccm=\""+request.getParameter("orgcode")+"\";";
 				res += "window.open('../std/std_list.jsp?sid='+rand+'&unitccm='+ccm,'stdlist');";
@@ -217,7 +217,7 @@ public class StdManageAction extends ActionInterface
 			stdinfo=new DocMetaVersionInfo();
 			if(stdinfo.Delete(del))
 			{
-				res += "MessageBox.Show(null,'删除成功！',null,'LogOK',null,1,'删除成功');";
+				res += "alert('删除成功');";
 
 				res += "parent.unittree.location.reload();";
 				//RequestDispatcher rd=request.getRequestDispatcher("unitmanage.jsp");
@@ -225,7 +225,7 @@ public class StdManageAction extends ActionInterface
 			}
 			else
 			{
-				res += "MessageBox.Show(null,'删除失败！',null,'LogOK','Error',1,'删除失败，请与管理员联系！');";
+				res += "alert('删除失败，请与管理员联系！');";
 
 				res += "parent.unittree.location.reload();";
 			}
