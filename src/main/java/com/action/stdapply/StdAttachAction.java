@@ -64,14 +64,14 @@ public class StdAttachAction  extends ActionInterface
 				DataTable dt = db.runSelectQuery(sql, pp);
 				DataTable attachdt = db.runSelectQuery(attachsql, pp2);
 				if(dt.getRowsCount()!=0){//如果附件的编码和某一主文档编码相同，则判断已存在
-					res += "MessageBox.Show(null,'添加失败！',null,'LogOK','Error',1,'添加失败，附件编码与某一主文档冲突！');";
+					res += "alert('添加失败，附件编码与某一主文档冲突！');";
 					res +="window.close();";
 					res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
 					  res += "parent.unittree.location.reload();";
 				}else if(attachdt.getRowsCount()!=0){
 					    if(attachdt.get(0).get(1).toString().equals(DocVersion))
 					    {
-					    	res += "MessageBox.Show(null,'添加失败！',null,'LogOK','Error',1,'添加失败，该文档该编码的附件已存在！');";
+					    	res += "alert('添加失败，该文档该编码的附件已存在！');";
 							res +="window.close();";
 							res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
 							  res += "parent.unittree.location.reload();";
@@ -130,7 +130,7 @@ public class StdAttachAction  extends ActionInterface
 		        
 				if (attachInfo.Insert())
 				{
-					res += "MessageBox.Show(null,'添加成功！',null,'LogOK',null,1,'添加成功');";
+					res += "alert('添加成功');";
 					res +="window.close();";
 					res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
 					  res += "parent.unittree.location.reload();";
@@ -140,7 +140,7 @@ public class StdAttachAction  extends ActionInterface
 				}
 				else
 				{
-					res += "MessageBox.Show(null,'添加失败！',null,'LogOK','Error',1,'添加失败，可能是由于编码重复，请检查！');";
+					res += "alert('添加失败，可能是由于编码重复，请检查！');";
 					res +="window.close();";
 					res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
 					  res += "parent.unittree.location.reload();";
@@ -180,7 +180,7 @@ public class StdAttachAction  extends ActionInterface
 			
 			if (attachInfo.Update())
 			{
-				res += "MessageBox.Show(null,'修改成功！',null,'LogOK',null,1,'修改成功');";
+				res += "alert('修改成功');";
 				res +="window.close();";
 				res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
 				  res += "parent.unittree.location.reload();";
@@ -189,7 +189,7 @@ public class StdAttachAction  extends ActionInterface
 			}
 			else
 			{
-				res += "MessageBox.Show(null,'修改失败！',null,'LogOK','Error',1,'修改失败，可能是由于编码重复，请检查！');";
+				res += "alert('修改失败，可能是由于编码重复，请检查！');";
 				res +="window.close();";
 				res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
 				  res += "parent.unittree.location.reload();";
@@ -200,7 +200,7 @@ public class StdAttachAction  extends ActionInterface
 			attachInfo=new DocReviseInifo();
 			if(attachInfo.Delete(del))
 			{
-				res += "MessageBox.Show(null,'删除成功！',null,'LogOK',null,1,'删除成功');";
+				res += "alert('删除成功');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res +="var  belongNo=\""+request.getParameter("docno")+"\";";
 				res += "window.open('../stdapply/std_attachedfile.jsp?sid='+rand+'&docNo='+belongNo,'_self');";
@@ -211,7 +211,7 @@ public class StdAttachAction  extends ActionInterface
 			}
 			else
 			{
-				res += "MessageBox.Show(null,'删除失败！',null,'LogOK','Error',1,'删除失败，请与管理员联系！');";
+				res += "alert('删除失败，请与管理员联系！');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res +="var  belongNo=\""+request.getParameter("docno")+"\";";
 				res += "window.open('../stdapply/std_attachedfile.jsp?sid='+rand+'&docNo='+belongNo,'_self');";
@@ -223,7 +223,7 @@ public class StdAttachAction  extends ActionInterface
 			attachInfo=new DocReviseInifo();
 			if(attachInfo.Delete(del))
 			{
-				res += "MessageBox.Show(null,'删除成功！',null,'LogOK',null,1,'删除成功');";
+				res += "alert('删除成功');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res +="var  belongNo=\""+request.getParameter("docno")+"\";";//
 				res +="var  docversionname=\""+request.getParameter("docversionname")+"\";";
@@ -235,7 +235,7 @@ public class StdAttachAction  extends ActionInterface
 			}
 			else
 			{
-				res += "MessageBox.Show(null,'删除失败！',null,'LogOK','Error',1,'删除失败，请与管理员联系！');";
+				res += "alert('删除失败，请与管理员联系！');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res +="var  belongNo=\""+request.getParameter("docno")+"\";";
 				res +="var  docversionname=\""+request.getParameter("docversionname")+"\";";

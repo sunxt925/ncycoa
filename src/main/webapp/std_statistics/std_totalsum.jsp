@@ -44,7 +44,7 @@ function F7()
   </table>
   </div>
   <div id="tab_menu" style="text-align: center;position: relative; top: 5%; height:100%; width:100%; border:3px ">
-<iframe src="totalnum.jsp?type=cansee" name="sumlist" id="sumlist" width="100%" height="100%" scrolling="no" frameborder="0"></iframe><
+<iframe src="totalnum.jsp?type=cansee" name="sumlist" id="sumlist" width="100%" height="100%" scrolling="auto" frameborder="0"></iframe><
 </div>
 </BODY>
 </HTML>

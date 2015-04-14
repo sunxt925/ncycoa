@@ -218,7 +218,7 @@ public class PdfToSwf {
     	String FilePath="";
     	FilePath=file.replace('\\', '/');
     //	System.out.println("filename   £º"+FilePath);  
-    	LoadConfig("/com/entity/stdapply/PdfToSwf.properties");
+    	LoadConfig("PdfToSwf.properties");
         String exePath = EXEPATH;
    
         try {

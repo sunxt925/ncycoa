@@ -16,9 +16,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <%
 
 	String docNo=request.getParameter("docNo");
-	String docversionname=request.getParameter("docversionname");
+	
 	String name="";
-	DocMetaVersionInfo docVersionInfo = new DocMetaVersionInfo();
+	DocMetaVersionInfo docVersionInfo = new DocMetaVersionInfo(docNo);
+	String docversionname=docVersionInfo.getDocVersionName();
 	int page_no = Integer.parseInt(Format.NullToZero(request.getParameter("page_no")));
 	
 	//request.getSession().setAttribute("docno",docNo);
@@ -122,7 +123,7 @@ function OpenFile(storefileno,filecontenttype)
 }
 function F1(docno)
 {
-  var stdupnewurl='std_search/std_attachdetail.jsp?bm='+docno;
+  var stdupnewurl='/ncycoa/std_search/std_attachdetail.jsp?bm='+docno;
     createwindowNoButton('附件的信息',stdupnewurl,'450px','300px');
   //window.open(stdupnewurl,"stdlist");
 //  window.showModalDialog(stdupnewurl,window,"dialogWidth=500px;dialogHeight=600px");

@@ -253,7 +253,7 @@ public class DocOrgPost {
 			DBObject db = new DBObject();
 
 			//String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||std_org_post.recid||'\">' as 选择,std_org_post.positioncode as 岗位编码 , base_position.positionname 岗位名称,'<a href=\"#\" onClick=dele(\"'||std_org_post.recid||'\") class=\"button4\">删除</a>' as 操作  from base_position FULL JOIN std_org_post on base_position.positioncode=std_org_post.positioncode  where std_org_post.doccode = '" + doccode + "' and std_org_post.orgcode = '" + orgcode + "'";
-			String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||std_org_post.recid||'\">' as 选择,std_org_post.positioncode as 岗位编码 , base_position.positionname 岗位名称,'<a href=\"#\" onClick=dele(\"'||std_org_post.recid||'\") class=\"button4\">删除</a>' as 操作  from base_position FULL JOIN std_org_post on base_position.positioncode=std_org_post.positioncode  where std_org_post.doccode = '" + doccode +  "' order by std_org_post.positioncode";
+			String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||std_org_post.recid||'\">' as 选择,std_org_post.positioncode as 岗位编码 , base_position.positionname as 岗位名称,'<a href=\"#\" onClick=dele(\"'||std_org_post.recid||'\") class=\"button4\">删除</a>' as 操作  from base_position FULL JOIN std_org_post on base_position.positioncode=std_org_post.positioncode  where std_org_post.doccode = '" + doccode +  "' order by std_org_post.positioncode";
 
 			String sql_run = Format.getFySql(base_sql, pageno, perpage);
 			return db.runSelectQuery(sql_run);
@@ -264,63 +264,68 @@ public class DocOrgPost {
 			return null;
 		}
 	}
-	public DataTable getAllStdList(String orgcode,String positioncode,String begin,String end,String docname,String doccode)
+	public DataTable getStdPostListsearch(int pageno, int perpage,String orgcode,String doccode)
+	{
+		try
+		{
+			DBObject db = new DBObject();
+
+			//String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||std_org_post.recid||'\">' as 选择,std_org_post.positioncode as 岗位编码 , base_position.positionname 岗位名称,'<a href=\"#\" onClick=dele(\"'||std_org_post.recid||'\") class=\"button4\">删除</a>' as 操作  from base_position FULL JOIN std_org_post on base_position.positioncode=std_org_post.positioncode  where std_org_post.doccode = '" + doccode + "' and std_org_post.orgcode = '" + orgcode + "'";
+			String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||std_org_post.recid||'\">' as 选择,std_org_post.positioncode as 岗位编码 , base_position.positionname as 岗位名称  from base_position FULL JOIN std_org_post on base_position.positioncode=std_org_post.positioncode  where std_org_post.doccode = '" + doccode +  "' order by std_org_post.positioncode";
+
+			String sql_run = Format.getFySql(base_sql, pageno, perpage);
+			return db.runSelectQuery(sql_run);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
+	public DataTable getAllStdList(String orgcode,String positioncode,String begin,String end,String docname,String doccode,String drawupperson,String gettype)
 	{
 		try
 		{
 			DBObject db = new DBObject();
 			String sql="";
 			String searchdoccode="";
+			String condition="";
+			String nameselect="";
+			String drawupdate="";
+			String personcondition="";
+			String getstdtypecondition="";
 			if(doccode.equals("")){
 				searchdoccode="";
 			}else {
 				searchdoccode=" and doccode like '%"+doccode+"%' ";
 			}
-		/*	if((docname.equals(""))&&(begin.equals(""))&&(end.equals(""))){
-				sql="select * from std_docmetaversioninfo where doccode in (select doccode from std_org_post where orgcode='"+orgcode+"' and positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除'" ;
-			}else if(!docname.equals("")){
-				sql="select * from std_docmetaversioninfo where doccode in (select doccode from std_org_post where orgcode='"+orgcode+"' and positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' and  DocVersionName like '%"+docname+"%'" ;
+			if((begin.equals(""))&&(end.equals(""))){
+				drawupdate="";
 			}else if((!begin.equals(""))&&(!end.equals(""))){
-				String drawupdate="drawupdate>=to_date('"+begin+"','yyyy-MM-dd') and drawupdate<=to_date('"+end+"','yyyy-MM-dd')";
-				sql="select * from std_docmetaversioninfo where doccode in (select doccode from std_org_post where orgcode='"+orgcode+"' and positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' and "+drawupdate ;
-			}
-			else if((!begin.equals(""))&&(end.equals(""))){
-				String drawupdate="drawupdate>=to_date('"+begin+"','yyyy-MM-dd')";
-				sql="select * from std_docmetaversioninfo where doccode in (select doccode from std_org_post where orgcode='"+orgcode+"' and positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' and "+drawupdate ;
+				drawupdate=" and drawupdate>=to_date('"+begin+"','yyyy-MM-dd') and drawupdate<=to_date('"+end+"','yyyy-MM-dd') ";
+			}else if((!begin.equals(""))&&(end.equals(""))){
+				drawupdate=" and drawupdate>=to_date('"+begin+"','yyyy-MM-dd') ";
 			}else if((begin.equals(""))&&(!end.equals(""))){
-				String drawupdate="drawupdate<=to_date('"+end+"','yyyy-MM-dd')";
-				sql="select * from std_docmetaversioninfo where doccode in (select doccode from std_org_post where orgcode='"+orgcode+"' and positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' and "+drawupdate ;
-			}*/
-			if(docname.equals("")){
-				if((begin.equals(""))&&(end.equals(""))){
-					sql = "select * from std_docmetaversioninfo where doccode in (select doccode from std_org_post where positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' "+searchdoccode+" order by DRAWUPDATE desc";
-				//String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||docno||'\">' as 选择,docno as 文档流水号,DocVersionName as 文档名称,docversion as 文档版本,docclassname as 文档类名称,doccontenttype as 文档内容类别,'<a href=\"#\" onClick=F1(\"'||docno||'\") class=\"button4\">查看标准明细</a> <a href=\"#\" onClick=F7(\"'||docno||'\",\"'||DocVersionName||'\") class=\"button4\">附件列表</a> <a href=\"#\" onClick=F9(\"'||docno||'\",\"'||DocVersionName||'\") class=\"button4\">文件列表</a>' as 操作 from std_docmetaversioninfo where doccode in (select doccode from std_org_post where orgcode='"+orgcode+"' and positioncode='"+positioncode+"')"+" and belongdocno = 'no'";
-				}else if((!begin.equals(""))&&(!end.equals(""))){
-					String drawupdate=" drawupdate>=to_date('"+begin+"','yyyy-MM-dd') and drawupdate<=to_date('"+end+"','yyyy-MM-dd') ";
-					sql = "select * from std_docmetaversioninfo where doccode in (select doccode from std_org_post where positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' and "+drawupdate+searchdoccode+" order by DRAWUPDATE desc";		
-				}else if((!begin.equals(""))&&(end.equals(""))){
-					String drawupdate=" drawupdate>=to_date('"+begin+"','yyyy-MM-dd') ";
-					sql = "select * from std_docmetaversioninfo where doccode in (select doccode from std_org_post where positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' and "+drawupdate+searchdoccode+" order by DRAWUPDATE desc";		
-				}else if((begin.equals(""))&&(!end.equals(""))){
-					String drawupdate=" drawupdate<=to_date('"+end+"','yyyy-MM-dd') ";
-					sql = "select * from std_docmetaversioninfo where doccode in (select doccode from std_org_post where positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' and "+drawupdate+searchdoccode+" order by DRAWUPDATE desc";		
-				}
-			}else if(!docname.equals("")){
-				String nameselect=" and DocVersionName like '%"+docname+"%' ";
-				if((begin.equals(""))&&(end.equals(""))){
-					sql = "select * from std_docmetaversioninfo where doccode in (select doccode from std_org_post where positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' "+nameselect+searchdoccode+" order by DRAWUPDATE desc";
-				//String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||docno||'\">' as 选择,docno as 文档流水号,DocVersionName as 文档名称,docversion as 文档版本,docclassname as 文档类名称,doccontenttype as 文档内容类别,'<a href=\"#\" onClick=F1(\"'||docno||'\") class=\"button4\">查看标准明细</a> <a href=\"#\" onClick=F7(\"'||docno||'\",\"'||DocVersionName||'\") class=\"button4\">附件列表</a> <a href=\"#\" onClick=F9(\"'||docno||'\",\"'||DocVersionName||'\") class=\"button4\">文件列表</a>' as 操作 from std_docmetaversioninfo where doccode in (select doccode from std_org_post where orgcode='"+orgcode+"' and positioncode='"+positioncode+"')"+" and belongdocno = 'no'";
-				}else if((!begin.equals(""))&&(!end.equals(""))){
-					String drawupdate=" drawupdate>=to_date('"+begin+"','yyyy-MM-dd') and drawupdate<=to_date('"+end+"','yyyy-MM-dd') ";
-					sql = "select * from std_docmetaversioninfo where doccode in (select doccode from std_org_post where positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' and "+drawupdate+nameselect+searchdoccode+" order by DRAWUPDATE desc";		
-				}else if((!begin.equals(""))&&(end.equals(""))){
-					String drawupdate=" drawupdate>=to_date('"+begin+"','yyyy-MM-dd') ";
-					sql = "select * from std_docmetaversioninfo where doccode in (select doccode from std_org_post where positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' and "+drawupdate+nameselect+searchdoccode+" order by DRAWUPDATE desc";		
-				}else if((begin.equals(""))&&(!end.equals(""))){
-					String drawupdate=" drawupdate<=to_date('"+end+"','yyyy-MM-dd') ";
-					sql = "select * from std_docmetaversioninfo where doccode in (select doccode from std_org_post where positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' and "+drawupdate+nameselect+searchdoccode+" order by DRAWUPDATE desc";		
-				}
+				drawupdate=" and drawupdate<=to_date('"+end+"','yyyy-MM-dd') ";
 			}
+			if(!docname.equals("")){//'<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||docno||'\">' as 选择,
+				nameselect=" and DocVersionName like '%"+docname+"%' ";
+			}
+			if(!drawupperson.equals("")){
+				personcondition=" and drawupperson like '%"+drawupperson+"%' ";
+			}
+			if(!gettype.equals("")){
+				if(gettype.equals("gl")){
+					getstdtypecondition=" and doccode like 'Q/NCYC.GL%' ";
+				}else if(gettype.equals("gz")){
+					getstdtypecondition=" and doccode like 'Q/NCYC.GZ%' ";
+				}else if(gettype.equals("js")){
+					getstdtypecondition=" and doccode like 'Q/NCYC.JS%' ";
+				}
+					
+			}
+			condition=condition+nameselect+getstdtypecondition+searchdoccode+drawupdate+personcondition;
+			sql = "select * from std_docmetaversioninfo where doccode in (select doccode from std_org_post where positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' "+condition+" order by DRAWUPDATE desc";
 			DataTable dt = db.runSelectQuery(sql);
 			return dt;
 		}
@@ -330,14 +335,19 @@ public class DocOrgPost {
 			return null;
 		}
 	}
-	public DataTable getStdList(int pageno, int perpage,String orgcode,String positioncode,String begin,String end,String docname,String doccode,String sorttype)
+	public DataTable getStdList(int pageno, int perpage,String orgcode,String positioncode,String begin,String end,String docname,String doccode,String sorttype,String drawupperson,String gettype)
 	{
 		try
 		{
 			DBObject db = new DBObject();
+			String condition="";
 			String base_sql="";
 			String searchdoccode="";
 			String sort="";
+			String nameselect="";
+			String drawupdate="";
+			String personcondition="";
+			String getstdtypecondition="";
 			if(doccode.equals("")){
 				searchdoccode="";
 			}else {
@@ -348,37 +358,33 @@ public class DocOrgPost {
 			}else{
 				sort=" order by drawupdate desc";
 			}
-			if(docname.equals("")){
-				if((begin.equals(""))&&(end.equals(""))){//orgcode='"+orgcode+"' and
-					base_sql = "select doccode as 标准编号,DocVersionName as 标准名称,to_char(DRAWUPDATE,'yyyy-mm-dd') as 编制日期,docno as 有无附件,docno as 标准正文,'<a href=\"#\" onClick=F1(\"'||docno||'\") class=\"button4\">标准信息</a> <a href=\"#\" onClick=F7(\"'||docno||'\",\"'||DocVersionName||'\") class=\"button4\">附件查看</a>' as 操作 from std_docmetaversioninfo where doccode in (select doccode from std_org_post where positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' "+searchdoccode+sort;
-				//String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||docno||'\">' as 选择,docno as 文档流水号,DocVersionName as 文档名称,docversion as 文档版本,docclassname as 文档类名称,doccontenttype as 文档内容类别,'<a href=\"#\" onClick=F1(\"'||docno||'\") class=\"button4\">查看标准明细</a> <a href=\"#\" onClick=F7(\"'||docno||'\",\"'||DocVersionName||'\") class=\"button4\">附件列表</a> <a href=\"#\" onClick=F9(\"'||docno||'\",\"'||DocVersionName||'\") class=\"button4\">文件列表</a>' as 操作 from std_docmetaversioninfo where doccode in (select doccode from std_org_post where orgcode='"+orgcode+"' and positioncode='"+positioncode+"')"+" and belongdocno = 'no'";
-				}else if((!begin.equals(""))&&(!end.equals(""))){
-					String drawupdate=" drawupdate>=to_date('"+begin+"','yyyy-MM-dd') and drawupdate<=to_date('"+end+"','yyyy-MM-dd') ";
-					base_sql = "select doccode as 标准编号,DocVersionName as 标准名称,to_char(DRAWUPDATE,'yyyy-mm-dd') as 编制日期,docno as 有无附件,docno as 标准正文,'<a href=\"#\" onClick=F1(\"'||docno||'\") class=\"button4\">标准信息</a> <a href=\"#\" onClick=F7(\"'||docno||'\",\"'||DocVersionName||'\") class=\"button4\">附件查看</a>' as 操作 from std_docmetaversioninfo where doccode in (select doccode from std_org_post where positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' and "+drawupdate+searchdoccode+sort;		
-				}else if((!begin.equals(""))&&(end.equals(""))){
-					String drawupdate=" drawupdate>=to_date('"+begin+"','yyyy-MM-dd') ";
-					base_sql = "select doccode as 标准编号,DocVersionName as 标准名称,to_char(DRAWUPDATE,'yyyy-mm-dd') as 编制日期,docno as 有无附件,docno as 标准正文,'<a href=\"#\" onClick=F1(\"'||docno||'\") class=\"button4\">标准信息</a> <a href=\"#\" onClick=F7(\"'||docno||'\",\"'||DocVersionName||'\") class=\"button4\">附件查看</a>' as 操作 from std_docmetaversioninfo where doccode in (select doccode from std_org_post where positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' and "+drawupdate+searchdoccode+sort;		
-				}else if((begin.equals(""))&&(!end.equals(""))){
-					String drawupdate=" drawupdate<=to_date('"+end+"','yyyy-MM-dd') ";
-					base_sql = "select doccode as 标准编号,DocVersionName as 标准名称,to_char(DRAWUPDATE,'yyyy-mm-dd') as 编制日期,docno as 有无附件,docno as 标准正文,'<a href=\"#\" onClick=F1(\"'||docno||'\") class=\"button4\">标准信息</a> <a href=\"#\" onClick=F7(\"'||docno||'\",\"'||DocVersionName||'\") class=\"button4\">附件查看</a>' as 操作 from std_docmetaversioninfo where doccode in (select doccode from std_org_post where positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' and "+drawupdate+searchdoccode+sort;		
-				}
-			}else if(!docname.equals("")){
-				String nameselect=" and DocVersionName like '%"+docname+"%' ";
-				if((begin.equals(""))&&(end.equals(""))){
-					base_sql = "select doccode as 标准编号,DocVersionName as 标准名称,to_char(DRAWUPDATE,'yyyy-mm-dd') as 编制日期,docno as 有无附件,docno as 标准正文,'<a href=\"#\" onClick=F1(\"'||docno||'\") class=\"button4\">标准信息</a> <a href=\"#\" onClick=F7(\"'||docno||'\",\"'||DocVersionName||'\") class=\"button4\">附件查看</a>' as 操作 from std_docmetaversioninfo where doccode in (select doccode from std_org_post where positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' "+nameselect+searchdoccode+sort;
-				//String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||docno||'\">' as 选择,docno as 文档流水号,DocVersionName as 文档名称,docversion as 文档版本,docclassname as 文档类名称,doccontenttype as 文档内容类别,'<a href=\"#\" onClick=F1(\"'||docno||'\") class=\"button4\">查看标准明细</a> <a href=\"#\" onClick=F7(\"'||docno||'\",\"'||DocVersionName||'\") class=\"button4\">附件列表</a> <a href=\"#\" onClick=F9(\"'||docno||'\",\"'||DocVersionName||'\") class=\"button4\">文件列表</a>' as 操作 from std_docmetaversioninfo where doccode in (select doccode from std_org_post where orgcode='"+orgcode+"' and positioncode='"+positioncode+"')"+" and belongdocno = 'no'";
-				}else if((!begin.equals(""))&&(!end.equals(""))){
-					String drawupdate=" drawupdate>=to_date('"+begin+"','yyyy-MM-dd') and drawupdate<=to_date('"+end+"','yyyy-MM-dd') ";
-					base_sql = "select doccode as 标准编号,DocVersionName as 标准名称,to_char(DRAWUPDATE,'yyyy-mm-dd') as 编制日期,docno as 有无附件,docno as 标准正文,'<a href=\"#\" onClick=F1(\"'||docno||'\") class=\"button4\">标准信息</a> <a href=\"#\" onClick=F7(\"'||docno||'\",\"'||DocVersionName||'\") class=\"button4\">附件查看</a>' as 操作 from std_docmetaversioninfo where doccode in (select doccode from std_org_post where positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' and "+drawupdate+nameselect+searchdoccode+sort;		
-				}else if((!begin.equals(""))&&(end.equals(""))){
-					String drawupdate=" drawupdate>=to_date('"+begin+"','yyyy-MM-dd') ";
-					base_sql = "select doccode as 标准编号,DocVersionName as 标准名称,to_char(DRAWUPDATE,'yyyy-mm-dd') as 编制日期,docno as 有无附件,docno as 标准正文,'<a href=\"#\" onClick=F1(\"'||docno||'\") class=\"button4\">标准信息</a> <a href=\"#\" onClick=F7(\"'||docno||'\",\"'||DocVersionName||'\") class=\"button4\">附件查看</a>' as 操作 from std_docmetaversioninfo where doccode in (select doccode from std_org_post where positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' and "+drawupdate+nameselect+searchdoccode+sort;		
-				}else if((begin.equals(""))&&(!end.equals(""))){
-					String drawupdate=" drawupdate<=to_date('"+end+"','yyyy-MM-dd') ";
-					base_sql = "select doccode as 标准编号,DocVersionName as 标准名称,to_char(DRAWUPDATE,'yyyy-mm-dd') as 编制日期,docno as 有无附件,docno as 标准正文,'<a href=\"#\" onClick=F1(\"'||docno||'\") class=\"button4\">标准信息</a> <a href=\"#\" onClick=F7(\"'||docno||'\",\"'||DocVersionName||'\") class=\"button4\">附件查看</a>' as 操作 from std_docmetaversioninfo where doccode in (select doccode from std_org_post where and positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' and "+drawupdate+nameselect+searchdoccode+sort;		
-				}
+			if((begin.equals(""))&&(end.equals(""))){
+				drawupdate="";
+			}else if((!begin.equals(""))&&(!end.equals(""))){
+				drawupdate=" and drawupdate>=to_date('"+begin+"','yyyy-MM-dd') and drawupdate<=to_date('"+end+"','yyyy-MM-dd') ";
+			}else if((!begin.equals(""))&&(end.equals(""))){
+				drawupdate=" and drawupdate>=to_date('"+begin+"','yyyy-MM-dd') ";
+			}else if((begin.equals(""))&&(!end.equals(""))){
+				drawupdate=" and drawupdate<=to_date('"+end+"','yyyy-MM-dd') ";
 			}
-			
+			if(!docname.equals("")){//'<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||docno||'\">' as 选择,
+				nameselect=" and DocVersionName like '%"+docname+"%' ";
+			}
+			if(!drawupperson.equals("")){
+				personcondition=" and drawupperson like '%"+drawupperson+"%' ";
+			}
+			if(!gettype.equals("")){
+				if(gettype.equals("gl")){
+					getstdtypecondition=" and doccode like 'Q/NCYC.GL%' ";
+				}else if(gettype.equals("gz")){
+					getstdtypecondition=" and doccode like 'Q/NCYC.GZ%' ";
+				}else if(gettype.equals("js")){
+					getstdtypecondition=" and doccode like 'Q/NCYC.JS%' ";
+				}
+					
+			}//'<a href=\"#\" onClick=F1(\"'||docno||'\") class=\"button4\">标准信息</a> <a href=\"#\" onClick=F7(\"'||docno||'\",\"'||DocVersionName||'\") class=\"button4\">附件查看</a> <a href=\"#\" onClick=F8(\"'||docno||'\",\"'||docversionname||'\",\""+orgcode+"\") class=\"button4\">涉及岗位</a>' as 操作 
+			condition=condition+getstdtypecondition+nameselect+searchdoccode+drawupdate+personcondition+sort;
+			base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||docno||'\">' as 选择,doccode as 标准编号,DocVersionName as 标准名称,to_char(DRAWUPDATE,'yyyy-mm-dd') as 编制日期,docno as 有无附件,docno as 标准正文   from std_docmetaversioninfo where doccode in (select doccode from std_org_post where positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' "+condition;
 			String sql_run = Format.getFySql(base_sql, pageno, perpage);
 			return db.runSelectQuery(sql_run);
 		}
