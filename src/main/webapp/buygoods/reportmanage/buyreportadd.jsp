@@ -22,8 +22,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/icon.css">
 <script type="text/javascript" src="<%=path%>/jscomponent/jquery/jquery-1.8.0.min.js"></script>
 <script type="text/javascript" src="<%=path%>/jscomponent/easyui/jquery.easyui.min.js"></script>
-<script language="javascript" src="<%=path%>/js/DatePicker/WdatePicker.js"></script>
-<script language="javascript" src="<%=path%>/js/public/check.js"></script>
+<script type="text/javascript" src="<%=path%>/js/DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="<%=path%>/js/public/check.js"></script>
 
 <script type="text/javascript" src="<%=path%>/jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
 

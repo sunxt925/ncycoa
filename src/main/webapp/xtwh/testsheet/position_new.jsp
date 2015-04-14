@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=gb2312" language="java" import="java.sql.*,com.db.*,com.common.*" errorPage="" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<%@ include file="/page/controlHead.jsp" %>
 <HTML>
 <HEAD>
 <TITLE>重庆市地方税务局</TITLE>

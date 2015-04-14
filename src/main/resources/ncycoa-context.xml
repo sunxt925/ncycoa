@@ -13,8 +13,8 @@
 	default-autowire="byName" default-lazy-init="false">
 	
 	<!-- 自动扫描dao和service包(自动注入) -->
-	<context:component-scan base-package="edu.cqu.gem.ncycoa.dao" />
-	<context:component-scan base-package="edu.cqu.gem.ncycoa.service" />
+	<context:component-scan base-package="edu.cqu.ncycoa.dao" />
+	<context:component-scan base-package="edu.cqu.ncycoa.common.service" />
 
 	<!-- 引入属性文件 -->
 	<context:property-placeholder location="classpath:dbconfig.properties" />

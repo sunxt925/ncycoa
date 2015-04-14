@@ -174,6 +174,15 @@ public class UserInfo
 			System.out.println(Integer.parseInt(this.avalilheight));
 		}
 	}
+	
+	private String orgCode = null;
+	public String getOrgCode(){
+		if(orgCode == null) {
+			orgCode = new Staff(getStaffcode()).getOrgcode();
+		}
+		
+		return orgCode;
+	}
 
 	public int getPerpage_full()
 	{
