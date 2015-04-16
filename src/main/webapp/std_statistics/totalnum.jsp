@@ -78,6 +78,18 @@ if (unitccm.equals("")) unitccm="NC";
 		tableutil.setDisplayCol("no");
 		out.print(tableutil.DrawTable());
 	%>
+	      <table width="100%" border="0" cellpadding="3" cellspacing="0">
+        <tr>
+          <td width="50%"></td>
+          <td align="right">
+          <%String para="type="+type;
+      	out.print(PageUtil.DividePage(page_no,pagecount,"totalnum.jsp",para));
+       %>
+       </td>
+          
+        </tr>
+        
+      </table>
       <%}%>
       </td>
             </tr>

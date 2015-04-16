@@ -41,7 +41,7 @@ public class meetingattendAction extends ActionInterface
 		
 			if (meetingattendee.Insert(para,meetingno,orgcode))
 			{
-				res += "MessageBox.Show(null,'添加成功！',null,'LogOK',null,1,'添加成功');";
+				res += "show('添加成功');";
 				//res += "var rand=Math.floor(Math.random()*10000);";
 				//res +="var ccm=\""+request.getParameter("meetingno")+"\";";
 				//res += "window.open('../xtwh/systemrolemanage/systemrole_member_manage.jsp?sid='+rand+'&bm='+ccm,'_parent');";
@@ -49,7 +49,7 @@ public class meetingattendAction extends ActionInterface
 			}
 			else
 			{
-				res += "MessageBox.Show(null,'添加失败！',null,'LogOK','Error',1,'添加失败，可能是由于员工编码重复或超过指定人数，请检查！');";
+				res += "show('添加失败，可能是由于员工编码重复或超过指定人数，请检查！');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res +="var ccm=\""+request.getParameter("meetingno")+"\";";
 				//res += "window.open('../xtwh/systemrolemanage/systemrole_member_manage.jsp?sid='+rand+'&bm='+ccm,'_parent');";

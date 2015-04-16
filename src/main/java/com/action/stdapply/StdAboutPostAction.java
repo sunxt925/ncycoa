@@ -56,7 +56,7 @@ public class StdAboutPostAction extends ActionInterface {
 
 			if (f)
 			{
-				res += "MessageBox.Show(null,'添加成功！',null,'LogOK',null,1,'全部添加成功');";
+				res += "show('全部添加成功');";
 				res +="window.close();";
 				res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
 				  res += "parent.unittree.location.reload();";
@@ -65,7 +65,7 @@ public class StdAboutPostAction extends ActionInterface {
 				//rd.forward(request,response);
 			}else
 			{
-				res += "MessageBox.Show(null,'未成功！',null,'LogOK',null,1,'部分添加成功，部分岗位已存在');";
+				res += "show('部分添加成功，部分岗位已存在');";
 				res +="window.close();";
 				res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
 				  res += "parent.unittree.location.reload();";
@@ -92,7 +92,7 @@ public class StdAboutPostAction extends ActionInterface {
 			docorgpost=new DocOrgPost();
 			if(docorgpost.Delete(del,orgcode))
 			{
-				res += "MessageBox.Show(null,'删除成功！',null,'LogOK',null,1,'删除成功');";
+				res += "show('删除成功');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res +="var ccm=\""+request.getParameter("docno")+"\";";
 				res +="var versionname=\""+request.getParameter("versionname")+"\";";
@@ -104,7 +104,7 @@ public class StdAboutPostAction extends ActionInterface {
 			}
 			else
 			{
-				res += "MessageBox.Show(null,'删除失败！',null,'LogOK','Error',1,'删除失败，请与管理员联系！');";
+				res += "show('删除失败，请与管理员联系！');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res +="var ccm=\""+request.getParameter("docno")+"\";";
 				res +="var versionname=\""+request.getParameter("versionname")+"\";";

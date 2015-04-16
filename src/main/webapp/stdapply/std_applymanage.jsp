@@ -232,7 +232,7 @@ function checkradio()
 		//			  createwindowNoButton('ÐÞ¶©±ê×¼',stdupnewurl,'1000px','800px');
   		//			//window.open(stdupnewurl,"stdlist");
  // 						window.showModalDialog(stdupnewurl,window,"dialogWidth=1000px;dialogHeight=1000px");
-  		createwindowIframe("ÐÞ¶©±ê×¼", stdupnewurl, "1000px", "700px","stdlist","ÐÞ¶©")
+  		createwindowIframe("ÐÞ¶©±ê×¼", stdupnewurl, "1000px", "520px","stdlist","ÐÞ¶©")
   						
   						
 
@@ -240,7 +240,7 @@ function checkradio()
 				{
 					var applystaffcode = document.getElementById('applystaffcode').value;
 					  var stdupnewurl='/ncycoa/stdapply/std_applymodmanage.jsp?applystaffcode='+applystaffcode+'&applyid='+applyid+'&type='+'·Ï³ý';
-		createwindowIframe("·Ï³ý±ê×¼", stdupnewurl, "1000px", "700px","stdlist","·Ï³ý")
+		createwindowIframe("·Ï³ý±ê×¼", stdupnewurl, "1000px", "520px","stdlist","·Ï³ý")
   					//window.open(stdupnewurl,"stdlist");
   		//				window.showModalDialog(stdupnewurl,window,"dialogWidth=1000px;dialogHeight=1000px");
   		//				window.location.reload();

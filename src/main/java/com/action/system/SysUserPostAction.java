@@ -22,13 +22,13 @@ public class SysUserPostAction extends ActionInterface
 			m.setUnit_ccm(Format.NullToBlank(request.getParameter("unitCcm")));
 			if (m.Insert())
 			{
-				res += "MessageBox.Show(null,'添加成功！',null,'LogOK',null,1,'添加成功');";
+				res += "show('添加成功');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.open('../xtwh/system_menuManagement/modulemanage.jsp?sid='+rand,'_self');";
 			}
 			else
 			{
-				res += "MessageBox.Show(null,'添加失败！',null,'LogOK','Error',1,'添加失败，可能是由于编码重复，请检查！');";
+				res += "show('添加失败，可能是由于编码重复，请检查！');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.open('../xtwh/system_menuManagement/modulemanage.jsp?sid='+rand,'_self');";
 			}
@@ -46,13 +46,13 @@ public class SysUserPostAction extends ActionInterface
 
 			if (m.Update())
 			{
-				res += "MessageBox.Show(null,'修改成功！',null,'LogOK',null,1,'修改成功');";
+				res += "show('修改成功');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.open('../xtwh/system_menuManagement/modulemanage.jsp?sid='+rand,'_self');";
 			}
 			else
 			{
-				res += "MessageBox.Show(null,'修改失败！',null,'LogOK','Error',1,'修改失败，可能是由于编码重复，请检查！');";
+				res += "show('修改失败，可能是由于编码重复，请检查！');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.open('../xtwh/system_menuManagement/modulemanage.jsp?sid='+rand,'_self');";
 			}
@@ -75,13 +75,13 @@ public class SysUserPostAction extends ActionInterface
 			m = new SysUserPost();
 			if (m.Delete(para))
 			{
-				res += "MessageBox.Show(null,'删除成功！',null,'LogOK',null,1,'删除成功');";
+				res += "show('删除成功');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.open('../xtwh/system_menuManagement/modulemanage.jsp?sid='+rand,'_self');";
 			}
 			else
 			{
-				res += "MessageBox.Show(null,'删除失败！',null,'LogOK','Error',1,'删除失败，请与管理员联系！');";
+				res += "show('删除失败，请与管理员联系！');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.open('../xtwh/system_menuManagement/modulemanage.jsp?sid='+rand,'_self');";
 			}

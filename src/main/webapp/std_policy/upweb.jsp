@@ -48,10 +48,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					policyname="企业方针、目标";
 					classs="goal";
 					}
-				else{
-					policyname="基础标准";
-					classs="base";
-					}
 			 String savename=classs+year+month+day+hour+minute+"."+ext;
 			smart.getFiles().getFile(0).saveAs(pathtemp+java.io.File.separator+savename);
 			System.out.println(pathtemp+java.io.File.separator+savename);

@@ -66,7 +66,6 @@ document.all("Submit").click();
     <td width="70%">
     <select name="type"  id="type" style="width:140px">
             <option value="1">企业方针目标</option>
-            <option value="2">基础标准</option>
     </select>
 
 </td>

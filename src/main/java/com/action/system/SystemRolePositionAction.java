@@ -40,7 +40,7 @@ import com.entity.system.SystemRole;
 			
 				if (roleposition.Insert(para,orgcode,rolecode))
 				{
-					res += "MessageBox.Show(null,'添加成功！',null,'LogOK',null,1,'添加成功');";
+					res += "show('添加成功');";
 					res += "var rand=Math.floor(Math.random()*10000);";
 					res +="var ccm=\""+request.getParameter("rolecode")+"\";";
 					//res += "window.open('../xtwh/systemrolemanage/systemrole_position_manage.jsp?sid='+rand+'&bm='+ccm,'_parent');";
@@ -48,7 +48,7 @@ import com.entity.system.SystemRole;
 				}
 				else
 				{
-					res += "MessageBox.Show(null,'添加失败！',null,'LogOK','Error',1,'添加失败，可能是由于添加的是同一岗位，请检查！');";
+					res += "show('添加失败，可能是由于添加的是同一岗位，请检查！');";
 					res += "var rand=Math.floor(Math.random()*10000);";
 					res +="var ccm=\""+request.getParameter("rolecode")+"\";";
 					//res += "window.open('../xtwh/systemrolemanage/systemrole_position_manage.jsp?sid='+rand+'&bm='+ccm,'_parent');";
@@ -104,14 +104,14 @@ import com.entity.system.SystemRole;
 				roleposition = new RolePosition();
 				if (roleposition.Delete(para,rolecode))
 				{
-					res += "MessageBox.Show(null,'删除成功！',null,'LogOK',null,1,'删除成功');";
+					res += "show('删除成功');";
 					res += "var rand=Math.floor(Math.random()*10000);";
 					res +="var ccm=\""+request.getParameter("rolecode")+"\";";
 					res += "window.open('../xtwh/systemrolemanage/systemrole_position_manage.jsp?sid='+rand+'&bm='+ccm,'_self');";
 				}
 				else
 				{
-					res += "MessageBox.Show(null,'删除失败！',null,'LogOK','Error',1,'删除失败，请与管理员联系！');";
+					res += "show('删除失败，请与管理员联系！');";
 					res += "var rand=Math.floor(Math.random()*10000);";
 					res +="var ccm=\""+request.getParameter("rolecode")+"\";";
 					res += "window.open('../xtwh/systemrolemanage/systemrole_position_manage.jsp?sid='+rand+'&bm='+ccm,'_self');";

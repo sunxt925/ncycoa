@@ -11,20 +11,21 @@
  <script type="text/javascript" src="<%=request.getContextPath()%>/jscomponent/jquery/jquery-1.8.0.min.js"></script>
 
 <script type="text/javascript" src="<%=request.getContextPath()%>/jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
-
 <script language="javascript">
 
 function F1(org){
 	  var url='../std_search/std_orgposttab.jsp?unitccm='+org;
+	  //addTab('个人指标定义查询','std_search/std_orgposttab.jsp?unitccm='+org+'&isIframe','folder')
 	  window.open(url);
 }
+
 function F113(type){
 	var url='policylist.jsp?type='+type;
 	  window.open(url);
 }
 </script>
 <body>
-	<div>
+	<div >
  		<img src="stdstructure.jpg" style="text-align: center;position:absolute; left:100px; top:100px;" usemap="#chinaMap">
  		<!-- 给执行的节点加框 -->
  		<map name="chinaMap" id="chinaMap">  

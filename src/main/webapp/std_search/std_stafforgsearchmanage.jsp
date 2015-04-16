@@ -6,10 +6,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 <HTML>
 <HEAD>
-<TITLE>重庆市地方税务局</TITLE>
+<TITLE>南充市烟草公司</TITLE>
 <link rel="stylesheet" type="text/css" href="../css/style.css">
 <META http-equiv=Content-Type content="text/html; charset=gb2312">
 <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
+ <style type="text/css">
+        #main_div{
+         
+        }
+        #top_div{
+        height: 1px;
+         
+        }
+        #bottom_div{
+         
+          
+        }
+        iframe{
+          border: 0;
+          scrolling:no;
+        }
+    </style>
 </HEAD>
 <% 
     UserInfo UserInfo=(UserInfo)request.getSession().getAttribute("UserInfo");
@@ -17,7 +34,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	Staff staff = new Staff();
 	DataTable dt = staff.getAllOrgByStaffCode(staffcode); 
 	String pageheight=UserInfo.getAvalilheight();
-	  int pageHeight=(int)(Integer.parseInt(pageheight)*0.8);
+	int pageHeight=(int)(Integer.parseInt(pageheight)*0.75);
 	
 %>
 <script language="javascript" src="../js/public/select.js"></script>
@@ -39,49 +56,31 @@ function changetopunit(unitccm)
 	//window.open(newtreeurl,'unittree')
 }
 </script>
-<BODY class="mainbody" onLoad="this.focus()">
-<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
-<form name="form1" id="form1" method="post" action="../../servlet/PageHandler">
-  <tr>
-    <td width="3%" class="main_table_topbg"><img src="../images/table_lt.jpg" width="22" ></td>
-    <td width="94%" valign="middle" class="main_table_topbg" >首页 &gt;&gt; 标准化管理 &gt;&gt; 单位标准查询 </td>
-    <td width="3%" align="right" class="main_table_topbg" ><img src="../images/table_rt.jpg" width="22" ></td>
-  </tr>
-  <!-- 
-  <tr>
-    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;<a href="#" onClick="F5()">刷新[F5]</a></td>
-  </tr>
-   -->
-  <tr>
-    <td colspan="3" valign="top" class="main_table_centerbg" align="center"><table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <td width="15%"  height="100%" class="main_table_centerbg" colspan="3" valign="top">
-          <table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
-          <tr>
-            <td width="100%" valign="top" bgcolor="#DBEAFD">
-            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <%
-				if (dt!= null && dt.getRowsCount()>0)
-				{
-					for (int i=0;i<dt.getRowsCount();i++)
-					{
-						out.print("<tr><td class='table_td_jb_iframe'style='padding-left:50px; padding-top:5px;'><a href=\"#\" onclick=\"changetopunit('"+dt.get(i).getString("orgcode")+"')\">○"+dt.get(i).getString("orgname")+"</a></td></tr>");	
-					}
-				}
-			%>
+<body>
+  <div id="main_div">
+   <div  id="top_div">
+             <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td width="3%" class="main_table_topbg" height="31"><img src="<%=request.getContextPath() %>/images/table_lt.jpg" width="22" height="31"></td>
+                    <td width="94%" valign="middle" class="main_table_topbg" height="31"> 首页 &gt;&gt; 标准化管理 &gt;&gt; 部门标准查询 </td>
+                    <td width="3%" align="right" class="main_table_topbg" height="31"><img src="<%=request.getContextPath() %>/images/table_rt.jpg" width="22" height="31"></td>
+                 </tr>
             </table>
-            </td>
-          </tr>
-         </table>
-         </td>
-<td width="1%">
-</td>
-            <td valign="top" height="<%=pageHeight%>px"><iframe src="" name="postlist" id="postlist" width="98%" height="98%" scrolling="no" frameborder="0"></iframe></td>
-      </tr>
-    </table></td>
-  </tr>
 
-</form>
-</table>
-</BODY>
+      </div>
+      <div id="bottom_div">
+            <table width="100%" height="94%" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                  <td width="20%"> 
+                 <iframe src="stafforg_left.jsp" width="100%" height="90%"></iframe>
+                 </td>
+               <td width="80%" valign="top" height="<%=pageHeight%>px">
+               <iframe src="" name="postlist" id="postlist" width="99%" height="100%" scrolling="no" frameborder="0"></iframe></td>
+                   </tr>
+            </table> 
+      </div>
+        
+  </div>
+ 
+  </body>
 </HTML>

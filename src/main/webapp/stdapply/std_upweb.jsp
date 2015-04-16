@@ -25,7 +25,7 @@ String filename = smart.getFiles().getFile(0).getFileName();
 	         	 String s=String.valueOf(r.nextInt());
 if(filename.equals("")||filename==null){
 	     				String res=""; 
-	     				res += "MessageBox.Show(null,'上传失败！',null,'LogOK','Error',1,'上传失败,没有选择上传的文件');";
+	     				res += "alert('上传失败,没有选择上传的文件');";
 	     				res +="var api = frameElement.api;api.close();";
 						//res +="window.close();";
 						res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
@@ -87,7 +87,7 @@ docno=smart.getRequest().getParameter("DocNo");
 	         	flag=file.Insert();
 	         	 if(flag==true){
 	     				String res=""; 
-	     				res += "MessageBox.Show(null,'上传成功！',null,'LogOK',null,1,'上传成功！');";
+	     				res += "alert('上传成功！');";
 	     				res +="var api = frameElement.api;api.close();";
 						//res +="window.close();";
 						res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
@@ -103,7 +103,7 @@ docno=smart.getRequest().getParameter("DocNo");
 						Out.print("</script></body></html>");		
 	     		}else{
 	     				String res=""; 
-	     				res += "MessageBox.Show(null,'上传失败！',null,'LogOK','Error',1,'上传失败');";
+	     				res += "alert('上传失败');";
 	     				res +="var api = frameElement.api;api.close();";
 						//res +="window.close();";
 						res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";

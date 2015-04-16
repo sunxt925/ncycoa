@@ -253,7 +253,7 @@ public class DocOrgPost {
 			DBObject db = new DBObject();
 
 			//String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||std_org_post.recid||'\">' as 选择,std_org_post.positioncode as 岗位编码 , base_position.positionname 岗位名称,'<a href=\"#\" onClick=dele(\"'||std_org_post.recid||'\") class=\"button4\">删除</a>' as 操作  from base_position FULL JOIN std_org_post on base_position.positioncode=std_org_post.positioncode  where std_org_post.doccode = '" + doccode + "' and std_org_post.orgcode = '" + orgcode + "'";
-			String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||std_org_post.recid||'\">' as 选择,std_org_post.positioncode as 岗位编码 , base_position.positionname 岗位名称,'<a href=\"#\" onClick=dele(\"'||std_org_post.recid||'\") class=\"button4\">删除</a>' as 操作  from base_position FULL JOIN std_org_post on base_position.positioncode=std_org_post.positioncode  where std_org_post.doccode = '" + doccode +  "' order by std_org_post.positioncode";
+			String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||std_org_post.recid||'\">' as 选择,std_org_post.positioncode as 岗位编码 , base_position.positionname as 岗位名称,'<a href=\"#\" onClick=dele(\"'||std_org_post.recid||'\") class=\"button4\">删除</a>' as 操作  from base_position FULL JOIN std_org_post on base_position.positioncode=std_org_post.positioncode  where std_org_post.doccode = '" + doccode +  "' order by std_org_post.positioncode";
 
 			String sql_run = Format.getFySql(base_sql, pageno, perpage);
 			return db.runSelectQuery(sql_run);
@@ -264,7 +264,25 @@ public class DocOrgPost {
 			return null;
 		}
 	}
-	public DataTable getAllStdList(String orgcode,String positioncode,String begin,String end,String docname,String doccode,String drawupperson)
+	public DataTable getStdPostListsearch(int pageno, int perpage,String orgcode,String doccode)
+	{
+		try
+		{
+			DBObject db = new DBObject();
+
+			//String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||std_org_post.recid||'\">' as 选择,std_org_post.positioncode as 岗位编码 , base_position.positionname 岗位名称,'<a href=\"#\" onClick=dele(\"'||std_org_post.recid||'\") class=\"button4\">删除</a>' as 操作  from base_position FULL JOIN std_org_post on base_position.positioncode=std_org_post.positioncode  where std_org_post.doccode = '" + doccode + "' and std_org_post.orgcode = '" + orgcode + "'";
+			String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||std_org_post.recid||'\">' as 选择,std_org_post.positioncode as 岗位编码 , base_position.positionname as 岗位名称  from base_position FULL JOIN std_org_post on base_position.positioncode=std_org_post.positioncode  where std_org_post.doccode = '" + doccode +  "' order by std_org_post.positioncode";
+
+			String sql_run = Format.getFySql(base_sql, pageno, perpage);
+			return db.runSelectQuery(sql_run);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
+	public DataTable getAllStdList(String orgcode,String positioncode,String begin,String end,String docname,String doccode,String drawupperson,String gettype)
 	{
 		try
 		{
@@ -275,6 +293,7 @@ public class DocOrgPost {
 			String nameselect="";
 			String drawupdate="";
 			String personcondition="";
+			String getstdtypecondition="";
 			if(doccode.equals("")){
 				searchdoccode="";
 			}else {
@@ -295,7 +314,17 @@ public class DocOrgPost {
 			if(!drawupperson.equals("")){
 				personcondition=" and drawupperson like '%"+drawupperson+"%' ";
 			}
-			condition=condition+nameselect+searchdoccode+drawupdate+personcondition;
+			if(!gettype.equals("")){
+				if(gettype.equals("gl")){
+					getstdtypecondition=" and doccode like 'Q/NCYC.GL%' ";
+				}else if(gettype.equals("gz")){
+					getstdtypecondition=" and doccode like 'Q/NCYC.GZ%' ";
+				}else if(gettype.equals("js")){
+					getstdtypecondition=" and doccode like 'Q/NCYC.JS%' ";
+				}
+					
+			}
+			condition=condition+nameselect+getstdtypecondition+searchdoccode+drawupdate+personcondition;
 			sql = "select * from std_docmetaversioninfo where doccode in (select doccode from std_org_post where positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' "+condition+" order by DRAWUPDATE desc";
 			DataTable dt = db.runSelectQuery(sql);
 			return dt;
@@ -306,7 +335,7 @@ public class DocOrgPost {
 			return null;
 		}
 	}
-	public DataTable getStdList(int pageno, int perpage,String orgcode,String positioncode,String begin,String end,String docname,String doccode,String sorttype,String drawupperson)
+	public DataTable getStdList(int pageno, int perpage,String orgcode,String positioncode,String begin,String end,String docname,String doccode,String sorttype,String drawupperson,String gettype)
 	{
 		try
 		{
@@ -318,6 +347,7 @@ public class DocOrgPost {
 			String nameselect="";
 			String drawupdate="";
 			String personcondition="";
+			String getstdtypecondition="";
 			if(doccode.equals("")){
 				searchdoccode="";
 			}else {
@@ -343,8 +373,18 @@ public class DocOrgPost {
 			if(!drawupperson.equals("")){
 				personcondition=" and drawupperson like '%"+drawupperson+"%' ";
 			}
-			condition=condition+nameselect+searchdoccode+drawupdate+personcondition+sort;
-			base_sql = "select doccode as 标准编号,DocVersionName as 标准名称,to_char(DRAWUPDATE,'yyyy-mm-dd') as 编制日期,docno as 有无附件,docno as 标准正文,'<a href=\"#\" onClick=F1(\"'||docno||'\") class=\"button4\">标准信息</a> <a href=\"#\" onClick=F7(\"'||docno||'\",\"'||DocVersionName||'\") class=\"button4\">附件查看</a>' as 操作 from std_docmetaversioninfo where doccode in (select doccode from std_org_post where positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' "+condition;
+			if(!gettype.equals("")){
+				if(gettype.equals("gl")){
+					getstdtypecondition=" and doccode like 'Q/NCYC.GL%' ";
+				}else if(gettype.equals("gz")){
+					getstdtypecondition=" and doccode like 'Q/NCYC.GZ%' ";
+				}else if(gettype.equals("js")){
+					getstdtypecondition=" and doccode like 'Q/NCYC.JS%' ";
+				}
+					
+			}//'<a href=\"#\" onClick=F1(\"'||docno||'\") class=\"button4\">标准信息</a> <a href=\"#\" onClick=F7(\"'||docno||'\",\"'||DocVersionName||'\") class=\"button4\">附件查看</a> <a href=\"#\" onClick=F8(\"'||docno||'\",\"'||docversionname||'\",\""+orgcode+"\") class=\"button4\">涉及岗位</a>' as 操作 
+			condition=condition+getstdtypecondition+nameselect+searchdoccode+drawupdate+personcondition+sort;
+			base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||docno||'\">' as 选择,doccode as 标准编号,DocVersionName as 标准名称,to_char(DRAWUPDATE,'yyyy-mm-dd') as 编制日期,docno as 有无附件,docno as 标准正文   from std_docmetaversioninfo where doccode in (select doccode from std_org_post where positioncode='"+positioncode+"')"+" and belongdocno = 'no' and DOCVERSIONSTATUS<>'历史版本' and flag<>'废除' "+condition;
 			String sql_run = Format.getFySql(base_sql, pageno, perpage);
 			return db.runSelectQuery(sql_run);
 		}

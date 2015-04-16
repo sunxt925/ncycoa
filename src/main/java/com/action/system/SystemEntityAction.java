@@ -21,13 +21,13 @@ public class SystemEntityAction extends ActionInterface
 				er = e.initEntity(request);
 				if (er.isRes())
 				{
-					res += "MessageBox.Show(null,'初始化成功！',null,'LogOK',null,1,'初始化成功');";
+					res += "show('初始化成功');";
 					res += "var rand=Math.floor(Math.random()*10000);";
 					res += "window.open('../xtwh/entitymanage.jsp?sid='+rand,'_self');";
 				}
 				else
 				{
-					res += "MessageBox.Show(null,'初始化失败！',null,'LogOK','Error',1,'"
+					res += "show('"
 							+ er.getRes_str() + "');";
 					res += "var rand=Math.floor(Math.random()*10000);";
 					res += "window.open('../xtwh/entitymanage.jsp?sid='+rand,'_self');";
@@ -45,14 +45,14 @@ public class SystemEntityAction extends ActionInterface
 				er = e.Update();
 				if (er.isRes())
 				{
-					res += "MessageBox.Show(null,'修改化成功！',null,'LogOK',null,1,'修改成功');";
+					res += "show('修改成功');";
 					res +="window.close();";
 				//	res += "var rand=Math.floor(Math.random()*10000);";
 				//	res += "window.open('../xtwh/entitymanage.jsp?sid='+rand,'_self');";
 				}
 				else
 				{
-					res += "MessageBox.Show(null,'修改化失败！',null,'LogOK','Error',1,'"
+					res += "show('"
 							+ er.getRes_str() + "');";
 					res +="window.close();";
 				//	res += "var rand=Math.floor(Math.random()*10000);";
@@ -68,7 +68,7 @@ public class SystemEntityAction extends ActionInterface
 				er = e.UpdateColumn(request);
 				if (er.isRes())
 				{
-					res += "MessageBox.Show(null,'修改化成功！',null,'LogOK',null,1,'修改成功');";
+					res += "show('修改成功');";
 					res += "var rand=Math.floor(Math.random()*10000);";
 					res += "window.open('../xtwh/entity_column.jsp?bm="
 							+ entity_code + "&sid='+rand,'_self');";
@@ -76,7 +76,7 @@ public class SystemEntityAction extends ActionInterface
 				}
 				else
 				{
-					res += "MessageBox.Show(null,'修改化失败！',null,'LogOK','Error',1,'"
+					res += "show('"
 							+ er.getRes_str() + "');";
 					res += "var rand=Math.floor(Math.random()*10000);";
 					res += "window.open('../xtwh/entity_column.jsp?bm="

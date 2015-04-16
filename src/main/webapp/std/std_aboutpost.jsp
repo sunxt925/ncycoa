@@ -46,7 +46,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	DataTable dt=docorgpost.getStdPostList(page_no,per_page,orgcode,doccode);
 	DataTable dtcount=docorgpost.getAllStdPostList(orgcode,doccode);
 	//if(request.getSession().getAttribute("docversionname")==null){
-	name=request.getParameter("docversionname");
+	name=docVersionInfo.getDocVersionName();
 	//	request.getSession().setAttribute("docversionname",name);
 	//}
 	//else{

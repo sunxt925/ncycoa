@@ -32,7 +32,7 @@ String basePath = request.getScheme()+"://"+
 <%
   // String url="collectjson.jsp?year="+request.getParameter("year");
 DocPolicy policy=new DocPolicy();
-DataTable dt = policy.getAllPolicy();
+DataTable dt = policy.getPolicyBytype("1");
 %>
 <body>
    <div style="text-align: center;position: relative;width: 100%;overflow:auto;">
