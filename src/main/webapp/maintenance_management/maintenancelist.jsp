@@ -15,7 +15,7 @@
 </style>
 </head>
 <body>
-	<h:datagrid actionUrl="plan.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="planlist">
+	<h:datagrid actionUrl="plan-management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="planlist">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
 		<h:dgColumn field="name" title="计划名称" query="true"></h:dgColumn>
 		<h:dgColumn field="type" title="计划类型" replace="岗位计划_0,部门计划_1" query="true"></h:dgColumn>
@@ -27,11 +27,11 @@
 	</h:datagrid>
 </body>
 
+<script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("input[name='inputDate_begin']").attr("class","easyui-datebox");
 		$("input[name='inputDate_end']").attr("class","easyui-datebox");
 	});
 </script>
-<script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>
 </html>

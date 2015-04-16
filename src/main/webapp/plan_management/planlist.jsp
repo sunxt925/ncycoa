@@ -15,27 +15,23 @@
 </style>
 </head>
 <body>
-	<h:datagrid actionUrl="plan.htm?dgdata_audit" checkbox="true" fit="true" fitColumns="true" queryMode="group" name="planlist">
+	<h:datagrid actionUrl="plan-management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="planlist">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
 		<h:dgColumn field="name" title="计划名称" query="true"></h:dgColumn>
 		<h:dgColumn field="type" title="计划类型" replace="岗位计划_0,部门计划_1" query="true"></h:dgColumn>
+		<h:dgColumn field="status" title="计划状态" replace="待审核_0,已审核_1,已完成_2" style="color:red_0,color:blue_1,color:green_2" query="true"></h:dgColumn>
 		<h:dgColumn field="inputUser" title="录入人员" dictionary="base_staff,staffcode,staffname" query="true"></h:dgColumn>
 		<h:dgColumn field="inputDate" title="录入时间" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="scope"></h:dgColumn>
-		<h:dgColumn title="操作" field="opt"></h:dgColumn>
-		<h:dgConfOpt title="审核" url="plan.htm?audit&id={id}" message="确认审核？" />
-		<h:dgToolBar url="plan.htm?audit" icon="icon-search" funname="update" title="审核"></h:dgToolBar>
+		<h:dgToolBar url="plan-management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
+		<h:dgToolBar url="plan-management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
 	</h:datagrid>
 </body>
 
+<script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("input[name='inputDate_begin']").attr("class","easyui-datebox");
 		$("input[name='inputDate_end']").attr("class","easyui-datebox");
 	});
-	
-	function audit(id) {
-		alert(id);
-	}
 </script>
-<script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>
 </html>

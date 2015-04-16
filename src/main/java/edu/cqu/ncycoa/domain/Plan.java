@@ -22,7 +22,7 @@ public class Plan {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="PLAN_ID")
-	private Long id;   // 计划编号
+	private Long id;   		 // 计划编号
 	
 	@Column(name="PLAN_NAME")
 	private String name;  	 // 计划名称
@@ -38,7 +38,7 @@ public class Plan {
 	private List<String> participants; // 参与人
 	
 	@Column(name="STATUS")
-	private Short status;     // 已创建待审核、已审核待完成、已完成
+	private Short status;      // 已创建待审核、已审核待完成、已完成
 	
 	@Column(name="TYPE")
 	private Short type;        // 岗位计划，部门计划
@@ -55,7 +55,7 @@ public class Plan {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="AUDIT_DATE")
-	private Date auditDate;  // 审计时间
+	private Date auditDate;    // 审计时间
 
 	public Long getId() {
 		return id;

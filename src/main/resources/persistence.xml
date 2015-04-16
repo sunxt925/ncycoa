@@ -9,6 +9,7 @@
 		<class>edu.cqu.ncycoa.domain.DataDictionaryItem</class>
 		<class>edu.cqu.ncycoa.domain.Log</class>
 		<class>edu.cqu.ncycoa.domain.Plan</class>
+		<class>edu.cqu.ncycoa.domain.ContractInfo</class>
 	</persistence-unit>
 
 </persistence> 
