@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
 	<context-param>
 		<param-name>adminseal-password</param-name>
 		<param-value>111111</param-value>
@@ -23,6 +23,15 @@
 		<description>spring监听器</description>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	<servlet>
+		<servlet-name>StdFlowDeploy</servlet-name>
+		<servlet-class>com.servlet.StdFlowDeploy</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StdFlowDeploy</servlet-name>
+		<url-pattern>/servlet/StdFlowDeploy</url-pattern>
+	</servlet-mapping>
 	<listener>
 		<description>Introspector缓存清除监听器</description>
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
@@ -175,11 +184,6 @@
 	<login-config>
 		<auth-method>BASIC</auth-method>
 	</login-config>
-
-
-
-
-
 
 	<session-config>
 		<session-timeout>120</session-timeout>

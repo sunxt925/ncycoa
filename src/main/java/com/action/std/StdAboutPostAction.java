@@ -86,7 +86,7 @@ public class StdAboutPostAction extends ActionInterface {
 				//rd.forward(request,response);
 			}else
 			{
-				res += "show('部分添加成功，部分岗位已存在');";
+				res += "alert('部分添加成功，部分岗位已存在');";
 				res +="window.close();";
 				res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
 				  res += "parent.unittree.location.reload();";
@@ -113,7 +113,7 @@ public class StdAboutPostAction extends ActionInterface {
 			docorgpost=new DocOrgPost();
 			if(docorgpost.Delete(del,orgcode))
 			{
-				res += "show('删除成功');";
+				res += "alert('删除成功');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res +="var ccm=\""+request.getParameter("docno")+"\";";
 				res +="var versionname=\""+request.getParameter("versionname")+"\";";
@@ -125,7 +125,7 @@ public class StdAboutPostAction extends ActionInterface {
 			}
 			else
 			{
-				res += "show('删除失败，请与管理员联系！');";
+				res += "alert('删除失败，请与管理员联系！');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res +="var ccm=\""+request.getParameter("docno")+"\";";
 				res +="var versionname=\""+request.getParameter("versionname")+"\";";
