@@ -1,7 +1,5 @@
 package edu.cqu.ncycoa.web.controller;
 
-import java.util.Date;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +18,7 @@ import edu.cqu.ncycoa.common.tag.TagUtil;
 import edu.cqu.ncycoa.common.util.dao.QueryUtils;
 import edu.cqu.ncycoa.common.util.dao.TQOrder;
 import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
+import edu.cqu.ncycoa.domain.ContractInfo;
 import edu.cqu.ncycoa.domain.Plan;
 import edu.cqu.ncycoa.util.ConvertUtils;
 import edu.cqu.ncycoa.util.Globals;
@@ -27,15 +26,15 @@ import edu.cqu.ncycoa.util.MyBeanUtils;
 import edu.cqu.ncycoa.util.SystemUtils;
 
 @Controller
-@RequestMapping("/plan")
-public class PlanController {
+@RequestMapping("/contract-management")
+public class ContractManagementController {
 	
 	@Resource(name="systemService")
 	SystemService systemService;
 	
 	@RequestMapping(params="add")
 	public String add(HttpServletRequest request) {
-		return "plan/plan";
+		return "contract_management/contract";
 	}
 	
 	@RequestMapping(params="del")
@@ -57,8 +56,8 @@ public class PlanController {
 			return;
 		}
 		
-		systemService.removeEntities(ids, Plan.class);
-		message = "计划删除成功";
+		systemService.removeEntities(ids, ContractInfo.class);
+		message = "合同删除成功";
 		systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 		j.setMsg(message);
 		SystemUtils.jsonResponse(response, j);
@@ -66,25 +65,22 @@ public class PlanController {
 	
 	@RequestMapping(params = "save")
 	@ResponseBody
-	public void save(Plan plan, HttpServletRequest request, HttpServletResponse response) {
+	public void save(ContractInfo contract, HttpServletRequest request, HttpServletResponse response) {
 		AjaxResultJson j = new AjaxResultJson();
 		String message;
-		if (plan.getId() != null) {
-			message = "计划更新成功";
-			Plan t = systemService.findEntityById(plan.getId(), Plan.class);
+		if (contract.getId() != null) {
+			message = "合同更新成功";
+			ContractInfo t = systemService.findEntityById(contract.getId(), ContractInfo.class);
 			try {
-				MyBeanUtils.copyBeanNotNull2Bean(plan, t);
+				MyBeanUtils.copyBeanNotNull2Bean(contract, t);
 				systemService.saveEntity(t);
 				systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 			} catch (Exception e) {
-				message = "计划更新失败";
+				message = "合同更新失败";
 			}
 		} else {
-			message = "计划添加成功";
-			plan.setStatus((short)0);
-			plan.setInputUser(SystemUtils.getSessionUser().getStaffcode());
-			plan.setInputDate(new Date());
-			systemService.addEntity(plan);
+			message = "合同添加成功";
+			systemService.addEntity(contract);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		}
 		
@@ -94,18 +90,18 @@ public class PlanController {
 	
 	@RequestMapping(params="dgview")
 	public String dgView(HttpServletRequest request) {
-		return "plan/planlist";
+		return "contract_management/contractlist";
 	}
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params="dgdata")
 	@ResponseBody
-	public void dgData(Plan plan, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
-		QueryDescriptor<Plan> cq = new QueryDescriptor<Plan>(Plan.class, dg);
+	public void dgData(ContractInfo contract, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
+		QueryDescriptor<ContractInfo> cq = new QueryDescriptor<ContractInfo>(ContractInfo.class, dg);
 		CommonService commonService = SystemUtils.getCommonService(request);
 		
 		//查询条件组装器
-		TypedQueryBuilder<Plan> tqBuilder = QueryUtils.getTQBuilder(plan, request.getParameterMap());
+		TypedQueryBuilder<ContractInfo> tqBuilder = QueryUtils.getTQBuilder(contract, request.getParameterMap());
 		if (StringUtils.isNotEmpty(dg.getSort())) {
 			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
 		}

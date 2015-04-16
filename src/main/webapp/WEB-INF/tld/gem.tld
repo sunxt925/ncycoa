@@ -9,7 +9,7 @@
 	<display-name>"自定义标签"</display-name>
 	<tag>
 		<name>datagrid</name>
-		<tag-class>edu.cqu.gem.common.tag.DataGridTag</tag-class>
+		<tag-class>edu.cqu.ncycoa.common.tag.DataGridTag</tag-class>
 		<body-content>jsp</body-content>
 		<description>数据列表</description>
 		<attribute>
@@ -147,7 +147,7 @@
 	</tag>
 	<tag>
 		<name>dgColumn</name>
-		<tag-class>edu.cqu.gem.common.tag.DataGridColumnTag</tag-class>
+		<tag-class>edu.cqu.ncycoa.common.tag.DataGridColumnTag</tag-class>
 		<body-content>jsp</body-content>
 		<description>列表字段</description>
 		<attribute>
@@ -281,7 +281,7 @@
 	</tag>
 	<tag>
 		<name>dgDelOpt</name>
-		<tag-class>edu.cqu.gem.common.tag.DataGridDelOptTag</tag-class>
+		<tag-class>edu.cqu.ncycoa.common.tag.DataGridDelOptTag</tag-class>
 		<body-content>jsp</body-content>
 		<description>列表删除操作</description>
 		<attribute>
@@ -320,7 +320,7 @@
 	</tag>
 	<tag>
 		<name>dgDefOpt</name>
-		<tag-class>edu.cqu.gem.common.tag.DataGridDefOptTag</tag-class>
+		<tag-class>edu.cqu.ncycoa.common.tag.DataGridDefOptTag</tag-class>
 		<body-content>jsp</body-content>
 		<description>列表URL操作</description>
 		<attribute>
@@ -349,7 +349,7 @@
 	</tag>
 	<tag>
 		<name>dgOpenOpt</name>
-		<tag-class>edu.cqu.gem.common.tag.DataGridOpenOptTag</tag-class>
+		<tag-class>edu.cqu.ncycoa.common.tag.DataGridOpenOptTag</tag-class>
 		<body-content>jsp</body-content>
 		<description>弹出窗模式操作</description>
 		<attribute>
@@ -393,7 +393,7 @@
 	</tag>
 	<tag>
 		<name>dgFunOpt</name>
-		<tag-class>edu.cqu.gem.common.tag.DataGridFunOptTag</tag-class>
+		<tag-class>edu.cqu.ncycoa.common.tag.DataGridFunOptTag</tag-class>
 		<body-content>jsp</body-content>
 		<description>列表自定义函数操作</description>
 		<attribute>
@@ -422,7 +422,7 @@
 	</tag>
 	<tag>
 		<name>dgToolBar</name>
-		<tag-class>edu.cqu.gem.common.tag.DataGridToolBarTag</tag-class>
+		<tag-class>edu.cqu.ncycoa.common.tag.DataGridToolBarTag</tag-class>
 		<body-content>jsp</body-content>
 		<description>列表工具条标签</description>
 		<attribute>
@@ -469,7 +469,7 @@
 	</tag>
 	<tag>
 		<name>dgConfOpt</name>
-		<tag-class>edu.cqu.gem.common.tag.DataGridConfOptTag</tag-class>
+		<tag-class>edu.cqu.ncycoa.common.tag.DataGridConfOptTag</tag-class>
 		<body-content>jsp</body-content>
 		<description>列表询问操作</description>
 		<attribute>
@@ -582,7 +582,7 @@
 	</tag>
 	<tag>
 		<name>formvalid</name>
-		<tag-class>edu.cqu.gem.common.tag.FormValidationTag</tag-class>
+		<tag-class>edu.cqu.ncycoa.common.tag.FormValidationTag</tag-class>
 		<body-content>jsp</body-content>
 		<description>表单验证标签</description>
 		<attribute>
