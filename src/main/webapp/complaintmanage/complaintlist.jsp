@@ -1,3 +1,4 @@
+<%@page import="com.entity.system.UserInfo"%>
 <%@ page language="java" import="java.util.*" pageEncoding="gb2312"%>
 <%
 String path = request.getContextPath();
@@ -25,7 +26,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 </head>
 <%
-String dataurl="complaintjson.jsp";
+
+String dataurl = "complaintjson.jsp?class="+request.getParameter("class");
 %>
 <body>
     

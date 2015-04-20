@@ -70,7 +70,7 @@ ComponentUtil cu=new ComponentUtil();
                     %></td>
                 </tr>
             </table>
-            <input type="button" id="btn_ok" style="display: " onclick="ret()" value="save">
+            <input type="button" id="btn_ok" style="display: " onclick="ret()" value="提交">
 		   <input type="hidden" id="TBM_COMPLAINT.COMPLAINTNO" name="TBM_COMPLAINT.COMPLAINTNO" value="<%=IndexCode.getRecno("CM")%>">
             <input type="hidden" id="TBM_COMPLAINT.COMPLAINTERCODE" name="TBM_COMPLAINT.COMPLAINTERCODE" value="<%=u.getStaffcode()%>">
             <input type="hidden" id="TBM_COMPLAINT.ENABLEDFLAG" name="TBM_COMPLAINT.ENABLEDFLAG" value="0">
@@ -91,10 +91,14 @@ ComponentUtil cu=new ComponentUtil();
       function ret(){
     	  var api = frameElement.api;
  		   if(sumbit_check())
-	   	     {       
- 			   document.all("Submit").click();
- 			   (api.data)({code:"refresh"});
- 			   window.close();
+	   	     { 
+ 			 if(document.all("TBM_COMPLAINT.COMPLAINTCATEGORY").value==""){
+ 				 alert("请选择申诉类别");
+ 			 }else{
+ 				 document.all("Submit").click();
+	 			   (api.data)({code:"refresh"});
+	 			   window.close();
+ 			 }
 	   	     }
  		  
         }

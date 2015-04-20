@@ -72,7 +72,7 @@ public class CodeAction extends ActionInterface
 			if (webFlowCode.Syn())
 			{
 				//res += "<script language='javascript'>";
-				res += "MessageBox.Show(null,'同步成功！',null,'LogOK',null,1,'同步成功');";
+				res += "show('同步成功！');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.open('../xtwh/code/codemanage.jsp?sid='+rand,'_self');";
 				//res +="window.location.reload();";
@@ -81,7 +81,7 @@ public class CodeAction extends ActionInterface
 			else
 			{
 				//res += "<script language='javascript'>";
-				res += "MessageBox.Show(null,'同步失败！',null,'LogOK','Error',1,'同步失败，请与管理员联系！');";
+				res += "show('同步失败，请与管理员联系！');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				//res +="window.location.reload();";
 				res += "window.open('../xtwh/code/codemanage.jsp?sid='+rand,'_self');";
@@ -108,7 +108,7 @@ public class CodeAction extends ActionInterface
 			if (co.Delete(para))
 			{
 				//res += "<script language='javascript'>";
-				res += "MessageBox.Show(null,'删除成功！',null,'LogOK',null,1,'删除成功');";
+				res += "show('删除成功');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.open('../xtwh/code/codemanage.jsp?sid='+rand,'_self');";
 				//res +="window.location.reload();";
@@ -117,7 +117,7 @@ public class CodeAction extends ActionInterface
 			else
 			{
 				//res += "<script language='javascript'>";
-				res += "MessageBox.Show(null,'删除失败！',null,'LogOK','Error',1,'删除失败，请与管理员联系！');";
+				res += "show('删除失败，请与管理员联系！');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				//res +="window.location.reload();";
 				res += "window.open('../xtwh/code/codemanage.jsp?sid='+rand,'_self');";
@@ -144,7 +144,7 @@ public class CodeAction extends ActionInterface
 			if (co.Load(para))
 			{
 				//res += "<script language='javascript'>";
-				res += "MessageBox.Show(null,'加载成功！',null,'LogOK',null,1,'加载成功');";
+				res += "show('加载成功');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.open('../xtwh/code/codemanage.jsp?sid='+rand,'_self');";
 				//res += "</script>";
@@ -152,7 +152,7 @@ public class CodeAction extends ActionInterface
 			else
 			{
 				//res += "<script language='javascript'>";
-				res += "MessageBox.Show(null,'加载失败！',null,'LogOK','Error',1,'加载失败，请与管理员联系！');";
+				res += "show('加载失败，请与管理员联系！');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.open('../xtwh/code/codemanage.jsp?sid='+rand,'_self');";
 				//res += "</script>";
@@ -194,7 +194,7 @@ public class CodeAction extends ActionInterface
 			er = code.UpdateColumn(request);
 			if (er.isRes())
 			{
-				res += "MessageBox.Show(null,'修改化成功！',null,'LogOK',null,1,'修改成功');";
+				res += "show('修改成功');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.open('../xtwh/code/code_list.jsp?table_name="
 						+ table_name + "&sid='+rand,'_self');";
@@ -202,7 +202,7 @@ public class CodeAction extends ActionInterface
 			}
 			else
 			{
-				res += "MessageBox.Show(null,'修改化失败！',null,'LogOK','Error',1,'"
+				res += "show('"
 						+ er.getRes_str() + "');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.open('../xtwh/code/code_list.jsp?table_name="
@@ -232,7 +232,7 @@ public class CodeAction extends ActionInterface
 			if (co.DeleteCol(para2,para))
 			{
 				//res += "<script language='javascript'>";
-				res += "MessageBox.Show(null,'删除成功！',null,'LogOK',null,1,'删除成功');";
+				res += "show('删除成功');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.open('../xtwh/code/code_list.jsp?code_id="+code_id+"&table_name="+para2+"&sid='+rand,'_self');";
 				res += "parent.codetree.location.reload();";
@@ -241,7 +241,7 @@ public class CodeAction extends ActionInterface
 			else
 			{
 				//res += "<script language='javascript'>";
-				res += "MessageBox.Show(null,'删除失败！',null,'LogOK','Error',1,'删除失败，请与管理员联系！');";
+				res += "show('删除失败，请与管理员联系！');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.open('../xtwh/code/code_list.jsp?code_id="+code_id+"&table_name="+para2+"&sid='+rand,'_self');";
 				res += "parent.codetree.location.reload();";

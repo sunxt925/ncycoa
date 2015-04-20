@@ -44,7 +44,6 @@ public class StdFileAction extends ActionInterface{
 				}
 				else
 				{
-
 					res += "alert('删除失败，可能个别文件删除不了联系！');";
 					res += "var rand=Math.floor(Math.random()*10000);";
 					res +="var ccm=\""+request.getParameter("docno")+"\";";

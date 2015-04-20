@@ -21,7 +21,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	List<String> orgnamelist=applymodOrgList.getOrgnamelist();
 	request.getSession().setAttribute("applyerid",applyid);
 	
-	
+	  String pageheight=((UserInfo)request.getSession().getAttribute("UserInfo")).getAvalilheight();
+	  int pageHeight=(int)(Integer.parseInt(pageheight)*0.8);
 %>
 <script language="javascript" src="<%=request.getContextPath()%>/js/public/select.js"></script>
 <script language="javascript" src="<%=request.getContextPath()%>/js/public/key.js"></script>
@@ -78,7 +79,7 @@ var type=document.form1.type.value;
           </tr>
          </table>
          </td>
-            <td valign="top" height="100%">
+            <td valign="top" height="<%=pageHeight %>px">
 <!--            <iframe src="" name="postlist" id="postlist" width="100%" height="51%" scrolling="no" frameborder="2" ></iframe><br>-->
            <iframe src="" name="stdlist" id="stdlist" width="100%" height="100%" scrolling="no" frameborder="2" ></iframe></td>
       </tr>

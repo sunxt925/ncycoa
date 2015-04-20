@@ -38,7 +38,7 @@ String dataurl="meritjson.jsp?class="+objectclass+"&year="+year+"&start_month="+
 %>
 <body>
    <div style="width: 100%">
-   <table id="dg" class="easyui-datagrid" style="width:900px;height:600px"
+   <table id="dg" class="easyui-datagrid" "
     data-options="url:'<%=dataurl %>',fitColumns:true,singleSelect:true,collapsible:true">
     <thead>
     <tr>

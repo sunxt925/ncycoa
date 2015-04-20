@@ -158,7 +158,7 @@ public class ParticipantAction extends ActionInterface{
 			
 			eo.setEntity(entity);
 			res0 = eo.Update(request);
-			res += "MessageBox.Show(null,'"+res0+"审核成功"+"',null,'LogOK',null,1,'"+res0+"审核成功"+"');";
+			res += "show('"+res0+"审核成功"+"');";
 			res += "var rand=Math.floor(Math.random()*10000);";
 			res += "window.close();";
 			res += "window.dialogArguments.window.location = window.dialogArguments.window.location;";

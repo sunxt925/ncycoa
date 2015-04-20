@@ -20,7 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	GoodsStoreEvent gse=new GoodsStoreEvent();
 	String name=request.getParameter("name");
     int page_no=Integer.parseInt(Format.NullToZero(request.getParameter("page_no")));
-	int per_page=((UserInfo)request.getSession().getAttribute("UserInfo")).getPerpage_half();
+	int per_page=((UserInfo)request.getSession().getAttribute("UserInfo")).getPerpage_half()-2;
 	DataTable dt=gse.getAllGoodsStore(page_no,per_page,"入库");
 	DataTable dtcount=gse.getAllGoodsStore("入库");
 	int pagecount=0;
@@ -94,7 +94,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
 		}
 	}
-	
+	var newcode="<%=AutoCoding.Codingnolevel("com_storeevent","StoreEventNo","IN",6)%>";
 	function validate() {
 		UnSelectAll('form1');
 		//创建Ajax核心对象XMLHttpRequest
@@ -137,6 +137,7 @@ function F3()
 	var rand=Math.floor(Math.random()*10000);
 	validate();
 	window.open("goodsinformINList.jsp?StoreEventNo=<%=newcode%>&detail=0&sid="+rand,"goodsinformINList");
+	F5();
 }
 function showModalDialogWin(url,wh,hg) {
         var obj = window.showModalDialog(url, window,"status:false;dialogWidth:"+wh+"px;dialogHeight:"+hg+"px;scroll=no;help: no;resizable:no;status:no;");

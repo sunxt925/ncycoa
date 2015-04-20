@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+
 import com.common.CodeDictionary;
 import com.common.Format;
+import com.dao.system.StaffDao;
 import com.db.DBObject;
 import com.db.DataRow;
 import com.db.DataTable;
@@ -54,17 +56,17 @@ public class Complaint {
 	 * 构建所有人员申诉列表
 	 * @return
 	 */
-	public String getComplaintJson(){
-		return getComplaintJson("");
+	public String getComplaintJson(String flag,String handler){
+		return getComplaintJson("",flag,handler);
 	}
 	/**
 	 * 根据staffcode构建个人申诉列表
 	 * @param staffcode
 	 * @return
 	 */
-	public String getComplaintJson(String staffcode){
+	public String getComplaintJson(String staffcode,String flag,String handlercode){
 		try {
-			List<Complaint> complaintlist=getComplaintList(staffcode);
+			List<Complaint> complaintlist=getComplaintList(staffcode,flag,handlercode);
 			StringBuilder sbuilder=new StringBuilder();
 			sbuilder.append("[");
 			for(Complaint complaint:complaintlist){
@@ -96,14 +98,18 @@ public class Complaint {
 	 * @param staffcode
 	 * @return
 	 */
-	public List<Complaint> getComplaintList(String staffcode){
+	public List<Complaint> getComplaintList(String staffcode,String flag,String handler){
 		try{
 			String queryCondition="";
+			List<String> staffcodes = null; 
 			if(staffcode.equals("")){
 				queryCondition="1=1";
+				staffcodes = StaffDao.getStaffByOrg(handler);
 			}else{
 				queryCondition="complaintercode='"+staffcode+"'";
+				staffcodes = StaffDao.getStaffByOrg(staffcode);
 			}
+			
 			String sql="select * from tbm_complaint where "+queryCondition;
 			DBObject db=new DBObject();
 			DataTable dt=db.runSelectQuery(sql);
@@ -122,7 +128,17 @@ public class Complaint {
 					complaint.setAttachedfile(row.getString("attachedfile"));
 					complaint.setEnableflag(Integer.parseInt(row.getString("enabledflag")));
 					complaint.setMemo(row.getString("memo"));
-					complaintlist.add(complaint);
+					//flag区分申诉类别，0为区县，1为市局
+					if(flag.equals("0")){
+						
+						if(!(row.getString("complaintcategory")).equals("company")){
+							if(staffcodes.contains(row.getString("complaintercode")))
+							complaintlist.add(complaint);
+						}
+					}else{
+						complaintlist.add(complaint);
+					}
+					
 				}
 				
 			}
@@ -132,6 +148,9 @@ public class Complaint {
 			return null;
 		}
 	}
+	
+	
+	
 	/**
 	 * 根据staffcode构建申诉列表，返回map数据
 	 * @param staffcode
