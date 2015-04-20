@@ -23,6 +23,10 @@ function F113(type){
 	var url='policylist.jsp?type='+type;
 	  window.open(url);
 }
+function Fbase(){
+	var url='../std_base/searchpolicylist.jsp';
+	  window.open(url);
+}
 </script>
 <body>
 	<div >
@@ -31,7 +35,7 @@ function F113(type){
  		<map name="chinaMap" id="chinaMap">  
     		<area shape="rect" coords="117,3,262,31" href="#" onClick="F113('1')" onFocus="this.blur()"/>  
     		<area shape="rect" coords="361,5,506,33" href="#" onClick="F12('')"/>  
-    		<area shape="rect" coords="603,2,750,33" href="#" onClick="F113('2')"/>  
+    		<area shape="rect" coords="603,2,750,33" href="#" onClick="Fbase()"/>  
     		<area shape="rect" coords="33,247,66,357" href="#" onClick="F1('NC.01.12')"/>   
     		<area shape="rect" coords="154,246,186,357" href="#" onClick="F1('NC.01.30')"/>  
     		<area shape="rect" coords="252,251,285,359" href="#" onClick="F1('NC.01.03')"/>  

@@ -40,10 +40,10 @@ DataTable dt = plan.getAllPlan();
     data-options="fitColumns:true,singleSelect:true">
     <thead>
     <tr>
-    <th data-options="field:'plandate',width:80">年度</th>
-    <th data-options="field:'planname',width:80">名称</th>
-    <th data-options="field:'uptime',width:80">制定时间</th>
-     <th data-options="field:'op',width:100">操作</th>
+    <th data-options="field:'plandate',width:80" align="center">年度</th>
+    <th data-options="field:'planname',width:80" align="center">名称</th>
+    <th data-options="field:'uptime',width:80" align="center">制定时间</th>
+     <th data-options="field:'op',width:100" align="center">操作</th>
     </tr>
     </thead>
     <tbody>

@@ -164,7 +164,7 @@ body222 {
 					</tr>
 					<tr>
 						<td></td>
-						<td></td>
+						<td align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/ncycoa/installpageoffice.jsp">[pageoffce]</a>¡¡</td>
 					</tr>
 				</table>
 			</div>

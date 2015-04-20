@@ -1,4 +1,4 @@
-<%@page import="com.entity.std.DocPlan"%>
+<%@page import="com.entity.std.DocPolicy"%>
 <%@page import="com.common.PageUtil"%>
 <%@page import="com.common.TableUtil"%>
 <%@page import="com.db.DataTable,com.db.*"%>
@@ -31,14 +31,8 @@ String basePath = request.getScheme()+"://"+
 </head>
 <%
   // String url="collectjson.jsp?year="+request.getParameter("year");
-DocPlan plan=new DocPlan();
-String year=request.getParameter("year");
-DataTable dt=null;
-if(year==null||(year.equals(""))){
-	 dt = plan.getAllPlan();
-}else{
-	 dt = plan.getPlanBydate(year);
-}
+DocPolicy policy=new DocPolicy();
+DataTable dt = policy.getPolicyBytype("3");
 %>
 <body>
    <div style="text-align: center;position: relative;width: 100%;overflow:auto;">
@@ -46,10 +40,9 @@ if(year==null||(year.equals(""))){
     data-options="fitColumns:true,singleSelect:true">
     <thead>
     <tr>
-    <th data-options="field:'plandate',width:100" align="center">年度</th>
-    <th data-options="field:'planname',width:100" align="center">名称</th>
-    <th data-options="field:'uptime',width:100" align="center">制定时间</th>
-     <th data-options="field:'op',width:150" align="center">操作</th>
+    <th data-options="field:'year',width:100">时间</th>
+    <th data-options="field:'period',width:100">类型</th>
+     <th data-options="field:'op',width:150">操作</th>
     </tr>
     </thead>
     <tbody>
@@ -57,12 +50,11 @@ if(year==null||(year.equals(""))){
 	DataRow row=dt.get(i);
 	%>										        
 			<tr>
-			    <td><%=row.getString("plandate") %></td>
-			    <td><%=row.getString("planname") %></td>
-			    <td><%=row.getString("uptime").substring(0, 10) %></td>
+			    <td><%=row.getString("editdate").substring(0, 10) %></td>
+			    <td><%=row.getString("policyname") %></td>
 			    <td><a href="#" class="easyui-linkbutton"
 				        data-options="iconCls:'icon-reload',plain:true" 
-				        onclick="openoffice('<%=row.getString("planpath")%>')">查看</a></td>
+				        onclick="openoffice('<%=row.getString("policypath")%>')">查看</a></td>
 			</tr>
 			<%} %>
     </tbody>
@@ -70,15 +62,15 @@ if(year==null||(year.equals(""))){
     </div>
  <script type="text/javascript">
       function openoffice(policypath){
-    	  var url='std_officeopen2.jsp?policypath='+policypath;
+    	  var url='std_officeopen.jsp?policypath='+policypath;
     	     window.open(url);
       }
-      function deleteplan(id,planpath){
+      function deletepolicy(id,policypath){
     	   var path='<%=path%>';
-    	   $.post(path+"/std_plan/deletedo.jsp",
+    	   $.post(path+"/std_policy/deletedo.jsp",
     	           			    {
     	           			      id:id,
-    	           			      planpath:planpath,
+    	           			      policypath:policypath,
     	           			    },
     	           				 function(data,status){
     	           			    	result(data);
