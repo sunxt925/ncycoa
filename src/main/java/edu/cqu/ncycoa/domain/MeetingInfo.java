@@ -20,25 +20,25 @@ public class MeetingInfo {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="MEETING_ID")
-	private String MeetingNo;
+	private Long id;
 	
 	@Column(name="MEETING_NAME")
-    private String MeetingName;
+    private String meetingName;
 	
 	@Column(name="MEETING_TOPICS")
-    private String MeetingTopics;
+    private String meetingTopics;
 	
 	@Column(name="MEETING_BEGINDATE")
-    private Date MeetingBeginDate;
+    private Date meetingBeginDate;
 	
 	@Column(name="MEETING_ENDDATE")
-	private Date MeetingEndDate;
+	private Date meetingEndDate;
 	
 	@Column(name="MEETING_ROOM")
-    private String MeetingRoom;
+    private String meetingRoom;
 	
 	@Column(name="MEETING_NUMATTENDEE")
-    private long NumAttendee;
+    private long numAttendee;
 	
 	
 	@ElementCollection
@@ -47,92 +47,95 @@ public class MeetingInfo {
 	
 	
 	@Column(name="MEETING_REQUESTDESC")
-    private String RequestDesc;
+    private String requestDesc;
 	
 	@Column(name="MEETING_APPLUORGCODE")
-    private String ApplyOrgCode;
+    private String applyOrgCode;
 	
 	@Column(name="MEETING_HANLER")
-    private String Handler;
+    private String handler;
 	
 	@Column(name="MEETING_FLAG")
-	private String MeetingFlag;
+	private String meetingFlag;
 	
 	@Column(name="MEETING_REPORT")
-    private String MeetingReport;
+    private String meetingReport;
 	
 	@Column(name="MEETING_AUDITORGCODE")
-    private String AuditOrgCode;
+    private String auditOrgCode;
 	
 	@Column(name="MEETING_AUDITOR")
-    private String Auditor;
+    private String auditor;
 	
 	@Column(name="MEETING_AUDITOPINION")
-    private String AuditOpinion;
+    private String auditOpinion;
 	
 	@Column(name="MEETING_AUDITDATE")
-    private Date AuditDate;
+    private Date auditDate;
 	
 	@Column(name="MEETING_AUDITFLAG")
-    private String AuditFlag;
+    private String auditFlag;
 	
 	@Column(name="MEETING_MEMO")
-    private String Memo;
+    private String memo;
 
-	public String getMeetingNo() {
-		return MeetingNo;
+
+	public Long getId() {
+		return id;
 	}
 
-	public void setMeetingNo(String meetingNo) {
-		MeetingNo = meetingNo;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getMeetingName() {
-		return MeetingName;
+		return meetingName;
 	}
 
 	public void setMeetingName(String meetingName) {
-		MeetingName = meetingName;
+		this.meetingName = meetingName;
 	}
 
 	public String getMeetingTopics() {
-		return MeetingTopics;
+		return meetingTopics;
 	}
 
 	public void setMeetingTopics(String meetingTopics) {
-		MeetingTopics = meetingTopics;
+		this.meetingTopics = meetingTopics;
 	}
 
 	public Date getMeetingBeginDate() {
-		return MeetingBeginDate;
+		return meetingBeginDate;
 	}
 
 	public void setMeetingBeginDate(Date meetingBeginDate) {
-		MeetingBeginDate = meetingBeginDate;
+		this.meetingBeginDate = meetingBeginDate;
 	}
 
 	public Date getMeetingEndDate() {
-		return MeetingEndDate;
+		return meetingEndDate;
 	}
 
 	public void setMeetingEndDate(Date meetingEndDate) {
-		MeetingEndDate = meetingEndDate;
+		this.meetingEndDate = meetingEndDate;
 	}
 
 	public String getMeetingRoom() {
-		return MeetingRoom;
+		return meetingRoom;
 	}
 
 	public void setMeetingRoom(String meetingRoom) {
-		MeetingRoom = meetingRoom;
+		this.meetingRoom = meetingRoom;
 	}
 
+	
+
 	public long getNumAttendee() {
-		return NumAttendee;
+		return numAttendee;
 	}
 
 	public void setNumAttendee(long numAttendee) {
-		NumAttendee = numAttendee;
+		this.numAttendee = numAttendee;
 	}
 
 	public List<String> getParticipants() {
@@ -144,92 +147,93 @@ public class MeetingInfo {
 	}
 
 	public String getRequestDesc() {
-		return RequestDesc;
+		return requestDesc;
 	}
 
 	public void setRequestDesc(String requestDesc) {
-		RequestDesc = requestDesc;
+		this.requestDesc = requestDesc;
 	}
 
 	public String getApplyOrgCode() {
-		return ApplyOrgCode;
+		return applyOrgCode;
 	}
 
 	public void setApplyOrgCode(String applyOrgCode) {
-		ApplyOrgCode = applyOrgCode;
+		this.applyOrgCode = applyOrgCode;
 	}
 
 	public String getHandler() {
-		return Handler;
+		return handler;
 	}
 
 	public void setHandler(String handler) {
-		Handler = handler;
+		this.handler = handler;
 	}
 
 	public String getMeetingFlag() {
-		return MeetingFlag;
+		return meetingFlag;
 	}
 
 	public void setMeetingFlag(String meetingFlag) {
-		MeetingFlag = meetingFlag;
+		this.meetingFlag = meetingFlag;
 	}
 
 	public String getMeetingReport() {
-		return MeetingReport;
+		return meetingReport;
 	}
 
 	public void setMeetingReport(String meetingReport) {
-		MeetingReport = meetingReport;
+		this.meetingReport = meetingReport;
 	}
 
 	public String getAuditOrgCode() {
-		return AuditOrgCode;
+		return auditOrgCode;
 	}
 
 	public void setAuditOrgCode(String auditOrgCode) {
-		AuditOrgCode = auditOrgCode;
+		this.auditOrgCode = auditOrgCode;
 	}
 
 	public String getAuditor() {
-		return Auditor;
+		return auditor;
 	}
 
 	public void setAuditor(String auditor) {
-		Auditor = auditor;
+		this.auditor = auditor;
 	}
 
 	public String getAuditOpinion() {
-		return AuditOpinion;
+		return auditOpinion;
 	}
 
 	public void setAuditOpinion(String auditOpinion) {
-		AuditOpinion = auditOpinion;
+		this.auditOpinion = auditOpinion;
 	}
 
 	public Date getAuditDate() {
-		return AuditDate;
+		return auditDate;
 	}
 
 	public void setAuditDate(Date auditDate) {
-		AuditDate = auditDate;
+		this.auditDate = auditDate;
 	}
 
 	public String getAuditFlag() {
-		return AuditFlag;
+		return auditFlag;
 	}
 
 	public void setAuditFlag(String auditFlag) {
-		AuditFlag = auditFlag;
+		this.auditFlag = auditFlag;
 	}
 
 	public String getMemo() {
-		return Memo;
+		return memo;
 	}
 
 	public void setMemo(String memo) {
-		Memo = memo;
+		this.memo = memo;
 	}
+
 	
 	
 }

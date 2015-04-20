@@ -21,14 +21,14 @@
 		<h:dgColumn field="meetingTopics" title="会议主题"  query="true"></h:dgColumn>
 		<h:dgColumn field="meetingBeginDate" title="开始时段"  dateFormatter="yyyy-MM-dd hh:mm:ss" query="true"></h:dgColumn>
 		<h:dgColumn field="meetingEndDate" title="结束时段" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true"></h:dgColumn>
-		<h:dgColumn field="meetingRoom" title="开会地点" replace="会议室1_0,会议室2_1,会议室3_2" query="true"></h:dgColumn>
+		<h:dgColumn field="meetingRoom" title="开会地点"   replace="会议室1_0,会议室2_1,会议室3_2"  query="true"></h:dgColumn>
 		<h:dgColumn field="numAttendee" title="会议人数"  query="true" queryMode="scope"></h:dgColumn>
-		<h:dgColumn field="auditFlag" title="审核状态" replace="通过_11,未审核_0,未通过_10" style="color:red_10,color:blue_11,color:green_0" query="true"></h:dgColumn>
-		<h:dgToolBar url="meeting_management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
-		<h:dgToolBar url="meeting_management.htm?update" icon="icon-add" funname="update" title="编辑"></h:dgToolBar>
+		<h:dgColumn field="meetingFlag" title="会议状态" replace="完成_11,取消_10,未处理_0" style="color:green_10,color:red_0,color:blue_11" query="true"></h:dgColumn>
 		
-		<h:dgToolBar url="meeting_management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
-	</h:datagrid>
+		<h:dgColumn field="auditDate" title="审核日期"  dateFormatter="yyyy-MM-dd hh:mm:ss" query="true"></h:dgColumn>
+		
+		<h:dgColumn field="auditFlag" title="审核状态" replace="通过_11,未审核_0,未通过_10" style="color:red_10,color:blue_11,color:green_0" query="true"></h:dgColumn>
+		</h:datagrid>
 </body>
 
 <script type="text/javascript">
@@ -36,9 +36,6 @@
 		$("input[name='meetingBeginDate']").attr("class","easyui-datebox");
 		$("input[name='meetingEndDate']").attr("class","easyui-datebox");
 	});
-	function ss(){
-		alert("dsa");
-	}
 </script>
 <script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>
 </html>

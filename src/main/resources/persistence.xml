@@ -10,6 +10,7 @@
 		<class>edu.cqu.ncycoa.domain.Log</class>
 		<class>edu.cqu.ncycoa.domain.Plan</class>
 		<class>edu.cqu.ncycoa.domain.ContractInfo</class>
+		<class>edu.cqu.ncycoa.domain.MeetingInfo</class>
 	</persistence-unit>
 
 </persistence> 

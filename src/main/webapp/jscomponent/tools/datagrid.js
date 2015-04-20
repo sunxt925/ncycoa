@@ -108,7 +108,7 @@ function update(title, actionUrl, gname, width, height) {
 	} else {
 		actionUrl += '?id='+ rows[0].id;
 	}
-	createwindow(title, url, width, height);
+	createwindow(title, actionUrl, width, height);
 }
 
 //普通询问操作调用函数

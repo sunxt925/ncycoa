@@ -15,19 +15,21 @@
 </style>
 </head>
 <body>
-	<h:datagrid actionUrl="meeting_management.htm?dgdata&flag=all" fit="true" fitColumns="true" queryMode="group" name="meetinglist">
+	<h:datagrid actionUrl="repair_management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="repairlist">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
-		<h:dgColumn field="meetingName" title="会议名称"  query="true"></h:dgColumn>
-		<h:dgColumn field="meetingTopics" title="会议主题"  query="true"></h:dgColumn>
-		<h:dgColumn field="meetingBeginDate" title="开始时段"  dateFormatter="yyyy-MM-dd hh:mm:ss" query="true"></h:dgColumn>
-		<h:dgColumn field="meetingEndDate" title="结束时段" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true"></h:dgColumn>
-		<h:dgColumn field="meetingRoom" title="开会地点" replace="会议室1_0,会议室2_1,会议室3_2" query="true"></h:dgColumn>
-		<h:dgColumn field="numAttendee" title="会议人数"  query="true" queryMode="scope"></h:dgColumn>
+		<h:dgColumn field="projectName" title="项目名称"  query="true"></h:dgColumn>
+		<h:dgColumn field="apporgCode" title="申请部门"  query="true"></h:dgColumn>
+		<h:dgColumn field="repairFree" title="维修项目预算"  query="true"></h:dgColumn>
+		<h:dgColumn field="appDate" title="申请日期"  dateFormatter="yyyy-MM-dd hh:mm:ss" query="true"></h:dgColumn>
+		<h:dgColumn field="repairContent" title="维修主要内容"  query="true"></h:dgColumn>
+		<h:dgColumn field="apporgOpinion" title="申请部门意见"  query="true"></h:dgColumn>
 		<h:dgColumn field="auditFlag" title="审核状态" replace="通过_11,未审核_0,未通过_10" style="color:red_10,color:blue_11,color:green_0" query="true"></h:dgColumn>
-		<h:dgToolBar url="meeting_management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
-		<h:dgToolBar url="meeting_management.htm?update" icon="icon-add" funname="update" title="编辑"></h:dgToolBar>
+		<h:dgToolBar url="repair_management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
+		<h:dgToolBar url="repair_management.htm?update" icon="icon-add" funname="update" title="编辑"></h:dgToolBar>
+		<h:dgToolBar url="repair_management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
+		<h:dgColumn title="操作" field="opt"></h:dgColumn>
+		<h:dgConfOpt title="申请维修" url="repair_management.htm?startworkflow&id={id}" message="确认提交申请？" />
 		
-		<h:dgToolBar url="meeting_management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
 	</h:datagrid>
 </body>
 

@@ -1,4 +1,3 @@
-<%@page import="edu.cqu.ncycoa.domain.MeetingInfo"%>
 <%@ page language="java" pageEncoding="gb2312"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -80,82 +79,50 @@
 </script>
 </head>
 <body style="overflow-x:hidden">
-<form id="formobj" name="formobj" action="meeting_management.htm?save"  method="post">
+<form id="formobj" name="formobj" action="repair_management.htm?save"  method="post">
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
-<input id="id" name="id" type="hidden" value="${meetingInfo.id}">
+<input id="id" name="id" type="hidden" value="${repairAudit.id}">
 <table style="width:600px;border-spacing:1px;" class="formtable">
 	<tr>
-		<td align="right"><label class="Validform_label"> 会议名称 </label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="meetingName" name="meetingName" value="${meetingInfo.meetingName}" datatype="s2-10">
+		<td align="right"><label class="Validform_label"> 项目名称 </label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="projectName" name="projectName" value="${repairAudit.projectName}" datatype="s2-10">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label"> 会议主题 </label></td>
+		<td align="right"><label class="Validform_label"> 申请单位 </label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="meetingTopics" name="meetingTopics" value="${meetingInfo.meetingTopics}" datatype="s2-10">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label"> 开始时段 </label></td>
-		<td class="value">
-		 <input name="meetingBeginDate" type="Wdate" class="input1" id="meetingBeginDate" onfocus="new WdatePicker({lang:'zh-cn'})"  value="${meetingInfo.meetingBeginDate}" size="30"  maxlength="30">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label"> 结束时段 </label></td>
-		<td class="value">
-		<input name="meetingEndDate" type="Wdate" class="input1" id="meetingEndDate" onfocus="new WdatePicker({lang:'zh-cn'})"  value="${meetingInfo.meetingEndDate}" size="30"  maxlength="30">
-		
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label"> 开会地点 </label></td>
-		<td class="value">
-		<select class="inputxt" id="meetingRoom" name="meetingRoom" style="width:156px;" >
-			<option value="0">会议室1</option>
-			<option value="1">会议室2</option>
-			<option value="2">会议室3</option>
-		</select>
-		
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label"> 会议人数 </label></td>
-		<td class="value">
-		<input class="inputxt" style="width:150px;" id="numAttendee" name="numAttendee" value="${meetingInfo.numAttendee}" >
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label"> 参与人员 </label></td>
-		<td class="value">
-		<input class="inputxt" style="width:150px;" id="participants" name="participants" value="${meetingInfo.participants}">
+		<input class="inputxt" style="width:150px;" id="apporgCode" name="apporgCode" value="${repairAudit.apporgCode}" datatype="s2-10">
 		<a id="btn_selectobject" href="#" class="easyui-linkbutton"
 				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label"> 需求部门 </label></td>
+		<td align="right"><label class="Validform_label"> 维修项目预算 </label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="applyOrgCode" name="applyOrgCode" value="${meetingInfo.applyOrgCode}" datatype="s2-10">
+		 <input  class="inputxt" style="width:150px;" id="repairFree" name="repairFree"   value="${repairAudit.repairFree}" >
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right"><label class="Validform_label"> 维修主要内容 </label></td>
+		<td class="value">
+		<input  class="inputxt" style="width:150px;" id="repairContent" name="repairContent"   value="${repairAudit.repairContent}" >
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label"> 其他需求 </label></td>
+		<td align="right"><label class="Validform_label"> 申请部门意见 </label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="meetingReport" name="meetingReport" value="${meetingInfo.meetingReport}" datatype="s2-10">
+		<input  class="inputxt" style="width:150px;" id="apporgOpinion" name="apporgOpinion"   value="${repairAudit.apporgOpinion}" >
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
-	<input  type="hidden" id="meetingFlag" name="meetingFlag" value="${meetingInfo.meetingFlag}">
-	<input  type="hidden" id="auditFlag" name="auditFlag" value="${meetingInfo.auditFlag}">
+
+	<input  type="hidden" id="projectType" name="projectType" value="${repairAudit.projectType}">
+	<input  type="hidden" id="auditFlag" name="auditFlag" value="${repairAudit.auditFlag}">
 </table>
 </form>
 <script type="text/javascript">
