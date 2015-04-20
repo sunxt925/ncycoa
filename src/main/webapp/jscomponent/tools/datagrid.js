@@ -108,7 +108,7 @@ function update(title, actionUrl, gname, width, height) {
 	} else {
 		actionUrl += '?id='+ rows[0].id;
 	}
-	createwindow(title, url, width, height);
+	createwindow(title, actionUrl, width, height);
 }
 
 //普通询问操作调用函数
@@ -362,8 +362,8 @@ function alertTip(msg,title) {
  * @param saveurl
  */
 function createwindow(title, url,width,height) {
-	width =  width ? width : 700;
-	height = height ? height : 400;
+	width =  width ? width : 800;
+	height = height ? height : 600;
 	if(width=="100%" || height=="100%"){
 		width = document.body.offsetWidth;
 		height =document.body.offsetHeight-100;
@@ -479,98 +479,25 @@ function opensearchdwin(title, url, width, height) {
  */
 function openwindow(title, url,name, width, height) {
 	gridname=name;
-	if (typeof (width) == 'undefined'&&typeof (height) != 'undefined')
-	{
-		if(typeof(windowapi) == 'undefined'){
-			$.dialog({
-				content: 'url:'+url,
-				title : title,
-				cache:false,
-				lock : true,
-				width: 'auto',
-			    height: height
-			});
-		}else{
-			$.dialog({
-				content: 'url:'+url,
-				title : title,
-				cache:false,
-				parent:windowapi,
-				lock : true,
-				width: 'auto',
-			    height: height
-			});
-		}
-	}
-	if (typeof (height) == 'undefined'&&typeof (width) != 'undefined')
-	{
-		if(typeof(windowapi) == 'undefined'){
-			$.dialog({
-				content: 'url:'+url,
-				title : title,
-				lock : true,
-				width: width,
-				cache:false,
-			    height: 'auto'
-			});
-		}else{
-			$.dialog({
-				content: 'url:'+url,
-				title : title,
-				lock : true,
-				parent:windowapi,
-				width: width,
-				cache:false,
-			    height: 'auto'
-			});
-		}
-	}
-	if (typeof (width) == 'undefined'&&typeof (height) == 'undefined')
-	{
-		if(typeof(windowapi) == 'undefined'){
-			$.dialog({
-				content: 'url:'+url,
-				title : title,
-				lock : true,
-				width: 'auto',
-				cache:false,
-			    height: 'auto'
-			});
-		}else{
-			$.dialog({
-				content: 'url:'+url,
-				title : title,
-				lock : true,
-				parent:windowapi,
-				width: 'auto',
-				cache:false,
-			    height: 'auto'
-			});
-		}
-	}
-	
-	if (typeof (width) != 'undefined'&&typeof (height) != 'undefined')
-	{
-		if(typeof(windowapi) == 'undefined'){
-			$.dialog({
-				width: width,
-			    height:height,
-				content: 'url:'+url,
-				title : title,
-				cache:false,
-				lock : true
-			});
-		}else{
-			$.dialog({
-				width: width,
-			    height:height,
-				content: 'url:'+url,
-				parent:windowapi,
-				title : title,
-				cache:false,
-				lock : true
-			});
-		}
+	if(typeof(windowapi) == 'undefined'){
+		$.dialog({
+			content: 'url:'+url,
+			title : title,
+			cache:false,
+			lock : true,
+			width: width ? width : 800,
+		    height: height ? height : 600
+		});
+	}else{
+		$.dialog({
+			content: 'url:'+url,
+			title : title,
+			cache:false,
+			parent:windowapi,
+			lock : true,
+			width: width ? width : 800,
+			height: height ? height : 600
+		});
 	}
 }
 

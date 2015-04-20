@@ -1,16 +1,20 @@
-package edu.cqu.ncycoa.domain;
+package edu.cqu.ncycoa.plan.domain;
 
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,16 +26,13 @@ public class Plan {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="PLAN_ID")
-	private Long id;   		 // 计划编号
+	private Long id;   		 	// 计划编号
 	
 	@Column(name="PLAN_NAME")
-	private String name;  	 // 计划名称
+	private String name;  	 	// 计划名称
 	
-	@Column(name="CONTENT")
-	private String content;  // 计划内容
-	
-	@Column(name="MEMO")
-	private String memo;     // 备注
+	@Column(name="DESCRIPTION")
+	private String description;   // 计划描述
 	
 	@ElementCollection
 	@CollectionTable(name="NCYCOA_PLAN_PART", joinColumns=@JoinColumn(name="PLAN_ID"))
@@ -40,8 +41,15 @@ public class Plan {
 	@Column(name="STATUS")
 	private Short status;      // 已创建待审核、已审核待完成、已完成
 	
+	@Column(name="DEPART")
+	private String departId;   // 计划所属部门
+	
 	@Column(name="TYPE")
 	private Short type;        // 岗位计划，部门计划
+	
+	@OneToMany(mappedBy = "plan", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OrderBy("order")
+	private List<PlanStep> steps;
 	
 	@Column(name="INPUT_USER")
 	private String inputUser;  // 录入人
@@ -56,6 +64,14 @@ public class Plan {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="AUDIT_DATE")
 	private Date auditDate;    // 审计时间
+
+	public String getDepartId() {
+		return departId;
+	}
+
+	public void setDepartId(String departId) {
+		this.departId = departId;
+	}
 
 	public Long getId() {
 		return id;
@@ -73,20 +89,12 @@ public class Plan {
 		this.name = name;
 	}
 
-	public String getContent() {
-		return content;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-	public String getMemo() {
-		return memo;
-	}
-
-	public void setMemo(String memo) {
-		this.memo = memo;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public List<String> getParticipants() {
@@ -111,6 +119,14 @@ public class Plan {
 
 	public void setType(Short type) {
 		this.type = type;
+	}
+
+	public List<PlanStep> getSteps() {
+		return steps;
+	}
+
+	public void setSteps(List<PlanStep> steps) {
+		this.steps = steps;
 	}
 
 	public String getInputUser() {
@@ -144,5 +160,5 @@ public class Plan {
 	public void setAuditDate(Date auditDate) {
 		this.auditDate = auditDate;
 	}
-	
+
 }
