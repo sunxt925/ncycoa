@@ -37,7 +37,7 @@ public class SystemUnitPositionRelationAction extends ActionInterface
 				opr.setPOSITIONRELATION("下级");
 			if (opr.Insert(orgposition))
 			{
-				res += "MessageBox.Show(null,'添加成功！',null,'LogOK',null,1,'添加成功');";
+				res += "show('添加成功');";
 				//res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.close()";
 				/*res +="var ccm=\""+orgcode+"\";";
@@ -47,7 +47,7 @@ public class SystemUnitPositionRelationAction extends ActionInterface
 			}
 			else
 			{
-				res += "MessageBox.Show(null,'添加失败！',null,'LogOK','Error',1,'添加失败，可能是由于角色ID重复，请检查！');";
+				res += "show('添加失败，可能是由于角色ID重复，请检查！');";
 				res += "window.close()";
 				/*res += "var rand=Math.floor(Math.random()*10000);";
 				res +="var ccm=\""+orgcode+"\";";
@@ -109,7 +109,7 @@ public class SystemUnitPositionRelationAction extends ActionInterface
 			if (opr.Delete(para))
 			{
 				//System.out.println(positionname);
-				res += "MessageBox.Show(null,'删除成功！',null,'LogOK',null,1,'删除成功');";
+				res += "show('删除成功');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res +="var ccm=\""+orgcode+"\";";
 				res +="var positioncode=\""+positioncode+"\";";
@@ -119,7 +119,7 @@ public class SystemUnitPositionRelationAction extends ActionInterface
 			}
 			else
 			{
-				res += "MessageBox.Show(null,'删除失败！',null,'LogOK','Error',1,'删除失败，请与管理员联系！');";
+				res += "show('删除失败，请与管理员联系！');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res +="var ccm=\""+orgcode+"\";";
 				res +="var positioncode=\""+positioncode+"\";";

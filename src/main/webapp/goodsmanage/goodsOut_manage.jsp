@@ -178,7 +178,7 @@ function F1(message)//物资出库
 	var rand=Math.floor(Math.random()*10000);
 	validate();//该函数进行chu库事件插入
 	window.open("goodsinformOUTList.jsp?StoreEventNo=<%=newcode%>&detail=0&sid="+rand,"goodsinformOUTList");
-	
+	F5();
 }
 function createwindow(title, url, width, height) {
 	$.dialog({

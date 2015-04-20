@@ -164,13 +164,7 @@ public class EntityOperation {
 
 
 
-  				if(!foreign_entity.equals(""))                    //校验外键是否存在
-  				{
-  					if(!IsExist(foreign_entity,column_code,column_value))
-  					{
-  						res.append(r.getString("column_name")+"外键不存在,");
-  					}
-  				}
+  				
   				
   				
   				if(column_value.length()>column_length)     //校验长度是否超过
@@ -231,7 +225,13 @@ public class EntityOperation {
   					values.append(",");
   				}
   				
-  			
+  				if(!foreign_entity.equals(""))                    //校验外键是否存在
+  				{
+  					if(!IsExist(foreign_entity,column_code,column_value))
+  					{
+  						res.append(r.getString("column_name")+"外键不存在,");
+  					}
+  				}
   				if(is_primarykey.equals("Y"))                     //校验主键是否已经存在，包括联合主键，校验主键是否为空
   				{
   					pkmap.put(column_code, column_value);

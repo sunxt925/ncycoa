@@ -41,9 +41,9 @@ DataTable dt = policy.getPolicyBytype(type);
     data-options="fitColumns:true,singleSelect:true">
     <thead>
     <tr>
-    <th data-options="field:'year',width:100">时间</th>
-    <th data-options="field:'period',width:100">类型</th>
-     <th data-options="field:'op',width:150">操作</th>
+    <th data-options="field:'year',width:100" align="center">时间</th>
+    <th data-options="field:'period',width:100" align="center">类型</th>
+     <th data-options="field:'op',width:150" align="center">操作</th>
     </tr>
     </thead>
     <tbody>

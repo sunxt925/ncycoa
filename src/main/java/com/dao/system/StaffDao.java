@@ -6,6 +6,8 @@ import java.util.List;
 import com.db.DBObject;
 import com.db.DataRow;
 import com.db.DataTable;
+import com.entity.index.AllMeritCollection;
+import com.entity.system.StaffInfo;
 
 public class StaffDao {
 
@@ -92,5 +94,49 @@ public class StaffDao {
 			return null;
 		}
 		
+	}
+	/**
+	 * 根据员工编码查找同属本公司所有员工
+	 * @param staffcode
+	 * @return
+	 */
+	public static List<String> getStaffByOrg(String staffcode){
+		String company = AllMeritCollection.getcompanyByobject(getOrgcode(staffcode));
+		List<String> list = new ArrayList<String>();
+		try {
+			String sql="";
+			if(company.equals("NC.01.00")){
+				sql = "select staffcode from base_orgmember where orgcode like 'NC.01.1%' union select staffcode from base_orgmember  where orgcode like 'NC.01.0%'";
+			}else{
+				sql = "select * from base_orgmember where orgcode like '"+company+"%'  order by staffcode";
+			}
+			DBObject dbObject = new DBObject();
+		    DataTable dt = dbObject.runSelectQuery(sql);
+		    if(dt!=null&&dt.getRowsCount()>=0){
+		    	
+		    	for(int i=0;i<dt.getRowsCount();i++){
+		    		list.add(dt.get(i).getString("staffcode"));
+		    	}
+		    	return list;
+		    }
+		    return null;
+		} catch (Exception e) {
+		   return null;
+		}
+	}
+	public static String getOrgcode(String staffcode){
+		try {
+			String sql = "select * from base_orgmember where orgcode like 'NC.01%' and staffcode='"+staffcode+"' order by staffcode";
+		    DBObject dbObject = new DBObject();
+		    DataTable dt = dbObject.runSelectQuery(sql);
+		    if(dt!=null&&dt.getRowsCount()>=0){
+		    	return dt.get(0).getString("orgcode");
+		    }
+		    return "";
+		} catch (Exception e) {
+		   return "";
+		}
+		
+	    
 	}
 }

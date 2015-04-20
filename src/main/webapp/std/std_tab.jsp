@@ -274,7 +274,7 @@ function sort()
 
 <form name="form1" id="form1" method="post" action="../servlet/PageHandler">
 
-     <div id="tab_menu" style="text-align: center; border:1px "></div>
+     <div id="tab_menu" style="text-align: center;border:1px "></div>
 <div id="page" style="text-align: center;position: relative;  height:95%; width:100%; border:1px "></div> 
 <table width="100%" height="0%" border="0" cellpadding="0" cellspacing="0">
   <tr>

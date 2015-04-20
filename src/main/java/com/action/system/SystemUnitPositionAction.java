@@ -28,7 +28,7 @@ public class SystemUnitPositionAction extends ActionInterface
 			orgposition.setPositionconfigcount("0");
 			if (orgposition.Insert(positions))
 			{
-				res += "MessageBox.Show(null,'添加成功！',null,'LogOK',null,1,'添加成功');";
+				res += "show('添加成功');";
 				//res += "var rand=Math.floor(Math.random()*10000);";
 				//res +="var ccm=\""+request.getParameter("orgcode")+"\";";
 				res+="window.close();";
@@ -38,7 +38,7 @@ public class SystemUnitPositionAction extends ActionInterface
 			}
 			else
 			{
-				res += "MessageBox.Show(null,'添加失败！',null,'LogOK','Error',1,'添加失败，可能是由于角色ID重复，请检查！');";
+				res += "show('添加失败，可能是由于角色ID重复，请检查！');";
 				res+="window.close();";
 				/*res += "var rand=Math.floor(Math.random()*10000);";
 				res +="var ccm=\""+request.getParameter("orgcode")+"\";";
@@ -65,7 +65,7 @@ public class SystemUnitPositionAction extends ActionInterface
 			
 			if (orgposition.Update())
 			{
-				res += "MessageBox.Show(null,'修改成功！',null,'LogOK',null,1,'修改成功');";
+				res += "show('修改成功');";
 				res+="window.close();";
 				//res += "var rand=Math.floor(Math.random()*10000);";
 				//res +="var ccm=\""+request.getParameter("OrgCode")+"\";";
@@ -73,7 +73,7 @@ public class SystemUnitPositionAction extends ActionInterface
 			}
 			else
 			{
-				res += "MessageBox.Show(null,'修改失败！',null,'LogOK','Error',1,'修改失败，可能是由于角色ID重复，请检查！');";
+				res += "show('修改失败，可能是由于角色ID重复，请检查！');";
 				res+="window.close();";
 				//res += "var rand=Math.floor(Math.random()*10000);";
 				//res +="var ccm=\""+request.getParameter("OrgCode")+"\";";
@@ -99,7 +99,7 @@ public class SystemUnitPositionAction extends ActionInterface
 			orgposition = new OrgPosition();
 			if (orgposition.Delete(para))
 			{
-				res += "MessageBox.Show(null,'删除成功！',null,'LogOK',null,1,'删除成功');";
+				res += "show('删除成功');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res +="var ccm=\""+request.getParameter("orgcode")+"\";";
 				res += "window.open('../xtwh/orgposition/unit_positionlist.jsp?sid='+rand+'&unitccm='+ccm,'unitpositionlist');";
@@ -107,7 +107,7 @@ public class SystemUnitPositionAction extends ActionInterface
 			}
 			else
 			{
-				res += "MessageBox.Show(null,'删除失败！',null,'LogOK','Error',1,'删除失败，请与管理员联系！');";
+				res += "show('删除失败，请与管理员联系！');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res +="var ccm=\""+request.getParameter("orgcode")+"\";";
 				res += "window.open('../xtwh/orgposition/unit_positionlist.jsp?sid='+rand+'&unitccm='+ccm,'unitpositionlist');";

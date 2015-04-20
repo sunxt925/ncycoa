@@ -24,7 +24,7 @@ public class SystemUnitAction extends ActionInterface
 			String entity=request.getParameter("entity");
 			eo.setEntity(entity);
 			res0 = eo.Add(request);
-			res += "MessageBox.Show(null,'"+res0+"',null,'LogOK',null,1,'"+res0+"');";
+			res += "show('"+res0+"');";
 			res+="window.close();";
 
 		}
@@ -35,7 +35,7 @@ public class SystemUnitAction extends ActionInterface
 			    String entity=request.getParameter("entity");
 				eo.setEntity(entity);
 				res0 = eo.Update(request);	
-                res += "MessageBox.Show(null,'"+res0+"',null,'LogOK',null,1,'"+res0+"');";
+                res += "show('"+res0+"');";
 				res+="window.close();";
 		
 		}
@@ -65,13 +65,13 @@ public class SystemUnitAction extends ActionInterface
 					db.run(sql2);
 					if(og.Delete(para))
 					{
-						res += "MessageBox.Show(null,'删除成功！',null,'LogOK',null,1,'删除成功');";
+						res += "show('删除成功');";
 						res+="parent.window.location.reload();";
 						
 					}
 					else
 					{
-						res += "MessageBox.Show(null,'删除失败！',null,'LogOK','Error',1,'删除失败，可能是有子单位请先删除子单位！');";
+						res += "show('删除失败，可能是有子单位请先删除子单位！');";
 						res+="parent.window.location.reload();";
 						
 					}

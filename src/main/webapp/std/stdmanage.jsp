@@ -29,8 +29,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </style>
 </HEAD>
 <% 
+   Org og=new Org();
+  DataTable dt=og.getTopList(); 
+  
   String pageheight=((UserInfo)request.getSession().getAttribute("UserInfo")).getAvalilheight();
-  int pageHeight=(int)(Integer.parseInt(pageheight)*0.75);
+  int pageHeight=(int)(Integer.parseInt(pageheight)*0.8);
 %>
 <script language="javascript" src="../js/public/select.js"></script>
 <script language="javascript" src="../js/public/key.js"></script>
@@ -78,7 +81,34 @@ function changetopunit(unitccm)
             </table> 
       </div>
         
+<<<<<<< HEAD
+<!--        		<td>-->
+<!--         <div id="tab_menu" style="text-align: center;position: absolute; top: 0%; height:100%; width:85%; border:2px  solid #7B7B7B;">-->
+<!--		<table width="100%" height="99%" border="0" cellspacing="0" cellpadding="0">-->
+<!--		  <tr valign="top">-->
+<td width="1%" height="100%" >
+</td>
+            <td width="80%" valign="top" height="<%=pageHeight %>px" >
+            <iframe src="" name="stdlist" id="stdlist" width="98%" height="98%" scrolling="no" frameborder="0" ></iframe>
+            </td>
+<!--		  </tr>-->
+<!--		</table>-->
+<!--		</div>-->
+<!--		</td>-->
+      </tr>
+    </table></td>
+  </tr>
+  
+  
+  
+
+
+</form>
+  </table>
+</BODY>
+=======
   </div>
  
   </body>
+>>>>>>> 423545f24b3d7b227a74c419536225a0be5d405c
 </HTML>

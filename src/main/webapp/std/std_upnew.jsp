@@ -147,7 +147,7 @@ function fun(DocClassName)
        </tr>
              <tr> 
 	  <td width="20%"><div align="right">批准日期：</div></td>
-        <td width="80%"><input name="ApproveDate" type="text" class="Wdate"type="Wdate" class="input1" id="ApproveDate" onfocus="new WdatePicker({lang:'zh-cn'})"  value="<%=date %>" size="30" maxlength="30"></td>     
+        <td width="80%"><input name="ApproveDate" type="text" class="Wdate" type="Wdate" class="input1" id="ApproveDate" onfocus="new WdatePicker({lang:'zh-cn'})"  value="<%=date %>" size="30" maxlength="30"></td>     
        </tr>
              <tr> 
 	  <td width="20%"><div align="right">批准人：</div></td>

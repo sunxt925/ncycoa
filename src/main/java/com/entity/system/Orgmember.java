@@ -47,7 +47,7 @@ public class Orgmember {
 			Parameter.SqlParameter[] pp = new Parameter.SqlParameter[]
 			{ new Parameter.String(PK) };
 			DataTable dt = db.runSelectQuery(sql, pp);
-			if (dt != null && dt.getRowsCount() == 1)
+			if (dt != null && dt.getRowsCount() >= 1)
 			{
 				DataRow r = dt.get(0);
 				this.staffcode = PK;
