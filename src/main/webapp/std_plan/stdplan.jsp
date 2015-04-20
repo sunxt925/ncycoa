@@ -36,7 +36,7 @@ String basePath = request.getScheme()+"://"+
 				        data-options="iconCls:'icon-add',plain:true" >上传年度计划</a>
     </div>
     <div data-options="region:'center',split:true" style="padding:5px;background:#fff;">
-		<iframe src="planlist.jsp" name="planlist" style="border: 0px;width: 70%;height: 70%;scrolling="auto"">
+		<iframe src="planlist.jsp" name="planlist" style="border: 0px;width: 100%;height: 90%;scrolling="auto"">
 	    </iframe>
 	</div>
     </body>

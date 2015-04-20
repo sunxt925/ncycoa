@@ -36,7 +36,7 @@ String basePath = request.getScheme()+"://"+
 				        data-options="iconCls:'icon-add',plain:true" >上传标准化方针目标</a>
     </div>
     <div data-options="region:'center',split:true" style="padding:5px;background:#fff;">
-		<iframe src="policylist.jsp" name="policylist" style="border: 0px;width: 70%;height: 70%;scrolling="auto"">
+		<iframe src="policylist.jsp" name="policylist" style="border: 0px;width: 100%;height: 90%;scrolling="auto"">
 	    </iframe>
 	</div>
     </body>

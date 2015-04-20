@@ -692,28 +692,30 @@ public class DataGridTag extends TagSupport {
 			}
 
 			if (DataGridOperationType.Confirm.equals(dgOperation.getType())) {
-				sb.append("href+=\"[<a href=\'#\' onclick=confirm(\'" + url + "\',\'" + dgOperation.getMessage() + "\',\'" + name
-						+ "\')> \";");
+				sb.append("href+=\"[ <a href=\'#\' class=\'dgopt\' onclick=confirm(\'" + url + "\',\'" + dgOperation.getMessage() + "\',\'" + name
+						+ "\')>\";");
 			}
 			if (DataGridOperationType.Del.equals(dgOperation.getType())) {
-				sb.append("href+=\"[<a href=\'#\' onclick=remove(\'" + url + "\',\'" + name + "\')>\";");
+				sb.append("href+=\"[ <a href=\'#\' class=\'dgopt\' onclick=remove(\'" + url + "\',\'" + name + "\')>\";");
 			}
 			if (DataGridOperationType.Fun.equals(dgOperation.getType())) {
 				String name = getFunction(dgOperation.getFunname());
 				String parmars = getFunParams(dgOperation.getFunname());
-				sb.append("href+=\"[<a href=\'#\' onclick=" + name + "(" + parmars + ")>\";");
+				sb.append("href+=\"[ <a href=\'#\' class=\'dgopt\' onclick=" + name + "(" + parmars + ")>\";");
 			}
 			if (DataGridOperationType.OpenWin.equals(dgOperation.getType())) {
-				sb.append("href+=\"[<a href=\'#\' onclick=openwindow('" + dgOperation.getTitle() + "','" + url + "','" + name + "',"
-						+ dgOperation.getWidth() + "," + dgOperation.getHeight() + ")>\";");
+				String width = StringUtils.isEmpty(dgOperation.getWidth()) ? "null" : dgOperation.getWidth();
+				String height = StringUtils.isEmpty(dgOperation.getHeight()) ? "null" : dgOperation.getHeight();
+				sb.append("href+=\"[ <a href=\'#\' class=\'dgopt\' onclick=openwindow('" + dgOperation.getTitle() + "','" + url + "','" + name + "',"
+						+ width + "," + height + ")>\";");
 			}
 			if (DataGridOperationType.Deff.equals(dgOperation.getType())) {
-				sb.append("href+=\"[<a href=\'" + url + "' title=\'" + dgOperation.getTitle() + "\'>\";");
+				sb.append("href+=\"[ <a href=\'" + url + "' class=\'dgopt\' title=\'" + dgOperation.getTitle() + "\'>\";");
 			}
 			if (DataGridOperationType.OpenTab.equals(dgOperation.getType())) {
-				sb.append("href+=\"[<a href=\'#\' onclick=addOneTab('" + dgOperation.getTitle() + "','" + url + "')>\";");
+				sb.append("href+=\"[ <a href=\'#\' class=\'dgopt\' onclick=addOneTab('" + dgOperation.getTitle() + "','" + url + "')>\";");
 			}
-			sb.append("href+=\"" + dgOperation.getTitle() + "</a>]\";");
+			sb.append("href+=\"" + dgOperation.getTitle() + "</a> ]\";");
 
 			if (StringUtils.isNotEmpty(exp)) {
 				for (int i = 0; i < exp.split("&&").length; i++) {

@@ -24,7 +24,7 @@
 	
 	$('#maintabs').tabs('add',{
 		title : '我的工作',
-		content : createFrame(''),
+		content : createFrame('pending-task.htm?dgview'),
 		closable : false,
 	});
 

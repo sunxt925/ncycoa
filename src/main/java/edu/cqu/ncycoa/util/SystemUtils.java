@@ -33,7 +33,6 @@ public class SystemUtils {
 	}
 	
 	public static void jsonResponse(HttpServletResponse response, AjaxResultJson json) {
-		response.setCharacterEncoding("gb2312");
 		response.setHeader("ContentType", "application/json;charset=gb2312");
 		try {
 			response.getWriter().write(json.getJsonStr());
