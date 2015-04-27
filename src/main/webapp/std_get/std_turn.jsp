@@ -98,6 +98,7 @@ $(function() {
 	<%
 	GetStd stdget=((GetStd)(request.getAttribute("getstd")));
 	String stdtype=stdget.getGstStdtype();
+	if(stdtype!=null&&!(stdtype.equals(""))){
 	String valuename="";if(stdtype.equals("0")){valuename="技术标准";}else if(stdtype.equals("2")){valuename="管理标准";}else if(stdtype.equals("2")){valuename="工作标准";}
 	%>
 	<tr>
@@ -112,6 +113,19 @@ $(function() {
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
+	<%} else{%>
+		<tr>
+		<td align="right"><label class="Validform_label"> 转化为标准类型 </label></td>
+		<td class="value">
+		<select class="inputxt" id="gstStdtype" name="gstStdtype" style="width:205px;">
+			<option value="0">技术标准</option>
+			<option value="1">管理标准</option>
+			<option value="2">工作标准</option>
+		</select>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<%} %>
 		<tr>
 		<td align="right"><label class="Validform_label"> 文件发布时间 </label></td>
 		<td class="value"><input class="inputxt" style="width:200px;" class="Wdate" type="Wdate" id="gstTurntime" onfocus="new WdatePicker({lang:'zh-cn'})" name="gstTurntime" value="${getstd.gstTurntime}">

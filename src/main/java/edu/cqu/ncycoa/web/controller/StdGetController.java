@@ -112,7 +112,7 @@ public class StdGetController{
 		try {
 			ids = ConvertUtils.toLongs(id.split(","));
 		} catch (Exception e) {
-			message = "数据不合法";
+			message = "data unlawful!";
 			j.setSuccess(false);
 			SystemUtils.jsonResponse(response, j);
 			return;
@@ -131,7 +131,7 @@ public class StdGetController{
 			}
 		}
 		systemService.removeEntities(ids, GetStd.class);
-		message = "采标删除成功";
+		message = "delete success!";
 		systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 		j.setMsg(message);
 		SystemUtils.jsonResponse(response, j);
@@ -366,11 +366,11 @@ public class StdGetController{
 							.getRealPath("doc/getstd");
 					File _apkFile = saveFileFromInputStream(
 							imgFile.getInputStream(), uploadFileUrl, fileName);
-					if (_apkFile.exists()) {
-						FileInputStream fis = new FileInputStream(_apkFile);
-					} else
-						throw new FileNotFoundException("apk write failed:"
-								+ fileName);
+//					if (_apkFile.exists()) {
+//						FileInputStream fis = new FileInputStream(_apkFile);
+//					} else
+//						throw new FileNotFoundException("apk write failed:"
+//								+ fileName);
 					result.put("success", true);
 				} catch (Exception e) {
 					result.put("success", false);

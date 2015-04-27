@@ -414,7 +414,7 @@ public class OrgPosition {
 		
 	public DataTable getOrgPositionCode(String staffcode){
 		DBObject dbObject = new DBObject();
-		String sql = "select orgcode,positioncode from base_orgmember where staffcode='"+staffcode+"'";
+		String sql = "select orgcode,positioncode from base_orgmember where staffcode='"+staffcode+"' order by orgcode";
 		DataTable dt;
 		try {
 			dt = dbObject.runSelectQuery(sql);

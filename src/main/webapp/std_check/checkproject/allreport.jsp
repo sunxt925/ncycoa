@@ -54,21 +54,83 @@ function F1()
 		document.all("formobj").submit();
 	//}
 }
-function F2()
-{
 
-		document.formobj.result.value="2";
-		document.all("formobj").submit();
+var count = 2;  
+/** 
+* 生成多附件上传框 
+*/  
+function createInput(parentId){  
+    count++;  
+    var str = '<div name="div" ><font style="font-size:12px;">附件</font>'+  
+    '   '+ '<input type="file" contentEditable="false" id="uploads' + count + '' +  
+    '" name="uploads'+ count +'" value="" style="width: 220px"/><input type="button"  value="删除" onclick="removeInput(event)" />'+'</div>';  
+    document.getElementById(parentId).insertAdjacentHTML("beforeEnd",str);  
+}  
+/** 
+* 删除多附件删除框 
+*/  
+function removeInput(evt, parentId){  
+   var el = evt.target == null ? evt.srcElement : evt.target;  
+   var div = el.parentNode;  
+   var cont = document.getElementById('more');         
+   if(cont.removeChild(div) == null){  
+    return false;  
+   }  
+   return true;  
+} 
+function addOldFile(data){  
+    var str = '<div name="div' + data.name + '" ><a href="#" style="text-decoration:none;font-size:12px;color:red;" onclick="removeOldFile(event,' + data.id + ')">删除</a>'+  
+    '   ' + data.name +   
+    '</div>';  
+    document.getElementById('oldImg').innerHTML += str;  
+}  
+  
+function removeOldFile(evt, id){  
+    //前端隐藏域，用来确定哪些file被删除，这里需要前端有个隐藏域  
+    $("#imgIds").val($("#imgIds").val()=="" ? id :($("#imgIds").val() + "," + id));  
+    var el = evt.target == null ? evt.srcElement : evt.target;  
+    var div = el.parentNode;  
+    var cont = document.getElementById('oldImg');      
+    if(cont.removeChild(div) == null){  
+        return false;  
+    }  
+    return true;  
+} 
+function ajaxFileUploadImg(){  
+    //获取file的全部id  
+    var uplist = $("input[name^=uploads]");  
+var arrId = [];  
+for (var i=0; i< uplist.length; i++){  
+    if(uplist[i].value){  
+        arrId[i] = uplist[i].id;  
+    }  
+    }  
+    ////////////////
+    var taskid=document.getElementById("taskid").value;
+    ////////////////
+$.ajaxFileUpload({  
+    url:'/ncycoa/checkproject.htm?upallreport',  
+    secureuri:false,  
+    fileElementId: arrId,  //这里不在是以前的id了，要写成数组的形式哦！  
+    dataType: 'json',  
+    data: {  
+                 //需要传输的数据  
+    	taskid:taskid,
+            },  
+    success: function (data){  
+    	document.all("formobj").submit();
+    },  
+    error: function(data){  
+    }  
+});  
 }
 </script>
 </head>
 <body style="overflow-x:hidden">
-<form id="formobj" name="formobj" action="/ncycoa/checkproject.htm?approve" enctype="multipart/form-data" method="post">
+<form id="formobj" name="formobj" action="/ncycoa/std_check/havedo.jsp" enctype="multipart/form-data" method="post">
 &nbsp;&nbsp;<a href="#" class="easyui-linkbutton"
 				        data-options="iconCls:'icon-add',plain:true" 
-				        onclick="F1()">审核通过</a>&nbsp;&nbsp;<a href="#" class="easyui-linkbutton"
-				        data-options="iconCls:'icon-reload',plain:true" 
-				        onclick="F2()">驳回</a><a href="/ncycoa/std_check/checkproject/deleteinstance.jsp?id=<%=taskId %>" class="easyui-linkbutton"
+				        onclick="ajaxFileUploadImg()">提交</a>&nbsp;&nbsp;<a href="/ncycoa/std_check/checkproject/deleteinstance.jsp?id=<%=taskId %>" class="easyui-linkbutton"
 				        data-options="iconCls:'icon-remove',plain:true" >结束流程</a>
 <input id="taskid" name="taskid" type="hidden" value="<%=taskId%>">
 <input id="result" name="result" type="hidden">
@@ -101,9 +163,9 @@ function F2()
 		</td>
 	</tr>
 			<%
-			Object filepathObject=taskService.getVariable(taskId, "filepath");
-			if(filepathObject!=null){
-				String filepath=filepathObject.toString();
+	Object filepathObject=taskService.getVariable(taskId, "filepath");
+	if(filepathObject!=null){
+		String filepath=filepathObject.toString();
 	String[] filepaths=filepath.split(";");
 	%>
 	<tr>
@@ -113,14 +175,26 @@ function F2()
 		</td>
 	</tr>
 	<%} %>
-		<tr>
-	       <td align="right"><label class="Validform_label"> 审核意见 </label></td>
-		  <td class="value">
-		    <label>
-		    <textarea name="suggest" id="suggest"   style="width:200px;height:50px"></textarea>
-		    </label><span class="Validform_checktip"></span>
+	<%
+	Object reportpathObject=taskService.getVariable(taskId, "reportpath");
+	if(reportpathObject!=null){
+		String reportpath=reportpathObject.toString();
+	String[] reportpaths=reportpath.split(";");
+	for(int i=0;i<reportpaths.length;i++){
+	%>
+	<tr>
+		<td align="right"><label class="Validform_label"> 初评报告<%=i+1 %> </label></td>
+		<td class="value"><input type="button"  value=" 评审方案内容   " onclick="officeopen('<%=reportpaths[i]%>')" />
+		<span class="Validform_checktip"></span>
 		</td>
-        </tr> 
+	</tr>
+	<%}} %>
+	<tr>
+		<td align="right"><label class="Validform_label"> 上传全市评审报告</label></td>
+		<td class="value"><input type="file" id="uploads1" name="uploads1" style="width:205px;">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
 </table>
 
 </form>

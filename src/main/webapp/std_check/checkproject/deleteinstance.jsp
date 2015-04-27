@@ -17,14 +17,39 @@
 	RuntimeService runtimeService = processEngine.getRuntimeService();
 	String taskid=request.getParameter("id");
 	
-	
+	Object reportpathobject = taskService.getVariable(taskid, "reportpath");
+	if(reportpathobject!=null){
+		String report=reportpathobject.toString();
+		if(!(report.equals(""))){
+			String[] reports=report.split(";");
+			for(int m=0;m<reports.length;m++){
+				File deleteroport=new File((request.getSession()
+						.getServletContext().getRealPath("doc")
+						+ "/checkproject/" + reports[m]));
+				deleteroport.delete();
+			}
+		}
+	}
+	Object allreportpathobject = taskService.getVariable(taskid, "allreportpath");
+	if(allreportpathobject!=null){
+		String allreport=allreportpathobject.toString();
+		if(!(allreport.equals(""))){
+			String[] allreports=allreport.split(";");
+			for(int m=0;m<allreports.length;m++){
+				File deleteroport=new File((request.getSession()
+						.getServletContext().getRealPath("doc")
+						+ "/checkproject/" + allreports[m]));
+				deleteroport.delete();
+			}
+		}
+	}
 	Object filepath = taskService.getVariable(taskid, "filepath");
 	if (filepath != null){
 		String[] filenames=filepath.toString().split(";");
 		for (int m = 0; m < filenames.length; m++) {
 		File deletefile = new File((request.getSession()
 				.getServletContext().getRealPath("doc")
-				+ "/checkproject/" + filenames[0]));
+				+ "/checkproject/" + filenames[m]));
 		deletefile.delete();
 		}
 		

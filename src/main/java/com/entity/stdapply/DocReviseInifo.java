@@ -12,7 +12,9 @@ import com.db.DataTable;
 import com.db.Parameter;
 import com.entity.ftp.FtpStoreFile;
 import com.entity.std.DocMetaVersionInfo;
+import com.entity.std.DocOrg;
 import com.entity.std.DocStoreFile;
+import com.entity.system.OrgPosition;
 import com.ftp.FtpStore;
 
 public class DocReviseInifo {
@@ -201,19 +203,19 @@ public boolean Std_Public(String docno,String applyid,String applyercode) throws
 				}
 			}
 		}
-//		OrgPosition orgPosition = new OrgPosition();
-//		DataTable dTable = orgPosition.getOrgPositionCode(applyercode);//返回该员工对应的机构编码和岗位编码（这个会返回两条及以上的记录）
-//		String orgcode = dTable.get(0).getString("orgcode");
-//		DocReviseInifo reviseinfo=new DocReviseInifo(docno);
-//		DocOrg docorg=new DocOrg();
-//		docorg.setDocCode(reviseinfo.getDocCode());
-//		docorg.setOrgCode(orgcode);
-//		docorg.setRelation("直接");
-//		DataTable dt2=docorg.Have();
-//		if(dt2.getRowsCount()==0){
-//				if(!docorg.insert())
-//					flag=false;
-//		}
+		OrgPosition orgPosition = new OrgPosition();
+		DataTable dTable = orgPosition.getOrgPositionCode(applyercode);//返回该员工对应的机构编码和岗位编码（这个会返回两条及以上的记录）
+		String orgcode = dTable.get(0).getString("orgcode");
+		DocReviseInifo reviseinfo=new DocReviseInifo(docno);
+		DocOrg docorg=new DocOrg();
+		docorg.setDocCode(reviseinfo.getDocCode());
+		docorg.setOrgCode(orgcode);
+		docorg.setRelation("直接");
+		DataTable dt2=docorg.Have();
+		if(dt2.getRowsCount()==0){
+				if(!docorg.insert())
+					flag=false;
+		}
 	}
 	if(flag){
 		if(!Delete(docno))
@@ -614,10 +616,15 @@ public String  StdPublic(String applyid,String applyercode) throws Exception{
 		{
 			DocReviseInifo reviseinfo=new DocReviseInifo();
 			try {
-			
+				int id=Integer.parseInt(applyid);
+				DocApplyPerson applyperson=new DocApplyPerson();
+				String doccodestring=getProcessDoccode(applyid);
+				String docnamestring=getProcessDocname(applyid);
 				if(reviseinfo.Std_Public(dt.get(i).get(0).toString(),applyid,applyercode)){
-					int id=Integer.parseInt(applyid);
-					DocApplyPerson applyperson=new DocApplyPerson(id);
+
+					if(!applyperson.UpdateDoc(id, doccodestring, docnamestring)){
+						flag=false;
+					}
 				}else{
 					flag=false;
 				}
@@ -627,10 +634,10 @@ public String  StdPublic(String applyid,String applyercode) throws Exception{
 			}
 		}
 		if(flag){
-			res += "MessageBox.Show(null,'发布成功！',null,'LogOK',null,1,'发布成功');";
+			res +=  "alert('发布成功');";
 
 		}else{
-			res += "MessageBox.Show(null,'发布失败！',null,'LogOK','Error',1,'发布失败，请与管理员联系！');";
+			res +=  "alert('发布失败');";
 		}
 	return res;
 	

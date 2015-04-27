@@ -109,7 +109,49 @@ public class StdApplyAction extends ActionInterface{
 			} else {
 				res += "alert('保存失败，请检查！');";
 			}
-		} else if (action != null && action.equals("appro")) {
+		} else if (action != null && action.equals("appro1")) {
+			
+			String where=(String) taskService.getVariable(taskid, "towhere");
+			String result=request.getParameter("result");
+			String sugstaffcode=request.getParameter("sugstaffcode");
+			String suggestion=request.getParameter("suggest");
+			Calendar c = Calendar.getInstance();
+	   		 String year = "" + c.get(c.YEAR);
+			 String month = "" + (c.get(c.MONTH) + 1);
+			 String day = "" + c.get(c.DATE);
+			 String date=year+"-"+month+"-"+day;
+			 if(suggestion==null&&(sugstaffcode.equals(applystaffcode))){
+			 }else{
+					DocApplySuggest applysuggest=new DocApplySuggest();
+					applysuggest.setApplyid(applyidString);
+					applysuggest.setSuggestion(suggestion);
+					applysuggest.setSugstaffcode(sugstaffcode);
+					applysuggest.setWheresug(where);
+					applysuggest.setSugdate(date);
+					applysuggest.Insert();  
+			 }
+			Map map = new HashMap();
+			if(result != null && "1".equals(result)){
+				map.put("passtomember", false);//批准
+				map.put("pass", true);//批准
+				map.put("back", false);//驳回
+				taskService.setVariables(taskid,map); 
+				res += "alert('审核通过并跳过委员会成员');";
+			}else if(result != null && "3".equals(result)){
+				map.put("passtomember", true);//批准
+				map.put("pass", false);//批准
+				map.put("back", false);//驳回
+				taskService.setVariables(taskid,map); 
+				res += "alert('审核通过并转到委员会成员');";
+			}else if(result != null && "2".equals(result)){
+				map.put("passtomember", false);//批准
+				map.put("pass", false);//批准
+				map.put("back", true);//驳回
+				res += "alert('已驳回！');";
+			}
+			taskService.complete(taskid,map);//执行  有参
+
+	}else if (action != null && action.equals("appro")) {
 				
 				String where=(String) taskService.getVariable(taskid, "towhere");
 				String result=request.getParameter("result");
@@ -141,7 +183,7 @@ public class StdApplyAction extends ActionInterface{
 					map.put("back", false);//驳回
 					taskService.setVariables(taskid,map); 
 					res += "alert('审核通过');";
-				}else{
+				}else if(result != null && "2".equals(result)){
 					map.put("go", false);//批准
 					map.put("back", true);//驳回
 					res += "alert('已驳回！');";
@@ -158,7 +200,6 @@ public class StdApplyAction extends ActionInterface{
 				Map map = new HashMap();
 				map.put("public", true);
 				taskService.complete(taskid,map);
-				res += "alert('发布成功');";
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

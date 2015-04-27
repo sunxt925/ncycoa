@@ -1,4 +1,4 @@
-<%@ page language="java" pageEncoding="UTF-8" import="java.util.*,com.entity.system.*"%>
+<%@ page language="java" pageEncoding="UTF-8" import="java.util.*,com.entity.system.*,java.text.SimpleDateFormat"%>
 <%@page import="org.springframework.context.ApplicationContext"%>
 <%@page import="org.activiti.engine.*"%>
 <%@page import="org.activiti.engine.repository.ProcessDefinition"%>
@@ -11,6 +11,10 @@
 
 <!DOCTYPE html>
 <%
+
+Date date=new Date();
+SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+String datestr = format.format(date);
 String path = request.getContextPath();
  String taskId=request.getParameter("id");
  ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(application);
@@ -54,21 +58,14 @@ function F1()
 		document.all("formobj").submit();
 	//}
 }
-function F2()
-{
 
-		document.formobj.result.value="2";
-		document.all("formobj").submit();
-}
 </script>
 </head>
 <body style="overflow-x:hidden">
-<form id="formobj" name="formobj" action="/ncycoa/checkproject.htm?approve" enctype="multipart/form-data" method="post">
+<form id="formobj" name="formobj" action="/ncycoa/checkproject.htm?publicreport" enctype="multipart/form-data" method="post">
 &nbsp;&nbsp;<a href="#" class="easyui-linkbutton"
 				        data-options="iconCls:'icon-add',plain:true" 
-				        onclick="F1()">审核通过</a>&nbsp;&nbsp;<a href="#" class="easyui-linkbutton"
-				        data-options="iconCls:'icon-reload',plain:true" 
-				        onclick="F2()">驳回</a><a href="/ncycoa/std_check/checkproject/deleteinstance.jsp?id=<%=taskId %>" class="easyui-linkbutton"
+				        onclick="F1()">发布（下发）</a>&nbsp;&nbsp;<a href="/ncycoa/std_check/checkproject/deleteinstance.jsp?id=<%=taskId %>" class="easyui-linkbutton"
 				        data-options="iconCls:'icon-remove',plain:true" >结束流程</a>
 <input id="taskid" name="taskid" type="hidden" value="<%=taskId%>">
 <input id="result" name="result" type="hidden">
@@ -113,14 +110,45 @@ function F2()
 		</td>
 	</tr>
 	<%} %>
-		<tr>
-	       <td align="right"><label class="Validform_label"> 审核意见 </label></td>
-		  <td class="value">
-		    <label>
-		    <textarea name="suggest" id="suggest"   style="width:200px;height:50px"></textarea>
-		    </label><span class="Validform_checktip"></span>
+	<%
+	Object reportpathObject=taskService.getVariable(taskId, "reportpath");
+	if(reportpathObject!=null){
+		String reportpath=reportpathObject.toString();
+	String[] reportpaths=reportpath.split(";");
+	for(int i=0;i<reportpaths.length;i++){
+	%>
+	<tr>
+		<td align="right"><label class="Validform_label"> 初评报告<%=i+1 %> </label></td>
+		<td class="value"><input type="button"  value=" 初评报告<%=i+1 %>  " onclick="officeopen('<%=reportpaths[i]%>')" />
+		<span class="Validform_checktip"></span>
 		</td>
-        </tr> 
+	</tr>
+	<%}} %>
+			<%
+	Object allreportObject=taskService.getVariable(taskId, "allreportpath");
+	if(allreportObject!=null){
+		String allreportpath=allreportObject.toString();
+	String[] allreportpaths=allreportpath.split(";");
+	%>
+	<tr>
+		<td align="right"><label class="Validform_label"> 全市评审报告</label></td>
+		<td class="value"><input type="button"  value=" 全市评审报告  " onclick="officeopen('<%=allreportpaths[0]%>')" />
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<%} %>
+		<tr>
+		<td align="right" width="30%"><label class="Validform_label"> 相关委员会</label></td>
+		<td class="value"  width="70%"><input class="inputxt" style="width:200px;" id="CommitteeName" name="CommitteeName">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+			<tr>
+		<td align="right"><label class="Validform_label"> 完成时限 </label></td>
+		<td class="value"><input class="inputxt" style="width:200px;" class="Wdate" type="Wdate" id="endTime" onfocus="new WdatePicker({lang:'zh-cn'})" name="endTime" value="<%=datestr%>">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
 </table>
 
 </form>

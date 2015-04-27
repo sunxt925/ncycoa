@@ -51,6 +51,7 @@ import edu.cqu.ncycoa.common.util.dao.QueryUtils;
 import edu.cqu.ncycoa.common.util.dao.TQOrder;
 import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
 import edu.cqu.ncycoa.domain.CheckProject;
+import edu.cqu.ncycoa.domain.CheckReport;
 import edu.cqu.ncycoa.util.ConvertUtils;
 import edu.cqu.ncycoa.util.Globals;
 import edu.cqu.ncycoa.util.SystemUtils;
@@ -71,10 +72,17 @@ public class CheckProjectController{
 	private static String checkposition;
 	private static String startorg;
 	private static String checkorg;
+	private static String banzhurenpos;
+	private static String banorg;
 	
 	@RequestMapping(params="dgview")
 	public String dgView(HttpServletRequest request) {
 		return "std_check/checkproject/projectlist";
+	}
+	
+	@RequestMapping(params="dgreportview")
+	public String dgReportView(HttpServletRequest request) {
+		return "std_check/checkproject/reportlist";
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -84,6 +92,21 @@ public class CheckProjectController{
 		CommonService commonService = SystemUtils.getCommonService(request);
 		//查询条件组装器
 		TypedQueryBuilder<CheckProject> tqBuilder = QueryUtils.getTQBuilder(checkproject, request.getParameterMap());
+		if (StringUtils.isNotEmpty(dg.getSort())) {
+			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
+		}
+		cq.setTqBuilder(tqBuilder);
+		commonService.getDataGridReturn(cq, true);
+		TagUtil.datagrid(response, dg);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(params="dgreportdata")
+	public void dgReportData(CheckReport checkreport, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
+		QueryDescriptor<CheckReport> cq = new QueryDescriptor<CheckReport>(CheckReport.class, dg);
+		CommonService commonService = SystemUtils.getCommonService(request);
+		//查询条件组装器
+		TypedQueryBuilder<CheckReport> tqBuilder = QueryUtils.getTQBuilder(checkreport, request.getParameterMap());
 		if (StringUtils.isNotEmpty(dg.getSort())) {
 			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
 		}
@@ -104,7 +127,7 @@ public class CheckProjectController{
 		try {
 			ids = ConvertUtils.toLongs(id.split(","));
 		} catch (Exception e) {
-			message = "数据不合法";
+			message = "data unlawful!";
 			j.setSuccess(false);
 			SystemUtils.jsonResponse(response, j);
 			return;
@@ -123,7 +146,44 @@ public class CheckProjectController{
 			}
 		}
 		systemService.removeEntities(ids, CheckProject.class);
-		message = "评审方案删除成功";
+		message = "delete success!";
+		systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
+		j.setMsg(message);
+		SystemUtils.jsonResponse(response, j);
+	}
+	
+	@RequestMapping(params="delreport")
+	public void delreport(HttpServletRequest request, HttpServletResponse response) {
+		AjaxResultJson j = new AjaxResultJson();
+		String message;
+		String id = request.getParameter("id");
+		if(StringUtils.isEmpty(id)) {
+			return;
+		}
+		Long[] ids;
+		try {
+			ids = ConvertUtils.toLongs(id.split(","));
+		} catch (Exception e) {
+			message = "data unlawful!";
+			j.setSuccess(false);
+			SystemUtils.jsonResponse(response, j);
+			return;
+		}
+		for(int i=0;i<ids.length;i++){
+			CheckReport checkreport=systemService.findEntityById(ids[i], CheckReport.class);
+			String reportpath=checkreport.getReportPath();
+			if (reportpath != null && !(reportpath.equals(""))) {
+				String[] reportpaths = reportpath.split(";");
+				for (int m = 0; m < reportpaths.length; m++) {
+					File deletefile = new File((request.getSession()
+							.getServletContext().getRealPath("doc")
+							+ "/checkproject/" + reportpaths[m]));
+					deletefile.delete();
+				}
+			}
+		}
+		systemService.removeEntities(ids, CheckReport.class);
+		message = "delete success!";
 		systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 		j.setMsg(message);
 		SystemUtils.jsonResponse(response, j);
@@ -149,13 +209,33 @@ public class CheckProjectController{
 		return "std_check/std_officeopen";
 	}
 	
+	@RequestMapping(params="openoffice2")
+	public String openoffice2(HttpServletRequest request)  {
+		String id = request.getParameter("id");
+		if(StringUtils.isEmpty(id)) {
+			return null;
+		}
+		Long[] ids;
+		try {
+			ids = ConvertUtils.toLongs(id.split(","));
+		} catch (Exception e) {
+			return null;
+		}
+		CheckReport checkreport=systemService.findEntityById(ids[0], CheckReport.class);
+		String filename=checkreport.getReportPath();
+		String[] filenames=filename.split(";");
+		String filepath="\\checkproject\\"+filenames[0];
+		request.setAttribute("filepath", filepath);
+		return "std_check/std_officeopen";
+	}
+	
 	@RequestMapping(params="upfile")
 	public void upfile(MultipartHttpServletRequest multipartRequest,
 			HttpServletResponse response) throws Exception {
 		String staffCode=multipartRequest.getParameter("staffCode");
 		
 		String taskid =multipartRequest.getParameter("taskid");
-		String checkCode =multipartRequest.getParameter("checkCode");
+		String checkCode =new String(multipartRequest.getParameter("checkCode").getBytes("ISO-8859-1"),"UTF-8");
 		String staffName=new String(multipartRequest.getParameter("staffName").getBytes("ISO-8859-1"),"UTF-8");
 		String checkName=(new String(multipartRequest.getParameter("checkName").getBytes("ISO-8859-1"),"UTF-8"));
 		DateFormat fmt =new SimpleDateFormat("yyyy-MM-dd");
@@ -164,6 +244,13 @@ public class CheckProjectController{
 		String status="0";
 		AjaxResultJson j = new AjaxResultJson();
 
+		//
+		//filename
+		Date date1 = new Date();     
+		 SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMddHHmmss");    
+		 String str1 = sdf1.format(date1);  
+		//
+		
 		
 		response.setContentType("text/html;charset=UTF-8");
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -175,7 +262,7 @@ public class CheckProjectController{
 			MultipartFile imgFile = multipartRequest.getFile(key);
 			if (imgFile.getOriginalFilename().length() > 0) {
 				String originalName = imgFile.getOriginalFilename();
-				String fileName = checkCode+i+originalName.substring(originalName.lastIndexOf("."),originalName.length());
+				String fileName = str1+i+originalName.substring(originalName.lastIndexOf("."),originalName.length());
 				filepath=filepath+fileName+";";
 				i++;
 				// 改成自己的对象哦！
@@ -216,6 +303,127 @@ public class CheckProjectController{
 		SystemUtils.jsonResponse(response, j);
 	}
 
+	
+	@RequestMapping(params="upreport")
+	public void upreport(MultipartHttpServletRequest multipartRequest,
+			HttpServletResponse response) throws Exception {
+		TaskService taskService = processEngine
+				.getTaskService();
+		String taskid =multipartRequest.getParameter("taskid");
+		AjaxResultJson j = new AjaxResultJson();
+
+		//
+		//filename
+		Date date1 = new Date();     
+		 SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMddHHmmss");    
+		 String str1 = sdf1.format(date1);  
+		//
+		
+		
+		response.setContentType("text/html;charset=UTF-8");
+		Map<String, Object> result = new HashMap<String, Object>();
+		// 获取多个file
+		int i=100;
+		String reportpath="";
+		Object reportpathO=taskService.getVariable(taskid, "reportpath");
+		if(reportpathO!=null)reportpath=reportpathO.toString();
+		for (Iterator it = multipartRequest.getFileNames(); it.hasNext();) {
+			String key = (String) it.next();
+			MultipartFile imgFile = multipartRequest.getFile(key);
+			if (imgFile.getOriginalFilename().length() > 0) {
+				String originalName = imgFile.getOriginalFilename();
+				String fileName = str1+i+originalName.substring(originalName.lastIndexOf("."),originalName.length());
+				reportpath=reportpath+fileName+";";
+				i++;
+				// 改成自己的对象哦！
+				// Constant.UPLOAD_GOODIMG_URL 是一个配置文件路径
+				try {
+					String uploadFileUrl = multipartRequest.getSession()
+							.getServletContext()
+							.getRealPath("doc/checkproject");
+					File _apkFile = saveFileFromInputStream(
+							imgFile.getInputStream(), uploadFileUrl, fileName);
+					if (_apkFile.exists()) {
+						FileInputStream fis = new FileInputStream(_apkFile);
+					} else
+						throw new FileNotFoundException("apk write failed:"
+								+ fileName);
+					result.put("success", true);
+				} catch (Exception e) {
+					result.put("success", false);
+					e.printStackTrace();
+				}
+			}
+		}
+		Map map = new HashMap();
+		map.put("reportpath", reportpath);
+		taskService.complete(taskid,map);//执行  有参
+		String message;
+		message = "提交成功";
+		systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
+		j.setMsg(message);
+		SystemUtils.jsonResponse(response, j);
+	}
+	
+	
+	@RequestMapping(params="upallreport")
+	public void upallreport(MultipartHttpServletRequest multipartRequest,
+			HttpServletResponse response) throws Exception {
+		TaskService taskService = processEngine
+				.getTaskService();
+		String taskid =multipartRequest.getParameter("taskid");
+		AjaxResultJson j = new AjaxResultJson();
+
+		//
+		//filename
+		Date date1 = new Date();     
+		 SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMddHHmmss");    
+		 String str1 = sdf1.format(date1);  
+		//
+		
+		
+		response.setContentType("text/html;charset=UTF-8");
+		Map<String, Object> result = new HashMap<String, Object>();
+		// 获取多个file
+		int i=100;
+		String reportpath="";
+		for (Iterator it = multipartRequest.getFileNames(); it.hasNext();) {
+			String key = (String) it.next();
+			MultipartFile imgFile = multipartRequest.getFile(key);
+			if (imgFile.getOriginalFilename().length() > 0) {
+				String originalName = imgFile.getOriginalFilename();
+				String fileName = str1+i+originalName.substring(originalName.lastIndexOf("."),originalName.length());
+				reportpath=reportpath+fileName+";";
+				i++;
+				// 改成自己的对象哦！
+				// Constant.UPLOAD_GOODIMG_URL 是一个配置文件路径
+				try {
+					String uploadFileUrl = multipartRequest.getSession()
+							.getServletContext()
+							.getRealPath("doc/checkproject");
+					File _apkFile = saveFileFromInputStream(
+							imgFile.getInputStream(), uploadFileUrl, fileName);
+					if (_apkFile.exists()) {
+						FileInputStream fis = new FileInputStream(_apkFile);
+					} else
+						throw new FileNotFoundException("apk write failed:"
+								+ fileName);
+					result.put("success", true);
+				} catch (Exception e) {
+					result.put("success", false);
+					e.printStackTrace();
+				}
+			}
+		}
+		Map map = new HashMap();
+		map.put("allreportpath", reportpath);
+		taskService.complete(taskid,map);//执行  有参
+		String message;
+		message = "提交成功";
+		systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
+		j.setMsg(message);
+		SystemUtils.jsonResponse(response, j);
+	}
 	// 保存文件
 	private File saveFileFromInputStream(InputStream stream, String path,
 			String filename) throws IOException {
@@ -245,8 +453,7 @@ public class CheckProjectController{
 				.getTaskService();
 		if(result!=null&&result.equals("2")){
 			
-			map.put("go", false);//批准
-			map.put("back", true);//驳回
+			map.put("towhere", "back");//批准
 			map.put("suggest",suggest);
 			Object filepath = taskService.getVariable(taskid, "filepath");
 			if (filepath != null){
@@ -254,15 +461,13 @@ public class CheckProjectController{
 				for (int m = 0; m < filenames.length; m++) {
 				File deletefile = new File((request.getSession()
 						.getServletContext().getRealPath("doc")
-						+ "/checkproject/" + filenames[0]));
+						+ "/checkproject/" + filenames[m]));
 				deletefile.delete();
 				}
 				
 			}
 		}
 		if(result != null && "1".equals(result)){
-			map.put("go", true);//批准
-			map.put("back", false);//驳回
 			map.put("suggest",suggest);
 			if(approvenum==1){
 			CheckProject checkproject = new CheckProject();
@@ -291,6 +496,48 @@ public class CheckProjectController{
 			systemService.addEntity(checkproject);
 			}
 			approvenum=approvenum-1;
+		}
+		taskService.complete(taskid,map);//执行  有参
+		return "std_check/havedo";
+	}
+	
+	@RequestMapping(params="publicreport")
+	public String publicreport(HttpServletRequest request) throws ParseException, UnsupportedEncodingException {
+		String result=request.getParameter("result");
+		String taskid=request.getParameter("taskid");
+		String aboutcommit=new String(request.getParameter("CommitteeName").getBytes("ISO-8859-1"),"UTF-8");
+		Map map = new HashMap();
+		TaskService taskService = processEngine
+				.getTaskService();
+
+		if(result != null && "1".equals(result)){
+			CheckReport checkreport = new CheckReport();
+			Object allreportpath = taskService.getVariable(taskid, "allreportpath");
+			if (allreportpath != null)
+				checkreport.setReportPath(allreportpath.toString());
+			Object checkName = taskService.getVariable(taskid, "checkName");
+			if (aboutcommit != null&&!(aboutcommit.equals("")))
+				checkreport.setAboutCommit(aboutcommit);
+			DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+			String endtime = request.getParameter("endTime");
+			if (endtime != null) {
+				Date date = fmt.parse(endtime);
+				checkreport.setEndTime(date);
+			}
+			systemService.addEntity(checkreport);
+			}
+		Object reportpathobject = taskService.getVariable(taskid, "reportpath");
+		if(reportpathobject!=null){
+			String report=reportpathobject.toString();
+			if(!(report.equals(""))){
+				String[] reports=report.split(";");
+				for(int m=0;m<reports.length;m++){
+					File deleteroport=new File((request.getSession()
+							.getServletContext().getRealPath("doc")
+							+ "/checkproject/" + reports[m]));
+					deleteroport.delete();
+				}
+			}
 		}
 		taskService.complete(taskid,map);//执行  有参
 		return "std_check/havedo";
@@ -334,7 +581,15 @@ public class CheckProjectController{
 			}
 		}
 		approvenum=checkprojectgroup.size();
-		map.put("checkprojectgroup",checkprojectgroup);
+		map.put("checkprojectgroup",checkprojectgroup);//管委会主任，其实是一个人，这里是按多个人写的，兼容一个人。同时为评审发起和评审过程中的管委会那两步分配人员
+		DataTable banzhuren=getMemberList(banzhurenpos,banorg);//查到办公室主任
+		map.put("banleader",banzhuren.get(0).getString("staffcode"));//为办公室主任上传全市报告结点分人员
+		if((user.getStaffcode()).equals(banzhuren.get(0).getString("staffcode"))){
+			map.put("towhere","pass");//是办公室主任发起的，就不需要相应分技术委员会初评
+		}else{
+			map.put("towhere","jishu");//技术委员会主任发起的，需要初评
+			map.put("jishuleader",user.getStaffcode());//技术委员会主任发起的评审，评审过程还由他上传初评报告
+		}
 		ProcessInstance pi=runtimeService.startProcessInstanceByKey("checkproject",map);
 		StaffInfo staffinfo=new StaffInfo(user.getStaffcode());
 		String staffname=staffinfo.getName();
@@ -397,6 +652,8 @@ public class CheckProjectController{
 				checkposition = consume(m_ftpProperties, "checkposition");
 				startorg = consume(m_ftpProperties, "startorg");
 				checkorg = consume(m_ftpProperties, "checkorg");
+				banzhurenpos = consume(m_ftpProperties, "banzhurenpos");
+				banorg = consume(m_ftpProperties, "banorg");
 			}
 			finally
 			{

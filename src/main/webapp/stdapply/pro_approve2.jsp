@@ -18,13 +18,33 @@ if (bm.equals("")) bm="NC";
 <META http-equiv=Content-Type content="text/html; charset=gb2312">
 <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
 </HEAD>
+<%
+UserInfo UserInfo=(UserInfo)request.getSession().getAttribute("UserInfo");
+String sugstaffcode=UserInfo.getStaffcode();
+		String taskId=request.getParameter("id");
+	    ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(application);
+		ProcessEngine processEngine = (ProcessEngine) ctx.getBean("processEngine");
+		TaskService taskService = processEngine
+				.getTaskService();
+		String ApplyId=taskService.getVariable(taskId, "applyid").toString();
+		int applyid=Integer.parseInt(ApplyId.toString());
+		DocApplyPerson applyperson=new DocApplyPerson(applyid);
+	String staffcode=applyperson.getApplystaffcode();
+	String staffname=applyperson.getApplyperson();
+	String applyapart=applyperson.getApplyapart();
+	String applydate=(applyperson.getApplydate()).substring(0,10);
+	String applyreason=applyperson.getApplyreason();
+%>
 <script language=
                 "javascript" type="text/javascript" src="<%=request.getContextPath()%>/js/MyDatePicker/WdatePicker.js">  </script>
-                <link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/default/easyui.css">
+                <script language="javascript" src="<%=request.getContextPath()%>/js/public/select.js"></script> 
+
+                 <link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/icon.css">
 <script type="text/javascript" src="<%=path%>/jscomponent/jquery/jquery-1.8.0.min.js"></script>
 <script type="text/javascript" src="<%=path%>/jscomponent/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=path%>/jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
+
 <script type="text/javascript" src="<%=request.getContextPath()%>/jscomponent/tools/stdapplyoutwindow.js"></script>
 <script language="javascript">
 function F1()
@@ -32,8 +52,15 @@ function F1()
 	//if (CkEmptyStr(document.all("DocNo"),"层次码不能为空！"))
 	//{
 		//alert (document.all("act"));
+		document.form1.result.value="1";
 		document.all("form1").submit();
 	//}
+}
+function F2()
+{
+
+		document.form1.result.value="2";
+		document.all("form1").submit();
 }
 function appytablebutton()
 {
@@ -44,103 +71,79 @@ var applyreason=document.getElementById("applyreason").value;
 var url='/ncycoa/stdapply/applytable2.jsp?applyid='+applyid+'&applyorg='+applyorg+'&applydate='+applydate+'&applyreason='+applyreason;
 createwindowNoButton('企业标准修订申请表',url,'1000px','500px');
 //window.open(url);
-}</script>
-<%
-	//System.out.println(bm);
-	         Calendar c = Calendar.getInstance();
-   		 String year = "" + c.get(c.YEAR);
-		 String month = "" + (c.get(c.MONTH) + 1);
-		 String day = "" + c.get(c.DATE);
-		 String date="";
-		UserInfo UserInfo=(UserInfo)request.getSession().getAttribute("UserInfo");
-		String staffcode=UserInfo.getStaffcode();
-		StaffInfo staffinfo=new StaffInfo(staffcode);
-		String staffname=staffinfo.getName();
-		OrgPosition orgPosition = new OrgPosition();
-		DataTable dTable = orgPosition.getOrgPositionCode(staffcode);//返回该员工对应的机构编码和岗位编码（这个会返回两条及以上的记录）
-		String orgcode = dTable.get(0).getString("orgcode");
-		Org org=new Org(orgcode);
-		String orgname=org.getName();
-		//////////////////////////////////////////////////////
-		String taskId=request.getParameter("id");
-	    ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(application);
-		ProcessEngine processEngine = (ProcessEngine) ctx.getBean("processEngine");
-		TaskService ts = processEngine
-				.getTaskService();
-		String applyid="";
-		Object applyobject=ts.getVariable(taskId, "applyid");
-		if(applyobject==null){
-			SequenceUtil seq=new SequenceUtil();
-			applyid=String.valueOf(seq.getSequence("标准类"));
-			date=year+"-"+month+"-"+day;
-		}else{
-			applyid=applyobject.toString();
-			DocApplyPerson person=new DocApplyPerson(Integer.parseInt(applyid));
-			date=person.getApplydate();
-		}
-%>
+}
+</script>
+
 <body>
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
 <form class="mainbody" name="form1" id="form1" method="post" action="../servlet/PageHandler">
        <tr>
-    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;<a href="#" onClick="F1()" class="easyui-linkbutton"
-				        data-options="iconCls:'icon-add',plain:true" >提交[F1]</a>　<a href="deleteinstance.jsp?id=<%=taskId %>" class="easyui-linkbutton"
-				        data-options="iconCls:'icon-remove',plain:true" >删除实例</a>　</td>
+    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;<a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-add',plain:true" 
+				        onclick="F1()">提交评审意见</a></td>
        </tr>
   <tr>
     <td colspan="3" valign="top" class="main_table_centerbg" align="center">
     <table width="100%" border="0" cellspacing="3" cellpadding="3" class="table_list1">
       <tr>
-        <td width="30%" align="center">申 请 人:</td>
+        <td width="30%"  align="center">申 请 人:</td>
         <td width="70%" align="left"><input name="applyperson" type="text" class="input1" id="applyperson" onKeyDown="EnterKeyDo('')" value="<%=staffname%>"   size="30" maxlength="30"  readonly="readonly"><input type="hidden" name="applyid" value="<%=applyid%>" id="applyid"></td>
       </tr>
 		 <tr>
-          <td width="30%" align="center"> 申请时间:</td>
-           <td width="70%" align="left"><input name="applydate" type="text" class="Wdate" id="applydate" onFocus="new WdatePicker(this,null,false,'whyGreen')"   value="<%=date %>" size="30" maxlength="30" readonly="readonly"></td>
+          <td width="30%"  align="center"> 申请时间:</td>
+           <td width="70%" align="left"><input name="applydate" type="text" class="Wdate" id="applydate" onFocus="new WdatePicker(this,null,false,'whyGreen')"   value="<%=applydate %>" size="30" maxlength="30" readonly="readonly"></td>
         </tr>
                 <tr>
           <td width="30%" align="center"> 申请部门:</td>
-		  <td width="70%" align="left"><input type="text" name="applyapart" value="<%=orgname %>" id="applyapart" size="30" maxlength="60"></td>
+		  <td width="70%" align="left"><input type="text" name="applyapart" value="<%=applyapart %>" id="applyapart" size="30" maxlength="60" readonly="readonly"></td>
 		  </tr>
 		  		  <tr>
 		   <td width="30%" align="center"> 新建标准:</td>
 		  <td width="70%" align="left">
 		  <label>
-		    <textarea name="newstd" id="newstd"  style="width:400px;height:100px"></textarea>
+		    <textarea name="newstd" id="newstd" style="width:400px;height:100px" ><%=taskService.getVariable(taskId, "newstd") %> </textarea>
 		   </label></td>
         </tr>
         <tr>
 		   <td width="30%" align="center"> 修订标准:</td>
-		  <td width="70%" align="left">
+		  <td width="70% align="left"">
 		  <label>
-		    <textarea name="modstd" id="modstd"  style="width:400px;height:100px"></textarea>
+		    <textarea name="modstd" id="modstd" style="width:400px;height:100px" readonly="readonly"><%=taskService.getVariable(taskId, "modstd") %></textarea>
 		   </label></td>
         </tr>
 		  <tr>
 		   <td width="30%" align="center"> 废除标准:</td>
 		  <td width="70%" align="left">
 		  <label>
-		    <textarea name="delstd" id="delstd"  style="width:400px;height:100px"></textarea>
+		    <textarea name="delstd" id="delstd" style="width:400px;height:100px" readonly="readonly"><%=taskService.getVariable(taskId, "delstd") %></textarea>
 		   </label></td>
         </tr>
  		  <tr>
 		   <td width="30%" align="center"> 申请理由:</td>
 		  <td width="70%" align="left">
 		  <label>
-		    <textarea name="applyreason" id="applyreason"  style="width:400px;height:100px"></textarea>
+		    <textarea name="applyreason" id="applyreason" style="width:400px;height:100px" readonly="readonly"><%=applyreason %></textarea>
 		   </label></td>
         </tr>
-<!--          <tr> -->
-<!--          <td width="30%" align="center"> 申请表:</td> -->
-<!-- 		  <td width="70%" align="left"> -->
-<!-- 				 <input type="button" name="button0" value="查看申请表" onClick="appytablebutton()" > -->
-<!-- 		 </td> -->
-<!--         </tr> -->
+         <tr>
+         <td width="30%" align="center"> 申 请 表:</td>
+		  <td width="70%" align="left">
+				 <input type="button" name="button0" value="查看申请表" onClick="appytablebutton()" >
+		 </td>
+        </tr>
+                <tr>
+        <td width="30%" align="center"> 审核意见:</td>
+		  <td width="70%" align="left">
+		    <label>
+		    <textarea name="suggest" id="suggest"   style="width:400px;height:100px"></textarea>
+		    </label></td>
+        </tr> 
       <tr>
         <td><input name="taskId" type="hidden" id="taskId" value="<%=taskId %>"></td>
-        <input name="orgcode" type="hidden" id="orgcode" value="<%=orgcode%>">
         <input type='hidden' name='applystaffcode' id='applystaffcode'  value="<%=staffcode %>">
-          <input name="act" type="hidden" id="act" value="add">
+        <input type='hidden' name='sugstaffcode'  value="<%=sugstaffcode %>">
+        <input name="result" type="hidden" id="result" value="">
+          <input name="act" type="hidden" id="act" value="appro">
 		  <input type="submit" name="Submit" value="提交" style="display:none">
           <input type="reset" name="reset" value="重置" style="display:none">
           <input name="action_class" type="hidden" id="action_class" value="com.action.stdapply.StdApplyAction"></td>

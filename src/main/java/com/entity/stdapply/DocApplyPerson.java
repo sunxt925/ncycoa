@@ -341,7 +341,7 @@ public class DocApplyPerson {
 			DBObject db = new DBObject();
 
 			String base_sql = "select applyperson as 申请人,applyapart as 申请部门,to_char(applydate,'yyyy-mm-dd') as 修订日期," +
-					"'<a href=\"#\" onClick=OpenTable(\"'||applyid||'\") class=\"button4\">企业标准修订申请表</a>' as 操作   from STD_DOCAPPLYPERSON where flag = '1' order by applydate";
+					"'<a href=\"#\" onClick=OpenTable(\"'||applyid||'\") class=\"button4\">企业标准修订申请表</a>' as 操作   from STD_DOCAPPLYPERSON where flag = '1' order by applydate desc";
 			String sql_run = Format.getFySql(base_sql, pageno, perpage);
 			return db.runSelectQuery(sql_run);
 		}
