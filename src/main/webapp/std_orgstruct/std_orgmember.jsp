@@ -49,7 +49,7 @@ DataTable stafflist2=staff.getAllMemberList(positioncodezhuren,orgcode);
     <th data-options="field:'idcard',width:150">身份证号</th>
     <th data-options="field:'staffname',width:70">成员姓名</th>
     <th data-options="field:'gender',width:50">性别</th>
-    <th data-options="field:'gender',width:50">职位</th>
+    <th data-options="field:'position',width:50">职位</th>
     </tr>
     </thead>
     <tbody>

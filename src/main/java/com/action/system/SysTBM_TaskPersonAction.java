@@ -45,11 +45,11 @@ public class SysTBM_TaskPersonAction extends ActionInterface{
 			//}
 			if(flag)
 			{
-				res += "MessageBox.Show(null,'修改权限失败！',null,'LogOK','Error',1,'修改权限失败，可能是由于编码重复，请检查！');";
+				res += "show('修改权限失败，可能是由于编码重复，请检查！');";
 				res += "window.open('../xtwh/PerformanceInputRights/PerformanceInputRights.jsp','_self');";
 			}
 			else{
-				res += "MessageBox.Show(null,'修改权限成功！',null,'LogOK',null,1,'修改权限成功');";
+				res += "show('修改权限成功');";
 				res += "window.open('../xtwh/PerformanceInputRights/PerformanceInputRights.jsp','_self');";
 			}
 				

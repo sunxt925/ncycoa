@@ -16,6 +16,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		smart.upload();
 		String filename = smart.getFiles().getFile(0).getFileName();
 		String plandate=smart.getRequest().getParameter("plandate");
+		String plantype=smart.getRequest().getParameter("plantype");
 
 		String pathtemp = getServletContext().getRealPath("/")+"doc\\plan";
 		if(filename.equals("")||filename==null){
@@ -42,6 +43,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			 String day = "" + c.get(c.DATE);
 			 String date=year+"-"+month+"-"+day;
 				String policyname="";
+				if(plantype.equals("1"))
+				{
+					policyname="年度计划";
+				}else if(plantype.equals("2")){
+					policyname="规划";
+				}
 			 String savename=plandate+"."+ext;
 			smart.getFiles().getFile(0).saveAs(pathtemp+java.io.File.separator+savename);
 			String policypath="doc/plan"+"/"+savename;

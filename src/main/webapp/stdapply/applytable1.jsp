@@ -41,7 +41,7 @@ String doccodestring=revise.getProcessDoccode(applyid);
 String docnamestring=revise.getProcessDocname(applyid);
 
 String tempPath = getServletContext().getRealPath("/")+"applytabletemp";//临时文件的路径
-String tempname=tempPath+"\\企业标准修订申请表.doc";
+String tempname=tempPath+"\\tabletemp.doc";
 String applytablepath=tempPath+"\\"+applyid+".doc";
 copyFile(tempname,applytablepath);
 

@@ -9,7 +9,7 @@
 <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
 </HEAD>
 
-<script language="javascript" type="text/javascript" src="../../js/DatePicker/WdatePicker.js">  </script>
+<script language="javascript" type="text/javascript" src="../../js/MyDatePicker/WdatePicker.js">  </script>
 <script language="javascript" src="../../js/public/key.js"></script>
 <script language="javascript" src="../../js/public/check.js"></script>
 <script language="javascript">
@@ -108,8 +108,7 @@ else if(orgclass.equals("00080002"))
       
       <tr>
         <td><div align="right">入职时间：</div></td>
-        <td><input name="positiontime" type="Wdate" class="input1" id="positiontime" onKeyDown="EnterKeyDo('')" value="<%=staff.getPositiontime() %>" size="40" maxlength="40" onfocus="new WdatePicker(this,null,false,'whyGreen')" ></td>
-       
+        <td><input name="positiontime" type="Wdate" class="input1" id="positiontime" onfocus="new WdatePicker({lang:'zh-cn'})"  value="<%=staff.getPositiontime() %>" size="30"  maxlength="30"></td>
       </tr>
     </table></td>
   </tr>

@@ -77,7 +77,7 @@ public class StdAboutPostAction extends ActionInterface {
 
 			if (f)
 			{
-				res += "alert('全部添加成功');";
+				res += "show('全部添加成功');";
 				res +="window.close();";
 				res +="window.dialogArguments.window.location = window.dialogArguments.window.location;";
 				  res += "parent.unittree.location.reload();";

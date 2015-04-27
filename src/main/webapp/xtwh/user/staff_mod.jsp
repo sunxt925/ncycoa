@@ -31,7 +31,7 @@ else if(staff.getGender().equals("女"))
 </HEAD>
 
 <script language=
-                "javascript" type="text/javascript" src="../../js/DatePicker/WdatePicker.js">  </script>
+                "javascript" type="text/javascript" src="../../js/MyDatePicker/WdatePicker.js">  </script>
 <script language="javascript" src="../../js/public/key.js"></script>
 <script language="javascript" src="../../js/public/check.js"></script>
 <script language="javascript">
@@ -189,7 +189,7 @@ function myidcard()
          <td><div align="right">薪水等级：</div></td>
          <td><input name="salarylevel" type="text" class="input1" id="salarylevel" onKeyDown="EnterKeyDo('')" size="40" maxlength="40" value="<%=staff.getSalarylevel() %>"></td>
          <td><div align="right">参工时间：</div></td>
-         <td><input name="begincareerdate" type="Wdate" class="input1" id="begincareerdate" onKeyDown="EnterKeyDo('')" size="40" maxlength="40" onfocus="new WdatePicker(this,null,false,'whyGreen')" value="<%=staff.getBegincareerdate() %>"></td>
+         <td><input name="begincareerdate" type="Wdate" class="input1" id="begincareerdate" onfocus="new WdatePicker({lang:'zh-cn'})"  value="<%=staff.getBegincareerdate() %>" size="30"  maxlength="30"></td>
       </tr>
       
        <tr>

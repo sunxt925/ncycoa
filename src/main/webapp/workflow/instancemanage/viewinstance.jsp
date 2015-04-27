@@ -49,28 +49,29 @@ TaskService taskService = processEngine
 	.getTaskService();
 %>
 <body class="mainbody" onLoad="this.focus()">
-   <div style="text-align: center;position: relative;width: 70%;height:700px;overflow:auto;border:1px solid 1px #cccccc;" >
+   <div style="text-align: center;position: relative;width: 100%;height:700px;overflow:auto;border:1px solid 1px #cccccc;" >
     <table id="dg" class="easyui-datagrid" style=""
     data-options="fitColumns:true,singleSelect:true">
     <thead>
     <tr>
-    <th data-options="field:'instanceid',width:100">实例ID</th>
-    <th data-options="field:'instancename',width:100">实例名称</th>
-    <th data-options="field:'initstaffname',width:100">发起人</th>
-    <th data-options="field:'initdate',width:100">发起时间</th>
-     <th data-options="field:'op',width:100">操作</th>
+    <th data-options="field:'instanceid',width:100" align="center">实例ID</th>
+    <th data-options="field:'instancename',width:100" align="center">实例名称</th>
+    <th data-options="field:'initstaffname',width:100" align="center">发起人</th>
+    <th data-options="field:'initdate',width:100" align="center">发起时间</th>
+     <th data-options="field:'op',width:100" align="center">操作</th>
     </tr>
     </thead>
     <tbody>
 <%
 	for (ProcessInstance processInstance : runtimeService.createProcessInstanceQuery().list()) {
 		pageContext.setAttribute("processInstance", processInstance);
+	    InstanceService instanceimpl=new InstanceServiceImpl();
+	    InstanceInfo instance=instanceimpl.loadInstanceById(processInstance.getId());
+	     if(instance!=null){
 %>							        
 			<tr>
 			    <td><%=processInstance.getId() %></td>
-			    <%InstanceService instanceimpl=new InstanceServiceImpl();
-			    InstanceInfo instance=instanceimpl.loadInstanceById(processInstance.getId());
-			     %>
+
 			    <td><%=instance.getInstancename() %></td>
 			    <td><%=instance.getInitstaffname() %></td>
 			    <td><%=instance.getInitdate()%></td>
@@ -79,7 +80,7 @@ TaskService taskService = processEngine
 				        onclick="view('<%= processInstance.getId()%>')">查看实例图</a>
 				                         </td>
 			</tr>
-			<%} %>
+			<%} }%>
     </tbody>
     </table>
     </div>

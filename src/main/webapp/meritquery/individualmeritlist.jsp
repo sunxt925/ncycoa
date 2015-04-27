@@ -32,7 +32,7 @@ String dataurl="meritjson.jsp?class=individual&year="+year+"&start_month="+start
    <div style="width: 100%">
    <a id="btn_detail" href="#" class="easyui-linkbutton"
 				data-options="iconCls:'icon-search',plain:true">Ã÷Ï¸</a>
-    <table id="dg" class="easyui-datagrid" style="width:900px;height:600px"
+    <table id="dg" class="easyui-datagrid"
     data-options="url:'<%=dataurl %>',fitColumns:true,singleSelect:true,collapsible:true">
     <thead>
     <tr>

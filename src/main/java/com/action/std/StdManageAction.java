@@ -226,7 +226,6 @@ public class StdManageAction extends ActionInterface
 			else
 			{
 				res += "alert('删除失败，请与管理员联系！');";
-
 				res += "parent.unittree.location.reload();";
 			}
 		}

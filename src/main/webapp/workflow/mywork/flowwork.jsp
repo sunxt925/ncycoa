@@ -48,10 +48,10 @@ UserInfo UserInfo=(UserInfo)request.getSession().getAttribute("UserInfo");
     data-options="fitColumns:true,singleSelect:true">
     <thead>
     <tr>
-    <th data-options="field:'instanceid',width:100">任务ID</th>
-    <th data-options="field:'instancename',width:200">任务名称</th>
-    <th data-options="field:'staffname',width:150">发起人</th>
-     <th data-options="field:'op',width:200">操作</th>
+    <th data-options="field:'instanceid',width:100" align="center">任务ID</th>
+    <th data-options="field:'instancename',width:200" align="center">任务名称</th>
+    <th data-options="field:'staffname',width:150" align="center">发起人</th>
+     <th data-options="field:'op',width:200" align="center">操作</th>
     </tr>
     </thead>
     <tbody>
@@ -60,15 +60,16 @@ UserInfo UserInfo=(UserInfo)request.getSession().getAttribute("UserInfo");
 		pageContext.setAttribute("task", task);
 		TaskFormData formData = formService.getTaskFormData(task.getId());
 		String formKey = formData.getFormKey();
-		StaffInfo staffinfo=new StaffInfo(task.getAssignee());
-		String staffname=staffinfo.getName();
+		String ownercode=taskService.getVariable(task.getId(), "owner").toString();
+		StaffInfo staffinfo=new StaffInfo(ownercode);
+		String ownername=staffinfo.getName();
 %>									        
 			<tr><%
 //String url=taskurl+"?id="+task.getId()
 %>
 			    <td>${task.id}</td>
 			    <td>${task.name}</td>
-			    <td><%=staffname %></td>
+			    <td><%=ownername %></td>
 			    <td><a href="#" class="easyui-linkbutton"
 				        data-options="iconCls:'icon-add',plain:true" 
 				        onclick="view('<%=formKey%>','<%=task.getId()%>')">查看任务</a>

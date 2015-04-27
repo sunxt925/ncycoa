@@ -66,11 +66,10 @@ function changetopunit(unitccm)
                     <td width="3%" align="right" class="main_table_topbg" height="31"><img src="<%=request.getContextPath() %>/images/table_rt.jpg" width="22" height="31"></td>
                  </tr>
             </table>
+
       </div>
       <div id="bottom_div">
-            
-            
-               <table width="100%" height="94%" border="0" cellpadding="0" cellspacing="0">
+            <table width="100%" height="94%" border="0" cellpadding="0" cellspacing="0">
                   <tr>
                   <td width="20%"> 
                  <iframe src="stafforg_left.jsp" width="100%" height="90%"></iframe>

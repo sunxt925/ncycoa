@@ -63,7 +63,7 @@ public class StaffAction extends ActionInterface{
 
 			if (staffinfo.Insert()&&staff.Insert())
 			{
-				res += "MessageBox.Show(null,'添加成功！',null,'LogOK',null,1,'添加成功');";
+				res += "show('添加成功');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.close();";
 				res += "window.dialogArguments.window.location = window.dialogArguments.window.location;";
@@ -71,7 +71,7 @@ public class StaffAction extends ActionInterface{
 
 			else
 			{
-				res += "MessageBox.Show(null,'添加失败！',null,'LogOK','Error',1,'添加失败，可能是由于编码重复，请检查！');";
+				res += "show('添加失败，可能是由于编码重复，请检查！');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.close();";
 				res += "window.dialogArguments.window.location = window.dialogArguments.window.location;";
@@ -81,7 +81,7 @@ public class StaffAction extends ActionInterface{
 			else if(request.getParameter("isexist").equals("true")){
 				if (staff.Insert())
 				{
-					res += "MessageBox.Show(null,'添加成功！',null,'LogOK',null,1,'添加成功');";
+					res += "show('添加成功');";
 					res += "var rand=Math.floor(Math.random()*10000);";
 					res += "window.close();";
 					res += "window.dialogArguments.window.location = window.dialogArguments.window.location;";
@@ -89,7 +89,7 @@ public class StaffAction extends ActionInterface{
 
 				else
 				{
-					res += "MessageBox.Show(null,'添加失败！',null,'LogOK','Error',1,'添加失败，可能是由于编码重复，请检查！');";
+					res += "show('添加失败，可能是由于编码重复，请检查！');";
 					res += "var rand=Math.floor(Math.random()*10000);";
 					res += "window.close();";
 					res += "window.dialogArguments.window.location = window.dialogArguments.window.location;";
@@ -115,14 +115,14 @@ public class StaffAction extends ActionInterface{
 
 			if (staff.Update())
 			{
-				res += "MessageBox.Show(null,'修改成功！',null,'LogOK',null,1,'修改成功');";
+				res += "show('修改成功');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.close();";
 				res += "window.dialogArguments.window.location = window.dialogArguments.window.location;";
 			}
 			else
 			{
-				res += "MessageBox.Show(null,'修改失败！',null,'LogOK','Error',1,'修改失败，可能是由于编码重复，请检查！');";
+				res += "show('修改失败，可能是由于编码重复，请检查！');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.close();";
 				res += "window.dialogArguments.window.location = window.dialogArguments.window.location;";
@@ -141,7 +141,7 @@ public class StaffAction extends ActionInterface{
 			String orgname = request.getParameter("orgname");
 			if (staff.Delete(staffcode,positioncode))
 			{
-				res += "MessageBox.Show(null,'删除成功！',null,'LogOK',null,1,'删除成功');";
+				res += "show('删除成功');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.open('../xtwh/user/member_list.jsp?sid='+rand+'&positioncode="+positioncode+"&positionname="+positionname+"&orgcode="+orgcode+"&orgname="+orgname+"&orgclass="+orgclass+"'"+",'_self');";
 				String a = "window.open('../xtwh/user/member_list.jsp?sid='+rand+'&positioncode="+positioncode+"&positionname="+positionname+"&orgcode="+orgcode+"&orgname="+orgname+"&orgclass="+orgclass+"'"+",'_self');";
@@ -149,7 +149,7 @@ public class StaffAction extends ActionInterface{
 			}
 			else
 			{
-				res += "MessageBox.Show(null,'删除失败！',null,'LogOK','Error',1,'删除失败，请与管理员联系！');";
+				res += "show('删除失败，请与管理员联系！');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.open('../xtwh/user/member_list.jsp?sid='+rand+'&positioncode="+positioncode+"&positionname="+positionname+"'"+"&orgcode="+orgcode+"&orgname="+orgname+"&orgclass="+orgclass+",'_self');";
 			}
@@ -172,14 +172,14 @@ public class StaffAction extends ActionInterface{
 			
 			if (staff.Insert())
 			{
-				res += "MessageBox.Show(null,'添加成功！',null,'LogOK',null,1,'添加成功');";
+				res += "show('添加成功');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.close();";
 				res += "window.dialogArguments.window.location = window.dialogArguments.window.location;";
 			}
 			else
 			{
-				res += "MessageBox.Show(null,'添加失败！',null,'LogOK','Error',1,'添加失败，可能是由于编码重复，请检查！');";
+				res += "show('添加失败，可能是由于编码重复，请检查！');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.close();";
 				res += "window.dialogArguments.window.location = window.dialogArguments.window.location;";
@@ -204,14 +204,14 @@ public class StaffAction extends ActionInterface{
 			staff = new Staff();
 			if (staff.Choose(para,(String)session.getAttribute("orgcode"),(String)session.getAttribute("orgname"),(String)session.getAttribute("positioncode"),(String)session.getAttribute("positionname")))
 			{
-				res += "MessageBox.Show(null,'添加成功！',null,'LogOK',null,1,'添加成功');";
+				res += "show('添加成功');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.close();";
 				res += "window.dialogArguments.window.location = window.dialogArguments.window.location;";
 			}
 			else
 			{
-				res += "MessageBox.Show(null,'添加失败！',null,'LogOK','Error',1,'添加失败，可能是由于编码重复，请检查！');";
+				res += "show('添加失败，可能是由于编码重复，请检查！');";
 				res += "var rand=Math.floor(Math.random()*10000);";
 				res += "window.close();";
 				res += "window.dialogArguments.window.location = window.dialogArguments.window.location;";

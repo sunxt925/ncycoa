@@ -1,4 +1,4 @@
-//Ê±¼ä¸ñÊ½»¯
+//æ—¶é—´æ ¼å¼åŒ–
 Date.prototype.format = function (format,value) {
 	if (!format) {
 		format = "yyyy-MM-dd hh:mm:ss";
@@ -37,22 +37,22 @@ Date.prototype.format = function (format,value) {
 };
 
 /**
- * ÔöÉ¾¸Ä¹¤¾ßÀ¸
+ * å¢åˆ æ”¹å·¥å…·æ 
  */
 window.onerror = function() {
 	return true;
 };
-var iframe;     // iframe²Ù×÷¶ÔÏó
-var win;        //´°¿Ú¶ÔÏó
-var gridname="";//²Ù×÷datagrid¶ÔÏóÃû³Æ
+var iframe;     // iframeæ“ä½œå¯¹è±¡
+var win;        //çª—å£å¯¹è±¡
+var gridname="";//æ“ä½œdatagridå¯¹è±¡åç§°
 var windowapi = frameElement.api;
-var W = windowapi.opener;//ÄÚÈİÒ³ÖĞµ÷ÓÃ´°¿ÚÊµÀı¶ÔÏó½Ó¿Ú
+var W = windowapi.opener;//å†…å®¹é¡µä¸­è°ƒç”¨çª—å£å®ä¾‹å¯¹è±¡æ¥å£
 function upload(curform) {
 	upload();
 }
 
 /**
- * Ìí¼Óµ÷ÓÃº¯Êı
+ * æ·»åŠ è°ƒç”¨å‡½æ•°
  */
 function add(title, actionUrl, gname, width, height) {
 	gridname=gname;
@@ -60,7 +60,7 @@ function add(title, actionUrl, gname, width, height) {
 }
 
 /**
- * É¾³ıµ÷ÓÃº¯Êı
+ * åˆ é™¤è°ƒç”¨å‡½æ•°
  */
 function del(title, actionUrl, gname) {
 	var rows = null;
@@ -68,7 +68,7 @@ function del(title, actionUrl, gname) {
 	try{rows=$('#'+gname).treegrid('getSelections');}catch(ex){}
 	
 	if (!rows || rows.length==0) {
-		tip('ÇëÑ¡Ôñ');
+		tip('è¯·é€‰æ‹©');
 		return;
 	}
 	
@@ -82,11 +82,11 @@ function del(title, actionUrl, gname) {
 		actionUrl += '&id='+ ids;
 	}
 	
-	createdialog('É¾³ıÈ·ÈÏ ', 'È·¶¨É¾³ı¸Ã¼ÇÂ¼Âğ ?', actionUrl, gname);
+	createdialog('åˆ é™¤ç¡®è®¤ ', 'ç¡®å®šåˆ é™¤è¯¥è®°å½•å— ?', actionUrl, gname);
 }
 
 /**
- * ¸üĞÂµ÷ÓÃº¯Êı
+ * æ›´æ–°è°ƒç”¨å‡½æ•°
  */
 function update(title, actionUrl, gname, width, height) {
 	gridname=gname;
@@ -95,11 +95,11 @@ function update(title, actionUrl, gname, width, height) {
 	try{rows=$('#'+gname).treegrid('getSelections');}catch(ex){}
 	
 	if (!rows || rows.length==0) {
-		tip('ÇëÑ¡Ôñ±à¼­ÏîÄ¿');
+		tip('è¯·é€‰æ‹©ç¼–è¾‘é¡¹ç›®');
 		return;
 	}
 	if (rows.length > 1) {
-		tip('ÇëÑ¡ÔñÒ»Ìõ¼ÇÂ¼ÔÙ±à¼­');
+		tip('è¯·é€‰æ‹©ä¸€æ¡è®°å½•å†ç¼–è¾‘');
 		return;
 	}
 	
@@ -108,16 +108,16 @@ function update(title, actionUrl, gname, width, height) {
 	} else {
 		actionUrl += '?id='+ rows[0].id;
 	}
-	createwindow(title, url, width, height);
+	createwindow(title, actionUrl, width, height);
 }
 
-//ÆÕÍ¨Ñ¯ÎÊ²Ù×÷µ÷ÓÃº¯Êı
+//æ™®é€šè¯¢é—®æ“ä½œè°ƒç”¨å‡½æ•°
 function confirm(actionUrl, content, name) {
-	createdialog('ÌáÊ¾ĞÅÏ¢ ', content, actionUrl, name);
+	createdialog('æç¤ºä¿¡æ¯ ', content, actionUrl, name);
 }
 
 /**
- * ´´½¨Ñ¯ÎÊ´°¿Ú
+ * åˆ›å»ºè¯¢é—®çª—å£
  */
 function createdialog(title, content, url, name) {
 	$.dialog.confirm(
@@ -145,9 +145,9 @@ function reloadTable(gname){
 
 
 /**
- * Ê÷ÁĞ±íÌí¼ÓÊÂ¼ş´ò¿ª´°¿Ú
- * @param title ±à¼­¿ò±êÌâ
- * @param addurl//Ä¿±êÒ³ÃæµØÖ·
+ * æ ‘åˆ—è¡¨æ·»åŠ äº‹ä»¶æ‰“å¼€çª—å£
+ * @param title ç¼–è¾‘æ¡†æ ‡é¢˜
+ * @param addurl//ç›®æ ‡é¡µé¢åœ°å€
  */
 function addTreeNode(title,addurl,gname) {
 	if (rowid != '') {
@@ -158,7 +158,7 @@ function addTreeNode(title,addurl,gname) {
 }
 
 /**
- * Èç¹ûÒ³ÃæÊÇÏêÏ¸²é¿´Ò³Ãæ£¬ÎŞĞ§»¯ËùÓĞ±íµ¥ÔªËØ£¬Ö»ÄÜ½øĞĞ²é¿´
+ * å¦‚æœé¡µé¢æ˜¯è¯¦ç»†æŸ¥çœ‹é¡µé¢ï¼Œæ— æ•ˆåŒ–æ‰€æœ‰è¡¨å•å…ƒç´ ï¼Œåªèƒ½è¿›è¡ŒæŸ¥çœ‹
  */
 $(function(){
 	if(location.href.indexOf("load=detail")!=-1){
@@ -168,24 +168,24 @@ $(function(){
 });
 
 /**
- * ²é¿´ÏêÏ¸ÊÂ¼ş´ò¿ª´°¿Ú
- * @param title ²é¿´¿ò±êÌâ
- * @param addurl//Ä¿±êÒ³ÃæµØÖ·
- * @param id//Ö÷¼ü×Ö¶Î
+ * æŸ¥çœ‹è¯¦ç»†äº‹ä»¶æ‰“å¼€çª—å£
+ * @param title æŸ¥çœ‹æ¡†æ ‡é¢˜
+ * @param addurl//ç›®æ ‡é¡µé¢åœ°å€
+ * @param id//ä¸»é”®å­—æ®µ
  */
 function detail(title,url, id,width,height) {
 	var rowsData = $('#'+id).datagrid('getSelections');
 //	if (rowData.id == '') {
-//		tip('ÇëÑ¡Ôñ²é¿´ÏîÄ¿');
+//		tip('è¯·é€‰æ‹©æŸ¥çœ‹é¡¹ç›®');
 //		return;
 //	}
 	
 	if (!rowsData || rowsData.length == 0) {
-		tip('ÇëÑ¡Ôñ²é¿´ÏîÄ¿');
+		tip('è¯·é€‰æ‹©æŸ¥çœ‹é¡¹ç›®');
 		return;
 	}
 	if (rowsData.length > 1) {
-		tip('ÇëÑ¡ÔñÒ»Ìõ¼ÇÂ¼ÔÙ²é¿´');
+		tip('è¯·é€‰æ‹©ä¸€æ¡è®°å½•å†æŸ¥çœ‹');
 		return;
 	}
     url += '&load=detail&id='+rowsData[0].id;
@@ -193,7 +193,7 @@ function detail(title,url, id,width,height) {
 }
 
 /**
- * ¶à¼ÇÂ¼³ıÇó
+ * å¤šè®°å½•é™¤æ±‚
  * @param title
  * @param url
  * @param gname
@@ -204,7 +204,7 @@ function deleteALLSelect(title,url,gname) {
     var ids = [];
     var rows = $("#"+gname).datagrid('getSelections');
     if (rows.length > 0) {
-    	$.dialog.confirm('ÄãÈ·¶¨ÓÀ¾ÃÉ¾³ı¸ÃÊı¾İÂğ?', function(r) {
+    	$.dialog.confirm('ä½ ç¡®å®šæ°¸ä¹…åˆ é™¤è¯¥æ•°æ®å—?', function(r) {
 		   if (r) {
 				for ( var i = 0; i < rows.length; i++) {
 					ids.push(rows[i].id);
@@ -230,12 +230,12 @@ function deleteALLSelect(title,url,gname) {
 			}
 		});
 	} else {
-		tip("ÇëÑ¡ÔñĞèÒªÉ¾³ıµÄÊı¾İ");
+		tip("è¯·é€‰æ‹©éœ€è¦åˆ é™¤çš„æ•°æ®");
 	}
 }
 
 /**
- * ²é¿´Ê±µÄµ¯³ö´°¿Ú
+ * æŸ¥çœ‹æ—¶çš„å¼¹å‡ºçª—å£
  * 
  * @param title
  * @param addurl
@@ -257,8 +257,8 @@ function createdetailwindow(title, addurl,width,height) {
 			title:title,
 			opacity : 0.3,
 			cache:false, 
-		    cancelVal: '¹Ø±Õ',
-		    cancel: true /*ÎªtrueµÈ¼ÛÓÚfunction(){}*/
+		    cancelVal: 'å…³é—­',
+		    cancel: true /*ä¸ºtrueç­‰ä»·äºfunction(){}*/
 		});
 	}else{
 		W.$.dialog({
@@ -270,37 +270,37 @@ function createdetailwindow(title, addurl,width,height) {
 			title:title,
 			opacity : 0.3,
 			cache:false, 
-		    cancelVal: '¹Ø±Õ',
-		    cancel: true /*ÎªtrueµÈ¼ÛÓÚfunction(){}*/
+		    cancelVal: 'å…³é—­',
+		    cancel: true /*ä¸ºtrueç­‰ä»·äºfunction(){}*/
 		});
 	}
 	
 }
 /**
- * È«ÆÁ±à¼­
- * @param title ±à¼­¿ò±êÌâ
- * @param addurl//Ä¿±êÒ³ÃæµØÖ·
- * @param id//Ö÷¼ü×Ö¶Î
+ * å…¨å±ç¼–è¾‘
+ * @param title ç¼–è¾‘æ¡†æ ‡é¢˜
+ * @param addurl//ç›®æ ‡é¡µé¢åœ°å€
+ * @param id//ä¸»é”®å­—æ®µ
  */
 function editfs(title,url) {
 	var name=gridname;
 	 if (rowid == '') {
-		tip('ÇëÑ¡Ôñ±à¼­ÏîÄ¿');
+		tip('è¯·é€‰æ‹©ç¼–è¾‘é¡¹ç›®');
 		return;
 	}
 	url += '&id='+rowid;
 	openwindow(title,url,name,800,500);
 }
 
-// É¾³ıµ÷ÓÃº¯Êı
+// åˆ é™¤è°ƒç”¨å‡½æ•°
 function confuploadify(url, id) {
-	$.dialog.confirm('È·¶¨É¾³ıÂğ', function(){
+	$.dialog.confirm('ç¡®å®šåˆ é™¤å—', function(){
 		deluploadify(url, id);
 	}, function(){
 	});
 }
 /**
- * Ö´ĞĞÉ¾³ı¸½¼ş
+ * æ‰§è¡Œåˆ é™¤é™„ä»¶
  * 
  * @param url
  * @param index
@@ -310,14 +310,14 @@ function deluploadify(url, id) {
 		async : false,
 		cache : false,
 		type : 'POST',
-		url : url,// ÇëÇóµÄactionÂ·¾¶
-		error : function() {// ÇëÇóÊ§°Ü´¦Àíº¯Êı
+		url : url,// è¯·æ±‚çš„actionè·¯å¾„
+		error : function() {// è¯·æ±‚å¤±è´¥å¤„ç†å‡½æ•°
 		},
 		success : function(data) {
 			var d = $.parseJSON(data);
 			if (d.success) {
-				$("#" + id).remove();// ÒÆ³ıSPAN
-				m.remove(id);// ÒÆ³ıMAP¶ÔÏóÄÚ×Ö·û´®
+				$("#" + id).remove();// ç§»é™¤SPAN
+				m.remove(id);// ç§»é™¤MAPå¯¹è±¡å†…å­—ç¬¦ä¸²
 			}
 
 		}
@@ -325,29 +325,29 @@ function deluploadify(url, id) {
 }
 
 /**
- * ÌáÊ¾ĞÅÏ¢
+ * æç¤ºä¿¡æ¯
  */
 function tip_old(msg) {
 	$.dialog.setting.zIndex = 1980;
 	$.dialog.tips(msg, 1);
 }
 /**
- * ÌáÊ¾ĞÅÏ¢
+ * æç¤ºä¿¡æ¯
  */
 function tip(msg) {
 	$.dialog.setting.zIndex = 1980;
 	$.messager.show({
-		title : 'ÌáÊ¾ĞÅÏ¢',
+		title : 'æç¤ºä¿¡æ¯',
 		msg : msg,
 		timeout : 1000 * 6
 	});
 }
 /**
- * ÌáÊ¾ĞÅÏ¢ÏñalertÒ»Ñù
+ * æç¤ºä¿¡æ¯åƒalertä¸€æ ·
  */
 function alertTip(msg,title) {
 	$.dialog.setting.zIndex = 1980;
-	title = title?title:"ÌáÊ¾ĞÅÏ¢";
+	title = title?title:"æç¤ºä¿¡æ¯";
 	$.dialog({
 			title:title,
 			icon:'tips.gif',
@@ -355,15 +355,15 @@ function alertTip(msg,title) {
 		});
 }
 /**
- * ´´½¨Ìí¼Ó»ò±à¼­´°¿Ú
+ * åˆ›å»ºæ·»åŠ æˆ–ç¼–è¾‘çª—å£
  * 
  * @param title
  * @param addurl
  * @param saveurl
  */
 function createwindow(title, url,width,height) {
-	width =  width ? width : 700;
-	height = height ? height : 400;
+	width =  width ? width : 800;
+	height = height ? height : 600;
 	if(width=="100%" || height=="100%"){
 		width = document.body.offsetWidth;
 		height =document.body.offsetHeight-100;
@@ -383,8 +383,8 @@ function createwindow(title, url,width,height) {
 				saveObj();
 				return false;
 		    },
-		    cancelVal: '¹Ø±Õ',
-		    cancel: true /*ÎªtrueµÈ¼ÛÓÚfunction(){}*/
+		    cancelVal: 'å…³é—­',
+		    cancel: true /*ä¸ºtrueç­‰ä»·äºfunction(){}*/
 		});
 	}else{
 		W.$.dialog({
@@ -401,14 +401,14 @@ function createwindow(title, url,width,height) {
 				saveObj();
 				return false;
 		    },
-		    cancelVal: '¹Ø±Õ',
-		    cancel: true /*ÎªtrueµÈ¼ÛÓÚfunction(){}*/
+		    cancelVal: 'å…³é—­',
+		    cancel: true /*ä¸ºtrueç­‰ä»·äºfunction(){}*/
 		});
 	}
 	
 }
 /**
- * ´´½¨ÉÏ´«Ò³Ãæ´°¿Ú
+ * åˆ›å»ºä¸Šä¼ é¡µé¢çª—å£
  * 
  * @param title
  * @param addurl
@@ -421,7 +421,7 @@ function openuploadwin(title, url,name,width, height) {
 	    cache:false,
 	    button: [
 	        {
-	            name: '¿ªÊ¼ÉÏ´«',
+	            name: 'å¼€å§‹ä¸Šä¼ ',
 	            callback: function(){
 	            	iframe = this.iframe.contentWindow;
 					iframe.upload();
@@ -430,7 +430,7 @@ function openuploadwin(title, url,name,width, height) {
 	            focus: true
 	        },
 	        {
-	            name: 'È¡ÏûÉÏ´«',
+	            name: 'å–æ¶ˆä¸Šä¼ ',
 	            callback: function(){
 	            	iframe = this.iframe.contentWindow;
 					iframe.cancel();
@@ -440,7 +440,7 @@ function openuploadwin(title, url,name,width, height) {
 	});
 }
 /**
- * ´´½¨²éÑ¯Ò³Ãæ´°¿Ú
+ * åˆ›å»ºæŸ¥è¯¢é¡µé¢çª—å£
  * 
  * @param title
  * @param addurl
@@ -456,14 +456,14 @@ function opensearchdwin(title, url, width, height) {
 		width : width,
 		opacity : 0.3,
 		button : [ {
-			name : '²éÑ¯',
+			name : 'æŸ¥è¯¢',
 			callback : function() {
 				iframe = this.iframe.contentWindow;
 				iframe.searchs();
 			},
 			focus : true
 		}, {
-			name : 'È¡Ïû',
+			name : 'å–æ¶ˆ',
 			callback : function() {
 
 			}
@@ -471,7 +471,7 @@ function opensearchdwin(title, url, width, height) {
 	});
 }
 /**
- * ´´½¨²»´ø°´Å¥µÄ´°¿Ú
+ * åˆ›å»ºä¸å¸¦æŒ‰é’®çš„çª—å£
  * 
  * @param title
  * @param addurl
@@ -479,111 +479,38 @@ function opensearchdwin(title, url, width, height) {
  */
 function openwindow(title, url,name, width, height) {
 	gridname=name;
-	if (typeof (width) == 'undefined'&&typeof (height) != 'undefined')
-	{
-		if(typeof(windowapi) == 'undefined'){
-			$.dialog({
-				content: 'url:'+url,
-				title : title,
-				cache:false,
-				lock : true,
-				width: 'auto',
-			    height: height
-			});
-		}else{
-			$.dialog({
-				content: 'url:'+url,
-				title : title,
-				cache:false,
-				parent:windowapi,
-				lock : true,
-				width: 'auto',
-			    height: height
-			});
-		}
-	}
-	if (typeof (height) == 'undefined'&&typeof (width) != 'undefined')
-	{
-		if(typeof(windowapi) == 'undefined'){
-			$.dialog({
-				content: 'url:'+url,
-				title : title,
-				lock : true,
-				width: width,
-				cache:false,
-			    height: 'auto'
-			});
-		}else{
-			$.dialog({
-				content: 'url:'+url,
-				title : title,
-				lock : true,
-				parent:windowapi,
-				width: width,
-				cache:false,
-			    height: 'auto'
-			});
-		}
-	}
-	if (typeof (width) == 'undefined'&&typeof (height) == 'undefined')
-	{
-		if(typeof(windowapi) == 'undefined'){
-			$.dialog({
-				content: 'url:'+url,
-				title : title,
-				lock : true,
-				width: 'auto',
-				cache:false,
-			    height: 'auto'
-			});
-		}else{
-			$.dialog({
-				content: 'url:'+url,
-				title : title,
-				lock : true,
-				parent:windowapi,
-				width: 'auto',
-				cache:false,
-			    height: 'auto'
-			});
-		}
-	}
-	
-	if (typeof (width) != 'undefined'&&typeof (height) != 'undefined')
-	{
-		if(typeof(windowapi) == 'undefined'){
-			$.dialog({
-				width: width,
-			    height:height,
-				content: 'url:'+url,
-				title : title,
-				cache:false,
-				lock : true
-			});
-		}else{
-			$.dialog({
-				width: width,
-			    height:height,
-				content: 'url:'+url,
-				parent:windowapi,
-				title : title,
-				cache:false,
-				lock : true
-			});
-		}
+	if(typeof(windowapi) == 'undefined'){
+		$.dialog({
+			content: 'url:'+url,
+			title : title,
+			cache:false,
+			lock : true,
+			width: width ? width : 800,
+		    height: height ? height : 600
+		});
+	}else{
+		$.dialog({
+			content: 'url:'+url,
+			title : title,
+			cache:false,
+			parent:windowapi,
+			lock : true,
+			width: width ? width : 800,
+			height: height ? height : 600
+		});
 	}
 }
 
 
 /**
- * Ö´ĞĞ±£´æ
+ * æ‰§è¡Œä¿å­˜
  */
 function saveObj() {
 	$('#btn_sub', iframe.document).click();
 }
 
 /**
- * Ö´ĞĞAJAXÌá½»FORM
+ * æ‰§è¡ŒAJAXæäº¤FORM
  * 
  * @param url
  * @param gridname
@@ -595,13 +522,13 @@ function ajaxSubForm(url) {
 			iframe.editor.sync();
 		},
 		success : function(r) {
-			tip('²Ù×÷³É¹¦');
+			tip('æ“ä½œæˆåŠŸ');
 			reloadTable();
 		}
 	});
 }
 /**
- * Ö´ĞĞ²éÑ¯
+ * æ‰§è¡ŒæŸ¥è¯¢
  * 
  * @param url
  * @param gridname
@@ -613,7 +540,7 @@ function search() {
 }
 
 /**
- * Ö´ĞĞ²Ù×÷
+ * æ‰§è¡Œæ“ä½œ
  * 
  * @param url
  * @param index
@@ -624,8 +551,8 @@ function doSubmit(url, gname) {
 		async : false,
 		cache : false,
 		type : 'POST',
-		url : url,// ÇëÇóµÄactionÂ·¾¶
-		error : function() {// ÇëÇóÊ§°Ü´¦Àíº¯Êı
+		url : url,// è¯·æ±‚çš„actionè·¯å¾„
+		error : function() {// è¯·æ±‚å¤±è´¥å¤„ç†å‡½æ•°
 		},
 		success : function(data) {
 			var d = $.parseJSON(data);
@@ -638,7 +565,7 @@ function doSubmit(url, gname) {
 	});
 }
 /**
- * ÍË³öÈ·ÈÏ¿ò
+ * é€€å‡ºç¡®è®¤æ¡†
  * 
  * @param url
  * @param content
@@ -651,7 +578,7 @@ function exit(url, content) {
 	});
 }
 /**
- * Ä£°åÒ³ÃæajaxÌá½»
+ * æ¨¡æ¿é¡µé¢ajaxæäº¤
  * 
  * @param url
  * @param gridname
@@ -663,12 +590,12 @@ function ajaxdoSub(url, formname) {
 			editor.sync();
 		},
 		success : function(r) {
-			tip('²Ù×÷³É¹¦');
+			tip('æ“ä½œæˆåŠŸ');
 		}
 	});
 }
 /**
- * ajaxÌá½»FORM
+ * ajaxæäº¤FORM
  * 
  * @param url
  * @param gridname
@@ -679,7 +606,7 @@ function ajaxdoForm(url, formname) {
 		onSubmit : function() {
 		},
 		success : function(r) {
-			tip('²Ù×÷³É¹¦');
+			tip('æ“ä½œæˆåŠŸ');
 		}
 	});
 }
@@ -694,7 +621,7 @@ function opensubwin(title, url, saveurl, okbutton, closebutton) {
 			name : okbutton,
 			callback : function() {
 				iframe = this.iframe.contentWindow;
-				win = frameElement.api.opener;// À´Ô´Ò³Ãæ
+				win = frameElement.api.opener;// æ¥æºé¡µé¢
 				$('#btn_sub', iframe.document).click();
 				return false;
 			}
@@ -717,7 +644,7 @@ function openauditwin(title, url, saveurl, okbutton, backbutton, closebutton) {
 			name : okbutton,
 			callback : function() {
 				iframe = this.iframe.contentWindow;
-				win = $.dialog.open.origin;// À´Ô´Ò³Ãæ
+				win = $.dialog.open.origin;// æ¥æºé¡µé¢
 				$('#btn_sub', iframe.document).click();
 				return false;
 			}
@@ -725,14 +652,14 @@ function openauditwin(title, url, saveurl, okbutton, backbutton, closebutton) {
 			name : backbutton,
 			callback : function() {
 				iframe = this.iframe.contentWindow;
-				win = frameElement.api.opener;// À´Ô´Ò³Ãæ
+				win = frameElement.api.opener;// æ¥æºé¡µé¢
 				$('#formobj', iframe.document).form('submit', {
 					url : saveurl + "&code=exit",
 					onSubmit : function() {
 						$('#code').val('exit');
 					},
 					success : function(r) {
-						$.dialog.tips('²Ù×÷³É¹¦', 2);
+						$.dialog.tips('æ“ä½œæˆåŠŸ', 2);
 						win.location.reload();
 					}
 				});
@@ -746,13 +673,13 @@ function openauditwin(title, url, saveurl, okbutton, backbutton, closebutton) {
 
 	});
 }
-// Ìí¼Ó±êÇ©
+// æ·»åŠ æ ‡ç­¾
 function addOneTab(subtitle, url, icon) {
 	if (icon == '') {
 		icon = 'icon folder';
 	}
 	window.top.$.messager.progress({
-		text : 'Ò³Ãæ¼ÓÔØÖĞ....',
+		text : 'é¡µé¢åŠ è½½ä¸­....',
 		interval : 300
 	});
 	window.top.$('#maintabs').tabs({
@@ -790,28 +717,28 @@ function addOneTab(subtitle, url, icon) {
 		}
 	}
 }
-// ¹Ø±Õ×ÔÉíTABË¢ĞÂ¸¸TABgrid
+// å…³é—­è‡ªèº«TABåˆ·æ–°çˆ¶TABgrid
 function closetab(title) {
-	//ÔİÊ±ÏÈ²»Ë¢ĞÂ
+	//æš‚æ—¶å…ˆä¸åˆ·æ–°
 	//window.top.document.getElementById('tabiframe').contentWindow.reloadTable();
 	//window.top.document.getElementById('maintabs').contentWindow.reloadTable();
 	window.top.$('#maintabs').tabs('close', title);
-	//tip("Ìí¼Ó³É¹¦");
+	//tip("æ·»åŠ æˆåŠŸ");
 }
 
 //popup  
-//object: this  name:ĞèÒªÑ¡ÔñµÄÁĞ±íµÄ×Ö¶Î  code:¶¯Ì¬±¨±íµÄcode
+//object: this  name:éœ€è¦é€‰æ‹©çš„åˆ—è¡¨çš„å­—æ®µ  code:åŠ¨æ€æŠ¥è¡¨çš„code
 function inputClick(obj,name,code) {
 	 $.dialog.setting.zIndex = 2000;
 	 if(name==""||code==""){
-		 alert("popup²ÎÊıÅäÖÃ²»È«");
+		 alert("popupå‚æ•°é…ç½®ä¸å…¨");
 		 return;
 	 }
 	 if(typeof(windowapi) == 'undefined'){
 		 $.dialog({
 				content: "url:cgReportController.do?popup&id="+code,
 				lock : true,
-				title:"Ñ¡Ôñ",
+				title:"é€‰æ‹©",
 				width:800,
 				height: 400,
 				cache:false,
@@ -819,7 +746,7 @@ function inputClick(obj,name,code) {
 			    	iframe = this.iframe.contentWindow;
 			    	var selected = iframe.getSelectRows();
 			    	if (selected == '' || selected == null ){
-				    	alert("ÇëÑ¡Ôñ");
+				    	alert("è¯·é€‰æ‹©");
 			    		return false;
 				    }else {
 					    var str = "";
@@ -836,14 +763,14 @@ function inputClick(obj,name,code) {
 				    }
 					
 			    },
-			    cancelVal: '¹Ø±Õ',
-			    cancel: true /*ÎªtrueµÈ¼ÛÓÚfunction(){}*/
+			    cancelVal: 'å…³é—­',
+			    cancel: true /*ä¸ºtrueç­‰ä»·äºfunction(){}*/
 			});
 		}else{
 			$.dialog({
 				content: "url:cgReportController.do?popup&id="+code,
 				lock : true,
-				title:"Ñ¡Ôñ",
+				title:"é€‰æ‹©",
 				width:800,
 				height: 400,
 				parent:windowapi,
@@ -852,7 +779,7 @@ function inputClick(obj,name,code) {
 			    	iframe = this.iframe.contentWindow;
 			    	var selected = iframe.getSelectRows();
 			    	if (selected == '' || selected == null ){
-				    	alert("ÇëÑ¡Ôñ");
+				    	alert("è¯·é€‰æ‹©");
 			    		return false;
 				    }else {
 					    var str = "";
@@ -869,16 +796,16 @@ function inputClick(obj,name,code) {
 				    }
 					
 			    },
-			    cancelVal: '¹Ø±Õ',
-			    cancel: true /*ÎªtrueµÈ¼ÛÓÚfunction(){}*/
+			    cancelVal: 'å…³é—­',
+			    cancel: true /*ä¸ºtrueç­‰ä»·äºfunction(){}*/
 			});
 		}
 }
 /*
-	×Ô¶¨ÒåurlµÄµ¯³ö
-	obj:ÒªÌî³äµÄ¿Ø¼ş,¿ÉÒÔÎª¶à¸ö£¬ÒÔ¶ººÅ·Ö¸ô
-	name:ÁĞ±íÖĞ¶ÔÓ¦µÄ×Ö¶Î,¿ÉÒÔÎª¶à¸ö£¬ÒÔ¶ººÅ·Ö¸ô£¨ÓëobjÒª¶ÔÓ¦£©
-	url£ºµ¯³öÒ³ÃæµÄUrl
+	è‡ªå®šä¹‰urlçš„å¼¹å‡º
+	obj:è¦å¡«å……çš„æ§ä»¶,å¯ä»¥ä¸ºå¤šä¸ªï¼Œä»¥é€—å·åˆ†éš”
+	name:åˆ—è¡¨ä¸­å¯¹åº”çš„å­—æ®µ,å¯ä»¥ä¸ºå¤šä¸ªï¼Œä»¥é€—å·åˆ†éš”ï¼ˆä¸objè¦å¯¹åº”ï¼‰
+	urlï¼šå¼¹å‡ºé¡µé¢çš„Url
 */
 function popClick(obj,name,url) {
 	 $.dialog.setting.zIndex = 2001;
@@ -888,7 +815,7 @@ function popClick(obj,name,url) {
 		 $.dialog({
 				content: "url:"+url,
 				lock : true,
-				title:"Ñ¡Ôñ",
+				title:"é€‰æ‹©",
 				width:700,
 				height: 400,
 				cache:false,
@@ -896,7 +823,7 @@ function popClick(obj,name,url) {
 			    	iframe = this.iframe.contentWindow;
 			    	var selected = iframe.getSelectRows();
 			    	if (selected == '' || selected == null ){
-				    	alert("ÇëÑ¡Ôñ");
+				    	alert("è¯·é€‰æ‹©");
 			    		return false;
 				    }else {
 				    	for(var i1=0;i1<names.length;i1++){
@@ -921,14 +848,14 @@ function popClick(obj,name,url) {
 				    }
 					 
 			    },
-			    cancelVal: '¹Ø±Õ',
-			    cancel: true /*ÎªtrueµÈ¼ÛÓÚfunction(){}*/
+			    cancelVal: 'å…³é—­',
+			    cancel: true /*ä¸ºtrueç­‰ä»·äºfunction(){}*/
 			});
 		}else{
 			$.dialog({
 				content: "url:"+url,
 				lock : true,
-				title:"Ñ¡Ôñ",
+				title:"é€‰æ‹©",
 				width:700,
 				height: 400,
 				parent:windowapi,
@@ -937,7 +864,7 @@ function popClick(obj,name,url) {
 			    	iframe = this.iframe.contentWindow;
 			    	var selected = iframe.getSelectRows();
 			    	if (selected == '' || selected == null ){
-				    	alert("ÇëÑ¡Ôñ");
+				    	alert("è¯·é€‰æ‹©");
 			    		return false;
 				    }else {
 				    	for(var i1=0;i1<names.length;i1++){
@@ -962,14 +889,14 @@ function popClick(obj,name,url) {
 				    }
 					
 			    },
-			    cancelVal: '¹Ø±Õ',
-			    cancel: true /*ÎªtrueµÈ¼ÛÓÚfunction(){}*/
+			    cancelVal: 'å…³é—­',
+			    cancel: true /*ä¸ºtrueç­‰ä»·äºfunction(){}*/
 			});
 		}
 }
 /**
- * Jeecg Excel µ¼³ö
- * ´úÈë²éÑ¯Ìõ¼ş
+ * Jeecg Excel å¯¼å‡º
+ * ä»£å…¥æŸ¥è¯¢æ¡ä»¶
  */
 function JeecgExcelExport(url,datagridId){
 	var queryParams = $('#'+datagridId).datagrid('options').queryParams;
@@ -989,7 +916,7 @@ function JeecgExcelExport(url,datagridId){
 	window.location.href = url+ encodeURI(fields+params);
 }
 /**
- * ×Ô¶¯Íê³ÉµÄ½âÎöº¯Êı
+ * è‡ªåŠ¨å®Œæˆçš„è§£æå‡½æ•°
  * @param data
  * @returns {Array}
  */

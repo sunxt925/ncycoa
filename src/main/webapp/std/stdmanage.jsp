@@ -29,8 +29,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </style>
 </HEAD>
 <% 
+   Org og=new Org();
+  DataTable dt=og.getTopList(); 
+  
   String pageheight=((UserInfo)request.getSession().getAttribute("UserInfo")).getAvalilheight();
-  int pageHeight=(int)(Integer.parseInt(pageheight)*0.75);
+  int pageHeight=(int)(Integer.parseInt(pageheight)*0.8);
 %>
 <script language="javascript" src="../js/public/select.js"></script>
 <script language="javascript" src="../js/public/key.js"></script>
@@ -78,6 +81,7 @@ function changetopunit(unitccm)
             </table> 
       </div>
         
+
   </div>
  
   </body>

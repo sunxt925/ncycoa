@@ -62,7 +62,7 @@ document.all("Submit").click();
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
 <tr>
 <td width="30%" >&nbsp; &nbsp;               
-    类型:</td>
+    年度:</td>
     <td width="70%">
     <select name="plandate"  id="plandate" style="width:140px">
             <option value="2015">2015</option>
@@ -76,6 +76,17 @@ document.all("Submit").click();
             <option value="2023">2023</option>
             <option value="2024">2024</option>
             <option value="2025">2025</option>
+    </select>
+
+</td>
+</tr>
+<tr>
+<td width="30%" >&nbsp; &nbsp;               
+    类型:</td>
+    <td width="70%">
+    <select name="plantype"  id="plantype" style="width:140px">
+            <option value="1">年度计划</option>
+            <option value="2">规划</option>
     </select>
 
 </td>

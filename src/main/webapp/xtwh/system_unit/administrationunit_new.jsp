@@ -11,7 +11,7 @@
 <% 
  
 %>
-<script language="javascript" type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js"></script>
+<script language="javascript" type="text/javascript" src="../../js/MyDatePicker/WdatePicker.js"></script>
 <script language="javascript" src="../../js/public/key.js"></script>
 <script language="javascript" src="../../js/public/check.js"></script>
 <script language="javascript" src="../../js/public/Calendar1.js"></script>

@@ -33,7 +33,7 @@ public class DocPlan {
 	public DocPlan(String plandate, String planname, String planpath,String uptime) {
 		super();
 		this.plandate = plandate;
-		//this.planname = planname;
+		this.planname = planname;
 		this.planpath = planpath;
 		this.uptime = uptime;
 	}

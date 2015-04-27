@@ -31,9 +31,6 @@ public class AuthInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
 		
-		System.out.print(request.getRequestURL());
-		System.out.print(request.getRequestURI());
-		
 		String requestPath = request.getRequestURI();
 		if( StringUtils.isNotEmpty(request.getQueryString()) ) {
 			requestPath += "?" + request.getQueryString();
