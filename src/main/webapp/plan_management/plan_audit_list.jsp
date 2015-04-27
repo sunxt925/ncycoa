@@ -10,6 +10,7 @@
 <script type="text/javascript" src="jscomponent/jquery/jquery-1.8.0.min.js"></script>
 <script type="text/javascript" src="jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
 <script type="text/javascript" src="jscomponent/tools/datagrid.js"></script>
+<script type="text/javascript" src="js/MyDatePicker/WdatePicker.js"></script>
 <style type="text/css">
 *{font-size:12px; font-family:Î¢ÈíÑÅºÚ,ĞÂËÎÌå}
 a.dgopt{
@@ -127,8 +128,8 @@ function batchaudit(title, actionUrl, gname, width, height) {
 
 
 	$(document).ready(function(){
-		$("input[name='inputDate_begin']").attr("class","easyui-datebox");
-		$("input[name='inputDate_end']").attr("class","easyui-datebox");
+		$("input[name='inputDate_begin']").click(function(){WdatePicker();});
+		$("input[name='inputDate_end']").click(function(){WdatePicker();});
 	});
 	
 

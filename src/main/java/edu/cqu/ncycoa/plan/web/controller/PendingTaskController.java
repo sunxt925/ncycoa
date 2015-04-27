@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -56,14 +55,15 @@ public class PendingTaskController {
 	}
 	
 	@RequestMapping(params="handle")
-	@ResponseBody
-	public void handle(Long id, HttpServletRequest request, HttpServletResponse response) {
-		AjaxResultJson j = new AjaxResultJson();
-		String message;
-		planService.handlePendingTask(id);
-		message = "任务处理完毕";
-		j.setMsg(message);
-		SystemUtils.jsonResponse(response, j);
+	public String handle(Long id, String type, Model model) {
+		model.addAttribute("taskId", id);
+		if("normal".equals(type)){
+			return "plan_management/plan_step_normal";
+		} else if("audit".equals(type)){
+			return "plan_management/plan_step_audit";
+		} else {
+			return "plan_management/plan_step_upload";
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -102,10 +102,10 @@ public class PendingTaskController {
 		}
 		dg.getResults().addAll(pendingTasks);
 		
-		Collections.sort(dg.getResults(), new Comparator<Date>(){
+		Collections.sort(dg.getResults(), new Comparator<PendingTask>(){
 			@Override
-			public int compare(Date o1, Date o2) {
-				return -o1.compareTo(o2);
+			public int compare(PendingTask o1, PendingTask o2) {
+				return -o1.getGenDate().compareTo(o2.getGenDate());
 			}
 		});
 		

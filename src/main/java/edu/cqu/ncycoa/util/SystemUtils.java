@@ -36,7 +36,7 @@ public class SystemUtils {
 	
 	public static void jsonResponse(HttpServletResponse response, AjaxResultJson json) {
 		response.setCharacterEncoding("gb2312");
-		response.setContentType("application/json");
+		response.setContentType("text/plain;charset=gb2312");
 		response.setHeader("Cache-Control", "no-store");
 		try {
 			PrintWriter pw = response.getWriter();

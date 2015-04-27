@@ -36,16 +36,13 @@ a.dgopt{
 <script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		//$("input[name='genDate_begin']").after("<img onclick=\"WdatePicker({el:'genDate_begin'})\" src=\"js/MyDatePicker/skin/datePicker.gif\" width=\"16\" height=\"22\" align=\"absmiddle\">");
-		//$("input[name='genDate_end']").after("<img onclick=\"WdatePicker({el:'genDate_end'})\" src=\"js/MyDatePicker/skin/datePicker.gif\" width=\"16\" height=\"22\" align=\"absmiddle\">");
 		$("input[name='genDate_begin']").click(function(){WdatePicker();});
 		$("input[name='genDate_end']").click(function(){WdatePicker();});
-	
 	});
 	
 	function handleTask(id, formkey){
-		if(formkey==null || formkey == "" || formkey == "null"){
-			createwindow("hello", "pending-task.htm?handle&id="+id);
+		if(id == null || id == "" || id == "null"){
+			createwindow("hello", formkey+"&id="+id);
 		} else {
 			createwindow("hello", formkey);
 		}	

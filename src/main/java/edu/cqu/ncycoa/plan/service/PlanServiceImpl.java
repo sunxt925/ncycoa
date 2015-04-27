@@ -30,6 +30,17 @@ public class PlanServiceImpl extends CommonServiceImpl implements PlanService {
 			
 			//给流程节点的负责人，创建一个待办事项
 			PendingTask task = new PendingTask();
+			switch(step.getTypeValue()){
+			case 0:
+				task.setFormKey("pending-task.htm?handle&type=normal");
+				break;
+			case 1:
+				task.setFormKey("pending-task.htm?handle&type=audit");
+				break;
+			case 2:
+				task.setFormKey("pending-task.htm?handle&type=upload");
+				break;
+			}
 			task.setPlan(step);
 			task.setParticipant(step.getParticipant());
 			task.setParticipantValue(step.getParticipantValue());
@@ -66,6 +77,17 @@ public class PlanServiceImpl extends CommonServiceImpl implements PlanService {
 			step.setStatus((short)1);
 			
 			task = new PendingTask();
+			switch(step.getTypeValue()){
+			case 0:
+				task.setFormKey("pending-task.htm?handle&type=normal");
+				break;
+			case 1:
+				task.setFormKey("pending-task.htm?handle&type=audit");
+				break;
+			case 2:
+				task.setFormKey("pending-task.htm?handle&type=upload");
+				break;
+			}
 			task.setPlan(step);
 			task.setParticipant(step.getParticipant());
 			task.setParticipantValue(step.getParticipantValue());
