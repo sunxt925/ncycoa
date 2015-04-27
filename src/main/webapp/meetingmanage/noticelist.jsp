@@ -15,7 +15,7 @@
 </style>
 </head>
 <body>
-	<h:datagrid actionUrl="meeting_management.htm?dgdata&flag=all" fit="true" fitColumns="true" queryMode="group" name="meetinglist">
+	<h:datagrid actionUrl="meeting_management.htm?dgdata&flag=audited_y" fit="true" fitColumns="true" queryMode="group" name="meetinglist">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
 		<h:dgColumn field="meetingName" title="会议名称"  query="true"></h:dgColumn>
 		<h:dgColumn field="meetingTopics" title="会议主题"  query="true"></h:dgColumn>
@@ -23,12 +23,10 @@
 		<h:dgColumn field="meetingEndDate" title="结束时段" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true"></h:dgColumn>
 		<h:dgColumn field="meetingRoom" title="开会地点" replace="会议室1_0,会议室2_1,会议室3_2" query="true"></h:dgColumn>
 		<h:dgColumn field="numAttendee" title="会议人数"  query="true" queryMode="scope"></h:dgColumn>
-		<h:dgColumn field="auditFlag" title="审核状态" replace="通过_11,未审核_0,未通过_10" style="color:red_10,color:blue_11,color:green_0" query="true"></h:dgColumn>
-		<h:dgToolBar url="meeting_management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
-		<h:dgToolBar url="meeting_management.htm?update" icon="icon-add" funname="update" title="编辑"></h:dgToolBar>
-		
-		<h:dgToolBar url="meeting_management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
-	</h:datagrid>
+		<h:dgColumn field="auditFlag" title="审核状态" replace="通过_11" style="color:green_11" query="true"></h:dgColumn>
+		<h:dgColumn title="操作" field="opt"></h:dgColumn>
+		<h:dgOpenOpt url="meeting_management.htm?queryAttender&id={id}" title="参会人员" width="300" height="400"></h:dgOpenOpt>
+		</h:datagrid>
 </body>
 
 <script type="text/javascript">
@@ -36,9 +34,6 @@
 		$("input[name='meetingBeginDate']").attr("class","easyui-datebox");
 		$("input[name='meetingEndDate']").attr("class","easyui-datebox");
 	});
-	function ss(){
-		alert("dsa");
-	}
 </script>
 <script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>
 </html>
