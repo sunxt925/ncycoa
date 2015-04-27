@@ -1,12 +1,22 @@
 <%@ page contentType="text/html; charset=gb2312" language="java" import="java.sql.*,com.db.*,com.common.*,com.entity.system.*" errorPage="" %>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+
+%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
 <TITLE>四川省南充烟草公司</TITLE>
 <link rel="stylesheet" type="text/css" href="../../css/style.css">
+<link rel="stylesheet" type="text/css" href="../../jscomponent/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../jscomponent/easyui/themes/icon.css">
+<script type="text/javascript" src="../../jscomponent/jquery/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="../../jscomponent/easyui/jquery.easyui.min.js"></script>
 <META http-equiv=Content-Type content="text/html; charset=gb2312">
 <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
 </HEAD>
+
 <%
 	Position position=new Position();
 	String name=request.getParameter("name");
@@ -27,9 +37,11 @@
 		pagecount=(dtcount.getRowsCount()/per_page)+1;
     
 %>
+
 <script language="javascript" src="../../js/public/select.js"></script>
 <script language="javascript" src="../../js/public/key.js"></script>
 <script type="text/javascript" src="../../js/public/searchvalue.js"></script>
+
 
 
  <script type="text/javascript" src="../../jscomponent/jquery/jquery-1.8.0.min.js"></script>
@@ -84,10 +96,14 @@ function searchName()
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td class="main_table_topbg" height="31">首页 &gt;&gt; 系统维护 &gt;&gt; 岗位管理</td>
-        <td class="main_table_topbg" height="31" align="right"><input name="search" type="text" class="input1" id="search"  onfocus="cls()" onblur="res()"  value="请输入关键字" size="30" maxlength="30"><a href="#" onClick="searchName()" class="button4">查询</a></td>
+        <td class="main_table_topbg" height="31" align="right"><input name="search" type="text" class="easyui-textbox" id="search"  onfocus="cls()" onblur="res()"  value="请输入关键字" size="30" maxlength="30"><a href="#" onClick="searchName()" class="easyui-linkbutton">查询</a></td>
       </tr>
       <tr>
-    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;<a href="#" onClick="F3()">增加[F3]</a>　<a href="#" onClick="F4()">删除[F4]</a>　<a href="#" onClick="F5()">刷新[F5]</a></td>
+    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;
+    <a href="#" onClick="F3()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">增加[F3]</a>
+    <a href="#" onClick="F4()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true">删除[F4]</a>
+    <a href="#" onClick="F5()" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true">刷新[F5]</a>
+    </td>
   </tr>
     </table>
     <!--<div style="overflow-x: auto; overflow-y: auto; height: 600px;">

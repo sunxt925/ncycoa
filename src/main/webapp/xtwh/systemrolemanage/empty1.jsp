@@ -4,6 +4,10 @@
 <HEAD>
 <TITLE>重庆市地方税务局</TITLE>
 <link rel="stylesheet" type="text/css" href="../../css/style.css">
+<link rel="stylesheet" type="text/css" href="../../jscomponent/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../jscomponent/easyui/themes/icon.css">
+<script type="text/javascript" src="../../jscomponent/jquery/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="../../jscomponent/easyui/jquery.easyui.min.js"></script>
 <META http-equiv=Content-Type content="text/html; charset=gb2312">
 <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
 </HEAD>
@@ -81,7 +85,7 @@ document.all("form1").submit();
     <tr><td colspan="3">
   <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
-          <td class="table_td_jb"><a href="#" onClick="F3()">增加[F3]</a><!--<a href="#" onClick="F4()">删除[F4]</a>　--><a href="#" onClick="F5()">刷新[F5]</a></td>
+          <td class="table_td_jb"><a href="#" onClick="F3()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">增加[F3]</a><!--<a href="#" onClick="F4()">删除[F4]</a>　--><a href="#" onClick="F5()" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true">刷新[F5]</a></td>
       </tr>
   </table>
   </td></tr>

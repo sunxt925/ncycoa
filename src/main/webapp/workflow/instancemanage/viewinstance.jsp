@@ -65,12 +65,13 @@ TaskService taskService = processEngine
 <%
 	for (ProcessInstance processInstance : runtimeService.createProcessInstanceQuery().list()) {
 		pageContext.setAttribute("processInstance", processInstance);
+	    InstanceService instanceimpl=new InstanceServiceImpl();
+	    InstanceInfo instance=instanceimpl.loadInstanceById(processInstance.getId());
+	     if(instance!=null){
 %>							        
 			<tr>
 			    <td><%=processInstance.getId() %></td>
-			    <%InstanceService instanceimpl=new InstanceServiceImpl();
-			    InstanceInfo instance=instanceimpl.loadInstanceById(processInstance.getId());
-			     %>
+
 			    <td><%=instance.getInstancename() %></td>
 			    <td><%=instance.getInitstaffname() %></td>
 			    <td><%=instance.getInitdate()%></td>
@@ -79,7 +80,7 @@ TaskService taskService = processEngine
 				        onclick="view('<%= processInstance.getId()%>')">²é¿´ÊµÀýÍ¼</a>
 				                         </td>
 			</tr>
-			<%} %>
+			<%} }%>
     </tbody>
     </table>
     </div>

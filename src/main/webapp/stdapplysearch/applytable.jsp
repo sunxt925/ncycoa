@@ -76,7 +76,7 @@ for(int i=0;i<dt.getRowsCount();i++){
 
 String tempPath = getServletContext().getRealPath("/")+"applytabletemp";//临时文件的路径
 String tempPath2 = getServletContext().getRealPath("/")+"doc";
-String tempname=tempPath+"\\企业标准修订申请表.doc";
+String tempname=tempPath+"\\tabletemp.doc";
 String applytablepath=tempPath2+"\\"+applyid+".doc";
 copyFile(tempname,applytablepath);
 

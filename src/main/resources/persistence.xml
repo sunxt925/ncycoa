@@ -10,6 +10,11 @@
 		<class>edu.cqu.ncycoa.domain.Log</class>
 		<class>edu.cqu.ncycoa.plan.domain.Plan</class>
 		<class>edu.cqu.ncycoa.plan.domain.PlanStep</class>
+		<class>edu.cqu.ncycoa.domain.Supplier</class>
+		<class>edu.cqu.ncycoa.domain.EvaluDefine</class>
+		<class>edu.cqu.ncycoa.domain.EvaluResult</class>
+		<class>edu.cqu.ncycoa.domain.GoodsUsed</class>
+		<class>edu.cqu.ncycoa.domain.PlanStep</class>
 		<class>edu.cqu.ncycoa.domain.ContractInfo</class>
 		<class>edu.cqu.ncycoa.domain.MeetingInfo</class>
 	</persistence-unit>

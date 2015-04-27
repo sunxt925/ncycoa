@@ -101,8 +101,9 @@ function F2()
 		</td>
 	</tr>
 			<%
-	String filepath=taskService.getVariable(taskId, "filepath").toString();
-	if(filepath!=null&&!(filepath.equals(""))){
+			Object filepathObject=taskService.getVariable(taskId, "filepath");
+			if(filepathObject!=null){
+				String filepath=filepathObject.toString();
 	String[] filepaths=filepath.split(";");
 	%>
 	<tr>

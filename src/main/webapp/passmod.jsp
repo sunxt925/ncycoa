@@ -17,6 +17,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <META http-equiv=Content-Type content="text/html; charset=gb2312">
 <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
 </HEAD>
+<link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/icon.css">
+<script type="text/javascript" src="<%=path%>/jscomponent/jquery/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="<%=path%>/jscomponent/easyui/jquery.easyui.min.js"></script>
 <script language="javascript" src="js/public/key.js"></script>
 <script language="javascript" src="js/public/check.js"></script>
 <script language="javascript">
@@ -56,20 +60,26 @@ function F8()
 <form name="form1" id="form1" method="post" action="servlet/PageHandler">
  
   <tr>
-    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;<a href="#" onClick="F8()">保存[F8]</a>　<a href="#" onClick="F3()">重填[F3]</a>　<a href="#" onClick="F5()">刷新[F5]</a></td>
+    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;
+    <a id="btn_add" href="#" onClick="F8()" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true">保存[F8]</a>
+    <a id="btn_reset" onClick="F3()" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true">重填[F3]</a>
+    <a id="btn_ref" onClick="F5()" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true">刷新[F5]</a>
+    </td>
   </tr>
-  <tr>
-    <td colspan="3" valign="top" class="main_table_centerbg" align="center"><table width="100%" border="1" cellspacing="0" cellpadding="0" class="table_list1">
-      
-     
-      <tr>
-        <td><div align="right">新密码：</div></td>
-        <td><input name="password" type="text" class="input1" id="password" onKeyDown="EnterKeyDo('')" size="40" maxlength="40"></td>
-      </tr>
-      <tr>
-        <td><div align="right">重复密码：</div></td>
-        <td><input name="password0" type="text" class="input1" id="password0"  onKeyDown="EnterKeyDo('')" size="40" maxlength="40"></td>
-      </tr>
+			<tr height="70px">
+				<td width="100px"><span>&nbsp;&nbsp;&nbsp;新密码：</span></td>
+				<td>
+					<input name="password" id="password" onKeyDown="EnterKeyDo('')" class="easyui-textbox">
+				</td>
+			</tr>
+			<tr height="70px">
+				<td><span>&nbsp;&nbsp;&nbsp;重复密码：</span></td>
+				<td>
+					<input name="password0" id="password0" onKeyDown="EnterKeyDo('')" class="easyui-textbox">
+				</td>
+			</tr>
+    <td colspan="3" valign="top" class="main_table_centerbg" align="center">
+    <table width="100%" border="1" cellspacing="0" cellpadding="0" class="table_list1">
        <input type="hidden" name="usercode" id="usercode" value="<%=staff.getUsercode() %>" >
       <tr>
        

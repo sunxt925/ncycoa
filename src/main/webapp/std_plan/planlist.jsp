@@ -41,7 +41,7 @@ DataTable dt = plan.getAllPlan();
     <thead>
     <tr>
     <th data-options="field:'plandate',width:80" align="center">年度</th>
-    <th data-options="field:'planname',width:80" align="center">名称</th>
+    <th data-options="field:'planname',width:80" align="center">类别</th>
     <th data-options="field:'uptime',width:80" align="center">制定时间</th>
      <th data-options="field:'op',width:100" align="center">操作</th>
     </tr>

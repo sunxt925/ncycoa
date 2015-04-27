@@ -106,28 +106,28 @@ createwindowNoButton('企业标准修订申请表',url,'1000px','500px');
 		   <td width="30%" align="center"> 新建标准:</td>
 		  <td width="70%" align="left">
 		  <label>
-		    <textarea name="newstd" id="newstd"  style="width:200px;height:50px"></textarea>
+		    <textarea name="newstd" id="newstd"  style="width:400px;height:100px"></textarea>
 		   </label></td>
         </tr>
         <tr>
 		   <td width="30%" align="center"> 修订标准:</td>
 		  <td width="70%" align="left">
 		  <label>
-		    <textarea name="modstd" id="modstd"  style="width:200px;height:50px"></textarea>
+		    <textarea name="modstd" id="modstd"  style="width:400px;height:100px"></textarea>
 		   </label></td>
         </tr>
 		  <tr>
 		   <td width="30%" align="center"> 废除标准:</td>
 		  <td width="70%" align="left">
 		  <label>
-		    <textarea name="delstd" id="delstd"  style="width:200px;height:100px"></textarea>
+		    <textarea name="delstd" id="delstd"  style="width:400px;height:100px"></textarea>
 		   </label></td>
         </tr>
  		  <tr>
 		   <td width="30%" align="center"> 申请理由:</td>
 		  <td width="70%" align="left">
 		  <label>
-		    <textarea name="applyreason" id="applyreason"  style="width:200px;height:150px"></textarea>
+		    <textarea name="applyreason" id="applyreason"  style="width:400px;height:100px"></textarea>
 		   </label></td>
         </tr>
 <!--          <tr> -->

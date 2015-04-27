@@ -1,6 +1,6 @@
 <%@ page language="java"
 	import="java.util.*,com.zhuozhengsoft.pageoffice.*,com.zhuozhengsoft.pageoffice.wordwriter.*,java.awt.*,com.ftp.*,com.entity.ftp.*,java.io.*"
-	pageEncoding="gb2312"%>
+	pageEncoding="GBK"%>
 	<%@page import="com.zhuozhengsoft.pageoffice.PDFCtrl"%>
 <%@page import="com.zhuozhengsoft.pageoffice.ThemeType"%>
 <%@ taglib uri="http://java.pageoffice.cn" prefix="po"%>

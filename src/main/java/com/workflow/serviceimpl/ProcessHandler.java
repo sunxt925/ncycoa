@@ -26,7 +26,8 @@ public class ProcessHandler {
 	private java.util.Properties m_ftpProperties;
 	private static String qicao;
 	private static String shenhe;
-	private static String jishushenhe;
+	private static String jishushenheyuan;
+	private static String jishushenhezhuren;
 	private static String fabu;
 	private static String orgfabu;
 	private static String orgyingxiao;
@@ -63,8 +64,13 @@ public boolean startProcessinstance(String staffcode,ProcessEngine processEngine
 	List<String> anquangroup=new ArrayList<String>();
 	List<String> wuliugroup=new ArrayList<String>();
 	List<String> jichugroup=new ArrayList<String>();
+	List<String> yingxiaoleader=new ArrayList<String>();
+	List<String> zhuanmaileader=new ArrayList<String>();
+	List<String> anquanleader=new ArrayList<String>();
+	List<String> wuliuleader=new ArrayList<String>();
+	List<String> jichuleader=new ArrayList<String>();
 	List<String> weiyuangroup=new ArrayList<String>();
-	String[] jishu=jishushenhe.split(",");
+	String[] jishu=jishushenheyuan.split(",");
 	for(int j=0;j<jishu.length;j++){
 	DataTable yingxiaoDT=getMemberList(jishu[j],orgyingxiao);
 	for(int i=0;i<yingxiaoDT.getRowsCount();i++){
@@ -91,6 +97,35 @@ public boolean startProcessinstance(String staffcode,ProcessEngine processEngine
 		jichugroup.add(jichuDT.get(i).getString("staffcode"));
 	}
 	}
+	///////////////////////////////////////////////////////////////////
+	String[] jishuleader=jishushenhezhuren.split(",");
+	for(int j=0;j<jishuleader.length;j++){
+	DataTable yingxiaoDTl=getMemberList(jishuleader[j],orgyingxiao);
+	for(int i=0;i<yingxiaoDTl.getRowsCount();i++){
+		yingxiaoleader.add(yingxiaoDTl.get(i).getString("staffcode"));
+	}
+	
+	DataTable zhuanmaiDTl=getMemberList(jishuleader[j],orgzhuanmai);
+	for(int i=0;i<zhuanmaiDTl.getRowsCount();i++){
+		zhuanmaileader.add(zhuanmaiDTl.get(i).getString("staffcode"));
+	}
+	
+	DataTable anquanDTl=getMemberList(jishuleader[j],organquan);
+	for(int i=0;i<anquanDTl.getRowsCount();i++){
+		anquanleader.add(anquanDTl.get(i).getString("staffcode"));
+	}
+	
+	DataTable wuliuDTl=getMemberList(jishuleader[j],orgwuliu);
+	for(int i=0;i<wuliuDTl.getRowsCount();i++){
+		wuliuleader.add(wuliuDTl.get(i).getString("staffcode"));
+	}
+	
+	DataTable jichuDTl=getMemberList(jishuleader[j],orgjichu);
+	for(int i=0;i<jichuDTl.getRowsCount();i++){
+		jichuleader.add(jichuDTl.get(i).getString("staffcode"));
+	}
+	}
+	///////////////////////////////////////////////////////////////////
 	DataTable weiyuanDT=getMemberList(shenhe,orgweiyuan);
 	for(int i=0;i<weiyuanDT.getRowsCount();i++){
 		weiyuangroup.add(weiyuanDT.get(i).getString("staffcode"));
@@ -103,6 +138,11 @@ public boolean startProcessinstance(String staffcode,ProcessEngine processEngine
 	map.put("AnQuanGroup",anquangroup);
 	map.put("WuLiuGroup",wuliugroup);
 	map.put("JiChuGroup",jichugroup);
+	map.put("YingXiaoLeader",yingxiaoleader);
+	map.put("ZhuanMaiLeader",zhuanmaileader);
+	map.put("AnQuanLeader",anquanleader);
+	map.put("WuLiuLeader",wuliuleader);
+	map.put("JiChuLeader",jichuleader);
 	map.put("WeiYuanGroup",weiyuangroup);
 	//////////////////////////////////////////////////////////////////////////////
 		String towhere="";
@@ -190,7 +230,8 @@ public void LoadConfig(String name)
 			// µÃµ½ÅäÖÃÄÚÈÝ
 			qicao = consume(m_ftpProperties, "qicao");
 			shenhe = consume(m_ftpProperties, "shenhe");
-			jishushenhe = consume(m_ftpProperties, "jishushenhe");
+			jishushenheyuan = consume(m_ftpProperties, "jishushenheyuan");
+			jishushenhezhuren = consume(m_ftpProperties, "jishushenhezhuren");
 			fabu = consume(m_ftpProperties, "fabu");
 			orgfabu = consume(m_ftpProperties, "orgfabu");
 			orgyingxiao = consume(m_ftpProperties, "orgyingxiao");
@@ -237,7 +278,7 @@ private String consume(java.util.Properties p, String key)
 public DataTable getMemberList(String positioncode,String orgcode) {
 	try {
 		DBObject db = new DBObject();
-		System.out.println("select staffcode from base_orgmember where  positioncode='" + positioncode + "' and orgcode='"+orgcode+"'");
+		//System.out.println("select staffcode from base_orgmember where  positioncode='" + positioncode + "' and orgcode='"+orgcode+"'");
 		DataTable dt = db.runSelectQuery("select staffcode from base_orgmember where  positioncode='" + positioncode + "' and orgcode='"+orgcode+"'");
 		return dt;
 	} catch (Exception e) {

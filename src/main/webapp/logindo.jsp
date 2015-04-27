@@ -3,7 +3,7 @@
 <%@ page import="java.io.*"%>
 <%@ page import="com.common.*"%>
 <%@ page import="com.dao.system.*"%>
-<%@ page import="javax.servlet.http.Cookie;"%>
+<%@ page import="javax.servlet.http.Cookie"%>
 <html>
 <head>
 <title></title>

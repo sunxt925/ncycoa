@@ -67,7 +67,7 @@ TaskService taskService = processEngine
 		pageContext.setAttribute("processInstance", processInstance);
 		InstanceService instanceimpl=new InstanceServiceImpl();
 	    InstanceInfo instance=instanceimpl.loadInstanceById(processInstance.getId());
-		if(staffcode.equals(instance.getInitstaffcode())){
+		if(instance!=null&&staffcode.equals(instance.getInitstaffcode())){
 %>							        
 			<tr>
 			    <td><%=processInstance.getId() %></td>

@@ -27,6 +27,9 @@ function Fbase(){
 	var url='../std_base/searchpolicylist.jsp';
 	  window.open(url);
 }
+function std(type){
+		window.open('std_tab.jsp?stdclass='+type);
+}
 </script>
 <body>
 	<div >
@@ -50,6 +53,9 @@ function Fbase(){
     		<area shape="rect" coords="801,250,834,358" href="#" onClick="F1('NC.01.06')"/>  
     		<area shape="rect" coords="852,250,882,358" href="#" onClick="F1('NC.01.04')"/>  
     		<area shape="rect" coords="901,250,933,358" href="#" onClick="F1('NC.01.02')"/>  
+    		<area shape="rect" coords="362,455,507,485" href="#" onClick="std('js')"/>  
+    		<area shape="rect" coords="591,455,739,486" href="#" onClick="std('gl')"/>  
+    		<area shape="rect" coords="482,559,629,588" href="#" onClick="std('gz')"/>  
     	 </map>  
  	</div>
 </body>
