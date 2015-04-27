@@ -75,3 +75,7 @@
 .icon-exit{
 	background:url('icons/exit.png') no-repeat center center;
 }
+
+.icon-default{
+	background:url('icons/default.png') no-repeat center center;
+}

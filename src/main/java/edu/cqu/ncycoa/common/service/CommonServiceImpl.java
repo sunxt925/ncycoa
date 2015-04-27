@@ -18,7 +18,7 @@ import edu.cqu.ncycoa.dao.CommonDao;
 public class CommonServiceImpl implements CommonService {
 	
 	@Resource(name="commonDao")
-	private CommonDao commonDao;
+	protected CommonDao commonDao;
 	
 	@Override
 	public <T> T findEntityById(Object id, Class<T> clazz) {
