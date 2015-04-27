@@ -27,7 +27,7 @@
 <table style="width:100%;border-spacing:1px;" class="formtable">
 	<tr>
 		<td align="right"><label class="Validform_label"> 工作完成情况描述 </label></td>
-		<td class="value">
+		<td class="value" align="left">
 		<textarea class="inputxt" id="description" name="description" style="overflow-x:hidden;width:400px;height:100px">${plan.description}</textarea>
 		<span class="Validform_checktip"></span>
 		</td>
