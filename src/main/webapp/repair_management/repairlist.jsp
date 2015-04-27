@@ -28,7 +28,7 @@
 		<h:dgToolBar url="repair_management.htm?update" icon="icon-add" funname="update" title="±à¼­"></h:dgToolBar>
 		<h:dgToolBar url="repair_management.htm?del" icon="icon-remove" funname="del" title="É¾³ý"></h:dgToolBar>
 		<h:dgColumn title="²Ù×÷" field="opt"></h:dgColumn>
-		<h:dgConfOpt title="ÉêÇëÎ¬ÐÞ" url="repair_management.htm?startworkflow&id={id}" message="È·ÈÏÌá½»ÉêÇë£¿" />
+		<h:dgConfOpt title="ÉêÇëÎ¬ÐÞ" url="repair_management.htm?repairAudit&id={id}" message="È·ÈÏÌá½»ÉêÇë£¿" />
 		
 	</h:datagrid>
 </body>

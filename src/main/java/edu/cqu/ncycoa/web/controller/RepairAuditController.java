@@ -1,11 +1,19 @@
 package edu.cqu.ncycoa.web.controller;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.activiti.engine.ProcessEngine;
+import org.activiti.engine.HistoryService;
+import org.activiti.engine.ManagementService;
+import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +31,6 @@ import edu.cqu.ncycoa.common.tag.TagUtil;
 import edu.cqu.ncycoa.common.util.dao.QueryUtils;
 import edu.cqu.ncycoa.common.util.dao.TQOrder;
 import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
-import edu.cqu.ncycoa.domain.MeetingInfo;
 import edu.cqu.ncycoa.domain.RepairAudit;
 import edu.cqu.ncycoa.util.ConvertUtils;
 import edu.cqu.ncycoa.util.Globals;
@@ -37,8 +44,20 @@ public class RepairAuditController {
 	@Resource(name="systemService")
 	SystemService systemService;
 	
-	@Resource(name="processEngine")
-	ProcessEngine processEngine;
+	@Resource(name="wfRtService")
+	RuntimeService runtimeService;
+	
+	@Resource(name="wfRepoService")
+	RepositoryService repositoryService;
+	
+	@Resource(name="wfTaskService")
+	TaskService taskService;
+	
+	@Resource(name="wfHistoryService")
+	HistoryService historyService;
+	
+	@Resource(name="wfManagementService")
+	ManagementService managementService;
 	
 	@RequestMapping(params="add")
 	public String add(HttpServletRequest request) {
@@ -217,6 +236,25 @@ public class RepairAuditController {
 		SystemUtils.jsonResponse(response, j);
 	}
 	
-	
+	@RequestMapping(params = "repairAudit")
+	@ResponseBody
+	public void repairAudit(HttpServletRequest request, HttpServletResponse response) {
+		AjaxResultJson j = new AjaxResultJson();
+		String message = "";
+		String id = request.getParameter("id");
+		try {
+			String processID = RepairAudit.class.getSimpleName();
+			Map<String, Object> paras =new HashMap<String, Object>();
+			paras.put("inputUser", "001");
+			ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processID, paras);
+			
+			message = "维修申请提交成功";
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		j.setMsg(message);
+		SystemUtils.jsonResponse(response, j);
+	}
 	
 }

@@ -9,11 +9,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -25,13 +23,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.common.Util;
-import com.entity.index.AllMeritCollection;
 import com.entity.system.Staff;
 import com.entity.system.UserInfo;
 
@@ -45,10 +40,8 @@ import edu.cqu.ncycoa.common.util.dao.QueryUtils;
 import edu.cqu.ncycoa.common.util.dao.TQOrder;
 import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
 import edu.cqu.ncycoa.domain.GetStd;
-import edu.cqu.ncycoa.domain.Plan;
 import edu.cqu.ncycoa.util.ConvertUtils;
 import edu.cqu.ncycoa.util.Globals;
-import edu.cqu.ncycoa.util.MyBeanUtils;
 import edu.cqu.ncycoa.util.SystemUtils;
 
 @Controller

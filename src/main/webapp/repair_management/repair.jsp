@@ -128,16 +128,16 @@
 <script type="text/javascript">
 $("#btn_selectobject").click(function(){
 	
-	createwindow('ss','indexmanage/selectstaff.jsp',500,500,returnobjValue );
+	createwindow('选择部门','indexmanage/selectunit.jsp',500,500,returnobjValue );
     });
 function returnobjValue(data){
-	var staffs = data.code;
-	var staffcodes = "";
-	for(var i = 0;i < staffs.length;i++){
-		staffcodes = staffcodes + staffs[i].staffcode+",";
+	var org = data.code;
+	if(org.length>1){
+		alert("最多只能选择一个部门");
+	}else{
+		$('#apporgCode').val(org[0].orgcode);
 	}
-	$('#participants').val(staffcodes);
-	$('#numAttendee').val(staffs.length);
+	
 	
 }
 function createwindow(title, url, width, height,func) {
