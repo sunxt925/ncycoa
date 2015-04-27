@@ -19,12 +19,16 @@ public class PlanServiceImpl extends CommonServiceImpl implements PlanService {
 	@Override
 	public void runPlan(Long planId){
 		Plan plan = commonDao.readEntityById(planId, Plan.class);
+		//设置计划为执行态
 		plan.setStatus(PlanStatus.EXECUTTING);
+		
 		List<PlanStep> steps = plan.getSteps();
 		if(steps != null && !steps.isEmpty()){
+			//找到该项计划的第一个流程节点，设置该节点为运行状态
 			PlanStep step = steps.get(0);
 			step.setStatus((short)1);
 			
+			//给流程节点的负责人，创建一个待办事项
 			PendingTask task = new PendingTask();
 			task.setPlan(step);
 			task.setParticipant(step.getParticipant());
@@ -32,7 +36,6 @@ public class PlanServiceImpl extends CommonServiceImpl implements PlanService {
 			task.setContent("来源于计划[ " + step.getPlan().getName() + " ]的待处理任务");
 			task.setStatus((short)0);
 			task.setGenDate(new Date());
-			
 			commonDao.saveEntity(task);
 		}
 	}
@@ -40,9 +43,11 @@ public class PlanServiceImpl extends CommonServiceImpl implements PlanService {
 	@Override
 	public void handlePendingTask(Long taskId){
 		PendingTask task = commonDao.readEntityById(taskId, PendingTask.class);
+		//设置已处理该待办事项
 		task.setStatus((short)1);
 		task.setHandleDate(new Date());
 		
+		//设置该事项对应的流程节点的状态为，已完成
 		PlanStep step = task.getPlan();
 		step.setStatus((short)2);
 		
@@ -54,11 +59,12 @@ public class PlanServiceImpl extends CommonServiceImpl implements PlanService {
 			}
 		}
 		
-		if(i == steps.size() - 1) {
+		if(i == steps.size() - 1) { //如果流程已走完，修改计划的状态
 			step.getPlan().setStatus((short)5);
-		} else {
+		} else { //流程还未走完，取下一个流程节点，并推送新的待办事项
 			step = steps.get(i+1);
 			step.setStatus((short)1);
+			
 			task = new PendingTask();
 			task.setPlan(step);
 			task.setParticipant(step.getParticipant());
@@ -66,7 +72,6 @@ public class PlanServiceImpl extends CommonServiceImpl implements PlanService {
 			task.setContent("来源于计划[ " + step.getPlan().getName() + " ]的待处理任务");
 			task.setGenDate(new Date());
 			task.setStatus((short)0);
-			
 			commonDao.saveEntity(task);
 		}
 	}
