@@ -36,39 +36,42 @@ function F8()
 
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
 <form name="form1" id="form1" method="post" action="../../servlet/PageHandler">
-  <tr>
-    <td width="3%" class="main_table_topbg" height="31"><img src="../../images/table_lt.jpg" width="22" height="31"></td>
-    <td width="94%" valign="middle" class="main_table_topbg" height="31">首页 &gt;&gt; 系统维护 &gt;&gt; <a href="systemrole_manage.jsp">角色管理</a>  &gt;&gt; 添加角色</td>
-    <td width="3%" align="right" class="main_table_topbg" height="31"><img src="../../images/table_rt.jpg" width="22" height="31"></td>
-  </tr>
-      <tr>
-    <td> <a id="F8" style="display:none" href="#" onClick="F8()">保存[F8]</a></td>
-  </tr>
+ 
 <!--  <tr>-->
 <!--    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;<a href="#" onClick="F8()">保存[F8]</a>　<a href="#" onClick="F3()">重填[F3]</a>　<a href="#" onClick="F5()">刷新[F5]</a></td>-->
 <!--  </tr>-->
+<table cellpadding="5"  width="100%" align="left" >		
+ <tr>
+    <td> <a id="F8" style="display:none" href="#" onClick="F8()">保存[F8]</a></td>
+  </tr>
+			<tr>
+				<td><span>角色代码：</span></td>
+				<td>
+					<%out.print(cu.print("SYSTEM_ROLE","ROLECODE")); %>
+				</td>
+			</tr>
+			<tr>
+				<td><span>角色名称：</span></td>
+				<td>
+					<%out.print(cu.print("SYSTEM_ROLE","ROLENAME")); %>
+				</td>
+			</tr>
+			 
+			<tr>
+				<td><span>角色模式：</span></td>
+				<td>
+					<%out.print(cu.print("SYSTEM_ROLE","ROLEMODE"));%>
+				</td>
+			</tr>		
+			<tr>
+				<td><span>有效标志：</span></td>
+				<td>
+					<%out.print(cu.print("SYSTEM_ROLE","VALIDFLAG"));%>
+				</td>
+			</tr>	
+</table>
   <tr>
-    <td colspan="3" valign="top" class="main_table_centerbg" align="center"><table width="100%" border="1" cellspacing="0" cellpadding="0" class="table_list1">
-      <tr>
-        <td width="20%"><div align="right">角色代码：</div></td>
-        <td width="80%">
-      <%out.print(cu.print("SYSTEM_ROLE","ROLECODE")); %>
-        <!--<input name="Rolecode" type="text" class="input1" id="Rolecode" onKeyDown="EnterKeyDo('')" size="30" maxlength="30"></td>
-      --></td>
-    <tr>
-        <td width="20%"><div align="right">角色名称：</div></td>
-        <td width="80%">
-        <%out.print(cu.print("SYSTEM_ROLE","ROLENAME")); %><!--<input name="Rolename" type="text" class="input1" id="Rolename" onKeyDown="EnterKeyDo('')" size="30" maxlength="30"></td>
-      --></td>
-      <tr>
-        <td width="20%"><div align="right">角色模式：</div></td>
-        <td width="80%">
-         <%out.print(cu.print("SYSTEM_ROLE","ROLEMODE"));%><!--<input name="Rolemode" type="text" class="input1" id="Rolemode" onKeyDown="EnterKeyDo('')" size="30" maxlength="30"></td>
-      --></td>
-      <tr>
-        <td><div align="right">有效标志：</div></td>
-        <td width="80%">
-         <%out.print(cu.print("SYSTEM_ROLE","VALIDFLAG"));%><!--
+  <!--
         <input name="ValidFlag" type="text" class="input1" id="ValidFlag" size="30" maxlength="30" onKeyDown="EnterKeyDo('F8()')">
         --><input name="act" type="hidden" id="act" value="add">
         <input type="hidden" id="entity" name="entity" value="SYSTEM_ROLE"/>
