@@ -25,6 +25,9 @@ public class PendingTask {
 	@Column(name="CONTENT")
 	private String content;   // ≤Ω÷Ë√Ë ˆ
 	
+	@Column(name="FORM_KEY")
+	private String formKey;
+
 	@OneToOne
 	@JoinColumn(name = "PLAN_STEP_ID")
 	private PlanStep plan;
@@ -60,6 +63,14 @@ public class PendingTask {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+	
+	public String getFormKey() {
+		return formKey;
+	}
+
+	public void setFormKey(String formKey) {
+		this.formKey = formKey;
 	}
 
 	public PlanStep getPlan() {

@@ -118,9 +118,9 @@ function mydel(title, actionUrl, gname) {
 
 
 
-	$(document).ready(function(){
-		$("input[name='inputDate_begin']").attr("class","easyui-datebox");
-		$("input[name='inputDate_end']").attr("class","easyui-datebox");
-	});
+$(document).ready(function(){
+	$("input[name='inputDate_begin']").attr("class","easyui-datebox");
+	$("input[name='inputDate_end']").attr("class","easyui-datebox");
+});
 </script>
 </html>

@@ -26,7 +26,7 @@ function changetopunit(unitccm)
 	var newlisturl='std_tab.jsp?unitccm='+unitccm;
 	var newtreeurl='../tree/unit_tree.jsp?pageurl=../std/std_tab.jsp&pagetarget=stdlist&unitccm='+unitccm;
 	//window.open(newlisturl,'stdlist');
-	window.open(newtreeurl,'unittree')
+	window.open(newtreeurl,'unittree');
 }}
 </script>
 <BODY class="mainbody" onLoad="this.focus()">
