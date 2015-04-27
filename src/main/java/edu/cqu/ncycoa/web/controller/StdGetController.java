@@ -45,7 +45,6 @@ import edu.cqu.ncycoa.common.util.dao.QueryUtils;
 import edu.cqu.ncycoa.common.util.dao.TQOrder;
 import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
 import edu.cqu.ncycoa.domain.GetStd;
-import edu.cqu.ncycoa.domain.Plan;
 import edu.cqu.ncycoa.util.ConvertUtils;
 import edu.cqu.ncycoa.util.Globals;
 import edu.cqu.ncycoa.util.MyBeanUtils;

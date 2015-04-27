@@ -111,11 +111,15 @@
    <tr>
 		<td align="right"><label class="Validform_label"> 归口管理部门</label></td>
 		<td class="value">
+		<%if(request.getAttribute("manageDepart")!=null) {%>
 		<select class="easyui-combobox" id="manageDepart" name="manageDepart" style="width:150px;">
 		<%
 		out.write(request.getAttribute("manageDepart").toString());
 		%>
         </select>
+        <%}else {%>
+        <input class="inputxt" style="width:150px;" id="manageDepart" name="manageDepart" value="${supplier.manageDepart}">
+        <%}%>
 		</td>
 	</tr>
 	<!--
