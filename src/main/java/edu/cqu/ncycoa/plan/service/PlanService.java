@@ -1,16 +1,21 @@
 package edu.cqu.ncycoa.plan.service;
 
 import java.util.List;
+import java.util.Map;
 
 import edu.cqu.ncycoa.common.service.CommonService;
+import edu.cqu.ncycoa.plan.domain.PlanInstance;
 import edu.cqu.ncycoa.plan.domain.PlanStep;
+import edu.cqu.ncycoa.plan.domain.PlanTask;
 
 public interface PlanService extends CommonService{
 
 	public void runPlan(Long planId);
 
-	public void handlePendingTask(Long taskId);
-
 	public List<PlanStep> findPlanStepsByPlanId(Long planId);
+
+	public Map<PlanStep, List<PlanTask>> findPlanTasks(PlanInstance planInstance);
+
+	public PlanInstance findPlanInstanceByPlanId(Long planId);
 
 }

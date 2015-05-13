@@ -22,29 +22,22 @@ a.dgopt{
 </style>
 </head>
 <body>
-	<h:datagrid actionUrl="pending-task.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="task_list">
+	<h:datagrid actionUrl="plan-management.htm?dgdata_supervise" fit="true" fitColumns="true" queryMode="group" name="plan_supervise_list">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
-		<h:dgColumn field="formKey" title="formKey" hidden="true"></h:dgColumn>
-		<h:dgColumn field="content" width="300" sortable="false" title="任务描述"></h:dgColumn>
-		<h:dgColumn field="genDate" title="发布时间" dateFormatter="yyyy-MM-dd hh:mm:ss" sortable="false" query="true" queryMode="scope"></h:dgColumn>
+		<h:dgColumn field="name" title="计划名称" query="true"></h:dgColumn>
+		<h:dgColumn field="type" title="计划类型" replace="岗位计划_0,部门计划_1" query="true"></h:dgColumn>
+		<h:dgColumn field="inputUser" title="录入人员" dictionary="base_staff,staffcode,staffname" query="true"></h:dgColumn>
+		<h:dgColumn field="inputDate" title="录入时间" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="scope"></h:dgColumn>
 		<h:dgColumn title="操作" field="opt"></h:dgColumn>
-		<h:dgFunOpt title="处理任务" funname="handleTask({id},{formKey})" /> 
+		<h:dgOpenOpt title="运行情况" url="plan-management.htm?exec_view&id={id}"/>
 	</h:datagrid>
 </body>
 
-<script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("input[name='genDate_begin']").click(function(){WdatePicker();});
-		$("input[name='genDate_end']").click(function(){WdatePicker();});
+		$("input[name='inputDate_begin']").click(function(){WdatePicker();});
+		$("input[name='inputDate_end']").click(function(){WdatePicker();});
 	});
-	
-	function handleTask(id, formkey){
-		if(id == null || id == "" || id == "null"){
-			createwindow("处理任务", formkey);
-		} else {
-			createwindow("处理任务", formkey+"&id="+id);
-		}	
-	}
 </script>
+<script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>
 </html>

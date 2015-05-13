@@ -380,8 +380,10 @@ function createwindow(title, url,width,height) {
 			cache:false,
 		    ok: function(){
 		    	iframe = this.iframe.contentWindow;
-				saveObj();
-				return false;
+				if(!saveObj()){
+					return false;
+				}
+				return true;
 		    },
 		    cancelVal: '关闭',
 		    cancel: true /*为true等价于function(){}*/
@@ -398,8 +400,10 @@ function createwindow(title, url,width,height) {
 			cache:false,
 		    ok: function(){
 		    	iframe = this.iframe.contentWindow;
-				saveObj();
-				return false;
+				if(!saveObj()){
+					return false;
+				}
+				return true;
 		    },
 		    cancelVal: '关闭',
 		    cancel: true /*为true等价于function(){}*/

@@ -13,14 +13,8 @@
 
 <body style="overflow-x:hidden">
 <div>
-${task.content}<br/>
-${task.genDate}<br/>
-
-${task.plan.plan.name }<br/>
-${task.plan.plan.description }<br/>
-
-${task.plan.content }<br/>
-${task.plan.type }<br/>
+${task.participantName}<br/>
+${task.handleDate}<br/>
 </div>
 </body>
 </html>

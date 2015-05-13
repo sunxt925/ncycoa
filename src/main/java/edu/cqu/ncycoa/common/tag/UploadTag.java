@@ -1,4 +1,4 @@
-package com.performance;
+package edu.cqu.ncycoa.common.tag;
 
 import java.io.IOException;
 import java.util.Random;
@@ -128,7 +128,7 @@ public class UploadTag extends TagSupport {
 				else
 				{
 				  if(callback!=null)
-				  sb.append(""+callback+"();");
+				  sb.append(""+callback+"(queueData);");
 				}
 				if(view)
 				{
@@ -141,7 +141,7 @@ public class UploadTag extends TagSupport {
 				sb.append("var d=$.parseJSON(data);").append("\n");
 				if(view)
 				{
-				sb.append("var fileitem=\"<span id=\'\"+d.attributes.id+\"\'><a href=\'#\' onclick=openwindow(\'文件查看\',\'\"+d.attributes.viewhref+\"\',\'70%\',\'80%\') title=\'查看\'>\"+d.attributes.name+\"</a><img border=\'0\' onclick=confuploadify(\'\"+d.attributes.delurl+\"\',\'\"+d.attributes.id+\"\') title=\'删除\' src=\'plug-in/uploadify/img/uploadify-cancel.png\' widht=\'15\' height=\'15\'>&nbsp;&nbsp;</span>\";");
+				sb.append("var fileitem=\"<span id=\'\"+d.attributes.id+\"\'><a href=\'#\' onclick=openwindow(\'文件查看\',\'\"+d.attributes.viewhref+\"\',\'70%\',\'80%\') title=\'查看\'>\"+d.attributes.name+\"</a><img border=\'0\' onclick=confuploadify(\'\"+d.attributes.delurl+\"\',\'\"+d.attributes.id+\"\') title=\'删除\' src=\'jscomponent/uploadify/uploadify-cancel.png\' widht=\'15\' height=\'15\'>&nbsp;&nbsp;</span>\";");
 				sb.append("m.put(d.attributes.id,fileitem);");
 				sb.append("fileKey=d.attributes.fileKey;");
 				}
