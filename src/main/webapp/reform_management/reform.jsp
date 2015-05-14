@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>计划管理</title>
+<title>整改管理</title>
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/icon.css">
 <link rel="stylesheet" href="jscomponent/validform/css/style.css" type="text/css" />
@@ -79,65 +79,58 @@
 </script>
 </head>
 <body style="overflow-x:hidden">
-<form id="formobj" name="formobj" action="repair_management.htm?save"  method="post">
+<form id="formobj" name="formobj" action="reform_management.htm?save"  method="post">
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
-<input id="id" name="id" type="hidden" value="${repairAudit.id}">
+<input id="id" name="id" type="hidden" value="${reform.id}">
 <table style="width:600px;border-spacing:1px;" class="formtable">
 	<tr>
-		<td align="right"><label class="Validform_label"> 项目名称 </label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="projectName" name="projectName" value="${repairAudit.projectName}" datatype="s2-10">
+		<td align="right"><label class="Validform_label"> 整改项目名称 </label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="name" name="name" value="${reform.name}" datatype="s2-10">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label"> 申请单位 </label></td>
+		<td align="right"><label class="Validform_label"> 下达整改部门 </label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="apporgCode" name="apporgCode" value="${repairAudit.apporgCode}" >
+		<input class="inputxt" style="width:150px;" id="xdzgOrgcode" name="xdzgOrgcode" value="${reform.xdzgOrgcode}" datatype="s2-10">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+
+	
+	<tr>
+	<td align="right"><label class="Validform_label"> 要求整改部门 </label></td>
+		<td class="value">
+		<input class="inputxt" style="width:150px;" id="clOrgcode" name="clOrgcode" value="${reform.clOrgcode}" >
 		<a id="btn_selectobject" href="#" class="easyui-linkbutton"
 				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label"> 维修项目预算 </label></td>
+		<td align="right"><label class="Validform_label"> 附件</label></td>
 		<td class="value">
-		 <input  class="inputxt" style="width:150px;" id="repairFree" name="repairFree"   value="${repairAudit.repairFree}" datatype="s2-5">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	
-	<tr>
-		<td align="right"><label class="Validform_label"> 维修主要内容 </label></td>
-		<td class="value">
-		<input  class="inputxt" style="width:150px;" id="repairContent" name="repairContent"   value="${repairAudit.repairContent}" >
+		<input class="inputxt" style="width:150px;" id="fileName" name="fileName" value="${reform.fileName}" >
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label"> 申请部门意见 </label></td>
+		<td align="right"><label class="Validform_label"> 整改说明 </label></td>
 		<td class="value">
-		<input  class="inputxt" style="width:150px;" id="apporgOpinion" name="apporgOpinion"   value="${repairAudit.apporgOpinion}" >
+		<input class="inputxt" style="width:150px;" id="memo" name="memo" value="${reform.memo}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
-
-	<input  type="hidden" id="projectType" name="projectType" value="${repairAudit.projectType}">
-	<input  type="hidden" id="auditFlag" name="auditFlag" value="${repairAudit.auditFlag}">
 </table>
+<input type="hidden" id="flag" name="flag" value="${reform.flag}">
 </form>
 <script type="text/javascript">
 $("#btn_selectobject").click(function(){
 	
-	createwindow('选择部门','indexmanage/selectunit.jsp',500,500,returnobjValue );
+	createwindow('选择单位','meetingroom_management/selectunit.jsp',300,400,returnobjValue );
     });
 function returnobjValue(data){
-	var org = data.code;
-	if(org.length>1){
-		alert("最多只能选择一个部门");
-	}else{
-		$('#apporgCode').val(org[0].orgcode);
-	}
-	
+	$('#clOrgcode').val(data.code);
 	
 }
 function createwindow(title, url, width, height,func) {

@@ -1,3 +1,4 @@
+<%@page import="oracle.net.aso.a"%>
 <%@ page language="java" pageEncoding="gb2312"%>
 <%@page import="java.io.*"%>
 <%@page import="org.activiti.engine.*"%>
@@ -47,15 +48,28 @@
  </script>
 </head>
 <%
-String processInstanceId = "RepairAudit:1:27504";
-String taskId = "30005";
+String processInstanceId = request.getParameter("processInstanceId");
+String taskId = request.getParameter("taskId");
 
 ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(application);
 ProcessEngine processEngine = (ProcessEngine) ctx.getBean("processEngine");
 TaskService taskService = processEngine
 .getTaskService();
 	RepositoryService repositoryService = processEngine.getRepositoryService();
-	if (taskId != null) {
+	
+	Task task = processEngine.getTaskService().createTaskQuery().taskId(taskId).singleResult();
+	String processDefId = task.getProcessDefinitionId();
+	ProcessDefinitionEntity processDefinitionEntity = (ProcessDefinitionEntity)processEngine.getRepositoryService().getProcessDefinition(processDefId);
+	
+	String processInsID = task.getProcessInstanceId();
+	
+	ProcessInstance pi = processEngine.getRuntimeService().createProcessInstanceQuery().processInstanceId(processInsID).singleResult();
+	
+	String activitid = pi.getActivityId();
+	
+	ActivityImpl activityImpl = processDefinitionEntity.findActivity(activitid);
+	
+/* 	if (taskId != null) {
 		Task task = processEngine.getTaskService().createTaskQuery().taskId(taskId).singleResult();
 		processInstanceId=task.getProcessInstanceId();
 	}
@@ -104,11 +118,12 @@ ProcessDefinition processDefinition = repositoryService
                     break;  
                 }  
             }
-          }
+          } */
 %>
+
 <body >
-<img  src="pic.jsp" style="text-align: center;position:absolute;left:0.5%;top:0.5%;">
-<%for(ActivityImpl actImpl : actImpls){ %>
-<div id="flow" style="position:absolute; border:1px solid red;left:100px;top:200px;width:100px;height:200px;" ></div>
-<%} %>
+<img  src="pic.jsp?processDefid=<%=processInstanceId %>" style="position:absolute;left:66px;top:193px;">
+
+<div  style="position:absolute; border:1px solid red;left:<%=activityImpl.getX()%>px;top:<%=activityImpl.getY()%>px;width:<%=activityImpl.getWidth()%>px;height:<%=activityImpl.getHeight()%>px;" ></div>
+
 </body>

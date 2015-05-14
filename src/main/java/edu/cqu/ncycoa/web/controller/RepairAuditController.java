@@ -1,7 +1,10 @@
 package edu.cqu.ncycoa.web.controller;
 
 
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -13,7 +16,14 @@ import org.activiti.engine.ManagementService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.impl.identity.Authentication;
+import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
+import org.activiti.engine.impl.pvm.PvmTransition;
+import org.activiti.engine.impl.pvm.process.ActivityImpl;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Comment;
+import org.activiti.engine.task.Task;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +31,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.common.Format;
+import com.dao.system.UnitDao;
+import com.entity.index.AllMeritCollection;
+import com.entity.system.Org;
+import com.entity.system.UserInfo;
 
 import edu.cqu.ncycoa.common.dto.AjaxResultJson;
 import edu.cqu.ncycoa.common.dto.DataGrid;
@@ -244,17 +258,163 @@ public class RepairAuditController {
 		String id = request.getParameter("id");
 		try {
 			String processID = RepairAudit.class.getSimpleName();
+			String objId = processID + ":" +id;
 			Map<String, Object> paras =new HashMap<String, Object>();
-			paras.put("inputUser", "001");
-			ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processID, paras);
+			paras.put("inputUser", ((UserInfo)request.getSession().getAttribute("UserInfo")).getStaffcode());
+			RepairAudit repairAudit = systemService.findEntityById(Long.parseLong(id), RepairAudit.class);
+			String orgcode = repairAudit.getApporgCode(); 
+			Org org = new Org(orgcode);
+			String orgaudit = "";
+			String companyaudit = "";
+			String companycode = AllMeritCollection.getcompanyByobject(orgcode);
+			if(repairAudit.getRepairFree() > 20000){
+				//市局
+				orgaudit = UnitDao.getOfficeAudit();
+				companyaudit = UnitDao.getCityAudit();
+			}else{
+				if(org.getAdminClass().equals("0")){
+					orgaudit = UnitDao.getOfficeAudit();
+					companyaudit = UnitDao.getCityAudit();
+				}else{
+					
+					if(Integer.parseInt((companycode.split("\\.")[2])) >= 20){
+						//区县
+						orgaudit = UnitDao.getQXOfficeAudit(companycode);
+						companyaudit = UnitDao.getComanyAudit(companycode);
+					}else{
+						//市局
+						orgaudit = UnitDao.getOfficeAudit();
+						companyaudit = UnitDao.getCityAudit();
+					}
+					
+				}
+			}
+			
+			paras.put("orgcode", orgaudit);
+			paras.put("company", companyaudit);
+			paras.put("objId", objId);
+			runtimeService.startProcessInstanceByKey(processID, objId, paras);
 			
 			message = "维修申请提交成功";
+			
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 		
 		j.setMsg(message);
 		SystemUtils.jsonResponse(response, j);
 	}
+	
+	@RequestMapping(params="taskList")
+    public ModelAndView taskList(HttpServletRequest request, HttpServletResponse response){
+		
+		UserInfo userInfo = (UserInfo)request.getSession().getAttribute("UserInfo");
+	    List<Task> tasks = taskService.createTaskQuery()
+	    		                      .taskAssignee(userInfo.getStaffcode())
+	    		                      .list();
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("repair_management/tasklist");
+		
+		mav.addObject("tasks",tasks);
+		return mav;
+	}
+	@RequestMapping(params = "exetask")
+	@ResponseBody
+	public void exetask(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+		AjaxResultJson j = new AjaxResultJson();
+		String message = "";
+		String taskId = request.getParameter("taskId");
+		String outcome = request.getParameter("outcome"); 
+		
+		String comment = request.getParameter("comment");
+		  
+		byte[] jiema= outcome.getBytes("utf-8") ; //解码  
+		String   bianma = new String(jiema,"gb2312");//编码
+		
+		
+		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+		String pi = task.getProcessInstanceId();
+		//添加审核人
+		Authentication.setAuthenticatedUserId(((UserInfo)request.getSession().getAttribute("UserInfo")).getStaffcode());
+		taskService.addComment(taskId, pi, comment);//增加批准信息
+		
+		Map<String, Object> paras =new HashMap<String, Object>();
+		paras.put("outcome", outcome);
+		
+		taskService.complete(taskId,paras);
+		try {
+			message = "维修申请提交成功";
+			
+		} catch (Exception e) {
+		}
+		
+		j.setMsg(message);
+		SystemUtils.jsonResponse(response, j);
+	}
+	
+	
+	@RequestMapping(params="submitTask")
+	public ModelAndView submitTask(HttpServletRequest request, HttpServletResponse response) {
+		List<String> list = new ArrayList<String>();
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("repair_management/repairaudit");
+		String taskId = request.getParameter("taskId");
+		
+		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+		String processDefId = task.getProcessDefinitionId();
+		String pi = task.getProcessInstanceId();
+		
+		ProcessDefinitionEntity processDefinitionEntity = (ProcessDefinitionEntity)repositoryService.getProcessDefinition(processDefId);
+		
+		ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(pi)
+	              .singleResult();
+	   
+		
+		String activityId = processInstance.getActivityId();
+		ActivityImpl activityImpl = processDefinitionEntity.findActivity(activityId);
+		
+		/**
+		 * 获取下一个当前活动后面的Sequence line
+		 */
+		List<PvmTransition> pvmTransitions = activityImpl.getOutgoingTransitions();
+		
+		if(pvmTransitions != null && pvmTransitions.size() > 0){
+			for(PvmTransition pvmTransition : pvmTransitions){
+				String name = (String)pvmTransition.getProperty("name");
+				if(StringUtils.isNotBlank(name)){
+					list.add(name);
+				}else{
+					list.add("默认提交");
+				}
+			}
+		}
+		
+		
+		String repairId = runtimeService.createProcessInstanceQuery().processInstanceId(pi)
+		              .singleResult().getBusinessKey().split(":")[1];
+		RepairAudit repairAudit = systemService.findEntityById(Long.parseLong(repairId), RepairAudit.class);
+		
+		
+		/**
+		 * 获取历史批注
+		 */
+		List<Comment> comments = new ArrayList<Comment>();
+		List<HistoricTaskInstance> historicTaskInstances = historyService.createHistoricTaskInstanceQuery()
+				                                                         .processInstanceId(pi)
+				                                                         .list();
+		if(historicTaskInstances !=null && historicTaskInstances.size() > 0){
+			for(HistoricTaskInstance historicTaskInstance : historicTaskInstances){
+				String htaskId = historicTaskInstance.getId();
+				List<Comment> taskList = taskService.getTaskComments(htaskId);
+				comments.addAll(taskList);
+			}
+		}
+		mav.addObject("repairAudit",repairAudit);
+		mav.addObject("outcomelist", list);
+		mav.addObject("taskId",taskId);
+		mav.addObject("comments", comments);
+		return mav;
+	}
+	
+	
 	
 }

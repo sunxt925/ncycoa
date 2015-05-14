@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>计划管理</title>
+<title>整改反馈管理</title>
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/icon.css">
 <link rel="stylesheet" href="jscomponent/validform/css/style.css" type="text/css" />
@@ -79,87 +79,42 @@
 </script>
 </head>
 <body style="overflow-x:hidden">
-<form id="formobj" name="formobj" action="repair_management.htm?save"  method="post">
+<form id="formobj" name="formobj" action="reformback_management.htm?save"  method="post">
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
-<input id="id" name="id" type="hidden" value="${repairAudit.id}">
+<input id="id" name="id" type="hidden" value="${reformback.id}">
 <table style="width:600px;border-spacing:1px;" class="formtable">
 	<tr>
-		<td align="right"><label class="Validform_label"> 项目名称 </label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="projectName" name="projectName" value="${repairAudit.projectName}" datatype="s2-10">
+		<td align="right"><label class="Validform_label"> 反馈名称 </label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="backname" name="backname" value="${reformback.backname}" datatype="s2-10">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label"> 申请单位 </label></td>
+		<td align="right"><label class="Validform_label"> 整改项目ID </label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="apporgCode" name="apporgCode" value="${repairAudit.apporgCode}" >
-		<a id="btn_selectobject" href="#" class="easyui-linkbutton"
-				       data-options="iconCls:'icon-search',plain:true">选择</a>
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label"> 维修项目预算 </label></td>
-		<td class="value">
-		 <input  class="inputxt" style="width:150px;" id="repairFree" name="repairFree"   value="${repairAudit.repairFree}" datatype="s2-5">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	
-	<tr>
-		<td align="right"><label class="Validform_label"> 维修主要内容 </label></td>
-		<td class="value">
-		<input  class="inputxt" style="width:150px;" id="repairContent" name="repairContent"   value="${repairAudit.repairContent}" >
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label"> 申请部门意见 </label></td>
-		<td class="value">
-		<input  class="inputxt" style="width:150px;" id="apporgOpinion" name="apporgOpinion"   value="${repairAudit.apporgOpinion}" >
+		<input class="inputxt" style="width:150px;" id="reformId" name="reformId" value="${reformback.reformId}" datatype="s2-10">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 
-	<input  type="hidden" id="projectType" name="projectType" value="${repairAudit.projectType}">
-	<input  type="hidden" id="auditFlag" name="auditFlag" value="${repairAudit.auditFlag}">
+	
+	<tr>
+	<td align="right"><label class="Validform_label"> 附件 </label></td>
+		<td class="value">
+		<input class="inputxt" style="width:150px;" id="fileName" name="fileName" value="${reformback.fileName}" >
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 说明 </label></td>
+		<td class="value">
+		<input class="inputxt" style="width:150px;" id="memo" name="memo" value="${reformback.memo}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
 </table>
 </form>
 <script type="text/javascript">
-$("#btn_selectobject").click(function(){
-	
-	createwindow('选择部门','indexmanage/selectunit.jsp',500,500,returnobjValue );
-    });
-function returnobjValue(data){
-	var org = data.code;
-	if(org.length>1){
-		alert("最多只能选择一个部门");
-	}else{
-		$('#apporgCode').val(org[0].orgcode);
-	}
-	
-	
-}
-function createwindow(title, url, width, height,func) {
-	
-	$.dialog({
-			id:'CLHG1976D',
-			data:func,
-			content : 'url:' + url,
-			lock : true,
-			width : width,
-			height : height,
-			title : title,
-			zIndex :2000,
-			opacity : 0.3,
-			cache : false,
-			ok : function() {
-				$('#btn_ok', this.iframe.contentWindow.document).click();
-				return true;
-			},
-			cancelVal : '关闭',
-			cancel : true/* 为true等价于function(){} */
-		});
-}
+
 </script>
 </body>

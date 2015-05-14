@@ -1,5 +1,7 @@
 package com.dao.system;
 
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+
 import com.db.DBObject;
 import com.db.DataRow;
 import com.db.DataTable;
@@ -233,6 +235,82 @@ public class UnitDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "[]";
+		}
+	}
+	
+	/**
+	 * 获取县局局长
+	 * @param orgcode
+	 * @return
+	 */
+	public static String getComanyAudit(String orgcode){
+		try {
+			DBObject db=new DBObject();
+			String sql="select * from base_orgmember where orgcode like '"+orgcode+"%' order by orgcode,positioncode";
+			DataTable dt = db.runSelectQuery(sql);
+			if(dt!=null&&dt.getRowsCount()>=0){
+				return dt.get(0).getString("staffcode");
+			}else{
+				return "";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+	
+	}
+	/**
+	 * 获取市局办公室主任
+	 */
+	public static String getOfficeAudit(){
+		try {
+			DBObject db=new DBObject();
+			String sql="select * from base_orgmember where orgcode='NC.01.01' and positioncode='01.0100.23'";
+			DataTable dt = db.runSelectQuery(sql);
+			if(dt!=null&&dt.getRowsCount()>=0){
+				return dt.get(0).getString("staffcode");
+			}else{
+				return "";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
+	/**
+	 * 获取区县办公室主任
+	 */
+	public static String getQXOfficeAudit(String companycode){
+		try {
+			DBObject db=new DBObject();
+			String sql="select * from base_orgmember where orgcode='"+companycode+".01' and positioncode='01.2X01.20'";
+			DataTable dt = db.runSelectQuery(sql);
+			if(dt!=null&&dt.getRowsCount()>=0){
+				return dt.get(0).getString("staffcode");
+			}else{
+				return "";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
+	/**
+	 * 获取市局总经理
+	 */
+	public static String getCityAudit(){
+		try {
+			DBObject db=new DBObject();
+			String sql="select * from base_orgmember where orgcode='NC.01.00' and positioncode='01.0000.20'";
+			DataTable dt = db.runSelectQuery(sql);
+			if(dt!=null&&dt.getRowsCount()>=0){
+				return dt.get(0).getString("staffcode");
+			}else{
+				return "";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
 		}
 	}
 }
