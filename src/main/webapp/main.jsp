@@ -10,11 +10,6 @@
 <title>南充烟草专卖局</title>
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/icon.css">
-<script type="text/javascript" src="jscomponent/jquery/jquery-1.8.0.min.js"></script>
-<script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="jscomponent/easyui/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" src="jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
-<script type="text/javascript" src="jscomponent/tools/curdtools.js"></script>
 <style type="text/css">
 *{font-size:12px; font-family:微软雅黑,新宋体}
 #nav .easyui-tree li a{ color:Black; text-decoration:none;}
@@ -109,5 +104,12 @@
 <div id="mm-tabcloseright">当前页右侧全部关闭</div>
 <div id="mm-tabcloseleft">当前页左侧全部关闭</div>
 </div>
+
+<script type="text/javascript" src="jscomponent/jquery/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="jscomponent/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
+<script type="text/javascript" src="jscomponent/tools/datagrid.js"></script>
+<script type="text/javascript" src="jscomponent/tools/leftmenu.js"></script>
 </body>
 </html>

@@ -200,7 +200,6 @@ function F3()
 <table width="100%" height="30" border="0" cellpadding="0" cellspacing="0">
 <tr>
 <td class="table_td_jb_iframe">&nbsp;&nbsp; 
-
 <a href="#" onClick="F3()">增加[F3]</a>
 <a href='#' onClick="logininfo()" >登录信息</a>
 <a href='#' onClick="positioninfo()" ><%=org %></a>

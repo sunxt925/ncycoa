@@ -1,5 +1,7 @@
 package edu.cqu.ncycoa.util;
 
+import java.io.PrintWriter;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,9 +35,13 @@ public class SystemUtils {
 	}
 	
 	public static void jsonResponse(HttpServletResponse response, AjaxResultJson json) {
-		response.setHeader("ContentType", "application/json;charset=gb2312");
+		response.setCharacterEncoding("gb2312");
+		response.setContentType("text/plain;charset=gb2312");
+		response.setHeader("Cache-Control", "no-store");
 		try {
-			response.getWriter().write(json.getJsonStr());
+			PrintWriter pw = response.getWriter();
+			pw.write(json.getJsonStr());
+			pw.flush();
 		} catch (Exception e) {
 			logger.error("·µ»Øjson´íÎó", e);
 		}

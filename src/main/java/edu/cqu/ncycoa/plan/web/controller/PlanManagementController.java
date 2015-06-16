@@ -3,7 +3,9 @@ package edu.cqu.ncycoa.plan.web.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +27,9 @@ import edu.cqu.ncycoa.common.util.dao.TQOrder;
 import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
 import edu.cqu.ncycoa.plan.PlanStatus;
 import edu.cqu.ncycoa.plan.domain.Plan;
+import edu.cqu.ncycoa.plan.domain.PlanInstance;
 import edu.cqu.ncycoa.plan.domain.PlanStep;
+import edu.cqu.ncycoa.plan.domain.PlanTask;
 import edu.cqu.ncycoa.plan.service.PlanService;
 import edu.cqu.ncycoa.util.ConvertUtils;
 import edu.cqu.ncycoa.util.MyBeanUtils;
@@ -48,12 +52,12 @@ public class PlanManagementController {
 	public String update(Long id, HttpServletRequest request, Model model) {
 		Plan plan = planService.findEntityById(id, Plan.class);
 		List<PlanStep> steps = planService.findEntitiesByProperty("plan", plan, PlanStep.class);
-		
 		model.addAttribute("taskList", steps);
 		model.addAttribute("plan", plan);
 		model.addAttribute("isAdmin", true);
 		return "plan_management/plan";
 	}
+	
 	
 	@RequestMapping(params="planstep")
 	public String planstep(HttpServletRequest request, Model model) {
@@ -119,24 +123,39 @@ public class PlanManagementController {
 		AjaxResultJson j = new AjaxResultJson();
 		
 		String participantList_id = request.getParameter("participantList_id");
-		plan.setParticipants( Arrays.asList(participantList_id.split(",")) );
+		String participantList = request.getParameter("participantList");
+		String[] participantList_ids = participantList_id.split(",");
+		String[] participantLists = participantList.split(",");
+		
+		Map<String, String> participants = new HashMap<String, String>();
+		for(int i = 0; i < participantList_ids.length; i++){
+			participants.put(participantList_ids[i], participantLists[i]);
+		}
+		plan.setParticipants( participants );
 		
 		
-		String[] taskid = request.getParameter("taskid").split(",");
-		String[] taskorder = request.getParameter("taskorder").split(",");
-		String[] taskparticipant = request.getParameter("taskparticipant").split(",");
-		String[] taskParticipantValue = request.getParameter("taskParticipantValue").split(",");
-		String[] tasktype = request.getParameter("tasktype").split(",");
-		String[] taskTypeValue = request.getParameter("taskTypeValue").split(",");
-		String[] taskcontent = request.getParameter("taskcontent").split(",");
+		String[] taskid = request.getParameter("taskid").split("&");
+		String[] taskorder = request.getParameter("taskorder").split("&");
+		String[] taskparticipant = request.getParameter("taskparticipant").split("&");
+		String[] taskParticipantValue = request.getParameter("taskParticipantValue").split("&");
+		String[] tasktype = request.getParameter("tasktype").split("&");
+		String[] taskTypeValue = request.getParameter("taskTypeValue").split("&");
+		String[] taskcontent = request.getParameter("taskcontent").split("&");
 		
 		List<PlanStep> tasks = new ArrayList<PlanStep>();
 		for(int i=0; i<taskid.length; i++){
 			PlanStep task = new PlanStep();
 			task.setId(StringUtils.isBlank(taskid[i]) ? null : Long.parseLong(taskid[i]));
 			task.setOrder(Long.parseLong(taskorder[i]));
-			task.setParticipant(taskparticipant[i]);
-			task.setParticipantValue(taskParticipantValue[i]);
+			
+			String[] taskParticipantList_ids = taskParticipantValue[i].split(",");
+			String[] taskParticipantLists = taskparticipant[i].split(",");
+			Map<String, String> taskParticipants = new HashMap<String, String>();
+			for(int k = 0; k < taskParticipantList_ids.length; k++){
+				taskParticipants.put(taskParticipantList_ids[k], taskParticipantLists[k]);
+			}
+			task.setParticipants( taskParticipants );
+			
 			task.setType(tasktype[i]);
 			task.setTypeValue(Short.parseShort(taskTypeValue[i]));
 			task.setContent(taskcontent[i]);
@@ -306,10 +325,33 @@ public class PlanManagementController {
 	
 	@RequestMapping(params="exec_view")
 	public String exec_view(Long id, HttpServletRequest request, Model model) {
-		List<PlanStep> tasks = planService.findPlanStepsByPlanId(id);
+		PlanInstance instance = planService.findPlanInstanceByPlanId(id);
+		Map<PlanStep, List<PlanTask>> tasks = planService.findPlanTasks(instance);
 		model.addAttribute("taskList", tasks);
 		
 		return "plan_management/plan_exec_view";
 	}
 	
+	@RequestMapping(params="dgview_supervise")
+	public String dgViewSupervise(HttpServletRequest request) {
+		return "plan_management/plan_supervise_list";
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(params="dgdata_supervise")
+	@ResponseBody
+	public void dgDataSupervise(Plan plan, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
+		QueryDescriptor<Plan> cq = new QueryDescriptor<Plan>(Plan.class, dg);
+		CommonService commonService = SystemUtils.getCommonService(request);
+		
+		//查询条件组装器
+		TypedQueryBuilder<Plan> tqBuilder = QueryUtils.getTQBuilder(plan, request.getParameterMap());
+		if (StringUtils.isNotEmpty(dg.getSort())) {
+			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
+		}
+		tqBuilder.addRestriction("status", "in", Arrays.asList(new Short[]{PlanStatus.EXECUTTING}));
+		cq.setTqBuilder(tqBuilder);
+		commonService.getDataGridReturn(cq, true);
+		TagUtil.datagrid(response, dg);
+	}
 }

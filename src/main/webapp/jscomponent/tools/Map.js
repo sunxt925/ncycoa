@@ -1,38 +1,38 @@
 /**
- * Mapå¯¹è±¡ï¼Œå®ç°MapåŠŸèƒ½
+ * Map¶ÔÏó£¬ÊµÏÖMap¹¦ÄÜ
  * 
  * 
- * size() è·å–Mapå…ƒç´ ä¸ªæ•° 
- * isEmpty() åˆ¤æ–­Mapæ˜¯å¦ä¸ºç©º 
- * clear() åˆ é™¤Mapæ‰€æœ‰å…ƒç´  
- * put(key, value) å‘Mapä¸­å¢åŠ å…ƒç´ ï¼ˆkey, value) 
- * remove(key) åˆ é™¤æŒ‡å®škeyçš„å…ƒç´ ï¼ŒæˆåŠŸè¿”å›trueï¼Œå¤±è´¥è¿”å›false 
- * get(key) è·å–æŒ‡å®škeyçš„å…ƒç´ å€¼valueï¼Œå¤±è´¥è¿”å›null 
- * element(index) è·å–æŒ‡å®šç´¢å¼•çš„å…ƒç´ ï¼ˆä½¿ç”¨element.keyï¼Œelement.valueè·å–keyå’Œvalueï¼‰ï¼Œå¤±è´¥è¿”å›null 
- * containsKey(key) åˆ¤æ–­Mapä¸­æ˜¯å¦å«æœ‰æŒ‡å®škeyçš„å…ƒç´  
- * containsValue(value) åˆ¤æ–­Mapä¸­æ˜¯å¦å«æœ‰æŒ‡å®švalueçš„å…ƒç´  
- * keys() è·å–Mapä¸­æ‰€æœ‰keyçš„æ•°ç»„ï¼ˆarrayï¼‰ 
- * values() è·å–Mapä¸­æ‰€æœ‰valueçš„æ•°ç»„ï¼ˆarrayï¼‰
+ * size() »ñÈ¡MapÔªËØ¸öÊı 
+ * isEmpty() ÅĞ¶ÏMapÊÇ·ñÎª¿Õ 
+ * clear() É¾³ıMapËùÓĞÔªËØ 
+ * put(key, value) ÏòMapÖĞÔö¼ÓÔªËØ£¨key, value) 
+ * remove(key) É¾³ıÖ¸¶¨keyµÄÔªËØ£¬³É¹¦·µ»Øtrue£¬Ê§°Ü·µ»Øfalse 
+ * get(key) »ñÈ¡Ö¸¶¨keyµÄÔªËØÖµvalue£¬Ê§°Ü·µ»Ønull 
+ * element(index) »ñÈ¡Ö¸¶¨Ë÷ÒıµÄÔªËØ£¨Ê¹ÓÃelement.key£¬element.value»ñÈ¡keyºÍvalue£©£¬Ê§°Ü·µ»Ønull 
+ * containsKey(key) ÅĞ¶ÏMapÖĞÊÇ·ñº¬ÓĞÖ¸¶¨keyµÄÔªËØ 
+ * containsValue(value) ÅĞ¶ÏMapÖĞÊÇ·ñº¬ÓĞÖ¸¶¨valueµÄÔªËØ 
+ * keys() »ñÈ¡MapÖĞËùÓĞkeyµÄÊı×é£¨array£© 
+ * values() »ñÈ¡MapÖĞËùÓĞvalueµÄÊı×é£¨array£©
  */
 function Map() {
 	this.elements = new Array();
 
-	// è·å–Mapå…ƒç´ ä¸ªæ•°
+	// »ñÈ¡MapÔªËØ¸öÊı
 	this.size = function() {
 		return this.elements.length;
 	},
 
-	// åˆ¤æ–­Mapæ˜¯å¦ä¸ºç©º
+	// ÅĞ¶ÏMapÊÇ·ñÎª¿Õ
 	this.isEmpty = function() {
 		return (this.elements.length < 1);
 	},
 
-	// åˆ é™¤Mapæ‰€æœ‰å…ƒç´ 
+	// É¾³ıMapËùÓĞÔªËØ
 	this.clear = function() {
 		this.elements = new Array();
 	},
 
-	// å‘Mapä¸­å¢åŠ å…ƒç´ ï¼ˆkey, value)
+	// ÏòMapÖĞÔö¼ÓÔªËØ£¨key, value)
 	this.put = function(_key, _value) {
 		if (this.containsKey(_key) == true) {
 			if (this.containsValue(_value)) {
@@ -56,7 +56,7 @@ function Map() {
 		}
 	},
 
-	// åˆ é™¤æŒ‡å®škeyçš„å…ƒç´ ï¼ŒæˆåŠŸè¿”å›trueï¼Œå¤±è´¥è¿”å›false
+	// É¾³ıÖ¸¶¨keyµÄÔªËØ£¬³É¹¦·µ»Øtrue£¬Ê§°Ü·µ»Øfalse
 	this.remove = function(_key) {
 		var bln = false;
 		try {
@@ -72,7 +72,7 @@ function Map() {
 		return bln;
 	},
 
-	// è·å–æŒ‡å®škeyçš„å…ƒç´ å€¼valueï¼Œå¤±è´¥è¿”å›null
+	// »ñÈ¡Ö¸¶¨keyµÄÔªËØÖµvalue£¬Ê§°Ü·µ»Ønull
 	this.get = function(_key) {
 		try {
 			for (i = 0; i < this.elements.length; i++) {
@@ -85,7 +85,7 @@ function Map() {
 		}
 	},
 
-	// è·å–æŒ‡å®šç´¢å¼•çš„å…ƒç´ ï¼ˆä½¿ç”¨element.keyï¼Œelement.valueè·å–keyå’Œvalueï¼‰ï¼Œå¤±è´¥è¿”å›null
+	// »ñÈ¡Ö¸¶¨Ë÷ÒıµÄÔªËØ£¨Ê¹ÓÃelement.key£¬element.value»ñÈ¡keyºÍvalue£©£¬Ê§°Ü·µ»Ønull
 	this.element = function(_index) {
 		if (_index < 0 || _index >= this.elements.length) {
 			return null;
@@ -93,7 +93,7 @@ function Map() {
 		return this.elements[_index];
 	},
 
-	// åˆ¤æ–­Mapä¸­æ˜¯å¦å«æœ‰æŒ‡å®škeyçš„å…ƒç´ 
+	// ÅĞ¶ÏMapÖĞÊÇ·ñº¬ÓĞÖ¸¶¨keyµÄÔªËØ
 	this.containsKey = function(_key) {
 		var bln = false;
 		try {
@@ -108,7 +108,7 @@ function Map() {
 		return bln;
 	},
 
-	// åˆ¤æ–­Mapä¸­æ˜¯å¦å«æœ‰æŒ‡å®švalueçš„å…ƒç´ 
+	// ÅĞ¶ÏMapÖĞÊÇ·ñº¬ÓĞÖ¸¶¨valueµÄÔªËØ
 	this.containsValue = function(_value) {
 		var bln = false;
 		try {
@@ -123,7 +123,7 @@ function Map() {
 		return bln;
 	},
 
-	// è·å–Mapä¸­æ‰€æœ‰keyçš„æ•°ç»„ï¼ˆarrayï¼‰
+	// »ñÈ¡MapÖĞËùÓĞkeyµÄÊı×é£¨array£©
 	this.keys = function() {
 		var arr = new Array();
 		for (i = 0; i < this.elements.length; i++) {
@@ -132,7 +132,7 @@ function Map() {
 		return arr;
 	},
 
-	// è·å–Mapä¸­æ‰€æœ‰valueçš„æ•°ç»„ï¼ˆarrayï¼‰
+	// »ñÈ¡MapÖĞËùÓĞvalueµÄÊı×é£¨array£©
 	this.values = function() {
 		var arr = new Array();
 		for (i = 0; i < this.elements.length; i++) {
@@ -141,7 +141,7 @@ function Map() {
 		return arr;
 	};
 	/**
-	 * é‡å†™toString 
+	 * ÖØĞ´toString 
 	 */
 	this.toString = function(){
 		var s = "";

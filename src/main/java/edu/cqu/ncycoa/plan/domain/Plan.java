@@ -2,6 +2,7 @@ package edu.cqu.ncycoa.plan.domain;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
@@ -13,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
@@ -26,17 +28,19 @@ public class Plan {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="PLAN_ID")
-	private Long id;   		 	// 计划编号
+	private Long id;   		 	 // 计划编号
 	
 	@Column(name="PLAN_NAME")
-	private String name;  	 	// 计划名称
+	private String name;  	 	 // 计划名称
 	
 	@Column(name="DESCRIPTION")
-	private String description;   // 计划描述
+	private String description;  // 计划描述
 	
 	@ElementCollection
 	@CollectionTable(name="NCYCOA_PLAN_PART", joinColumns=@JoinColumn(name="PLAN_ID"))
-	private List<String> participants; // 参与人
+	@MapKeyColumn(name="PARTICIPANT_CODE")
+	@Column(name="PARTICIPANT_NAME")
+	private Map<String, String> participants; // 参与人
 	
 	@Column(name="STATUS")
 	private Short status;      // 已创建待审核、已审核待完成、已完成
@@ -97,11 +101,11 @@ public class Plan {
 		this.description = description;
 	}
 
-	public List<String> getParticipants() {
+	public Map<String, String> getParticipants() {
 		return participants;
 	}
 
-	public void setParticipants(List<String> participants) {
+	public void setParticipants(Map<String, String> participants) {
 		this.participants = participants;
 	}
 

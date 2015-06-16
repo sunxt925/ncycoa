@@ -1,17 +1,32 @@
 package edu.cqu.ncycoa.plan.domain;
 
+import java.util.Map;
+
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="NCYCOA_PLAN_STEP")
-public class PlanStep {
+public class PlanStep implements Comparable<PlanStep>{
+	
+	@Transient
+	public final static Short READY = 0;
+	
+	@Transient
+	public final static Short EXECUTING = 1;
+	
+	@Transient
+	public final static Short FINISHED = 2;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -28,11 +43,12 @@ public class PlanStep {
 	@JoinColumn(name = "PLAN_ID")
 	private Plan plan;
 	
-	@Column(name="PARTICIPANT")
-	private String participant; // 参与人
-	
-	@Column(name="PARTICIPANT_VALUE")
-	private String participantValue;
+	@ElementCollection
+	@CollectionTable(name="NCYCOA_PLAN_STEP_PART", joinColumns=@JoinColumn(name="PLAN_STEP_ID"))
+	@MapKeyColumn(name="PARTICIPANT_CODE")
+	@Column(name="PARTICIPANT_NAME")
+	private Map<String, String> participants; // 参与人
+
 	
 	@Column(name="STATUS")
 	private Short status = (short)0;      // 0等待执行、1正在执行、2执行完成
@@ -75,20 +91,12 @@ public class PlanStep {
 		this.plan = plan;
 	}
 
-	public String getParticipant() {
-		return participant;
+	public Map<String, String> getParticipants() {
+		return participants;
 	}
 
-	public void setParticipant(String participant) {
-		this.participant = participant;
-	}
-
-	public String getParticipantValue() {
-		return participantValue;
-	}
-
-	public void setParticipantValue(String participantValue) {
-		this.participantValue = participantValue;
+	public void setParticipants(Map<String, String> participants) {
+		this.participants = participants;
 	}
 
 	public Short getStatus() {
@@ -113,6 +121,11 @@ public class PlanStep {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	@Override
+	public int compareTo(PlanStep o) {
+		return getOrder().compareTo(o.getOrder());
 	}
 	
 }

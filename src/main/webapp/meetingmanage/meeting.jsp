@@ -1,8 +1,9 @@
+<%@page import="java.util.List"%>
+<%@page import="edu.cqu.ncycoa.domain.MeetingInfo"%>
 <%@ page language="java" pageEncoding="gb2312"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="h" uri="/gem-tags"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +19,8 @@
 <script type="text/javascript" src="jscomponent/tools/datagrid.js"></script>
 <script type="text/javascript" src="jscomponent/validform/js/Validform_v5.3.1_ncr_min.js"></script>
 <script type="text/javascript" src="jscomponent/validform/js/Validform_Datatype.js"></script>
+
+<script type="text/javascript" src="js/MyDatePicker/WdatePicker.js"></script></HEAD>
 <style type="text/css">
 *{font-size:12px; font-family:微软雅黑,新宋体}
 </style>
@@ -80,108 +83,152 @@
 <body style="overflow-x:hidden">
 <form id="formobj" name="formobj" action="meeting_management.htm?save"  method="post">
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
-<input id="id" name="id" type="hidden" value="">
+<input id="id" name="id" type="hidden" value="${meetingInfo.id}">
 <table style="width:600px;border-spacing:1px;" class="formtable">
 	<tr>
 		<td align="right"><label class="Validform_label"> 会议名称 </label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="name" name="name" value="" datatype="s2-10">
+		<td class="value"><input class="inputxt" style="width:150px;" id="meetingName" name="meetingName" value="${meetingInfo.meetingName}" datatype="s2-10">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 会议主题 </label></td>
+		<td class="value">
+		<input class="inputxt" style="width:150px;" id="meetingTopics" name="meetingTopics" value="${meetingInfo.meetingTopics}" datatype="s2-10">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label"> 开始时段 </label></td>
 		<td class="value">
-		<input>
+		 <input name="meetingBeginDate" type="Wdate" class="input1" id="meetingBeginDate" onfocus="new WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="${meetingInfo.meetingBeginDate}" size="30"  maxlength="30">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label"> 结束时段 </label></td>
 		<td class="value">
-		<input>
+		<input name="meetingEndDate" type="Wdate" class="input1" id="meetingEndDate" onfocus="new WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="${meetingInfo.meetingEndDate}" size="30"  maxlength="30">
+		
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label"> 开会地点 </label></td>
 		<td class="value">
-		<input>
+		<input class="inputxt" style="width:150px;" id="meetingRoom" name="meetingRoom" value="${meetingInfo.meetingRoom}" >
+		<a id="btn_selectroom" href="#" class="easyui-linkbutton"
+				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label"> 会议人数 </label></td>
 		<td class="value">
-		<input>
+		<input class="inputxt" style="width:150px;" id="numAttendee" name="numAttendee" value="${meetingInfo.numAttendee}" >
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 参与人员 </label></td>
+		<td class="value">
+		<input class="inputxt" style="width:150px;" id="participants" name="participants" value="${meetingInfo.participants}">
+		<a id="btn_selectobject" href="#" class="easyui-linkbutton"
+				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label"> 需求部门 </label></td>
 		<td class="value">
-		<input>
+		<input class="inputxt" style="width:150px;" id="applyOrgCode" name="applyOrgCode" value="${meetingInfo.applyOrgCode}" datatype="s2-10">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label"> 其他需求 </label></td>
 		<td class="value">
-		<input>
+		<input class="inputxt" style="width:150px;" id="meetingReport" name="meetingReport" value="${meetingInfo.meetingReport}" datatype="s2-10">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
+	<input  type="hidden" id="meetingFlag" name="meetingFlag" value="${meetingInfo.meetingFlag}">
+	<input  type="hidden" id="auditFlag" name="auditFlag" value="${meetingInfo.auditFlag}">
 </table>
-<div style="width: 690px; height: 1px;"></div>
-<div id="tt" class="easyui-tabs" data-options="onSelect:function(t){$('#tt .panel-body').css('width','auto');}">
-<div title="参会人员">
-<div style="padding: 3px; height: 25px; width: auto;" class="datagrid-toolbar">
-	<a id="addBtn" href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">添加</a> 
-	<a id="delBtn" href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-remove'">删除</a>
-</div>
-<table style="border-spacing:2px" id="participant_table">
-	<tr bgcolor="#E6E6E6">
-		<td align="center" bgcolor="#EEEEEE">序号</td>
-		<td align="left" bgcolor="#EEEEEE">姓名</td>
-		<td align="left" bgcolor="#EEEEEE">所属部门</td>
-		<td align="left" bgcolor="#EEEEEE">任务内容</td>
-		<td align="left" bgcolor="#EEEEEE">备注</td>
-	</tr>
-	<tbody id="add_participant_table">
-		<c:if test="${fn:length(participantList)  <= 0 }">
-			<tr>
-				<td align="center"><input style="width: 20px;" type="checkbox" name="ck" /></td>
-				<td align="left"><input name="name" type="text" value=""></td>
-				<td align="left"><input name="depart" type="text" value=""></td>
-				<td align="left"><input name="task" type="text" value=""></td>
-				<td align="left"><input name="memo" maxlength="200" type="text" value=""></td>
-			</tr>
-		</c:if>
-		<c:if test="${fn:length(participantList)  > 0 }">
-			<c:forEach items="${participantList}" var="participant" varStatus="stuts">
-				<tr>
-					<td align="center"><input style="width: 20px;" type="checkbox" name="ck" /></td>
-					<td align="left"><input name="name" type="text" value="${participant.name }"></td>
-					<td align="left"><input name="depart" type="text" value="${participant.depart }"></td>
-					<td align="left"><input name="task" type="text" value="${participant.task }"></td>
-					<td align="left"><input name="memo" maxlength="200" type="text" value="${participant.memo }"></td>
-				</tr>
-			</c:forEach>
-		</c:if>
-	</tbody>
-</table>
-</div>
-</div>
 </form>
+<script type="text/javascript">
+$("#btn_selectroom").click(function(){
+	var begindate = $('#meetingBeginDate').val();
+	var enddate = $('#meetingEndDate').val();
+	
+	if(begindate == ""){
+		alert("请先选择会议开始时间");
+	}
+	if(enddate == "" ){
+		alert("请先选择会议结束时间");
+	}
+	if(begindate != "" && enddate != ""){
+		createwindow('选择会议室','meetingmanage/selectroom.jsp',500,500,returnroomValue );
+	}
+	
+    });
 
-<table style="display: none">
-	<tbody id="add_participant_table_template">
-		<tr>
-			<td align="center"><input style="width: 20px;" type="checkbox" name="ck" /></td>
-			<td align="left"><input name="name" type="text" value=""></td>
-			<td align="left"><input name="depart" type="text" value=""></td>
-			<td align="left"><input name="task" type="text" value=""></td>
-			<td align="left"><input name="memo" maxlength="200" type="text" value=""></td>
-		</tr>
-	</tbody>
-</table>
+function returnroomValue(data){
+
+	var room = data.code;
+	var begindate = $('#meetingBeginDate').val();
+	var enddate = $('#meetingEndDate').val();
+	var url = "meetingmanage/validroom.jsp?roomno="+room.roomid+"&startdate="+begindate+"&enddate="+enddate;
+	$.get(url,function(data,status){
+		if(data=="1"){
+			$('#meetingRoom').val(room.roomid);
+		}else{
+			$('#meetingRoom').val('');
+			alert("选择的会议室有冲突");
+		}
+		
+	});
+	
+	
+}
+$("#btn_selectobject").click(function(){
+	
+	createwindow('选择人员','indexmanage/selectstaff.jsp',500,500,returnobjValue );
+    });
+    
+ 
+function returnobjValue(data){
+
+	var array = data.code;
+	var staffs="";
+	for(var i=0;i<array.length;i++){
+		staffs += array[i].staffcode+",";
+	}
+	
+	$('#participants').val(staffs);
+	$('#numAttendee').val(array.length);
+	
+}
+function createwindow(title, url, width, height,func) {
+	
+	$.dialog({
+			id:'CLHG1976D',
+			data:func,
+			content : 'url:' + url,
+			lock : true,
+			width : width,
+			height : height,
+			title : title,
+			zIndex :2000,
+			opacity : 0.3,
+			cache : false,
+			ok : function() {
+				$('#btn_ok', this.iframe.contentWindow.document).click();
+				return true;
+			},
+			cancelVal : '关闭',
+			cancel : true/* 为true等价于function(){} */
+		});
+}
+</script>
 </body>

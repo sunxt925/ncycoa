@@ -14,10 +14,22 @@ public class IndexCode {
 			if(!pIndexcode.equals("-1")){
 				indexcode=pIndexcode;
 			}
-			String sql="select count(indexcode) from tbm_indexitem where indexcode like '"+indexcode+"%'   and parentindexcode='"+pIndexcode+"'";
+			String sql="select indexcode from tbm_indexitem where indexcode like '"+indexcode+"%'   and parentindexcode='"+pIndexcode+"' order by indexcode";
 			DBObject  db=new DBObject();
 			DataTable dt=db.runSelectQuery(sql);
-			int num=Integer.parseInt(dt.get(0).getString("count(indexcode)"))+1;
+			int maxcount = dt.getRowsCount();
+			long num =0;
+			if(maxcount == 0){
+				num = 1;
+			}else{
+				String[] maxnum = dt.get(dt.getRowsCount()-1).getString("indexcode").split("\\.");
+				if(pIndexcode.equals("-1")){
+					num = Long.parseLong(maxnum[maxnum.length-1].replace(indexcode, "")) + 1;
+				}else{
+					num = Long.parseLong(maxnum[maxnum.length-1]) + 1;
+				}
+			}
+			
 			String newcode="";
 			if(pIndexcode.equals("-1")){
 			

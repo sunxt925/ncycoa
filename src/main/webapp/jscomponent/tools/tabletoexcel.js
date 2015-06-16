@@ -1,46 +1,46 @@
-ï»¿function saveAsExcel(tableid){ 
-	//æ•´ä¸ªè¡¨æ ¼æ‹·è´åˆ°EXCELä¸­   
+function saveAsExcel(tableid){ 
+	//Õû¸ö±í¸ñ¿½±´µ½EXCELÖĞ   
 		   var jXls; 
 		   try { 
 		    jXls = new ActiveXObject('Excel.Application'); 
 		   }catch (e) { 
-		    alert("æ— æ³•å¯åŠ¨Excel!\n\nå¦‚æœæ‚¨ç¡®ä¿¡æ‚¨çš„ç”µè„‘ä¸­å·²ç»å®‰è£…äº†Excelï¼Œ"+"é‚£ä¹ˆè¯·è°ƒæ•´IEçš„å®‰å…¨çº§åˆ«ã€‚\n\nå…·ä½“æ“ä½œï¼š\n\n"+"å·¥å…· â†’ Interneté€‰é¡¹ â†’ å®‰å…¨ â†’ è‡ªå®šä¹‰çº§åˆ« â†’ å¯¹æ²¡æœ‰æ ‡è®°ä¸ºå®‰å…¨çš„ActiveXè¿›è¡Œåˆå§‹åŒ–å’Œè„šæœ¬è¿è¡Œ â†’ å¯ç”¨"); 
+		    alert("ÎŞ·¨Æô¶¯Excel!\n\nÈç¹ûÄúÈ·ĞÅÄúµÄµçÄÔÖĞÒÑ¾­°²×°ÁËExcel£¬"+"ÄÇÃ´Çëµ÷ÕûIEµÄ°²È«¼¶±ğ¡£\n\n¾ßÌå²Ù×÷£º\n\n"+"¹¤¾ß ¡ú InternetÑ¡Ïî ¡ú °²È« ¡ú ×Ô¶¨Òå¼¶±ğ ¡ú ¶ÔÃ»ÓĞ±ê¼ÇÎª°²È«µÄActiveX½øĞĞ³õÊ¼»¯ºÍ½Å±¾ÔËĞĞ ¡ú ÆôÓÃ"); 
 		    return false; 
 		   } 
 	  var  curTbl = document.getElementById(tableid);  
 	    
 	  var  oXL = new  ActiveXObject("Excel.Application" );  
 	    
-	  //åˆ›å»ºAXå¯¹è±¡excel   
+	  //´´½¨AX¶ÔÏóexcel   
 	    
 	  var  oWB = oXL.Workbooks.Add();  
 	    
-	  //è·å–workbookå¯¹è±¡   
+	  //»ñÈ¡workbook¶ÔÏó   
 	    
 	  var  oSheet = oWB.ActiveSheet;  
 	    
-	  //æ¿€æ´»å½“å‰sheet   
+	  //¼¤»îµ±Ç°sheet   
 	    
 	  var  sel = document.body.createTextRange();  
 	    
 	  sel.moveToElementText(curTbl);  
 	    
-	  //æŠŠè¡¨æ ¼ä¸­çš„å†…å®¹ç§»åˆ°TextRangeä¸­   
+	  //°Ñ±í¸ñÖĞµÄÄÚÈİÒÆµ½TextRangeÖĞ   
 	    
 // 	  sel.select();  
 	    
-	  //å…¨é€‰TextRangeä¸­å†…å®¹   
+	  //È«Ñ¡TextRangeÖĞÄÚÈİ   
 	    
 	  sel.execCommand("Copy" );  
 	    
-	  //å¤åˆ¶TextRangeä¸­å†…å®¹   
+	  //¸´ÖÆTextRangeÖĞÄÚÈİ   
 	    
 	  oSheet.Paste();  
 	    
-	  //ç²˜è´´åˆ°æ´»åŠ¨çš„EXCELä¸­   
+	  //Õ³Ìùµ½»î¶¯µÄEXCELÖĞ   
 	    
 	  oXL.Visible = true ;  
 	    
-	  //è®¾ç½®excelå¯è§å±æ€§   
+	  //ÉèÖÃexcel¿É¼ûÊôĞÔ   
 	    
 	  }  

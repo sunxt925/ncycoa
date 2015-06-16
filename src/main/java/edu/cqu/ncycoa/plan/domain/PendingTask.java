@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,14 +21,16 @@ public class PendingTask {
 	private Long id;   		 	// 步骤id
 
 	@Column(name="CONTENT")
-	private String content;   // 步骤描述
+	private String content;   // 描述
 	
-	@OneToOne
-	@JoinColumn(name = "PLAN_STEP_ID")
-	private PlanStep plan;
+	@Column(name="FORM_KEY")
+	private String formKey;
+	
+	@Column(name = "CEIlLING_ENTITY_ID")
+	private String ceilingEntityId;
 	
 	@Column(name="PARTICIPANT")
-	private String participant; // 参与人
+	private String participant; 		 // 参与人
 	
 	@Column(name="PARTICIPANT_VALUE")
 	private String participantValue;
@@ -61,13 +61,13 @@ public class PendingTask {
 	public void setContent(String content) {
 		this.content = content;
 	}
-
-	public PlanStep getPlan() {
-		return plan;
+	
+	public String getFormKey() {
+		return formKey;
 	}
 
-	public void setPlan(PlanStep plan) {
-		this.plan = plan;
+	public void setFormKey(String formKey) {
+		this.formKey = formKey;
 	}
 
 	public String getParticipant() {
@@ -108,6 +108,14 @@ public class PendingTask {
 
 	public void setHandleDate(Date handleDate) {
 		this.handleDate = handleDate;
+	}
+
+	public String getCeilingEntityId() {
+		return ceilingEntityId;
+	}
+
+	public void setCeilingEntityId(String ceilingEntityId) {
+		this.ceilingEntityId = ceilingEntityId;
 	}
 
 }

@@ -93,7 +93,7 @@ $.ajaxFileUpload({
     url:'stdget.htm?upfile',  
     secureuri:false,  
     fileElementId: arrId,  //这里不在是以前的id了，要写成数组的形式哦！  
-    dataType: 'json',  
+    dataType: 'plain',  
     data: {  
                  //需要传输的数据  
     	id:id,
