@@ -44,37 +44,33 @@ function F8()
 <BODY class="mainbody" onLoad="this.focus();">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
 <form name="form1" id="form1" method="post" action="../../servlet/PageHandler">
+  
+ <table cellpadding="5"  width="100%" align="left" >
   <tr>
-    <td width="3%" class="main_table_topbg" height="31"><img src="../../images/table_lt.jpg" width="22" height="31"></td>
-    <td width="94%" valign="middle" class="main_table_topbg" height="31">当前单位：<%=trackName %>岗位信息修改</td>
-    <td width="3%" align="right" class="main_table_topbg" height="31"><img src="../../images/table_rt.jpg" width="22" height="31"></td>
-  </tr>
-      <tr>
     <td> <a id="F8" style="display:none" href="#" onClick="F8()">保存[F8]</a></td>
   </tr>
-<!--  <tr>-->
-<!--    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;<a href="#" onClick="F8()">保存[F8]</a>　<a href="#" onClick="F3()">重填[F3]</a>　<a href="#" onClick="F5()">刷新[F5]</a></td>-->
-<!--  </tr>-->
+             <tr>
+				<td><span>岗位编码：</span></td>
+				<td>
+					<input name="PositionCode" type="text" class="easyui-textbox" id="PositionCode" onKeyDown="EnterKeyDo('')" value="<%=orgposition.getPositioncode()%>" size="30" maxlength="30"  readonly="readonly">
+				</td>
+			</tr>
+			 
+			<tr>
+				<td><span>岗位名称：</span></td>
+				<td><input name="PositionName" type="text" class="easyui-textbox" id="PositionName" onKeyDown="EnterKeyDo('')" value="<%=orgposition.getPositionname()%>" size="40" maxlength="40" readonly="readonly"></td>
+			</tr>
+			<tr>
+				<td><span>配置人数：</span></td>
+				<td><input name="positionconfigcount" type="text" class="easyui-textbox" id="positionconfigcount" onKeyDown="EnterKeyDo('')" value="<%=orgposition.getPositionconfigcount()%>" size="30" maxlength="200"></td>
+			</tr>
+			<tr>
+				<td><span>备注：</span></td>
+				<td><input name="Memo" type="text" class="easyui-textbox" id="Memo" onKeyDown="EnterKeyDo('')" value="<%=orgposition.getMemo()%>" size="30" maxlength="30"></td>
+			</tr>
   <tr>
-    <td colspan="3" valign="top" class="main_table_centerbg" align="center"><table width="100%" border="1" cellspacing="0" cellpadding="0" class="table_list1">
-      <tr>
-        <td width="20%"><div align="right">岗位编码：</div></td>
-        <td width="80%"><input name="PositionCode" type="text" class="input1" id="PositionCode" onKeyDown="EnterKeyDo('')" value="<%=orgposition.getPositioncode()%>" size="30" maxlength="30"  readonly="readonly"></td>
-      </tr>
-      <tr>
-        <td><div align="right">岗位名称：</div></td>
-        <td><input name="PositionName" type="text" class="input1" id="PositionName" onKeyDown="EnterKeyDo('')" value="<%=orgposition.getPositionname()%>" size="40" maxlength="40" readonly="readonly"></td>
-      </tr>
-      <tr>
-        <td><div align="right">配置人数：</div></td>
-        <td><input name="positionconfigcount" type="text" class="input1" id="positionconfigcount" onKeyDown="EnterKeyDo('')" value="<%=orgposition.getPositionconfigcount()%>" size="30" maxlength="200"></td>
-      </tr>
-        
-      <tr>  
-	   <td width="20%"><div align="right">备注：</div></td>
-        <td width="80%"><input name="Memo" type="text" class="input1" id="Memo" onKeyDown="EnterKeyDo('')" value="<%=orgposition.getMemo()%>" size="30" maxlength="30"></td> 
-        </tr>    
-	  <tr>
+    <td colspan="3" valign="top" class="main_table_centerbg" align="center"><table  width="100%" border="1" cellspacing="0" cellpadding="0" class="table_list1" style="display: none">    
+	  <tr >
       <td>
          <input type="submit" name="Submit" value="提交" style="display:none">
           <input type="reset" name="reset" value="重置" style="display:none">
@@ -89,11 +85,7 @@ function F8()
       </tr>
     </table></td>
   </tr>
-  <tr>
-    <td height="5" class="main_table_bottombg"><img src="../../images/table_lb.jpg" width="10" height="5"></td>
-    <td height="5" class="main_table_bottombg"></td>
-    <td height="5" align="right" class="main_table_bottombg"><img src="../../images/table_rb.jpg" width="10" height="5"></td>
-  </tr>
+ 
 </form>
 </table>
 </BODY>

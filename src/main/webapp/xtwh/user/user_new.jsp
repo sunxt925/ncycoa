@@ -260,73 +260,125 @@ function myidcard()
     <td width="3%" align="right" class="main_table_topbg" height="31"><img src="../../images/table_rt.jpg" width="22" height="31"></td>
   </tr>
   -->
-      <tr>
-    <td> <a id="F8" style="display:none" href="#" onClick="F8()">保存[F8]</a></td>
-  </tr>
+  
+  <table cellpadding="5"  width="100%" align="left" >
+				<tr>
+					<td><a id="F8" style="display: none" href="#" onClick="F8()">保存[F8]</a></td>
+				</tr>
+			
+			<tr>
+				<td><span>身份证号：</span></td>
+				<td>
+					<input name="idcard" type="text" class="easyui-textbox" id="idcard"  onblur=exist() onKeyDown="EnterKeyDo('')" size="40" maxlength="40" >
+				</td>
+			</tr>
+			<tr>
+				<td><span>员工编码：</span></td>
+				<td>
+					<input name="staffcode" type="text" class="easyui-textbox" id="staffcode" onblur=changeIsExist() onKeyDown="EnterKeyDo('')" size="40" maxlength="40">
+				</td>
+			</tr>
+			 
+			<tr>
+				<td><span>员工姓名：</span></td>
+				<td>
+					<input name="staffname" type="text" class="easyui-textbox" id="staffname" onblur=nameExist() onKeyDown="EnterKeyDo('')" size="40" maxlength="40">
+				</td>
+			</tr>
+			<tr>
+				<td><span>性别：</span></td>
+				<td>
+					<input name="gender" type="radio" class="easyui-textbox" id="gender" value="男" onKeyDown="EnterKeyDo('')" >男</input>
+            <input name="gender" type="radio" class="easyui-textbox" id="gender" value="女" onKeyDown="EnterKeyDo('')"  >女</input>
+				</td>
+			</tr>
+			
+			<tr>
+				<td><span>生日：</span></td>
+				<td>
+					<input name="birthday" type="Wdate" class="easyui-textbox" id="birthday" onKeyDown="EnterKeyDo('')" size="40" maxlength="40"  onfocus="new WdatePicker(this,null,false,'whyGreen')"  >
+				</td>
+			</tr>
+			<tr>
+				<td><span>民族编码：</span></td>
+				<td>
+					<input name="nationalitycode" type="text" class="easyui-textbox" id="nationalitycode" onKeyDown="EnterKeyDo('')" size="40" maxlength="40">
+				</td>
+			</tr>
+			<tr>
+				<td><span>民族：</span></td>
+				<td>
+					<input name="nationality" type="text" class="easyui-textbox" id="nationality" onKeyDown="EnterKeyDo('')" size="40" maxlength="40">
+				</td>
+			</tr>
+			<tr>
+				<td><span>籍贯：</span></td>
+				<td>
+					<input name="nativeplace" type="text" class="easyui-textbox" id="nativeplace" onKeyDown="EnterKeyDo('')" size="40" maxlength="40">
+				</td>
+			</tr>
+			<tr>
+				<td><span>婚姻状况：</span></td>
+				<td>
+					<input name="nativeplace" type="text" class="easyui-textbox" id="nativeplace" onKeyDown="EnterKeyDo('')" size="40" maxlength="40">
+				</td>
+			</tr>
+			<tr>
+				<td><span>薪水等级：</span></td>
+				<td>
+					<input name="salarylevel" type="text" class="easyui-textbox" id="salarylevel" onKeyDown="EnterKeyDo('')" size="40" maxlength="40">
+				</td>
+			</tr>
+			<tr>
+				<td><span>参工时间：</span></td>
+				<td>
+					<input name="begincareerdate" type="Wdate" class="easyui-textbox" id="begincareerdate" onfocus="new WdatePicker({lang:'zh-cn'})"  value="" size="30"  maxlength="30">
+				</td>
+			</tr>
+			<tr>
+				<td><span>E-mail：</span></td>
+				<td>
+					<input name="email" type="text" class="easyui-textbox" id="email" onKeyDown="EnterKeyDo('')" size="40" maxlength="40">
+				</td>
+			</tr>
+			<tr>
+				<td><span>QQ：</span></td>
+				<td>
+                    <input name="qq" type="text" class="easyui-textbox" id="qq" onKeyDown="EnterKeyDo('')" size="40" maxlength="40"></td>				</td>
+			</tr>
+			<tr>
+				<td><span>移动电话：</span></td>
+				<td>
+					<input name="mobilephone" type="text" class="easyui-textbox" id="mobilephone" onKeyDown="EnterKeyDo('')" size="40" maxlength="40">
+				</td>
+			</tr>
+			<tr>
+				<td><span>办公电话：</span></td>
+				<td>
+					<input name="officephone" type="text" class="easyui-textbox" id="officephone" onKeyDown="EnterKeyDo('')" size="40" maxlength="40">
+				</td>
+			</tr>
+			<tr>
+				<td><span>家庭电话：</span></td>
+				<td>
+					<input name="homephone" type="text" class="easyui-textbox" id="homephone" onKeyDown="EnterKeyDo('')" size="40" maxlength="40">
+				</td>
+			</tr>
+			<tr>
+				<td><span>家庭住址：</span></td>
+				<td>
+					<input name="homeaddress" type="text" class="easyui-textbox" id="homeaddress" onKeyDown="EnterKeyDo('')" size="40" maxlength="40">
+				</td>
+			</tr>
+			
+		</table>
+
 <!--  <tr>-->
 <!--    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;<a href="#" onClick="F8()">保存[F8]</a>　<a href="#" onClick="F3()">重填[F3]</a>　<a href="#" onClick="F5()">刷新[F5]</a></td>-->
 <!--  </tr>-->
   <tr>
     <td colspan="3" valign="top" class="main_table_centerbg" align="center"><table width="100%" border="1" cellspacing="0" cellpadding="0" class="table_list1">
       <tr>
-        <td><div align="right">身份证号：</div></td>
-        <td><input name="idcard" type="text" class="input1" id="idcard"  onblur=exist() onKeyDown="EnterKeyDo('')" size="40" maxlength="40" ></td>
-      </tr>
-      <tr>
-        <td ><div align="right">员工编码：</div></td>
-        <td ><input name="staffcode" type="text" class="input1" id="staffcode" onblur=changeIsExist() onKeyDown="EnterKeyDo('')" size="40" maxlength="40"></td>
-        <td><div align="right">员工姓名：</div></td>
-        <td><input name="staffname" type="text" class="input1" id="staffname" onblur=nameExist() onKeyDown="EnterKeyDo('')" size="40" maxlength="40"></td>
-      </tr>
-      <tr>
-        
-      </tr>
-        <td><div align="right">性别：</div></td>
-        <td><input name="gender" type="radio" class="input1" id="gender" value="男" onKeyDown="EnterKeyDo('')" >男</input>
-            <input name="gender" type="radio" class="input1" id="gender" value="女" onKeyDown="EnterKeyDo('')"  >女</input></td>
-        <td><div align="right">生日：</div></td>
-        <td><input name="birthday" type="Wdate" class="input1" id="birthday" onKeyDown="EnterKeyDo('')" size="40" maxlength="40"  onfocus="new WdatePicker(this,null,false,'whyGreen')"  ></td>
-      
-      <tr>
-         <td><div align="right">民族编码：</div></td>
-         <td><input name="nationalitycode" type="text" class="input1" id="nationalitycode" onKeyDown="EnterKeyDo('')" size="40" maxlength="40"></td>
-         <td><div align="right">民族：</div></td>
-         <td><input name="nationality" type="text" class="input1" id="nationality" onKeyDown="EnterKeyDo('')" size="40" maxlength="40"></td>
-      </tr>
-      
-      <tr>
-         <td><div align="right">籍贯：</div></td>
-         <td><input name="nativeplace" type="text" class="input1" id="nativeplace" onKeyDown="EnterKeyDo('')" size="40" maxlength="40"></td>
-         <td><div align="right">婚姻状况：</div></td>
-         <td><input name="marriage" type="text" class="input1" id="marriage" onKeyDown="EnterKeyDo('')" size="40" maxlength="40"></td>
-      </tr>
-      
-      <tr>
-         <td><div align="right">薪水等级：</div></td>
-         <td><input name="salarylevel" type="text" class="input1" id="salarylevel" onKeyDown="EnterKeyDo('')" size="40" maxlength="40"></td>
-         <td><div align="right">参工时间：</div></td>
-         <td><input name="begincareerdate" type="Wdate" class="input1" id="begincareerdate" onfocus="new WdatePicker({lang:'zh-cn'})"  value="" size="30"  maxlength="30"></td>
-      </tr>
-      
-       <tr>
-         <td><div align="right">E-mail：<div></td>
-         <td><input name="email" type="text" class="input1" id="email" onKeyDown="EnterKeyDo('')" size="40" maxlength="40"></td>
-         <td><div align="right">QQ：</div></td>
-         <td><input name="qq" type="text" class="input1" id="qq" onKeyDown="EnterKeyDo('')" size="40" maxlength="40"></td>
-      </tr>
-       
-       <tr>
-         <td><div align="right">移动电话：</div></td>
-         <td><input name="mobilephone" type="text" class="input1" id="mobilephone" onKeyDown="EnterKeyDo('')" size="40" maxlength="40"></td>
-         <td><div align="right">办公电话：</div></td>
-         <td><input name="officephone" type="text" class="input1" id="officephone" onKeyDown="EnterKeyDo('')" size="40" maxlength="40"></td>
-      </tr>
-      
-      <tr>
-         <td><div align="right">家庭电话：</div></td>
-         <td><input name="homephone" type="text" class="input1" id="homephone" onKeyDown="EnterKeyDo('')" size="40" maxlength="40"></td>
-         <td><div align="right">家庭住址：</div></td>
-         <td><input name="homeaddress" type="text" class="input1" id="homeaddress" onKeyDown="EnterKeyDo('')" size="40" maxlength="40"></td>
           
           <input name="act" type="hidden" id="act" value="add"/>
           <input name="orgcode" type="hidden" id="orgcode" value="<%=orgcode %>">
