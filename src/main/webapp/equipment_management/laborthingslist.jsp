@@ -15,25 +15,26 @@
 </style>
 </head>
 <body>
-	<h:datagrid actionUrl="supplier.htm?useddgdata" fit="true" fitColumns="true" queryMode="group" name="usedlist">
+	<h:datagrid actionUrl="laborthings_management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="elevatorlist">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
-		<h:dgColumn field="supplier" title="供应商名称" query="true"></h:dgColumn>
-		<h:dgColumn field="usedGoods" title="物资类别" query="true"></h:dgColumn>
-     	<h:dgColumn field="usedDepart" title="使用部门" query="true"></h:dgColumn>
-     	<h:dgColumn field="usedMoney" title="采购金额"></h:dgColumn>
-     	<h:dgColumn field="usedCount" title="采购数量"></h:dgColumn>
-     	<h:dgColumn field="usedTime" title="使用时间" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="scope"></h:dgColumn>
-		
-		<h:dgToolBar url="supplier.htm?used_addi" icon="icon-add" funname="add" title="新增记录"></h:dgToolBar>
-		<h:dgToolBar url="supplier.htm?used_update" icon="icon-reload" funname="myedit" title="更新记录"></h:dgToolBar>
+		<h:dgColumn field="type" title="劳动保护用品类别" query="true"></h:dgColumn>
+     	<h:dgColumn field="performanceRequire" title="性能要求" query="true"></h:dgColumn>
+		<h:dgColumn field="status" title="用品状态" ></h:dgColumn>
+		<h:dgColumn field="givener" title="发放的人员" ></h:dgColumn>
+		<h:dgColumn field="amount" title="每人发放的套数"></h:dgColumn>
+		<h:dgColumn field="givenTime" title="发放时间" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="scope"></h:dgColumn>
+		<h:dgToolBar url="laborthings_management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
+		<h:dgToolBar url="laborthings_management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
+		<h:dgToolBar url="laborthings_management.htm?update" icon="icon-reload" funname="myedit" title="更新"></h:dgToolBar>
 	</h:datagrid>
 </body>
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("input[name='usedTime_begin']").attr("class","easyui-datebox");
-		$("input[name='usedTime_end']").attr("class","easyui-datebox");
+		$("input[name='givenTime_begin']").attr("class","easyui-datebox");
+		$("input[name='givenTime_end']").attr("class","easyui-datebox");
 	});
+	
 	
 	function myedit(title, actionUrl, gname, width, height) {
 		gridname=gname;

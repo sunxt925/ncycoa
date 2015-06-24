@@ -15,25 +15,30 @@
 </style>
 </head>
 <body>
-	<h:datagrid actionUrl="supplier.htm?useddgdata" fit="true" fitColumns="true" queryMode="group" name="usedlist">
+	<h:datagrid actionUrl="hiddendangerimprovement_management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="hiddendangerimprovementlist">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
-		<h:dgColumn field="supplier" title="供应商名称" query="true"></h:dgColumn>
-		<h:dgColumn field="usedGoods" title="物资类别" query="true"></h:dgColumn>
-     	<h:dgColumn field="usedDepart" title="使用部门" query="true"></h:dgColumn>
-     	<h:dgColumn field="usedMoney" title="采购金额"></h:dgColumn>
-     	<h:dgColumn field="usedCount" title="采购数量"></h:dgColumn>
-     	<h:dgColumn field="usedTime" title="使用时间" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="scope"></h:dgColumn>
-		
-		<h:dgToolBar url="supplier.htm?used_addi" icon="icon-add" funname="add" title="新增记录"></h:dgToolBar>
-		<h:dgToolBar url="supplier.htm?used_update" icon="icon-reload" funname="myedit" title="更新记录"></h:dgToolBar>
+		<h:dgColumn field="number" title="序号" query="true"></h:dgColumn>
+		<h:dgColumn field="place" title="地点" ></h:dgColumn>
+		<h:dgColumn field="date" title="日期" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="scope"></h:dgColumn>
+     	<h:dgColumn field="dangerContent" title="隐患内容"></h:dgColumn>
+		<h:dgColumn field="dangerType" title="隐患分类" query="true"></h:dgColumn>
+		<h:dgColumn field="dangerLevel" title="隐患分级" replace="一般_0,重点 _1"></h:dgColumn>
+		<h:dgColumn field="improveStatus" title="整改措施及完成情况" ></h:dgColumn>
+		<h:dgColumn field="improveDepart" title="整改责任单位/部门"></h:dgColumn>
+		<h:dgColumn field="improveChecker" title="整改验证人"></h:dgColumn>
+		<h:dgColumn field="memo" title="备注" ></h:dgColumn>
+		<h:dgToolBar url="hiddendangerimprovement_management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
+		<h:dgToolBar url="hiddendangerimprovement_management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
+		<h:dgToolBar url="hiddendangerimprovement_management.htm?update" icon="icon-reload" funname="myedit" title="更新"></h:dgToolBar>
 	</h:datagrid>
 </body>
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("input[name='usedTime_begin']").attr("class","easyui-datebox");
-		$("input[name='usedTime_end']").attr("class","easyui-datebox");
+		$("input[name='date_begin']").attr("class","easyui-datebox");
+		$("input[name='date_end']").attr("class","easyui-datebox");
 	});
+	
 	
 	function myedit(title, actionUrl, gname, width, height) {
 		gridname=gname;

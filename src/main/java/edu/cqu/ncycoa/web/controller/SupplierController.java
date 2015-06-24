@@ -227,8 +227,9 @@ public class SupplierController {
 		AjaxResultJson j = new AjaxResultJson();
 		String message;
 		if (goodsUsed.getId() != null) {
+			System.out.println("inininininininininin@@@@@#####");
 			message = "物资使用记录更新成功";
-			Supplier t = systemService.findEntityById(goodsUsed.getId(), Supplier.class);
+			GoodsUsed t = systemService.findEntityById(goodsUsed.getId(), GoodsUsed.class);
 			try {
 				MyBeanUtils.copyBeanNotNull2Bean(goodsUsed, t);
 				systemService.saveEntity(t);
@@ -247,6 +248,15 @@ public class SupplierController {
 	}
 	
 	//更新使用记录   params=used_update
+	@RequestMapping(params="used_update")
+	public ModelAndView usedUpdate(HttpServletRequest request) {
+		String id = request.getParameter("id");
+		System.out.println("###id##"+id);
+		GoodsUsed t = systemService.findEntityById(Long.parseLong(id), GoodsUsed.class);
+		ModelAndView mav=new ModelAndView("supplier/used_add");
+		mav.addObject("goodsUsed", t);
+		return mav;
+	}
 	
 	//查询物资使用记录
 	@RequestMapping(params="useddgview")

@@ -15,26 +15,25 @@
 </style>
 </head>
 <body>
-	<h:datagrid actionUrl="supplier.htm?useddgdata" fit="true" fitColumns="true" queryMode="group" name="usedlist">
+	<h:datagrid actionUrl="pressureequipment_management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="pressureequipmentlist">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
-		<h:dgColumn field="supplier" title="供应商名称" query="true"></h:dgColumn>
-		<h:dgColumn field="usedGoods" title="物资类别" query="true"></h:dgColumn>
-     	<h:dgColumn field="usedDepart" title="使用部门" query="true"></h:dgColumn>
-     	<h:dgColumn field="usedMoney" title="采购金额"></h:dgColumn>
-     	<h:dgColumn field="usedCount" title="采购数量"></h:dgColumn>
-     	<h:dgColumn field="usedTime" title="使用时间" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="scope"></h:dgColumn>
-		
-		<h:dgToolBar url="supplier.htm?used_addi" icon="icon-add" funname="add" title="新增记录"></h:dgToolBar>
-		<h:dgToolBar url="supplier.htm?used_update" icon="icon-reload" funname="myedit" title="更新记录"></h:dgToolBar>
+		<h:dgColumn field="designPressure" title="设计压力一" query="true"></h:dgColumn>
+     	<h:dgColumn field="designPressure2" title="设计压力二" query="true"></h:dgColumn>
+		<h:dgColumn field="maxPressure" title="最高工作压力一" ></h:dgColumn>
+		<h:dgColumn field="maxPressure2" title="最高工作压力二" ></h:dgColumn>
+		<h:dgColumn field="designTemperature" title="设计温度一"></h:dgColumn>
+		<h:dgColumn field="designTemperature2" title="设计温度二" ></h:dgColumn>
+		<h:dgColumn field="maxTemperature" title="最高工作温度一" ></h:dgColumn>
+		<h:dgColumn field="maxTemperature2" title="最高工作温度二" ></h:dgColumn>
+		<h:dgColumn field="manageDepart" title="监控部门" ></h:dgColumn>
+		<h:dgColumn field="manager" title="监控负责人" ></h:dgColumn>
+		<h:dgToolBar url="pressureequipment_management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
+		<h:dgToolBar url="pressureequipment_management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
+		<h:dgToolBar url="pressureequipment_management.htm?update" icon="icon-reload" funname="myedit" title="更新"></h:dgToolBar>
 	</h:datagrid>
 </body>
 
 <script type="text/javascript">
-	$(document).ready(function(){
-		$("input[name='usedTime_begin']").attr("class","easyui-datebox");
-		$("input[name='usedTime_end']").attr("class","easyui-datebox");
-	});
-	
 	function myedit(title, actionUrl, gname, width, height) {
 		gridname=gname;
 		var rows;
