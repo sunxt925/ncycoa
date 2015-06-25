@@ -1,5 +1,8 @@
 package com.dao.system;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 
 import com.db.DBObject;
@@ -313,4 +316,26 @@ public class UnitDao {
 			return "";
 		}
 	}
+	public static List<String> getOrgListByStaffcode(String staffcode){
+		try {
+			List<String> orgList = new ArrayList<String>();
+			DBObject db=new DBObject();
+			String sql="select * from base_orgmember where staffcode='"+staffcode+"'";
+			DataTable dt = db.runSelectQuery(sql);
+			if(dt!=null&&dt.getRowsCount()>=0){
+				DataRow row = null;
+				for(int i=0;i<dt.getRowsCount();i++){
+					row = dt.get(i);
+					orgList.add(row.getString("orgcode"));
+				}
+				return orgList;
+			}else{
+				return null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 }

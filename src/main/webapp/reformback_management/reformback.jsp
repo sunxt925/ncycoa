@@ -78,21 +78,21 @@
 	});
 </script>
 </head>
+
 <body style="overflow-x:hidden">
 <form id="formobj" name="formobj" action="reformback_management.htm?save"  method="post">
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
-<input id="id" name="id" type="hidden" value="${reformback.id}">
 <table style="width:600px;border-spacing:1px;" class="formtable">
 	<tr>
 		<td align="right"><label class="Validform_label"> 反馈名称 </label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="backname" name="backname" value="${reformback.backname}" datatype="s2-10">
+		<td class="value"><input class="inputxt" style="width:150px;" id="backname" name="backname"  datatype="s2-10">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label"> 整改项目ID </label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="reformId" name="reformId" value="${reformback.reformId}" datatype="s2-10">
+		<input class="inputxt" style="width:150px;" id="reformId" name="reformId" value="${reformid}" datatype="s2-10" readonly="readonly">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -101,20 +101,56 @@
 	<tr>
 	<td align="right"><label class="Validform_label"> 附件 </label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="fileName" name="fileName" value="${reformback.fileName}" >
+		<input class="inputxt" style="width:150px;" id="fileName" name="fileName" >
+		 <a id="btn_uploadfile" href="#"    class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">上传文件</a>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label"> 说明 </label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="memo" name="memo" value="${reformback.memo}">
+		<input class="inputxt" style="width:150px;" id="memo" name="memo" >
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 </table>
+<input type="button" id="btn_ok" style="display: none" onclick="ret()">
 </form>
 <script type="text/javascript">
+function ret(){
+	 var api = frameElement.api;
+	$('#formobj').submit();
+	(api.data)({code:"refresh"});
+}
 
+$("#btn_uploadfile").click(function(){
+	createwindow('文件上传','complaintmanage/fileupload.jsp',350,130,returnFile);
+	    });
+
+function returnFile(data){
+	$('#fileName').val(data.code);
+   
+}
+function createwindow(title, url, width, height,func) {
+	
+	$.dialog({
+			id:'CLHG1976D',
+			data:func,
+			content : 'url:' + url,
+			lock : true,
+			width : width,
+			height : height,
+			title : title,
+			zIndex :2000,
+			opacity : 0.3,
+			cache : false,
+			ok : function() {
+				$('#btn_ok', this.iframe.contentWindow.document).click();
+				return true;
+			},
+			cancelVal : '关闭',
+			cancel : true/* 为true等价于function(){} */
+		});
+}
 </script>
 </body>

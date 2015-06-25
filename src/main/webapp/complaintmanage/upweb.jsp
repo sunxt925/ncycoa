@@ -17,7 +17,7 @@ try {
 } catch (Exception e) {  
     e.printStackTrace();  
 }  
-FileUpload.copyFile(this.getServletContext().getRealPath("upload\\"+fileName), "D:\\ftproot\\temp\\"+fileName);
+FileUpload.copyFile(this.getServletContext().getRealPath("upload\\"+fileName), "e:\\ftproot\\temp\\"+fileName);
 file.delete();
 out.println("上传成功");
 

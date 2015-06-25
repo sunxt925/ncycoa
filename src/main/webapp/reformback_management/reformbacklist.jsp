@@ -28,8 +28,15 @@
 		<h:dgToolBar url="reformback_management.htm?update" icon="icon-add" funname="update" title="±à¼­"></h:dgToolBar>
 		
 		<h:dgToolBar url="reformback_management.htm?del" icon="icon-remove" funname="del" title="É¾³ý"></h:dgToolBar>
+		
+		<h:dgColumn title="²Ù×÷" field="opt"></h:dgColumn>
+		  <h:dgFunOpt funname="fileload({fileName})" title="¸½¼þÏÂÔØ"></h:dgFunOpt>
 	</h:datagrid>
 </body>
-
+<script type="text/javascript">
+function fileload(fileName){
+	   window.open("complaintmanage/downweb.jsp?filename="+fileName);
+}
+</script>
 <script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>
 </html>

@@ -24,28 +24,37 @@ String basePath = request.getScheme()+"://"+
 <script type="text/javascript" src="<%=path%>/jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
 </head>
   <body class="easyui-layout">
-   
+    <div id="left" data-options="region:'west',split:true" style="width:250px;">
+    <ul id="tt" class="easyui-tree"   data-options="url:'unitjson.jsp?unitccm=NC.01',onClick:change">
+			</ul>
+	</div>
 	<div id="center" data-options="region:'center'" style="padding:5px;background:#eee;">
-	     <table id="dg" class="easyui-datagrid" data-options="url:'roomjson.jsp',fitColumns:true,singleSelect:true" style="width: 490px">
-	     <thead>
-    <tr>
-        <th data-options="filed:'ck',checkbox:true"></th>
-	    <th data-options="field:'roomid',width:100">会议室编号</th>
-	    <th data-options="field:'roomname',width:200">会议室名称</th>
-	    <th data-options="field:'galleryful',width:100">可容纳人数</th>
-	    <th data-options="field:'roommemo',width:300">会议室说明</th>
-    </tr>
-    </thead>
+	     <table id="dg" class="easyui-datagrid" data-options="fitColumns:true,singleSelect:true">
+	    
 	</table>
 	</div>
 	<input type="button" id="btn_ok" style="display: none" onclick="ret()">
 	<script type="text/javascript">
-	  
+	    function change(){
+	    	 $('#tt').tree({
+	  			onClick: function(node){
+	  				var u="orgjson.jsp?orgccm="+node.id;
+	  			    $('#dg').datagrid({
+	  			      url:u,
+	  			      columns:[[
+	  			       {filed:'ck',checkbox:true},
+	  			      {field:'orgcode',title:'机构编码',width:100},
+	  			      {field:'orgname',title:'机构名称',width:100}
+	  			      ]]
+	  			      });
+	  			}
+	  		});
+	    }
 	    function ret(){
 	    	var api = frameElement.api;
 	    	var row = $('#dg').datagrid('getSelected');
-	    	
 	    	(api.data)({code:(row)});
+	    	
 	    }
 	</script>
   </body>

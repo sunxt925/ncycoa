@@ -25,7 +25,7 @@ Goodsoutstoreitem goutstoreitem=new Goodsoutstoreitem();
     
     int page_no=Integer.parseInt(Format.NullToZero(request.getParameter("page_no")));
 
-	int per_page=((UserInfo)request.getSession().getAttribute("UserInfo")).getPerpage_half();
+	int per_page=((UserInfo)request.getSession().getAttribute("UserInfo")).getPerpage_half()-4;
 	if(detail.equals("1"))
 		 dt=goutstoreitem.getGoodsStoreItemListdetail(page_no,per_page,StoreEventNo);
 	else
@@ -104,7 +104,7 @@ function F3(message)//修改
 		return;
 	}
 	var rand=Math.floor(Math.random()*10000);
-	createwindow('修改', "goodsmanage/goodsinformOUT_mod.jsp?outno="+outno,700,600);
+	createwindow('修改', "goodsmanage/goodsinformOUT_mod.jsp?outno="+outno,700,550);
 }
 function showModalDialogWin(url,wh,hg) {
         var obj = window.showModalDialog(url, window,"status:false;dialogWidth:"+wh+"px;dialogHeight:"+hg+"px;scroll=no;help: no;resizable:no;status:no;");
@@ -149,7 +149,7 @@ function select()
 {
 	var rand=Math.floor(Math.random()*10000);
 	var newtreeurl='goodsmanage/goodsOutStore_list.jsp?StoreEventNo=<%=StoreEventNo%>';
-	createwindow('选择', newtreeurl,1200,600);
+	createwindow('选择', newtreeurl,1000,550);
 	
 }
 function createwindow(title, url, width, height) {
