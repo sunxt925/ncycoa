@@ -35,7 +35,7 @@
 </body>
 <script type="text/javascript">
 function fileload(fileName){
-	   window.open("complaintmanage/downweb.jsp?filename="+fileName);
+	   window.open("fileupload/downweb.jsp?filename="+fileName);
 }
 </script>
 <script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>

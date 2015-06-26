@@ -38,9 +38,6 @@
 		$("input[name='meetingBeginDate']").attr("class","easyui-datebox");
 		$("input[name='meetingEndDate']").attr("class","easyui-datebox");
 	});
-	function ss(){
-		alert("dsa");
-	}
 </script>
 <script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>
 </html>

@@ -2,10 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="h" uri="/gem-tags"%>
+
 <!DOCTYPE html>
 <html>
 <head>
-<title>整改管理</title>
+<title>伤亡事故管理</title>
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/icon.css">
 <link rel="stylesheet" href="jscomponent/validform/css/style.css" type="text/css" />
@@ -17,8 +18,6 @@
 <script type="text/javascript" src="jscomponent/tools/datagrid.js"></script>
 <script type="text/javascript" src="jscomponent/validform/js/Validform_v5.3.1_ncr_min.js"></script>
 <script type="text/javascript" src="jscomponent/validform/js/Validform_Datatype.js"></script>
-
-<script type="text/javascript" src="js/MyDatePicker/WdatePicker.js"></script></HEAD>
 <style type="text/css">
 *{font-size:12px; font-family:微软雅黑,新宋体}
 </style>
@@ -52,7 +51,7 @@
 				var win = frameElement.api.opener;
 				if (data.success == true) {
 					frameElement.api.close();
-					win.tip(data.msg);
+					win.tip("hello");
 					
 				} else {
 					if (data.responseText == ''|| data.responseText == undefined){
@@ -79,107 +78,56 @@
 </script>
 </head>
 <body style="overflow-x:hidden">
-<form id="formobj" name="formobj" action="reform_management.htm?save"  method="post">
+<form id="formobj" name="formobj" action="accident_management.htm?save"  method="post">
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
-<input id="id" name="id" type="hidden" value="${reform.id}">
+<input id="id" name="id" type="hidden" value="${accident.id}">
 <table style="width:600px;border-spacing:1px;" class="formtable">
-	<tr>
-		<td align="right"><label class="Validform_label"> 整改项目名称 </label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="name" name="name" value="${reform.name}" datatype="s2-10">
+     <tr>
+		<td align="right"><label class="Validform_label">事故概述</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="detial" name="detial"  value="${accident.detial}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label"> 下达整改部门 </label></td>
-		<td class="value">
-		<input class="inputxt" style="width:150px;" id="xdzgOrgname" name="xdzgOrgname" value="${reform.xdzgOrgcode}">
-		<input type="hidden" id="xdzgOrgcode" name="xdzgOrgcode" value="${reform.clOrgcode}">
-		<a id="btn_selectorg" href="#" class="easyui-linkbutton"
-				       data-options="iconCls:'icon-search',plain:true">选择</a>
+		<td align="right"><label class="Validform_label">事故分析</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="analyze" name="analyze" value="${accident.analyze}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label">事故责任处罚</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="punish" name="punish" value="${accident.punish}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 
+	<tr>
+		<td align="right"><label class="Validform_label">伤亡人员救治信息</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="cureInfo" name="cureInfo" value="${accident.cureInfo}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label">备注</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;height:80px" id="memo" name="memo" value="${accident.memo}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
 	
-	<tr>
-	<td align="right"><label class="Validform_label"> 要求整改部门 </label></td>
-		<td class="value">
-		<input class="inputxt" style="width:150px;" id="clOrgname" name="clOrgname" value="${reform.clOrgcode}" >
-		<input type="hidden" id="clOrgcode" name="clOrgcode" value="${reform.clOrgcode}">
-		<a id="btn_selectobject" href="#" class="easyui-linkbutton"
-				       data-options="iconCls:'icon-search',plain:true">选择</a>
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label"> 附件</label></td>
-		<td class="value">
-		<input class="inputxt" style="width:150px;" id="fileName" name="fileName" value="${reform.fileName}" >
-		 <a id="btn_uploadfile" href="#"    class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">上传文件</a>
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label"> 整改说明 </label></td>
-		<td class="value">
-		<input class="inputxt" style="width:150px;" id="memo" name="memo" value="${reform.memo}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
 </table>
-<input type="hidden" id="flag" name="flag" value="${reform.flag}">
-</form>
-<script type="text/javascript">
-$("#btn_selectobject").click(function(){
-	
-	createwindow('选择单位','reform_management/selectunit.jsp',600,500,returnobjValue );
-    });
-    
-$("#btn_selectorg").click(function(){
-	
-	createwindow('选择单位','reform_management/selectunit.jsp',600,500,returnorgValue );
-    });
-       
-    
-$("#btn_uploadfile").click(function(){
-	createwindow("文件上传","fileupload/fileupload.jsp",350,130,returnFile);
-	    });
+<div style="width: 690px; height: 1px;"></div>
 
-function returnFile(data){
-	$('#fileName').val(data.code);
-   
-}
-function returnorgValue(data){
-	$('#xdzgOrgcode').val(data.code.orgcode);
-	$('#xdzgOrgname').val(data.code.orgname);
-	
-}    
-    
-function returnobjValue(data){
-	$('#clOrgcode').val(data.code.orgcode);
-	$('#clOrgname').val(data.code.orgname);
-	
-}
-function createwindow(title, url, width, height,func) {
-	
-	$.dialog({
-			id:'CLHG1976D',
-			data:func,
-			content : 'url:' + url,
-			lock : true,
-			width : width,
-			height : height,
-			title : title,
-			zIndex :2000,
-			opacity : 0.3,
-			cache : false,
-			ok : function() {
-				$('#btn_ok', this.iframe.contentWindow.document).click();
-				return true;
-			},
-			cancelVal : '关闭',
-			cancel : true/* 为true等价于function(){} */
-		});
-}
-</script>
+</form>
+
+<table style="display: none">
+	<tbody id="add_participant_table_template">
+		<tr>
+			<td align="center"><input style="width: 20px;" type="checkbox" name="ck" /></td>
+			<td align="left"><input name="name" type="text" value=""></td>
+			<td align="left"><input name="depart" type="text" value=""></td>
+			<td align="left"><input name="task" type="text" value=""></td>
+			<td align="left"><input name="memo" maxlength="200" type="text" value=""></td>
+		</tr>
+	</tbody>
+</table>
 </body>

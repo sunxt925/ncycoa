@@ -58,6 +58,7 @@ function view(url){
 	createwindow('维修进度',url,1000,600);
 }
 function returnValue(data){
+	alert('处理成功');
 	window.location.reload();
 }
 function createwindow(title, url, width, height) {

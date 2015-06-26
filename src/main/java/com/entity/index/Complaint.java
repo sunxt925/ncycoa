@@ -78,7 +78,7 @@ public class Complaint {
 				sbuilder.append("\"complaintcategory\":").append("\""+complaint.getComplaintcategory()+"\"").append(",");
 				sbuilder.append("\"complaintreason\":").append("\""+complaint.getComplaintreson()+"\"").append(",");
 				sbuilder.append("\"complaintdate\":").append("\""+Format.dateToStr(complaint.getComplaintdate())+"\"").append(",");
-				sbuilder.append("\"attachedfile\":").append("\"<a href='downweb.jsp?filename="+complaint.getAttachedfile()+"'>"+complaint.getAttachedfile()+"</a>\"").append(",");
+				sbuilder.append("\"attachedfile\":").append("\"<a href='../fileupload/downweb.jsp?filename="+complaint.getAttachedfile()+"'>"+complaint.getAttachedfile()+"</a>\"").append(",");
 				sbuilder.append("\"enabledflag\":").append("\""+complaint.getEnableflag()+"\"").append(",");
 				sbuilder.append("\"memo\":").append("\""+complaint.getMemo()+"\"");
 				

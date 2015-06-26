@@ -24,7 +24,7 @@
 		<h:dgColumn field="clOrgcode" title="要求整改部门"  dictionary="base_org,orgcode,orgname"  query="true" queryMode="scope"></h:dgColumn>
 		<h:dgColumn field="xdDate" title="下达日期" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="scope"></h:dgColumn>
 		<h:dgColumn field="fileName" title="附件">
-		<h:dgOpenOpt url="complaintmanage/download.jsp?filename={fileName}" title="{fileName}"></h:dgOpenOpt>
+		<h:dgOpenOpt url="fileupload/download.jsp?filename={fileName}" title="{fileName}"></h:dgOpenOpt>
 		</h:dgColumn>
 		<h:dgColumn field="memo" title="整改说明"></h:dgColumn>
 		<h:dgColumn field="flag" title="状态"></h:dgColumn>
@@ -35,7 +35,7 @@
 </body>
 <script type="text/javascript">
 function fileload(fileName){
-	   window.open("complaintmanage/downweb.jsp?filename="+fileName);
+	   window.open("fileupload/downweb.jsp?filename="+fileName);
 }
   function reformback(id){
 	  createwindow("反馈结果","reformback_management.htm?add&reformid="+id,600,400);

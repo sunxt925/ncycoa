@@ -86,7 +86,7 @@ ComponentUtil cu=new ComponentUtil();
         }
        
         $("#btn_uploadfile").click(function(){
-        	createwindow("文件上传","complaintmanage/fileupload.jsp",350,130);
+        	createwindow("文件上传","fileupload/fileupload.jsp",350,130);
         	    });
         function createwindow(title, url, width, height) {
         	var api = frameElement.api, W = api.opener;
