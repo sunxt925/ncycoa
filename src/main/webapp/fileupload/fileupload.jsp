@@ -74,8 +74,9 @@ String staffcode=request.getParameter("staffcode");
        });  
    }  
    function formSubmit(){  
+	   
        window.setInterval("callback()", 100);//每隔100毫秒执行callback  
-       document.form.submit();       
+       document.form.submit(); 
    }     
 </script>
 </html>

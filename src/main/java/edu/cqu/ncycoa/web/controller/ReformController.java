@@ -1,5 +1,7 @@
 package edu.cqu.ncycoa.web.controller;
 
+import java.util.Arrays;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.common.Format;
+import com.dao.system.UnitDao;
+import com.entity.system.UserInfo;
 
 import edu.cqu.ncycoa.common.dto.AjaxResultJson;
 import edu.cqu.ncycoa.common.dto.DataGrid;
@@ -20,8 +24,8 @@ import edu.cqu.ncycoa.common.service.SystemService;
 import edu.cqu.ncycoa.common.tag.TagUtil;
 import edu.cqu.ncycoa.common.util.dao.QueryUtils;
 import edu.cqu.ncycoa.common.util.dao.TQOrder;
+import edu.cqu.ncycoa.common.util.dao.TQRestriction;
 import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
-import edu.cqu.ncycoa.domain.MeetingRoom;
 import edu.cqu.ncycoa.domain.Reform;
 import edu.cqu.ncycoa.util.ConvertUtils;
 import edu.cqu.ncycoa.util.Globals;
@@ -95,6 +99,7 @@ public class ReformController {
 			}
 		} else {
 			message = "整改任务下达成功";
+			reform.setHandler(((UserInfo)request.getSession().getAttribute("UserInfo")).getStaffcode());
 			reform.setXdDate(Format.strToDate(Format.getNowtime()));
 			reform.setFlag("0");
 			systemService.addEntity(reform);
@@ -113,7 +118,12 @@ public class ReformController {
 		
 	}
 	
-	
+	@RequestMapping(params="dgviewquery")
+	public String dgViewQuery(HttpServletRequest request) {
+		
+		return "reform_management/reformquerylist";
+		
+	}
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params="dgdata")
 	@ResponseBody
@@ -123,6 +133,27 @@ public class ReformController {
 		CommonService commonService = SystemUtils.getCommonService(request);
 		//查询条件组装器
 		TypedQueryBuilder<Reform> tqBuilder = QueryUtils.getTQBuilder(reform, request.getParameterMap());
+		
+		if (StringUtils.isNotEmpty(dg.getSort())) {
+			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
+		}
+		cq.setTqBuilder(tqBuilder);
+		commonService.getDataGridReturn(cq, true);
+		TagUtil.datagrid(response, dg);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(params="dgdataquery")
+	@ResponseBody
+	public void dgDataQuery(Reform reform, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
+		QueryDescriptor<Reform> cq = new QueryDescriptor<Reform>(Reform.class, dg);
+		
+		CommonService commonService = SystemUtils.getCommonService(request);
+		//查询条件组装器
+		TypedQueryBuilder<Reform> tqBuilder = QueryUtils.getTQBuilder(reform, request.getParameterMap());
+		UserInfo u = (UserInfo)request.getSession().getAttribute("UserInfo");
+		tqBuilder.addRestriction(new TQRestriction( "clOrgcode", "in", UnitDao.getOrgListByStaffcode(u.getStaffcode())));
+		tqBuilder.addRestriction(new TQRestriction( "flag", "in", Arrays.asList("0")));
 		
 		if (StringUtils.isNotEmpty(dg.getSort())) {
 			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));

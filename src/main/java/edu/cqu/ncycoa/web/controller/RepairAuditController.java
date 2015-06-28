@@ -141,6 +141,21 @@ public class RepairAuditController {
 		return mav;
 	}
 	
+	/**
+	 * 更新台账
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(params="updaterec")
+    public ModelAndView updaterec(HttpServletRequest request, HttpServletResponse response){
+		String id = request.getParameter("id"); 
+		RepairAudit repairAudit = systemService.findEntityById(Long.parseLong(id), RepairAudit.class);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("repair_management/repairupdate");
+		mav.addObject("repairAudit",repairAudit);
+		return mav;
+	}
 	
 	@RequestMapping(params="dgview")
 	public String dgView(HttpServletRequest request) {
@@ -327,8 +342,6 @@ public class RepairAuditController {
 		
 		String comment = request.getParameter("comment");
 		  
-		byte[] jiema= outcome.getBytes("utf-8") ; //解码  
-		String   bianma = new String(jiema,"gb2312");//编码
 		
 		
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();

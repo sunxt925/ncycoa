@@ -25,7 +25,30 @@
 *{font-size:12px; font-family:微软雅黑,新宋体}
 </style>
 <script type="text/javascript">
- 	
+$(function() {
+	$("#formobj").Validform({
+		tiptype : 1,
+		btnSubmit : "#btn_sub",
+		btnReset : "#btn_reset",
+		ajaxPost : true,
+		callback : function(data) {
+			var win = frameElement.api.opener;
+			if (data.success == true) {
+				frameElement.api.close();
+				win.tip(data.msg);
+				
+			} else {
+				if (data.responseText == ''|| data.responseText == undefined){
+					$("#formobj").html(data.msg);
+				}else{
+					$("#formobj").html(data.responseText);
+				}
+				return false;
+			}
+			win.reloadTable();
+		}
+	});
+});
 	
 </script>
 </head>
@@ -36,7 +59,7 @@
 <div style="width: 90%;padding: 10px">
 			<div style="width: 90%;padding: 20px">
 				<div id="p" class="easyui-panel" title="维修申请单"
-					style="width:800px;height:300px;padding:10px;">
+					style="width:700px;height:300px;padding:10px;">
 					<table style="width:600px;border-spacing:1px;" >
 	<tr>
 		<td align="right"><label class="Validform_label"> 项目名称 </label></td>
@@ -74,11 +97,11 @@
 	</div>
 	</div>
 	</div>
-	<form id="form1" action="repair_management.htm?exetask"  method="post" accept-charset="utf-8">
+	<form  id="formobj" name="formobj"  action="repair_management.htm?exetask"  method="post">
 	<input  type="hidden" id="taskId" name="taskId" value="${taskId}">
 			<div style="width: 100%;padding: 20px">
 				<div id="p" class="easyui-panel" title="批注"
-					style="width:800px;height:300px;padding:10px;">
+					style="width:700px;height:300px;padding:10px;">
 					<table style="border-spacing:1px;" >
 					   <tr>
 					     <td><textarea name="comment" id="comment" style="width: 400px;height: 100px"></textarea></td>
@@ -110,14 +133,19 @@
 					</div>
 			</div>
 <input id="outcome" name="outcome" type="hidden" value="">
+<input id="btn_ok" type="hidden" onclick="ret()">
 </form>
 <script type="text/javascript">
 function sub(val){
-	alert($(val).val());
-	$('#outcome').val($(val).val());
-	$('#form1').submit();
-}
 
+	$('#outcome').val($(val).val());
+	$('#formobj').submit();
+	ret();
+}
+function ret(){
+	 var api = frameElement.api;
+	 (api.data)({code:"refresh"});
+}
 
 </script>
 </body>

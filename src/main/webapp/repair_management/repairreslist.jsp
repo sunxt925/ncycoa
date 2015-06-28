@@ -17,16 +17,18 @@
 <body>
 	<h:datagrid actionUrl="repair_management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="repairlist">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
-		<h:dgColumn field="projectName" title="项目名称"  query="true"></h:dgColumn>
-		<h:dgColumn field="apporgCode" title="申请部门"  query="true"></h:dgColumn>
-		<h:dgColumn field="repairFree" title="维修项目预算"  query="true"></h:dgColumn>
-		<h:dgColumn field="appDate" title="申请日期"  dateFormatter="yyyy-MM-dd hh:mm:ss" query="true"></h:dgColumn>
-		<h:dgColumn field="repairContent" title="维修主要内容"  query="true"></h:dgColumn>
-		<h:dgColumn field="apporgOpinion" title="申请部门意见" ></h:dgColumn>
-		<h:dgColumn field="guikouorgOpinion" title="归口部门意见部门意见" ></h:dgColumn>
-		<h:dgColumn field="sanxiangOpinion" title="三项办意见" ></h:dgColumn>
-		<h:dgColumn field="auditFlag" title="审核状态" replace="归口部门通过_11,未审核_0,归口部门未通过_10,三项办通过_21,三项办未通过_20" style="color:red_10,color:red_20,color:blue_11,color:blue_21,color:green_0" query="true"></h:dgColumn>
-	
+		
+		<h:dgColumn field="apporgCode" title="维修申请单位(部门)"  dictionary="base_org,orgcode,orgname"  query="true"></h:dgColumn>
+		<h:dgColumn field="projectName" title="维修项目名称"  query="true"></h:dgColumn>
+		<h:dgColumn field="repairContent" title="维修内容"  query="true"></h:dgColumn>
+		<h:dgColumn field="serviceProvider" title="维修商"  query="true"></h:dgColumn>
+		<h:dgColumn field="handlePerson" title="经办人" dictionary="base_staff,staffcode,staffname"></h:dgColumn>
+		<h:dgColumn field="repairFree" title="预算金额" ></h:dgColumn>
+		<h:dgColumn field="trueFree" title="实际金额" ></h:dgColumn>
+		<h:dgColumn field="handleDate" title="审批时间"  dateFormatter="yyyy-MM-dd hh:mm:ss" query="true"></h:dgColumn>
+		<h:dgColumn field="endTime" title="完成时间"  dateFormatter="yyyy-MM-dd hh:mm:ss" query="true"></h:dgColumn>
+	    <h:dgColumn field="acceptor" title="验收人" dictionary="base_staff,staffcode,staffname"></h:dgColumn>
+	    <h:dgToolBar url="repair_management.htm?updaterec" icon="icon-add" funname="update" title="更新记录"></h:dgToolBar>
 	</h:datagrid>
 </body>
 

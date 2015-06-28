@@ -25,7 +25,7 @@ Goodsinstoreitem ginstoreitem=new Goodsinstoreitem();
     
     int page_no=Integer.parseInt(Format.NullToZero(request.getParameter("page_no")));
 
-	int per_page=((UserInfo)request.getSession().getAttribute("UserInfo")).getPerpage_half();
+	int per_page=((UserInfo)request.getSession().getAttribute("UserInfo")).getPerpage_half()-4;
 	if(detail.equals("1"))
 		 dt=ginstoreitem.getGoodsStoreItemListdetail(page_no,per_page,StoreEventNo);
 	else
@@ -97,7 +97,7 @@ Goodsinstoreitem ginstoreitem=new Goodsinstoreitem();
 function F3(inno)//ÐÞ¸Ä
 {
 	var rand=Math.floor(Math.random()*10000);
-	 createwindow('ÐÞ¸Ä', "goodsmanage/goodsinformIN_mod.jsp?inno="+inno,700,600);
+	 createwindow('ÐÞ¸Ä', "goodsmanage/goodsinformIN_mod.jsp?inno="+inno,700,550);
 	//window.open("goodsinformINList.jsp?detail=0&StoreEventNo=<%=StoreEventNo%>&sid="+rand,"_self");
 }
 function showModalDialogWin(url,wh,hg) {
@@ -132,7 +132,7 @@ function select()
 {
 	var rand=Math.floor(Math.random()*10000);
 	var newtreeurl='goodsmanage/goodsclasscheckbox_tree.jsp?StoreEventNo=<%=StoreEventNo%>';
-	createwindow('', newtreeurl, 700,600);
+	createwindow('', newtreeurl, 700,550);
 	}
 
 function dele(inno)

@@ -23,6 +23,7 @@ import edu.cqu.ncycoa.common.tag.TagUtil;
 import edu.cqu.ncycoa.common.util.dao.QueryUtils;
 import edu.cqu.ncycoa.common.util.dao.TQOrder;
 import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
+import edu.cqu.ncycoa.domain.Reform;
 import edu.cqu.ncycoa.domain.ReformBack;
 import edu.cqu.ncycoa.util.ConvertUtils;
 import edu.cqu.ncycoa.util.Globals;
@@ -36,8 +37,12 @@ public class ReformBackController {
 	@Resource(name="systemService")
 	SystemService systemService;
 	@RequestMapping(params="add")
-	public String add(HttpServletRequest request) {
-		return "reformback_management/reformback";
+	public ModelAndView add(HttpServletRequest request, HttpServletResponse response) {
+		String id = request.getParameter("reformid"); 
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("reformback_management/reformback");
+		mav.addObject("reformid",id);
+		return mav;
 	}
 	
 	@RequestMapping(params="del")
@@ -66,15 +71,6 @@ public class ReformBackController {
 		SystemUtils.jsonResponse(response, j);
 	}
 	
-	@RequestMapping(params="update")
-    public ModelAndView update(HttpServletRequest request, HttpServletResponse response){
-		String id = request.getParameter("id"); 
-		ReformBack reformBack = systemService.findEntityById(Long.parseLong(id), ReformBack.class);
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("reformback_management/reformback");
-		mav.addObject("reformback",reformBack);
-		return mav;
-	}
 	
 	@RequestMapping(params = "save")
 	@ResponseBody
@@ -87,7 +83,9 @@ public class ReformBackController {
 			try {
 				MyBeanUtils.copyBeanNotNull2Bean(reformBack, t);
 				
+				
 				systemService.saveEntity(t);
+				
 				
 			} catch (Exception e) {
 				message = "整改反馈更新失败";
@@ -97,6 +95,10 @@ public class ReformBackController {
 			message = "整改反馈上传成功";
 			reformBack.setSubDate(Format.strToDate(Format.getNowtime()));
 			reformBack.setSubUser(((UserInfo)request.getSession().getAttribute("UserInfo")).getStaffcode());
+			//更新整改记录状态
+			Reform reform= systemService.findEntityById(reformBack.getReformId(), Reform.class);
+			reform.setFlag("1");
+			systemService.saveEntity(reform);
 			systemService.addEntity(reformBack);
 			
 		}

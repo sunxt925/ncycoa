@@ -18,7 +18,7 @@
 	<h:datagrid actionUrl="repair_management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="repairlist">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
 		<h:dgColumn field="projectName" title="项目名称"  query="true"></h:dgColumn>
-		<h:dgColumn field="apporgCode" title="申请部门"  query="true"></h:dgColumn>
+		<h:dgColumn field="apporgCode" title="申请部门"  dictionary="base_org,orgcode,orgname"  query="true"></h:dgColumn>
 		<h:dgColumn field="repairFree" title="维修项目预算"  query="true"></h:dgColumn>
 		<h:dgColumn field="appDate" title="申请日期"  dateFormatter="yyyy-MM-dd hh:mm:ss" query="true"></h:dgColumn>
 		<h:dgColumn field="repairContent" title="维修主要内容"  query="true"></h:dgColumn>

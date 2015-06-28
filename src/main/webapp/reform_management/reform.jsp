@@ -92,7 +92,10 @@
 	<tr>
 		<td align="right"><label class="Validform_label"> 下达整改部门 </label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="xdzgOrgcode" name="xdzgOrgcode" value="${reform.xdzgOrgcode}" datatype="s2-10">
+		<input class="inputxt" style="width:150px;" id="xdzgOrgname" name="xdzgOrgname" value="${reform.xdzgOrgcode}">
+		<input type="hidden" id="xdzgOrgcode" name="xdzgOrgcode" value="${reform.clOrgcode}">
+		<a id="btn_selectorg" href="#" class="easyui-linkbutton"
+				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -101,7 +104,8 @@
 	<tr>
 	<td align="right"><label class="Validform_label"> 要求整改部门 </label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="clOrgcode" name="clOrgcode" value="${reform.clOrgcode}" >
+		<input class="inputxt" style="width:150px;" id="clOrgname" name="clOrgname" value="${reform.clOrgcode}" >
+		<input type="hidden" id="clOrgcode" name="clOrgcode" value="${reform.clOrgcode}">
 		<a id="btn_selectobject" href="#" class="easyui-linkbutton"
 				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
@@ -111,6 +115,7 @@
 		<td align="right"><label class="Validform_label"> 附件</label></td>
 		<td class="value">
 		<input class="inputxt" style="width:150px;" id="fileName" name="fileName" value="${reform.fileName}" >
+		 <a id="btn_uploadfile" href="#"    class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">上传文件</a>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -127,10 +132,32 @@
 <script type="text/javascript">
 $("#btn_selectobject").click(function(){
 	
-	createwindow('选择单位','meetingroom_management/selectunit.jsp',300,400,returnobjValue );
+	createwindow('选择单位','reform_management/selectunit.jsp',600,500,returnobjValue );
     });
+    
+$("#btn_selectorg").click(function(){
+	
+	createwindow('选择单位','reform_management/selectunit.jsp',600,500,returnorgValue );
+    });
+       
+    
+$("#btn_uploadfile").click(function(){
+	createwindow("文件上传","fileupload/fileupload.jsp",350,130,returnFile);
+	    });
+
+function returnFile(data){
+	$('#fileName').val(data.code);
+   
+}
+function returnorgValue(data){
+	$('#xdzgOrgcode').val(data.code.orgcode);
+	$('#xdzgOrgname').val(data.code.orgname);
+	
+}    
+    
 function returnobjValue(data){
-	$('#clOrgcode').val(data.code);
+	$('#clOrgcode').val(data.code.orgcode);
+	$('#clOrgname').val(data.code.orgname);
 	
 }
 function createwindow(title, url, width, height,func) {
