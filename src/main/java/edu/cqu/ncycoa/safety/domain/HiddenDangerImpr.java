@@ -19,14 +19,14 @@ public class HiddenDangerImpr {
 	@Column(name="ID")
 	private Long id;   
 	
-	@Column(name="NUMBER")
+	@Column(name="DNUMBER")
 	private String number;   //序号
 	
-	@Column(name="PLACE")
+	@Column(name="DPLACE")
 	private String place;   //地点
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATE")
+	@Column(name="DANGER_DATE")
 	private Date date;  // 日期
 	
 	@Column(name="DANGER_CONTENT")

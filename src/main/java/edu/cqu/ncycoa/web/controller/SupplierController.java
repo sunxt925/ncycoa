@@ -227,7 +227,6 @@ public class SupplierController {
 		AjaxResultJson j = new AjaxResultJson();
 		String message;
 		if (goodsUsed.getId() != null) {
-			System.out.println("inininininininininin@@@@@#####");
 			message = "物资使用记录更新成功";
 			GoodsUsed t = systemService.findEntityById(goodsUsed.getId(), GoodsUsed.class);
 			try {

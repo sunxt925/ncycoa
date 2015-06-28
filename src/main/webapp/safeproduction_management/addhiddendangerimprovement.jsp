@@ -116,8 +116,8 @@
 	<tr>
 		<td align="right"><label class="Validform_label">隐患分级</label></td>
 		<td class="value">
-		<select class="inputxt" id="goodsType" name="goodsType" style="width:100px;">
-		<option selected value="0">一般</option>  
+		<select class="inputxt" id="dangerLevel" name="dangerLevel" style="width:100px;">
+		<option value="0">一般</option>  
         <option value="1" >重点</option>
 		</select>
 		<span class="Validform_checktip"></span>

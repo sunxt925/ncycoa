@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>安全生产管理</title>
+<title>设备管理</title>
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/icon.css">
 <link rel="stylesheet" href="jscomponent/validform/css/style.css" type="text/css" />
@@ -78,58 +78,69 @@
 </script>
 </head>
 <body style="overflow-x:hidden">
-<form id="formobj" name="formobj" action="checkrecord_management.htm?save"  method="post">
+<form id="formobj" name="formobj" action="fireequipment_management.htm?save"  method="post">
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
-<input id="id" name="id" type="hidden" value="${checkRecord.id}">
+<input id="id" name="id" type="hidden" value="${fireEquipment.id}">
 <table style="width:600px;border-spacing:1px;" class="formtable">
      <tr>
-		<td align="right"><label class="Validform_label">检查地点</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="place" name="place"  value="${checkRecord.place}">
+		<td align="right"><label class="Validform_label">设备名称</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="name" name="name"  value="${fireEquipment.name}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">检查时间</label></td>
-		<td class="value"><input class="easyui-datebox" style="width:150px;" id="checkTime" name="checkTime" value="${checkRecord.checkTime}">
+		<td align="right"><label class="Validform_label">编号</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="serialNum" name="serialNum"  value="${fireEquipment.serialNum}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">主持人</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="host" name="host" value="${checkRecord.host}">
+		<td align="right"><label class="Validform_label">数量</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="amount" name="amount"  value="${fireEquipment.amount}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right"><label class="Validform_label">配置时间</label></td>
+		<td class="value"><input class="easyui-datebox" style="width:150px;" id="setTime" name="setTime" value="${fireEquipment.setTime}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label">位置</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="location" name="location" value="${fireEquipment.location}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label">责任人</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="checker" name="checker" value="${fireEquipment.checker}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 
 	<tr>
-		<td align="right"><label class="Validform_label">参加人员</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="participants" name="participants" value="${checkRecord.participants}">
-		<a id="btn_selectobject" href="#" class="easyui-linkbutton"
-				       data-options="iconCls:'icon-search',plain:true">选择</a>
+		<td align="right"><label class="Validform_label">使用部门</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="useDepart" name="useDepart" value="${fireEquipment.useDepart}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">检查内容</label></td>
-		<td class="value"><input class="inputxt" style="width:250px;" id="checkContent" name="checkContent" value="${checkRecord.checkContent}">
+		<td align="right"><label class="Validform_label">有效期</label></td>
+		<td class="value"><input class="inputxt" style="width:250px;" id="validTime" name="validTime" value="${fireEquipment.validTime}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">检查结果</label></td>
-		<td class="value"><input class="inputxt" style="width:100px;" id="checkResult" name="checkResult" value="${checkRecord.checkResult}">
+		<td align="right"><label class="Validform_label">下次检修日期</label></td>
+		<td class="value"><input class="easyui-datebox" style="width:150px;" id="nextCheckDate" name="nextCheckDate" value="${fireEquipment.setTime}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">整改要求</label></td>
-		<td class="value"><input class="inputxt" style="width:160px;" id="changeRequire" name="changeRequire" value="${checkRecord.changeRequire}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label">整改情况</label></td>
-		<td class="value"><input class="inputxt" style="width:160px;" id="changeStatus" name="changeStatus" value="${checkRecord.changeStatus}">
+		<td align="right"><label class="Validform_label">备注</label></td>
+		<td class="value"><input class="inputxt" style="width:160px;" id="memo" name="memo" value="${fireEquipment.memo}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -137,44 +148,7 @@
 <div style="width: 690px; height: 1px;"></div>
 
 </form>
-<script type="text/javascript">
-$("#btn_selectobject").click(function(){
-	alert("adsf");
-	createwindow('选择人员','indexmanage/selectstaff.jsp',500,500,returnobjValue );
-    });
-function returnobjValue(data){
 
-	var array = data.code;
-	var staffs="";
-	for(var i=0;i<array.length;i++){
-		staffs += array[i].staffcode+",";
-	}
-	
-	$('#participants').val(staffs);
-	//$('#numAttendee').val(array.length);	
-}
-function createwindow(title, url, width, height,func) {
-	
-	$.dialog({
-			id:'CLHG1976D',
-			data:func,
-			content : 'url:' + url,
-			lock : true,
-			width : width,
-			height : height,
-			title : title,
-			zIndex :2000,
-			opacity : 0.3,
-			cache : false,
-			ok : function() {
-				$('#btn_ok', this.iframe.contentWindow.document).click();
-				return true;
-			},
-			cancelVal : '关闭',
-			cancel : true/* 为true等价于function(){} */
-		});
-}
-</script>
 <table style="display: none">
 	<tbody id="add_participant_table_template">
 		<tr>

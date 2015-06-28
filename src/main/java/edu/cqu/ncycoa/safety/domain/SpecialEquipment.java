@@ -1,26 +1,34 @@
 package edu.cqu.ncycoa.safety.domain;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="SAFE_SPECIALEQUIPMENT")
-public class SpecialEquipment {
+@SuppressWarnings("serial")
+public class SpecialEquipment implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="ID")
 	private Long id;   
 	
-	@Column(name="NAME")
+	@Column(name="SNAME")
 	private String name;   //设备名称
 	
 	@Column(name="MODEL")
@@ -32,8 +40,8 @@ public class SpecialEquipment {
 	@Column(name="SERIAL_NUM")
 	private String serialNum;  // 出厂编号
 	
-	@Column(name="WEIGHT")
-	private Double weight;     // 设备重量
+	@Column(name="SWEIGHT")
+	private String weight;     // 设备重量
 	
 	@Column(name="INSTALL_POSITION")
 	private String installPosition;     // 安装位置  
@@ -41,8 +49,8 @@ public class SpecialEquipment {
 	@Column(name="FILE_NUM")
 	private String fileNum;   // 档案编号
 	
-	@Column(name="SIZE")
-	private Double size;  //外形尺寸
+	@Column(name="SSIZE")
+	private String size;  //外形尺寸
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="MADE_TIME")
@@ -51,6 +59,9 @@ public class SpecialEquipment {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="USE_TIME")
 	private Date useTime;     // 启用时间
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "specialEquipment")
+	private List<SubSpecialEquipment> subEquipments; // 附属设备
 
 	public Long getId() {
 		return id;
@@ -92,11 +103,11 @@ public class SpecialEquipment {
 		this.serialNum = serialNum;
 	}
 
-	public Double getWeight() {
+	public String getWeight() {
 		return weight;
 	}
 
-	public void setWeight(Double weight) {
+	public void setWeight(String weight) {
 		this.weight = weight;
 	}
 
@@ -116,11 +127,11 @@ public class SpecialEquipment {
 		this.fileNum = fileNum;
 	}
 
-	public Double getSize() {
+	public String getSize() {
 		return size;
 	}
 
-	public void setSize(Double size) {
+	public void setSize(String size) {
 		this.size = size;
 	}
 
@@ -139,5 +150,25 @@ public class SpecialEquipment {
 	public void setUseTime(Date useTime) {
 		this.useTime = useTime;
 	}
+
+	public List<SubSpecialEquipment> getSubEquipments() {
+		return subEquipments;
+	}
+
+	public void setSubEquipments(List<SubSpecialEquipment> subEquipments) {
+		this.subEquipments = subEquipments;
+	}
 	
+	public void addSub(SubSpecialEquipment item) {
+        if (!this.subEquipments.contains(item)) {
+            this.subEquipments.add(item);
+            item.setSpecialEquipment(this);
+        }
+    }
+	public void removeOrderItem(SubSpecialEquipment item) {
+        if (this.subEquipments.contains(item)) {
+            item.setSpecialEquipment(null);
+            this.subEquipments.remove(item);
+        }
+    }
 }

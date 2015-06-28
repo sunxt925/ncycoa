@@ -19,21 +19,20 @@ import edu.cqu.ncycoa.common.tag.TagUtil;
 import edu.cqu.ncycoa.common.util.dao.QueryUtils;
 import edu.cqu.ncycoa.common.util.dao.TQOrder;
 import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
-import edu.cqu.ncycoa.dao.SupplierDao;
-import edu.cqu.ncycoa.safety.domain.CheckRecord;
+import edu.cqu.ncycoa.safety.domain.FireEquipment;
 import edu.cqu.ncycoa.util.ConvertUtils;
 import edu.cqu.ncycoa.util.Globals;
 import edu.cqu.ncycoa.util.MyBeanUtils;
 import edu.cqu.ncycoa.util.SystemUtils;
 
 @Controller
-@RequestMapping("/checkrecord_management")
-public class CheckRecordController {
+@RequestMapping("/fireequipment_management")
+public class FireEquipmentController {
 	@Resource(name="systemService")
 	SystemService systemService;
 	@RequestMapping(params="add")
 	public String add(HttpServletRequest request) {
-		return "safeproduction_management/addcheckrecord";
+		return "equipment_management/addfireequipment";
 	}
 	
 	@RequestMapping(params="del")
@@ -56,7 +55,7 @@ public class CheckRecordController {
 			return;
 		}
 		
-		systemService.removeEntities(ids, CheckRecord.class);
+		systemService.removeEntities(ids, FireEquipment.class);
 		message = "会议室删除成功";
 		j.setMsg(message);
 		SystemUtils.jsonResponse(response, j);
@@ -65,25 +64,23 @@ public class CheckRecordController {
 	@RequestMapping(params="update")
     public ModelAndView update(HttpServletRequest request, HttpServletResponse response){
 		String id = request.getParameter("id"); 
-		CheckRecord checkRecord = systemService.findEntityById(Long.parseLong(id), CheckRecord.class);
+		FireEquipment fireEquipment = systemService.findEntityById(Long.parseLong(id), FireEquipment.class);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("safeproduction_management/addcheckrecord");
-		mav.addObject("checkRecord",checkRecord);
+		mav.setViewName("equipment_management/addfireequipment");
+		mav.addObject("fireEquipment",fireEquipment);
 		return mav;
 	}
 	
 	@RequestMapping(params = "save")
 	@ResponseBody
-	public void save(CheckRecord checkRecord, HttpServletRequest request, HttpServletResponse response) {
+	public void save(FireEquipment fireEquipment, HttpServletRequest request, HttpServletResponse response) {
 		AjaxResultJson j = new AjaxResultJson();
 		String message;
-		String partticipants=SupplierDao.getStaffNamesByCodes(checkRecord.getParticipants());
-		checkRecord.setParticipants(partticipants);
-		if (checkRecord.getId() != null) {
+		if (fireEquipment.getId() != null) {
 			message = "会议室更新成功";
-			CheckRecord t = systemService.findEntityById(checkRecord.getId(), CheckRecord.class);
+			FireEquipment t = systemService.findEntityById(fireEquipment.getId(), FireEquipment.class);
 			try {
-				MyBeanUtils.copyBeanNotNull2Bean(checkRecord, t);
+				MyBeanUtils.copyBeanNotNull2Bean(fireEquipment, t);
 				
 				systemService.saveEntity(t);
 				
@@ -94,7 +91,7 @@ public class CheckRecordController {
 		} else {
 			message = "会议室添加成功";
 			
-			systemService.addEntity(checkRecord);
+			systemService.addEntity(fireEquipment);
 			
 		}
 		
@@ -106,7 +103,7 @@ public class CheckRecordController {
 	@RequestMapping(params="dgview")
 	public String dgView(HttpServletRequest request) {
 		
-		return "safeproduction_management/checkrecordlist";
+		return "equipment_management/fireequipmentlist";
 		
 	}
 	
@@ -114,12 +111,12 @@ public class CheckRecordController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params="dgdata")
 	@ResponseBody
-	public void dgData(CheckRecord checkRecord, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
-		QueryDescriptor<CheckRecord> cq = new QueryDescriptor<CheckRecord>(CheckRecord.class, dg);
+	public void dgData(FireEquipment fireEquipment, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
+		QueryDescriptor<FireEquipment> cq = new QueryDescriptor<FireEquipment>(FireEquipment.class, dg);
 		
 		CommonService commonService = SystemUtils.getCommonService(request);
 		//查询条件组装器
-		TypedQueryBuilder<CheckRecord> tqBuilder = QueryUtils.getTQBuilder(checkRecord, request.getParameterMap());
+		TypedQueryBuilder<FireEquipment> tqBuilder = QueryUtils.getTQBuilder(fireEquipment, request.getParameterMap());
 		
 		if (StringUtils.isNotEmpty(dg.getSort())) {
 			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));

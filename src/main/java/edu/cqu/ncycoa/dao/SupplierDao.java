@@ -271,7 +271,28 @@ public class SupplierDao {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}		
+	}
+	//下面方法给安全模块使用：
+	public static String getStaffNamesByCodes(String codes) {
+		String[] staffs=codes.split(",");
+
+		String result="";
+		try {
+			DBObject db = new DBObject();
+			for(int j=0;j<staffs.length;j++){
+				String sql = "select staffname from BASE_ORGMEMBER t where staffcode="+staffs[j]+"";
+
+				DataTable dt = db.runSelectQuery(sql);
+				if (dt != null&& dt.getRowsCount() >= 1) {
+
+					DataRow r = dt.get(0);
+					result=result+r.getString("staffname")+",";
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
+		return result;
 	}
 }
