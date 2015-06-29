@@ -41,9 +41,11 @@ String staffcode=request.getParameter("staffcode");
      
      <br>
      <br>
-	      <form action="upweb.jsp" method="post" enctype="multipart/form-data"  name="form">  
+	      <form id="form1" action="upweb.jsp" method="post" enctype="multipart/form-data"  name="form">  
 	        <input type="file" name="file" id="file"> 
+	        <input type="hidden" id="filename" name="filename" value="das">
 	        <input type="button" onclick="formSubmit()" value="提交" style="display: none">
+	        
 	    </form>  
              <span id="span"></span>  
             <table width="300px;" border="0"><tr><td>  
@@ -51,23 +53,30 @@ String staffcode=request.getParameter("staffcode");
              </td>  
              </tr>  
             </table>  
-	       <input type="button" id="btn_ok" style="display: none" onclick="ret()">
+	       <input type="button" id="btn_ok" style="display: " onclick="ret()">
+	       
 </body>
 <script type="text/javascript">
    function ret(){
+	  
 	   var api = frameElement.api;
 	   var val=$("#file").val();
 	   var v=new Array();
 	   v=val.split("\\");
-	   (api.data)({code:v[v.length-1]});
+	   var timestamp = Date.parse( new Date());
+	   var va = v[v.length-1].split(".");
+	   var filename = timestamp+"."+va[va.length-1];
+	   $("#filename").val(filename);
+	   alert(filename);
+	   (api.data)({code:filename});
 	   formSubmit();
 	   window.close();
     }
    function callback(){  
        $.ajax({  
-           type:"post",  
+           type:"post",
            url:"uploadstatus.jsp",//响应文件上传进度的servlet  
-           success:function(msg){  
+           success:function(msg){
            document.getElementById("span").innerHTML="已上传："+msg;//显示读取百分比  
            document.getElementById("table").width=msg;//通过表格宽度 实现进度条  
            }  
@@ -76,7 +85,7 @@ String staffcode=request.getParameter("staffcode");
    function formSubmit(){  
 	   
        window.setInterval("callback()", 100);//每隔100毫秒执行callback  
-       document.form.submit(); 
+       $('#form1').submit();
    }     
 </script>
 </html>
