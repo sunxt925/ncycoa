@@ -14,7 +14,6 @@
 *{font-size:12px; font-family:Î¢ÈíÑÅºÚ,ĞÂËÎÌå}
 </style>
 </head>
-<input id="id" name="id"  value="${id}">
 <body>
 	<h:datagrid actionUrl="specialequipment_management.htm?dgdatasub&id=${id}" fit="true" fitColumns="true" queryMode="group" idField="${id}" name="checkplanlist">
 		<h:dgColumn field="serialNum" title="ĞòºÅ" query="true" hidden="true"></h:dgColumn>

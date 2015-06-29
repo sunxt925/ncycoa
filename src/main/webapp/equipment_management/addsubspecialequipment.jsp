@@ -80,7 +80,7 @@
 <body style="overflow-x:hidden">
 <form id="formobj" name="formobj" action="specialequipment_management.htm?savesub"  method="post">
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
-<input id="subID" name=subID value="${subID}">
+<input id="subID" name=subID value="${subID}" type="hidden" >
 <input id="serialNum" name=serialNum type="hidden" value="${subSpecialEquipment.serialNum}">
 <table style="width:600px;border-spacing:1px;" class="formtable">
      <tr>
