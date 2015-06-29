@@ -17,7 +17,7 @@ public class SubSpecialEquipment implements java.io.Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="SERIAL_NUM")
-	private String serialNum; //–Ú∫≈   
+	private Long serialNum; //–Ú∫≈   
 	
 	@Column(name="EQUIPMENT_NUM")
 	private String equipmentNum;   //…Ë±∏Œª∫≈
@@ -41,10 +41,10 @@ public class SubSpecialEquipment implements java.io.Serializable{
     @JoinColumn(name = "ID")
     private SpecialEquipment specialEquipment;
 	
-	public String getSerialNum() {
+	public Long getSerialNum() {
 		return serialNum;
 	}
-	public void setSerialNum(String serialNum) {
+	public void setSerialNum(Long serialNum) {
 		this.serialNum = serialNum;
 	}
 	public String getEquipmentNum() {

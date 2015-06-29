@@ -15,23 +15,23 @@
 </style>
 </head>
 <body>
-	<h:datagrid actionUrl="checkplan_management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="checkplanlist">
+	<h:datagrid actionUrl="specialequipment_management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="checkplanlist">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
 		<h:dgColumn field="name" title="设备名称" query="true"></h:dgColumn>
 		<h:dgColumn field="model" title="设备型号" query="true"></h:dgColumn>
-		<h:dgColumn field="manufacturer" title="生产厂家" query="true"></h:dgColumn>
+		<h:dgColumn field="manufacturer" title="生产厂家"></h:dgColumn>
 		<h:dgColumn field="serialNum" title="出场编号" query="true"></h:dgColumn>
-		<h:dgColumn field="weight" title="设备重量" query="true"></h:dgColumn>
-		<h:dgColumn field="installPosition" title="安装位置" query="true"></h:dgColumn>
+		<h:dgColumn field="weight" title="设备重量"></h:dgColumn>
+		<h:dgColumn field="installPosition" title="安装位置"></h:dgColumn>
 		<h:dgColumn field="fileNum" title="档案编号" query="true"></h:dgColumn>
 		<h:dgColumn field="size" title="外形尺寸" query="true"></h:dgColumn>
 		<h:dgColumn field="madeTime" title="制造日期" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="scope"></h:dgColumn>
      	<h:dgColumn field="useTime" title="启用时间" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="scope"></h:dgColumn>
-  		<h:dgToolBar url="checkplan_management.htm?add" icon="icon-add" funname="add" title="新增特种设备"></h:dgToolBar>
-		<h:dgToolBar url="checkplan_management.htm?del" icon="icon-remove" funname="del" title="删除特种设备"></h:dgToolBar>
-		<h:dgToolBar url="checkplan_management.htm?update" icon="icon-reload" funname="myedit" title="更新特种设备"></h:dgToolBar>
-		<h:dgToolBar url="checkplan_management.htm?addsub" icon="icon-add" funname="add" title="添加附属设备"></h:dgToolBar>
-		<h:dgToolBar url="checkplan_management.htm?sub" icon="icon-search" funname="add" title="查看附属设备"></h:dgToolBar>
+  		<h:dgToolBar url="specialequipment_management.htm?add" icon="icon-add" funname="add" title="新增特种设备"></h:dgToolBar>
+		<h:dgToolBar url="specialequipment_management.htm?del" icon="icon-remove" funname="del" title="删除特种设备"></h:dgToolBar>
+		<h:dgToolBar url="specialequipment_management.htm?update" icon="icon-reload" funname="myedit" title="更新特种设备"></h:dgToolBar>
+		<h:dgToolBar url="specialequipment_management.htm?addsub" icon="icon-add" funname="myedit" title="添加附属设备"></h:dgToolBar>
+		<h:dgToolBar url="specialequipment_management.htm?sub" icon="icon-search" funname="myedit" title="查看附属设备"></h:dgToolBar>
 	</h:datagrid>
 </body>
 
@@ -62,6 +62,7 @@
 		} else {
 			actionUrl += '?id='+ rows[0].id;
 		}
+		alert(rows[0].id);
 		createwindow(title, actionUrl, width, height);
 	}
 </script>

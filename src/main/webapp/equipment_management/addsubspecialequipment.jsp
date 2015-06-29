@@ -78,68 +78,45 @@
 </script>
 </head>
 <body style="overflow-x:hidden">
-<form id="formobj" name="formobj" action="specialequipment_management.htm?save"  method="post">
+<form id="formobj" name="formobj" action="specialequipment_management.htm?savesub"  method="post">
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
-<input id="id" name="id" type="hidden" value="${specialEquipment.id}">
+<input id="subID" name=subID value="${subID}">
+<input id="serialNum" name=serialNum type="hidden" value="${subSpecialEquipment.serialNum}">
 <table style="width:600px;border-spacing:1px;" class="formtable">
      <tr>
+		<td align="right"><label class="Validform_label">设备位号</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="equipmentNum" name="equipmentNum"  value="${subSpecialEquipment.equipmentNum}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
 		<td align="right"><label class="Validform_label">设备名称</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="name" name="name"  value="${specialEquipment.name}">
+		<td class="value"><input class="inputxt" style="width:150px;" id="equipmentName" name="equipmentName" value="${subSpecialEquipment.equipmentName}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">设备型号</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="model" name="model" value="${specialEquipment.model}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label">生产厂家</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="manufacturer" name="manufacturer" value="${specialEquipment.manufacturer}">
+		<td align="right"><label class="Validform_label">规格型号</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="model" name="model" value="${subSpecialEquipment.model}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 
 	<tr>
-		<td align="right"><label class="Validform_label">出场编号</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="serialNum" name="serialNum" value="${specialEquipment.serialNum}">
+		<td align="right"><label class="Validform_label">生产厂家</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="manufacturer" name="manufacturer" value="${subSpecialEquipment.manufacturer}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">设备重量</label></td>
-		<td class="value"><input class="inputxt" style="width:250px;" id="weight" name="weight" value="${specialEquipment.weight}">
+		<td align="right"><label class="Validform_label">维护周期</label></td>
+		<td class="value"><input class="inputxt" style="width:250px;" id="maintenCycle" name="maintenCycle" value="${subSpecialEquipment.maintenCycle}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">安装位置</label></td>
-		<td class="value"><input class="inputxt" style="width:100px;" id="installPosition" name="installPosition" value="${specialEquipment.installPosition}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label">档案编号</label></td>
-		<td class="value"><input class="inputxt" style="width:160px;" id="fileNum" name="fileNum" value="${specialEquipment.fileNum}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label">外形尺寸</label></td>
-		<td class="value"><input class="inputxt" style="width:160px;" id="size" name="size" value="${specialEquipment.size}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label">制造日期</label></td>
-		<td class="value"><input class="easyui-datebox" style="width:150px;" id="madeTime" name="madeTime" value="${specialEquipment.madeTime}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label">启用时间</label></td>
-		<td class="value"><input class="easyui-datebox" style="width:150px;" id="useTime" name="useTime" value="${specialEquipment.useTime}">
+		<td align="right"><label class="Validform_label">备注</label></td>
+		<td class="value"><input class="inputxt" style="width:160px;" id="memo" name="memo" value="${subSpecialEquipment.memo}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>

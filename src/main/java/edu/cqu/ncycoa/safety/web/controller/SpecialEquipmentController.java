@@ -1,5 +1,7 @@
 package edu.cqu.ncycoa.safety.web.controller;
 
+import java.util.Arrays;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,9 +20,11 @@ import edu.cqu.ncycoa.common.service.SystemService;
 import edu.cqu.ncycoa.common.tag.TagUtil;
 import edu.cqu.ncycoa.common.util.dao.QueryUtils;
 import edu.cqu.ncycoa.common.util.dao.TQOrder;
+import edu.cqu.ncycoa.common.util.dao.TQRestriction;
 import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
 import edu.cqu.ncycoa.domain.MeetingRoom;
 import edu.cqu.ncycoa.safety.domain.SpecialEquipment;
+import edu.cqu.ncycoa.safety.domain.SubSpecialEquipment;
 import edu.cqu.ncycoa.util.ConvertUtils;
 import edu.cqu.ncycoa.util.Globals;
 import edu.cqu.ncycoa.util.MyBeanUtils;
@@ -31,6 +35,17 @@ import edu.cqu.ncycoa.util.SystemUtils;
 public class SpecialEquipmentController {
 	@Resource(name="systemService")
 	SystemService systemService;
+	@RequestMapping(params="addsub")
+	public ModelAndView addSub(HttpServletRequest request, HttpServletResponse response) {
+		String id = request.getParameter("id"); 
+		//SubSpecialEquipment subSpecialEquipment = systemService.findEntityById(Long.parseLong(id), SubSpecialEquipment.class);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("equipment_management/addsubspecialequipment");
+		mav.addObject("subID",id);
+		//mav.addObject("subSpecialEquipment",subSpecialEquipment);
+		return mav;
+	}
+	
 	@RequestMapping(params="add")
 	public String add(HttpServletRequest request) {
 		return "equipment_management/addspecialequipment";
@@ -100,11 +115,37 @@ public class SpecialEquipmentController {
 		SystemUtils.jsonResponse(response, j);
 	}
 	
+	@RequestMapping(params = "savesub")
+	@ResponseBody
+	public void saveSub(SubSpecialEquipment subSpecialEquipment, HttpServletRequest request, HttpServletResponse response) {
+		AjaxResultJson j = new AjaxResultJson();
+		String message;
+		String id = request.getParameter("subID");
+		System.out.println("@@"+subSpecialEquipment.getEquipmentName());
+		SpecialEquipment t = systemService.findEntityById(Long.parseLong(id), SpecialEquipment.class);
+		t.addSub(subSpecialEquipment);
+		message = "添加成功";
+		MyBeanUtils.copyBeanNotNull2Bean(t, t);
+		systemService.saveEntity(t);	
+		j.setMsg(message);
+		SystemUtils.jsonResponse(response, j);
+	}
+	
 	
 	@RequestMapping(params="dgview")
 	public String dgView(HttpServletRequest request) {
 		
 		return "equipment_management/specialequipmentlist";
+		
+	}
+	@RequestMapping(params="sub")
+	public ModelAndView dgViewSub(HttpServletRequest request) {
+		String id = request.getParameter("id");
+		System.out.println("^"+id);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("equipment_management/subspecialequipmentlist");
+		mav.addObject("id",id);
+		return mav;
 		
 	}
 	
@@ -119,6 +160,25 @@ public class SpecialEquipmentController {
 		//查询条件组装器
 		TypedQueryBuilder<SpecialEquipment> tqBuilder = QueryUtils.getTQBuilder(specialEquipment, request.getParameterMap());
 		
+		if (StringUtils.isNotEmpty(dg.getSort())) {
+			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
+		}
+		cq.setTqBuilder(tqBuilder);
+		commonService.getDataGridReturn(cq, true);
+		TagUtil.datagrid(response, dg);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(params="dgdatasub")
+	@ResponseBody
+	public void dgDataSub(SubSpecialEquipment subSpecialEquipment, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
+		QueryDescriptor<SubSpecialEquipment> cq = new QueryDescriptor<SubSpecialEquipment>(SubSpecialEquipment.class, dg);
+		String id = request.getParameter("id");
+		CommonService commonService = SystemUtils.getCommonService(request);
+		//查询条件组装器
+		TypedQueryBuilder<SubSpecialEquipment> tqBuilder = QueryUtils.getTQBuilder(subSpecialEquipment, request.getParameterMap());
+		System.out.println("^^^^"+id);
+		tqBuilder.addRestriction(new TQRestriction( "ID", "in", Arrays.asList(id)));
 		if (StringUtils.isNotEmpty(dg.getSort())) {
 			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
 		}
