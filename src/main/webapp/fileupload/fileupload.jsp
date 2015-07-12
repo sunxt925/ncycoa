@@ -53,7 +53,7 @@ String staffcode=request.getParameter("staffcode");
              </td>  
              </tr>  
             </table>  
-	       <input type="button" id="btn_ok" style="display: " onclick="ret()">
+	       <input type="button" id="btn_ok" style="display: none " onclick="ret()">
 	       
 </body>
 <script type="text/javascript">
@@ -67,7 +67,6 @@ String staffcode=request.getParameter("staffcode");
 	   var va = v[v.length-1].split(".");
 	   var filename = timestamp+"."+va[va.length-1];
 	   $("#filename").val(filename);
-	   alert(filename);
 	   (api.data)({code:filename});
 	   formSubmit();
 	   window.close();

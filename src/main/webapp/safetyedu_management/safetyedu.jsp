@@ -162,7 +162,7 @@ function createwindow(title, url, width, height,func) {
 			cache : false,
 			ok : function() {
 				$('#btn_ok', this.iframe.contentWindow.document).click();
-				return true;
+				return false;
 			},
 			cancelVal : '关闭',
 			cancel : true/* 为true等价于function(){} */
