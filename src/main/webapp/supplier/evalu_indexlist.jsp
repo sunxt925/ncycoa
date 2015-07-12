@@ -15,29 +15,26 @@
 </style>
 </head>
 <body>
-	<h:datagrid actionUrl="supplier.htm?useddgdata" fit="true" fitColumns="true" queryMode="group" name="usedlist">
-		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
-		<h:dgColumn field="supplier" title="供应商名称" query="true"></h:dgColumn>
-		<h:dgColumn field="usedGoods" title="物资类别" query="true"></h:dgColumn>
-     	<h:dgColumn field="usedDepart" title="使用部门" query="true"></h:dgColumn>
-     	<h:dgColumn field="usedMoney" title="采购金额"></h:dgColumn>
-     	<h:dgColumn field="usedCount" title="采购数量"></h:dgColumn>
-     	<h:dgColumn field="usedTime" title="使用时间" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn>
-		
-		<h:dgToolBar url="supplier.htm?used_addi" icon="icon-add" funname="add" title="新增记录"></h:dgToolBar>
-		<h:dgToolBar url="supplier.htm?used_update" icon="icon-reload" funname="myedit" title="更新记录"></h:dgToolBar>
+	<h:datagrid actionUrl="supplier.htm?evaluindexdgdata" fit="true" fitColumns="true" queryMode="group" name="evalu_indexlist">
+		<h:dgColumn field="evaluYear" title="年度" query="true"></h:dgColumn>	
+		<h:dgColumn field="indexCode" title="指标编码" sortable="true" query="true"></h:dgColumn>	
+		<h:dgColumn field="indexName" title="指标名"></h:dgColumn>	
+		<h:dgColumn field="indexOption" title="指标选项"></h:dgColumn>	
+		<h:dgColumn field="instruction" title="说明" query="true"></h:dgColumn>	
+		<h:dgToolBar url="supplier.htm?add_index" icon="icon-add" funname="add" title="添加指标定义"></h:dgToolBar>
+		<h:dgToolBar url="supplier.htm?update_index" icon="icon-reload" funname="myedit" title="修改指标"></h:dgToolBar>
 	</h:datagrid>
 </body>
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("input[name='usedTime_begin']").attr("class","easyui-datebox");
-		$("input[name='usedTime_end']").attr("class","easyui-datebox");
+		$("input[name='exitTime_begin']").attr("class","easyui-datebox");
+		$("input[name='exitTime_end']").attr("class","easyui-datebox");
 	});
 	
 	function add(title, actionUrl, gname, width, height) {
 		gridname=gname;
-		createwindow(title, actionUrl, 600, 250);
+		createwindow(title, actionUrl, 600, 430);
 	}
 	
 	function myedit(title, actionUrl, gname, width, height) {
@@ -56,11 +53,11 @@
 		}
 	
 		if(actionUrl.indexOf("?") >= 0) {
-			actionUrl += '&id='+ rows[0].id;
+			actionUrl += '&year='+ rows[0].evaluYear+"&code="+ rows[0].indexCode;
 		} else {
-			actionUrl += '?id='+ rows[0].id;
+			actionUrl += '?year='+ rows[0].evaluYear+"&code="+ rows[0].indexCode;
 		}
-		createwindow(title, actionUrl, 600, 250);
+		createwindow(title, actionUrl, 600, 430);
 	}
 </script>
 <script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>

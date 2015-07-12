@@ -15,12 +15,12 @@
 </style>
 </head>
 <body>
-	<h:datagrid actionUrl="supplier.htm?evaludgdata" fit="true" queryMode="single" fitColumns="true" name="evalulist">
-	    <h:dgColumn field="evaluYear" title="年度"></h:dgColumn>
-		<h:dgColumn field="evaluDepart" title="评价部门" query="true" ></h:dgColumn>
-     	<h:dgColumn field="evaluSupplier" title="评价供应商" query="true"></h:dgColumn>
-		<h:dgColumn field="score" title="得分"></h:dgColumn>
-		<h:dgColumn field="level" title="评价等级" replace="优_0,良_1,一般_2,不及格_3" query="true"></h:dgColumn>
+	<h:datagrid actionUrl="supplier.htm?evaludgdata" fit="true" queryMode="group" fitColumns="true" name="evalulist">
+	    <h:dgColumn field="evaluYear" title="年度" query="true" align="center" width="1"></h:dgColumn>
+		<h:dgColumn field="evaluDepart" title="评价部门" query="true" align="center" width="3"></h:dgColumn>
+     	<h:dgColumn field="evaluSupplier" title="评价供应商" query="true" align="center" width="2"></h:dgColumn>
+		<h:dgColumn field="score" title="得分" align="center" width="2"></h:dgColumn>
+		<h:dgColumn field="level" title="评价等级" replace="优_0,良_1,一般_2,不及格_3" query="true" align="center" width="2"></h:dgColumn>
 	</h:datagrid>
 </body>
 

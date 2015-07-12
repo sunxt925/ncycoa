@@ -1,5 +1,7 @@
 package edu.cqu.ncycoa.dao;
 
+import java.util.Calendar;
+
 import org.springframework.web.servlet.tags.form.OptionTag;
 
 import com.common.Format;
@@ -9,6 +11,8 @@ import com.db.DataTable;
 import com.db.Parameter;
 import com.entity.system.Staff;
 
+import edu.cqu.ncycoa.common.service.SupplierServiceImpl;
+import edu.cqu.ncycoa.domain.EvaluDefine;
 import edu.cqu.ncycoa.util.SystemUtils;
 
 public class SupplierDao {
@@ -68,6 +72,29 @@ public class SupplierDao {
 		}
 		return result;
 	}
+	
+	//获取当前用户的行政部门名称（一个）
+	public static String getOneDepart() {
+		//Staff staff=new Staff(SystemUtils.getSessionUser().getStaffcode());
+		String result="";
+		
+		try {
+			DBObject db = new DBObject();
+			String sql = "select * from BASE_ORGMEMBER where staffcode=?";
+			Parameter.SqlParameter[] pp = new Parameter.SqlParameter[] { new Parameter.String(SystemUtils.getSessionUser().getStaffcode()) };
+
+			DataTable dt = db.runSelectQuery(sql, pp);
+			if (dt != null&& dt.getRowsCount() >= 1) {
+				
+					DataRow r = dt.get(0);
+					result=r.getString("orgname");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	//添加评价的表
 	public static String getEvaluContent(String year){
 		String result="";
 		DBObject db = new DBObject();
@@ -113,6 +140,124 @@ public class SupplierDao {
 		}
 		return result;
 	}
+	//查看已评价的表
+	public static String getEvaluedContent(String year,String supplier) {
+		String result="";
+		DBObject db = new DBObject();
+		//获取详细得分字串
+		String detail=getEvaluedDetail(getOneDepart(), supplier, year);
+		//System.out.println("detail:"+detail);
+		String[] detailArray=detail.substring(0, detail.length()-1).split(",");		
+		String sql = "";
+		sql = "select INDEX_NAME,INDEX_OPTION from NCYCOA_EVALU_DEFINE where EVALU_YEAR=?";
+		Parameter.SqlParameter[] pp = new Parameter.SqlParameter[] { new Parameter.String(year) };
+		DataTable dt = null;
+		int count=0;
+		try {
+			dt = db.runSelectQuery(sql,pp);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		if (dt != null && dt.getRowsCount() >= 1)
+		{
+			for (int i = 0; i < dt.getRowsCount(); i++)
+			{
+				DataRow r = dt.get(i);
+				try {
+					if(r.get(1).toString().equals("()=()")){
+						result=result+"<tr><td colspan=2 style='background-color: rgb(250, 204, 57);text-align: center;'>类别:"+r.get(0).toString()+"</td></tr>";
+					}else{
+						result=result+"<tr><td style='background-color:rgba(121, 154, 241, 0.94)' width: 50px;>评价项"+(++count)+":"+"</td><td style='background-color:rgba(152, 201, 255, 0.94)'>";
+						result=result+r.get(0)+"</td>";
+						String option=r.get(1).toString();
+						String[] optionText=splitOption(option,0);
+						String[] optionScore=splitOption(option,1);
+						for(int j=0;j<optionScore.length;j++)
+						{
+							if(optionScore[j].equals(detailArray[count-1])){
+								result=result+"<tr><td colspan=2>&nbsp;&nbsp;&nbsp;<input type='radio' name='option"+count+"' value='"+optionScore[j]+"' checked />";
+							}else {
+								result=result+"<tr><td colspan=2>&nbsp;&nbsp;&nbsp;<input type='radio' name='option"+count+"' value='"+optionScore[j]+"' />";
+							}							
+							result=result+optionText[j]+"("+optionScore[j]+"分)";
+							result=result+"</td></tr>";
+						}
+				
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				//System.out.println(result);
+			}
+		}
+		return result;
+	}
+	
+	//根据年份和部门 查看每个供应商评价情况 并可点击添加评价
+	public static String getSuppliersEvaluStatus(){
+		String getDepart=getOneDepart();
+		System.out.println(getDepart);
+		int year=Calendar.getInstance().get(Calendar.YEAR);
+		String result="";
+		DBObject db = new DBObject();
+		String sql = "";
+		sql = "select supplier_name,supplier_id from NCYCOA_SUPPLIER t where manage_depart like'%"+getDepart+"%'";
+		DataTable dt = null;
+		try {
+			dt = db.runSelectQuery(sql);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		if (dt != null && dt.getRowsCount() >= 1)
+		{
+			for (int i = 0; i < dt.getRowsCount(); i++)
+			{
+				DataRow r = dt.get(i);
+				try {
+					if(!r.get(0).toString().equals(null)){
+						result=result+"<tr><td style=''>"+r.get(0).toString()+"</td>";
+						boolean flag=isEvalued(getDepart, r.get(0).toString(), String.valueOf(year));
+						if(flag){
+							result+="<td>已评价</td>";
+							result+="<td>"+getScore(getDepart, r.get(0).toString(), String.valueOf(year))+"</td>";
+							result+="<td><a onclick=\"makeSeeTable(\'"+r.get(1).toString()+"\')\" class='easyui-linkbutton' data-options='iconCls:\"icon-add\",plain:true'>查看评价</a></td>";
+						}
+						else {
+							result+="<td>未评价</td>";
+							result+="<td>--</td>";
+							result+="<td><a onclick=\"makeTable(\'"+r.get(1).toString()+"\')\" class='easyui-linkbutton' data-options='iconCls:\"icon-add\",plain:true'>添加评价</a></td>";
+						}
+						result+="</tr>";
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				//System.out.println(result);
+			}
+		}
+		return result;
+	}
+
+	private static String getScore(String depart, String supplier, String year) {
+		DBObject db = new DBObject();
+		String sql = "select evalu_score from NCYCOA_EVALU_RESULT where evalu_depart=? and evalu_supplier=? and evalu_year=? ";
+		Parameter.SqlParameter[] pp = new Parameter.SqlParameter[] { new Parameter.String(depart),new Parameter.String(supplier),new Parameter.String(year) };
+		try {
+			DataTable dt = db.runSelectQuery(sql,pp);
+			if(dt != null&& dt.getRowsCount() >= 1){
+				String score=dt.get(0).get(0).toString();
+				return score;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	private static String[] splitOption(String option, int i) {
 		String[] temp=option.split("=");
@@ -135,10 +280,14 @@ public class SupplierDao {
 		String result="";
 		try {
 			DBObject db = new DBObject();
-			String sql = "select supplier_name from NCYCOA_SUPPLIER t where manage_depart='"+departs[0]+"'";
+			String sql = "select supplier_name from NCYCOA_SUPPLIER t where manage_depart LIKE '%"+departs[0]+"%'";
 			for(int j=1;j<departs.length;j++){
-				sql=sql+" or manage_depart='"+departs[j]+"'";
+				sql=sql+" or manage_depart LIKE '%"+departs[j]+"%'";
 			}
+//			String sql = "select supplier_name from NCYCOA_SUPPLIER t where manage_depart='"+departs[0]+"'";
+//			for(int j=1;j<departs.length;j++){
+//				sql=sql+" or manage_depart='"+departs[j]+"'";
+//			}
 			DataTable dt = db.runSelectQuery(sql);
 			if (dt != null&& dt.getRowsCount() >= 1) {
 				for (int i = 0; i < dt.getRowsCount(); i++)
@@ -162,7 +311,6 @@ public class SupplierDao {
 
 	private static String getDepartName() {
 		String result="";
-		
 		try {
 			DBObject db = new DBObject();
 			String sql = "select * from BASE_ORGMEMBER where staffcode=?";
@@ -247,6 +395,26 @@ public class SupplierDao {
 		}
 		return false;
 	}
+	
+	//查看某年某部门某供应商得分详细字符串
+	public static String getEvaluedDetail(String depart, String supplier, String year) {
+		DBObject db = new DBObject();
+		String result="";
+		String sql = "select evalu_detail from NCYCOA_EVALU_RESULT where evalu_depart=? and evalu_supplier=? and evalu_year=? ";
+		//String sql="select evalu_detail from NCYCOA_EVALU_RESULT where evalu_depart='市局（公司）企管科' and evalu_supplier='供应商9' and evalu_year='2015'";
+		Parameter.SqlParameter[] pp = new Parameter.SqlParameter[] { new Parameter.String(depart),new Parameter.String(supplier),new Parameter.String(year) };
+        //System.out.println(depart+supplier+year);		
+		try {
+			DataTable dt = db.runSelectQuery(sql,pp);
+			if(dt != null&& dt.getRowsCount() >= 1){
+				result=dt.get(0).getString("evalu_detail");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 
 	public static void startEvalu() {
 		DBObject db = new DBObject();
@@ -273,6 +441,57 @@ public class SupplierDao {
 			e.printStackTrace();
 		}		
 	}
+	
+	public static String getOrgNamesByCodes(String codes) {
+		String[] orgs=codes.split(",");
+
+		String result="";
+		try {
+			DBObject db = new DBObject();
+			for(int j=0;j<orgs.length;j++){
+				String sql = "select orgname from BASE_ORG t where orgcode='"+orgs[j]+"'";
+
+				DataTable dt = db.runSelectQuery(sql);
+				if (dt != null&& dt.getRowsCount() >= 1) {
+
+					DataRow r = dt.get(0);
+					if(orgs.length==1){
+						result=r.getString("orgname");
+					}else{
+						result=result+r.getString("orgname")+",";
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	//通过年份和指标编码获取EvaluDefine实体
+	public static EvaluDefine getIndexByYearAndCode(String year,String code) {
+		EvaluDefine t=new EvaluDefine();
+		try {
+			DBObject db = new DBObject();
+			String sql = "select * from NCYCOA_EVALU_DEFINE t where evalu_year=? and index_code=?";
+			Parameter.SqlParameter[] pp = new Parameter.SqlParameter[] { new Parameter.String(year),new Parameter.String(code) };
+
+			DataTable dt = db.runSelectQuery(sql, pp);
+			if (dt != null) {	
+					DataRow r = dt.get(0);
+					t.setEvaluYear(year);
+					t.setIndexCode(code);
+					t.setIndexName(r.getString("index_name"));
+					t.setIndexOption(r.getString("index_option"));
+					t.setIndexParentCode(r.getString("index_parentcode"));
+					t.setInstruction(r.getString("instruction"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return t;
+	}
+	
 	//下面方法给安全模块使用：
 	public static String getStaffNamesByCodes(String codes) {
 		String[] staffs=codes.split(",");
@@ -295,4 +514,24 @@ public class SupplierDao {
 		}
 		return result;
 	}
+
+	public static String getSupplierNameByID(String supplierID) {
+		String result="";
+		try {
+			DBObject db = new DBObject();
+			String sql = "select supplier_name from NCYCOA_SUPPLIER t where supplier_id=?";
+			Parameter.SqlParameter[] pp = new Parameter.SqlParameter[] { new Parameter.Long(Long.parseLong(supplierID)) };
+
+			DataTable dt = db.runSelectQuery(sql, pp);
+			if (dt != null&& dt.getRowsCount() >= 1) {
+					DataRow r = dt.get(0);
+					result=r.get(0).toString();	
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	
 }
