@@ -10,6 +10,10 @@ String unitccm=Format.NullToBlank(request.getParameter("unitccm"));
 <HEAD>
 <TITLE>重庆市地方税务局</TITLE>
 <link rel="stylesheet" type="text/css" href="../../css/style.css">
+<link rel="stylesheet" type="text/css" href="../../jscomponent/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../jscomponent/easyui/themes/icon.css">
+<script type="text/javascript" src="../../jscomponent/jquery/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="../../jscomponent/easyui/jquery.easyui.min.js"></script>
 <META http-equiv=Content-Type content="text/html; charset=gb2312">
 <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
 </HEAD>
@@ -88,7 +92,7 @@ document.all("form1").submit();
       <tr>
       </tr>
       <tr>
-      <td class="table_td_jb_iframe"><a href="#" onClick="F3()">&nbsp;&nbsp;增加本层菜单[F3]</a><!--　<a href="#" onClick="F4()">删除[F4]</a></td>-->
+      <td class="table_td_jb_iframe"><a href="#" onClick="F3()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">&nbsp;&nbsp;增加本层菜单[F3]</a><!--　<a href="#" onClick="F4()">删除[F4]</a></td>-->
       </tr>
     </table>
     <%

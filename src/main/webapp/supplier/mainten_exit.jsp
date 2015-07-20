@@ -98,7 +98,6 @@
 		<select class="inputxt" id="reason" name="reason" style="width:156px;">
 			<option value="0">自行退出</option>
 			<option value="1">违规退出</option>
-			<option value="2">评价退出</option>
 		</select>
 		<span class="Validform_checktip"></span>
 		</td>

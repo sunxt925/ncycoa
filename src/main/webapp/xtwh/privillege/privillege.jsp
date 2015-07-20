@@ -4,9 +4,13 @@
 <HEAD>
 <TITLE>四川省南充烟草公司</TITLE>
 <link rel="stylesheet" type="text/css" href="../../css/style.css">
+<link rel="stylesheet" type="text/css" href="../../jscomponent/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../jscomponent/easyui/themes/icon.css">
+<script type="text/javascript" src="../../jscomponent/jquery/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="../../jscomponent/easyui/jquery.easyui.min.js"></script>
 <META http-equiv=Content-Type content="text/html; charset=gb2312">
 <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
-<script type="text/javascript" src="../../jscomponent/jquery/jquery-1.8.0.min.js"></script></HEAD>
+</HEAD>
 <link rel="stylesheet" href="../../images/ztree/zTreeStyle.css" type="text/css">
 <script type="text/javascript" src="../../js/ztree/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="../../js/ztree/jquery.ztree.core-3.5.js"></script>
@@ -106,7 +110,9 @@ function test(){
     <td width="3%" align="right" class="main_table_topbg" height="31"><img src="../../images/table_rt.jpg" width="22" height="31"></td>
   </tr>
   <tr>
-    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;<a href="#" onClick="F8()">保存[F8]</a><a href="#" onClick="F5()">刷新[F5]</a></td>
+    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;
+    <a href="#" onClick="F8()" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true">保存[F8]</a>
+    <a href="#" onClick="F5()" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true">刷新[F5]</a></td>
   </tr>
   <tr>
     <td colspan="3" valign="top" class="main_table_centerbg" align="center">

@@ -504,7 +504,7 @@
 	</tag>
 	<tag>
 		<name>upload</name>
-		<tag-class>com.performance.UploadTag</tag-class>
+		<tag-class>edu.cqu.ncycoa.common.tag.UploadTag</tag-class>
 		<body-content>jsp</body-content>
 		<attribute>
 			<name>id</name>

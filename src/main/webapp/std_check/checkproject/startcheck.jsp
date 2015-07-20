@@ -137,7 +137,7 @@ $.ajaxFileUpload({
 <input id="taskid" name="taskid" type="hidden" value="<%=taskId%>">
 <table style="width:100%;border-spacing:1px;"  class="formtable">
 	<tr>
-		<td align="right" width="30%"><label class="Validform_label"> 发起人</label></td>
+		<td align="right" width="30%"><label class="Validform_label"> 发起人  </label></td>
 		<td class="value"  width="70%"><input class="inputxt" style="width:200px;" id="staffName" name="staffName" value="<%=staffname%>">
 		<span class="Validform_checktip"></span>
 		</td>

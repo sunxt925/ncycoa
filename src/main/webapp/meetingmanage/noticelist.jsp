@@ -21,7 +21,7 @@
 		<h:dgColumn field="meetingTopics" title="会议主题"  query="true"></h:dgColumn>
 		<h:dgColumn field="meetingBeginDate" title="开始时段"  dateFormatter="yyyy-MM-dd hh:mm:ss" query="true"></h:dgColumn>
 		<h:dgColumn field="meetingEndDate" title="结束时段" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true"></h:dgColumn>
-		<h:dgColumn field="meetingRoom" title="开会地点" replace="会议室1_0,会议室2_1,会议室3_2" query="true"></h:dgColumn>
+		<h:dgColumn field="meetingRoom" title="开会地点"   dictionary="ncycoa_meetingroom,room_no,room_name"  query="true"></h:dgColumn>
 		<h:dgColumn field="numAttendee" title="会议人数"  query="true" queryMode="scope"></h:dgColumn>
 		<h:dgColumn field="auditFlag" title="审核状态" replace="通过_11" style="color:green_11" query="true"></h:dgColumn>
 		<h:dgColumn title="操作" field="opt"></h:dgColumn>

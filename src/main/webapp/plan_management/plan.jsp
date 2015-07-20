@@ -40,6 +40,7 @@
 			data.type= $("#type").val();
 			data.description=$("#description").val();
 			data.participantList_id=$("#participantList_id").val();
+			data.participantList=$("#participantList").val();
 			
 			data.taskparticipant="";
 			data.taskParticipantValue="";
@@ -52,13 +53,13 @@
 			if($('#add_steps_table > tr.tpl') == null || $('#add_steps_table > tr.tpl').length == 0){
 			
 				$('#add_steps_table > tr').each(function(i){
-					data.taskparticipant += $("input[name=taskparticipant]", this).val() + ",";
-					data.taskParticipantValue += $("input[name=taskParticipantValue]", this).val() + ",";
-					data.tasktype += $("input[name=tasktype]", this).val()+",";
-					data.taskTypeValue += $("input[name=taskTypeValue]", this).val()+",";
-					data.taskcontent += $("input[name=taskcontent]", this).val()+",";
-					data.taskid += $("input[name=taskid]", this).val()+",";
-					data.taskorder += $("input[name=taskorder]", this).val()+",";
+					data.taskparticipant += $("input[name=taskparticipant]", this).val() + "&";
+					data.taskParticipantValue += $("input[name=taskParticipantValue]", this).val() + "&";
+					data.tasktype += $("input[name=tasktype]", this).val()+"&";
+					data.taskTypeValue += $("input[name=taskTypeValue]", this).val()+"&";
+					data.taskcontent += $("input[name=taskcontent]", this).val()+"&";
+					data.taskid += $("input[name=taskid]", this).val()+"&";
+					data.taskorder += $("input[name=taskorder]", this).val()+"&";
 				});
 				
 				if($('#add_steps_table > tr').length > 0){
@@ -92,30 +93,6 @@
 			});
 			
 		});
-		
-		
-// 		$("#formobj").Validform({
-// 			tiptype : 1,
-// 			btnSubmit : "#btn_sub",
-// 			btnReset : "#btn_reset",
-// 			ajaxPost : true,
-// 			callback : function(data) {
-// 				var win = frameElement.api.opener;
-// 				if (data.success == true) {
-// 					frameElement.api.close();
-// 					win.tip(data.msg);
-					
-// 				} else {
-// 					if (data.responseText == ''|| data.responseText == undefined){
-// 						$("#formobj").html(data.msg);
-// 					}else{
-// 						$("#formobj").html(data.responseText);
-// 					}
-// 					return false;
-// 				}
-// 				win.reloadTable();
-// 			}
-// 		});
 		
 		var ckid = 100;
 		function returnObjValue(data){
@@ -253,8 +230,22 @@
 	<tr>
 		<td align="right"><label class="Validform_label"> 计划参与人员 </label></td>
 		<td class="value">
-		<input class="inputxt" style="width:400px;" disabled id="participantList" name="participantList" value="${participantList}"></input>
-		<input type="hidden" id="participantList_id" name="participantList_id" value="${participantList_id}"></input>
+		
+		<c:set var="planpart_code" value=""/>
+		<c:set var="planpart_name" value=""/>
+		<c:forEach items="${plan.participants}" var="aPlanPart" varStatus="plan_status">
+		<c:if test="${plan_status.last }">
+		<c:set var="planpart_code" value="${planpart_code}${aPlanPart.key}"/>
+		<c:set var="planpart_name" value="${planpart_name}${aPlanPart.value}"/>
+		</c:if>
+		<c:if test="${!plan_status.last }">
+		<c:set var="planpart_code" value="${planpart_code}${aPlanPart.key},"/>
+		<c:set var="planpart_name" value="${planpart_name}${aPlanPart.value},"/>
+		</c:if>
+		</c:forEach>
+		
+		<input class="inputxt" style="width:400px;" disabled id="participantList" name="participantList" value="${planpart_name}"></input>
+		<input type="hidden" id="participantList_id" name="participantList_id" value="${planpart_code}"></input>
 		<h:choose textname="staffname" hiddenid="staffcode" inputTextname="participantList" hiddenName="participantList_id" url="indexmanage/selectstaff.jsp" icon="icon-search" title="员工列表" isclear="true"></h:choose>
 		<span class="Validform_checktip"></span>
 		</td>
@@ -310,9 +301,24 @@
 					<input type="hidden" name="taskid" value="${task.id }" />
 					<input type="hidden" name="taskorder" value="${task.order }"/>
 					</td>
+					
 					<td align="left">
-					<input name="taskparticipant" type="text" style="width: 200px;" disabled value="${task.participant }"/>
-					<input name="taskParticipantValue" type="hidden" value="${task.participantValue }"/>
+					
+					<c:set var="part_code" value=""/>
+					<c:set var="part_name" value=""/>
+					<c:forEach items="${task.participants}" var="aTaskPart" varStatus="part_status">
+					<c:if test="${part_status.last }">
+					<c:set var="part_code" value="${part_code}${aTaskPart.key}"/>
+					<c:set var="part_name" value="${part_name}${aTaskPart.value}"/>
+					</c:if>
+					<c:if test="${!part_status.last }">
+					<c:set var="part_code" value="${part_code}${aTaskPart.key},"/>
+					<c:set var="part_name" value="${part_name}${aTaskPart.value},"/>
+					</c:if>
+					</c:forEach>
+					
+					<input name="taskparticipant" type="text" style="width: 200px;" disabled value="${part_name}"/>
+					<input name="taskParticipantValue" type="hidden" value="${part_code }"/>
 					</td>
 					<td align="left">
 					<input name="tasktype" type="text" disabled value="${task.type }"/>

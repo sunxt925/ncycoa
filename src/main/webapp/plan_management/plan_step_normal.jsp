@@ -19,21 +19,49 @@
 </style>
 
 </head>
-<body style="overflow-x:hidden;text-align:center">
+<body style="overflow-x:hidden">
 
-<form id="formobj" name="formobj" action="plan-management.htm?save"  method="post">
+<form id="formobj" name="formobj" action="pending-task.htm?h_normal"  method="post">
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
-<input id="id" name="id" type="hidden" value="${taskId}">
+<input id="id" name="id" type="hidden" value="${id}">
+<input id="taskId" name="taskId" type="hidden" value="${taskId}">
 <table style="width:100%;border-spacing:1px;" class="formtable">
 	<tr>
 		<td align="right"><label class="Validform_label"> 工作完成情况描述 </label></td>
 		<td class="value">
-		<textarea class="inputxt" id="description" name="description" style="overflow-x:hidden;width:400px;height:100px">${plan.description}</textarea>
+		<textarea class="inputxt" id="description" name="description" style="overflow-x:hidden;width:400px;height:100px">${description}</textarea>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 </table>
 </form>
 
+<script type="text/javascript">
+$(function() {
+	
+	$("#formobj").Validform({
+		tiptype : 1,
+		btnSubmit : "#btn_sub",
+		btnReset : "#btn_reset",
+		ajaxPost : true,
+		callback : function(data) {
+			var win = frameElement.api.opener;
+			if (data.success == true) {
+				frameElement.api.close();
+				win.tip(data.msg);
+			} else {
+				if (data.responseText == ''|| data.responseText == undefined){
+					$("#formobj").html(data.msg);
+				}else{
+					$("#formobj").html(data.responseText);
+				}
+				return false;
+			}
+			win.reloadTable();
+		}
+	});
+	
+});
+</script>
 </body>
 </html>

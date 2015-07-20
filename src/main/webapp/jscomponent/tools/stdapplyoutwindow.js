@@ -1,4 +1,4 @@
-﻿function createwindow(title, url, width, height) {
+function createwindow(title, url, width, height) {
 		width = width ? width : 700;
 		height = height ? height : 400;
 		if (width == "100%" || height == "100%") {
@@ -17,7 +17,7 @@
 				cache : false,
 				button: [
         		{
-            			name: '保存',
+            			name: '����',
             			callback: function(){
                 			$('#F8', this.iframe.contentWindow.document).click();
                    			disabled: false
@@ -29,7 +29,7 @@
             			}	
         		}
         		],
-				cancelVal : '关闭',
+				cancelVal : '�ر�',
 
 				cancel :function(){
 				window.location.reload();
@@ -62,7 +62,7 @@ function createwindowIframe(title, url, width, height,siframe) {
 				cache : false,
 				button: [
         		{
-            			name: '保存',
+            			name: '����',
             			callback: function(){
                 			$('#F8', this.iframe.contentWindow.document.getElementById(siframe).contentWindow.document).click();
                    			disabled: false
@@ -74,7 +74,7 @@ function createwindowIframe(title, url, width, height,siframe) {
             			}	
         		}
         		],
-				cancelVal : '关闭',
+				cancelVal : '�ر�',
 
 				cancel :function(){
 				window.location.reload();
@@ -108,7 +108,7 @@ function createwindowNoRefresh(title, url, width, height) {
 				cache : false,
 				button: [
         		{
-            			name: '保存',
+            			name: '����',
             			callback: function(){
                 			$('#F8', this.iframe.contentWindow.document).click();
                    			disabled: false
@@ -116,7 +116,7 @@ function createwindowNoRefresh(title, url, width, height) {
             			}	
         		}
         		],
-				cancelVal : '关闭',
+				cancelVal : '�ر�',
 
 				cancel :function(){
 				//window.location.reload();
@@ -147,7 +147,7 @@ function createwindowNoSave(title, url, width, height) {
 				title : title,
 				opacity : 0.3,
 				cache : false,
-				cancelVal : '关闭',
+				cancelVal : '�ر�',
 				cancel :function(){
 				window.location.reload();
 				},
@@ -203,17 +203,17 @@ function createwindowUpFile(title, url, width, height) {
 				cache : false,
 				button: [
         		{
-            			name: '上传',
+            			name: '�ϴ�',
             			callback: function(){
                 			$('#F8', this.iframe.contentWindow.document).click();
-                			$.dialog.tips('文件上传中。。。请等待',600,'loading.gif');
+                			$.dialog.tips('�ļ��ϴ��С�������ȴ�',600,'loading.gif');
                    			disabled: false
                				 return false;
             			},
             			focus:true
         		}
         		],
-				cancelVal : '关闭',
+				cancelVal : '�ر�',
 
 				cancel :function(){
 				//window.location.reload();

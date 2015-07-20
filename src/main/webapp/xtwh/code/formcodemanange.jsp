@@ -7,6 +7,10 @@
 <HEAD>
 <TITLE>南充烟草专卖局</TITLE>
 <link rel="stylesheet" type="text/css" href="../../css/style.css">
+<link rel="stylesheet" type="text/css" href="../../jscomponent/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../jscomponent/easyui/themes/icon.css">
+<script type="text/javascript" src="../../jscomponent/jquery/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="../../jscomponent/easyui/jquery.easyui.min.js"></script>
 <META http-equiv=Content-Type content="text/html; charset=gb2312">
 <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
 
@@ -110,10 +114,10 @@ var rand=Math.floor(Math.random()*10000);
 				<tr>
 					<td colspan="3" valign="middle" class="table_td_jb">
 						&nbsp;&nbsp;
-						<a href="#" onClick="F3()">新增[F3]</a>
-						　<a href="#" onClick="F4()">删除[F4]</a>
+						<a href="#" onClick="F3()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新增[F3]</a>
+						　<a href="#" onClick="F4()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true">删除[F4]</a>
 						
-						　<a href="#" onClick="F5()">刷新[F5]</a>
+						　<a href="#" onClick="F5()" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true">刷新[F5]</a>
 					
 					</td>
 				</tr>

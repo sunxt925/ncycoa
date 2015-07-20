@@ -28,8 +28,7 @@ a.dgopt{
 		<h:dgColumn field="content" width="300" sortable="false" title="任务描述"></h:dgColumn>
 		<h:dgColumn field="genDate" title="发布时间" dateFormatter="yyyy-MM-dd hh:mm:ss" sortable="false" query="true" queryMode="scope"></h:dgColumn>
 		<h:dgColumn title="操作" field="opt"></h:dgColumn>
-		<h:dgOpenOpt title="明细" url="pending-task.htm?view&id={id}" />
-		<h:dgFunOpt title="处理" funname="handleTask({id},{formKey})" /> 
+		<h:dgFunOpt title="处理任务" funname="handleTask({id},{formKey})" /> 
 	</h:datagrid>
 </body>
 
@@ -42,9 +41,9 @@ a.dgopt{
 	
 	function handleTask(id, formkey){
 		if(id == null || id == "" || id == "null"){
-			createwindow("hello", formkey+"&id="+id);
+			createwindow("处理任务", formkey);
 		} else {
-			createwindow("hello", formkey);
+			createwindow("处理任务", formkey+"&id="+id);
 		}	
 	}
 </script>

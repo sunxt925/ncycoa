@@ -1,20 +1,29 @@
 <%@ page contentType="text/html; charset=gb2312" language="java" import="java.sql.*,com.db.*,com.common.*,java.util.ArrayList,com.entity.system.*,com.dao.system.*"  errorPage="" %>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
 <TITLE>四川省南充烟草公司</TITLE>
 <link rel="stylesheet" type="text/css" href="../../css/style.css">
+<link rel="stylesheet" type="text/css" href="../../jscomponent/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../jscomponent/easyui/themes/icon.css">
+<script type="text/javascript" src="../../jscomponent/jquery/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="../../jscomponent/easyui/jquery.easyui.min.js"></script>
 <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
 <META HTTP-EQUIV="Expires" CONTENT="0">
 <META http-equiv=Content-Type content="text/html; charset=gb2312">
 <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
+
 <%
 	//初始化表格内容
 	TBM_MeritInputTaskPerson  tbm=new TBM_MeritInputTaskPerson();
 	DataTable dt=tbm.getMemberList();
 %>
-<script type="text/javascript" src="../../jscomponent/jquery/jquery-1.8.0.min.js"></script></HEAD>
+</HEAD>
 
 <script language="javascript" src="../../js/public/select.js"></script>
 
@@ -351,7 +360,9 @@ function getmember(code){
     <td width="3%" align="right" class="main_table_topbg" height="31"><img src="../../images/table_rt.jpg" width="22" height="31"></td>
   </tr>
   <tr >
-    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;<a href="#" onClick="F8()">保存[F8]</a><a href="#" onClick="F5()">刷新[F5]</a></td>
+    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;
+    <a href="#" onClick="F8()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">保存[F8]</a>
+    <a href="#" onClick="F5()" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true">刷新[F5]</a></td>
   </tr>
   <tr >
     <td colspan="3" valign="top" height="40"  align="center">

@@ -83,7 +83,7 @@
 <input id="id" name="id" type="hidden" value="${supplier.id}">
 <table style="width:600px;border-spacing:1px;" class="formtable">
      <tr>
-		<td align="right"><label class="Validform_label"> 机构代码 </label></td>
+		<td align="right"><label class="Validform_label"> 供应商代码 </label></td>
 		<td class="value"><input class="inputxt" style="width:150px;" id="code" name="code"  value="${supplier.code}" datatype="s2-10">
 		<span class="Validform_checktip"></span>
 		</td>
@@ -107,25 +107,31 @@
 		</td>
 	</tr>
   -->
- 
+ <!-- 
    <tr>
 		<td align="right"><label class="Validform_label"> 归口管理部门</label></td>
 		<td class="value">
+		<%if(request.getAttribute("manageDepart")!=null) {%>
 		<select class="easyui-combobox" id="manageDepart" name="manageDepart" style="width:150px;">
 		<%
-		out.write(request.getAttribute("manageDepart").toString());
+	//	out.write(request.getAttribute("manageDepart").toString());
 		%>
         </select>
+        <%}else {%>
+        <input class="inputxt" style="width:150px;" id="manageDepart" name="manageDepart" value="${supplier.manageDepart}">
+        <%}%>
 		</td>
 	</tr>
-	<!--
+ -->	
 	<tr>
 		<td align="right"><label class="Validform_label"> 归口管理部门</label></td>
 		<td class="value"><input class="inputxt" style="width:150px;" id="manageDepart" name="manageDepart" value="${supplier.manageDepart}">
+		<a id="btn_selectorg" href="#" class="easyui-linkbutton"
+				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
-	  -->
+
 	<tr>
 		<td align="right"><label class="Validform_label"> 经营范围</label></td>
 		<td class="value"><input class="inputxt" style="width:150px;" id="range" name="range" value="${supplier.range}">
@@ -185,7 +191,46 @@
 <div style="width: 690px; height: 1px;"></div>
 
 </form>
-
+<script type="text/javascript">
+$("#btn_selectorg").click(function(){
+	
+	createwindow('选择部门','indexmanage/selectunit.jsp',500,500,returnorgValue );
+    });
+function returnorgValue(data){
+	var org = data.code;
+	var codes="";
+	if(org.length>1){
+		for(var i=0;i<org.length;i++){
+			codes+=org[i].orgcode;
+			codes+=",";
+		}
+		$('#manageDepart').val(codes);
+	}else{
+		$('#manageDepart').val(org[0].orgcode);
+	}
+}
+function createwindow(title, url, width, height,func) {
+	
+	$.dialog({
+			id:'CLHG1976D',
+			data:func,
+			content : 'url:' + url,
+			lock : true,
+			width : width,
+			height : height,
+			title : title,
+			zIndex :2000,
+			opacity : 0.3,
+			cache : false,
+			ok : function() {
+				$('#btn_ok', this.iframe.contentWindow.document).click();
+				return true;
+			},
+			cancelVal : '关闭',
+			cancel : true/* 为true等价于function(){} */
+		});
+}
+</script>
 <table style="display: none">
 	<tbody id="add_participant_table_template">
 		<tr>

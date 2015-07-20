@@ -29,6 +29,11 @@
 		$("input[name='exitTime_begin']").attr("class","easyui-datebox");
 		$("input[name='exitTime_end']").attr("class","easyui-datebox");
 	});
+	
+	function add(title, actionUrl, gname, width, height) {
+		gridname=gname;
+		createwindow(title, actionUrl, 600, 200);
+	}
 </script>
 <script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>
 </html>

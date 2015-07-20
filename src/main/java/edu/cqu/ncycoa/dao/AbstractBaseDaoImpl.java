@@ -105,6 +105,9 @@ public abstract class AbstractBaseDaoImpl implements AbstractBaseDao {
 	@Override
 	public <T> List<T> readEntitiesByJPQL(String jpql, Class<T> clazz, Object... params) {
 		TypedQuery<T> query = getEntityManager().createQuery(jpql, clazz);
+		for(int i = 1; i<=params.length; i++){
+			query.setParameter(i, params[i-1]);
+		}
 		return query.getResultList();
 	}
 	

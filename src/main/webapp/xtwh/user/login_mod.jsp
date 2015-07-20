@@ -61,25 +61,42 @@ function F8()
 <!--    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;<a href="#" onClick="F8()">保存[F8]</a>　<a href="#" onClick="F3()">重填[F3]</a>　<a href="#" onClick="F5()">刷新[F5]</a></td>-->
 <!--  </tr>-->
   <tr>
-    <td colspan="3" valign="top" class="main_table_centerbg" align="center"><table width="100%" border="1" cellspacing="0" cellpadding="0" class="table_list1">
-      <tr>
-        <td width="20%"><div align="right">登录名：</div></td>
-        <%if(staff.getUsercode().equals("")){ %>
-        <td width="80%"><input name="usercode" type="text" class="input1" id="usercode" onKeyDown="EnterKeyDo('')"  size="30" maxlength="30"></td>
-        <% }else{%>
+    <td colspan="3" valign="top">
+    <table cellpadding="5"  width="100%" align="left" >
+						<tr>
+							<td><span>登录名：</span></td>
 
-        <td width="80%"><input name="usercode" type="text" class="input1" id="usercode" value="<%=staff.getUsercode() %>" onKeyDown="EnterKeyDo('')" size="30" maxlength="30" ></td>
-        <%} %>
-      </tr>
-     
-      <tr>
-        <td><div align="right">新密码：</div></td>
-        <td><input name="password" type="password" class="input1" id="password" onKeyDown="EnterKeyDo('')" size="40" maxlength="40"></td>
-      </tr>
-      <tr>
-        <td><div align="right">重复密码：</div></td>
-        <td><input name="password0" type="password" class="input1" id="password0"  onKeyDown="EnterKeyDo('')" size="40" maxlength="40"></td>
-      </tr>
+							<%
+								if (staff.getUsercode().equals("")) {
+							%>
+							<td><input name="usercode" type="text" class="easyui-textbox"
+								id="usercode" onKeyDown="EnterKeyDo('')" size="30"
+								maxlength="30"></td>
+							<%
+								} else {
+							%>
+
+							<td><input name="usercode" type="text" class="easyui-textbox"
+								id="usercode" value="<%=staff.getUsercode()%>"
+								onKeyDown="EnterKeyDo('')" size="30" maxlength="30"></td>
+							<%
+								}
+							%>
+						</tr>
+			<tr>
+				<td><span>新密码：</span></td>
+				<td>
+					<input name="password" type="password" class="easyui-textbox" id="password" onKeyDown="EnterKeyDo('')" size="40" maxlength="40">
+				</td>
+			</tr>
+			 
+			<tr>
+				<td><span>重复密码：</span></td>
+				<td>
+					<input name="password0" type="password" class="easyui-textbox" id="password0"  onKeyDown="EnterKeyDo('')" size="40" maxlength="40">
+				</td>
+			</tr>
+      
     
       <tr>
        

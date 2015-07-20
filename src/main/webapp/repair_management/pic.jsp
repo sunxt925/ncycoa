@@ -13,16 +13,12 @@
 <%@page import="org.activiti.engine.task.*"%>
 
 <%
-	String procDefId="RepairAudit:1:27504";
+String procDefId= request.getParameter("processDefid");
 ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(application);
 ProcessEngine processEngine = (ProcessEngine) ctx.getBean("processEngine");
 TaskService taskService = processEngine
 .getTaskService();
-	RepositoryService repositoryService = processEngine.getRepositoryService();
-//	ProcessDefinition procDef = repositoryService.createProcessDefinitionQuery().processDefinitionId(procDefId).singleResult();
-//	String diagramResourceName = procDef.getDiagramResourceName();  
-// InputStream imageStream = repositoryService.getResourceAsStream(  
-//         procDef.getDeploymentId(), diagramResourceName);  
+RepositoryService repositoryService = processEngine.getRepositoryService();
 ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionId(procDefId).singleResult();
 
 String diagramResourceName = processDefinition.getDiagramResourceName();
@@ -31,7 +27,6 @@ byte[] b = new byte[1024];
 int len = -1;  
 while((len = imageStream.read(b, 0, 1024)) != -1) {  
     response.getOutputStream().write(b, 0, len);  
-    // 防止异常：getOutputStream() has already been called for this response  
     out.clear();  
     out = pageContext.pushBody();  
 } 

@@ -109,6 +109,53 @@ public class MeritAnalysisDao {
 		
 		return sBuilder.toString();
 	}
+	/**
+	 * 可视化展示
+	 * @param indexcode
+	 * @param year
+	 * @param month
+	 * @return
+	 */
+	public String getNameAndScore(String indexcode,String year,String month){
+		List<IndexScoreDetial> indexScoreDetials = getIndexscoreDetials(getCompareDb(indexcode, year, month));
+		StringBuilder sBuilder = new StringBuilder();
+		String result="";
+		sBuilder.append("");
+		if(getCompareDb(indexcode, year, month).getRowsCount() == 0){
+			sBuilder.append("无查询结果返回");
+		}else{
+			  if(indexScoreDetials != null){
+		 	    for(IndexScoreDetial indexScoreDetial : indexScoreDetials){
+		 	    	sBuilder.append(CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname", indexScoreDetial.getObjectCode())).append(",");
+		 	    }
+		 	    result=sBuilder.substring(0, sBuilder.length()-1);
+		 	    result+=";";
+		 	   for(IndexScoreDetial indexScoreDetial : indexScoreDetials){
+		 		  result=result+indexScoreDetial.getScorevalue()+",";
+		 	   }
+		 	    result=result.substring(0, result.length()-1);
+		 		//sBuilder.append("<td>").append(indexScoreDetial.getIndexitem().getStandardscore()).append("</td>");
+		    }
+		}
+		System.out.println(result);
+		return  result;
+	}
+	public float getStandSocre(String indexcode,String year,String month){
+		List<IndexScoreDetial> indexScoreDetials = getIndexscoreDetials(getCompareDb(indexcode, year, month));
+		float stand=(float)indexScoreDetials.get(0).getIndexitem().getStandardscore();
+		return stand;
+	}
+	public float getAverageScoretoFront(String indexcode,String year,String month){
+		List<IndexScoreDetial> indexScoreDetials = getIndexscoreDetials(getCompareDb(indexcode, year, month));
+		if(indexScoreDetials == null || indexScoreDetials.size()==0){
+			return 0;
+		}
+		float sum = 0;
+		for(IndexScoreDetial indexScoreDetial : indexScoreDetials){
+			sum += indexScoreDetial.getScorevalue();
+		}
+		return sum / indexScoreDetials.size();
+	}
 	public double getAverageScore(List<IndexScoreDetial> indexScoreDetials){
 		if(indexScoreDetials == null || indexScoreDetials.size()==0){
 			return 0;

@@ -10,13 +10,17 @@
 		<class>edu.cqu.ncycoa.domain.Log</class>
 		<class>edu.cqu.ncycoa.plan.domain.Plan</class>
 		<class>edu.cqu.ncycoa.plan.domain.PlanStep</class>
+		<class>edu.cqu.ncycoa.plan.domain.PlanInstance</class>
+		<class>edu.cqu.ncycoa.plan.domain.PlanTask</class>
 		<class>edu.cqu.ncycoa.domain.Supplier</class>
 		<class>edu.cqu.ncycoa.domain.EvaluDefine</class>
 		<class>edu.cqu.ncycoa.domain.EvaluResult</class>
 		<class>edu.cqu.ncycoa.domain.GoodsUsed</class>
-		<class>edu.cqu.ncycoa.domain.PlanStep</class>
 		<class>edu.cqu.ncycoa.domain.ContractInfo</class>
 		<class>edu.cqu.ncycoa.domain.MeetingInfo</class>
+		<class>edu.cqu.ncycoa.safety.PressurePipe</class>
+		<class>edu.cqu.ncycoa.safety.SpecialEquipment</class>
+		<class>edu.cqu.ncycoa.safety.SubSpecialEquipment</class>
 	</persistence-unit>
 
 </persistence> 
