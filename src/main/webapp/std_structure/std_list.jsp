@@ -41,7 +41,11 @@ if(drawupperson==null)
 	int per_page=((UserInfo)request.getSession().getAttribute("UserInfo")).getPerpage_full()-4;
 	DataTable dt=docorgpost.getStdByClass(page_no,per_page,begin,end,docname,doccode,sortkind,drawupperson,getType);
 	DataTable dtcount=docorgpost.getAllStdByClass(begin,end,docname,doccode,drawupperson,getType);
-	int pagecount=(dt.getRowsCount()/per_page)+1;
+	int pagecount=0;
+	if(dtcount.getRowsCount()%per_page==0)
+	    pagecount=dtcount.getRowsCount()/per_page;
+	else
+		pagecount=(dtcount.getRowsCount()/per_page)+1;
 %>
 <script language=
                 "javascript" type="text/javascript" src="<%=path%>/js/MyDatePicker/WdatePicker.js">  </script>

@@ -1,5 +1,8 @@
 package com.workflow.serviceimpl;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.common.Format;
 import com.db.DBObject;
 import com.db.DataRow;
@@ -7,7 +10,8 @@ import com.db.DataTable;
 import com.db.Parameter;
 import com.workflow.orm.InstanceInfo;
 import com.workflow.service.InstanceService;
-
+@Service("InstanceService")
+@Transactional
 public class InstanceServiceImpl implements InstanceService{
 
 	public InstanceInfo loadInstanceById(String instanceid) throws Exception {
