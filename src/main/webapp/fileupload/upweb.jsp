@@ -7,8 +7,12 @@
 response.setContentType("text/html;charset=utf-8");  
 FileUpload fu=new FileUpload(); 
 fu.setMap(request);//解析request  
+
 Map<String,FileItem> files=fu.getFiles();  
-String fileName =fu.getFileName(files.get("file"));  
+Map<String,String> params = fu.getParams();
+System.out.println(params.get("filename"));
+String fileName =fu.getFileName(files.get("file")); 
+
 File file=new File(this.getServletContext().getRealPath("upload\\"+fileName));  
 try {  
       
@@ -17,7 +21,7 @@ try {
 } catch (Exception e) {  
     e.printStackTrace();  
 }  
-FileUpload.copyFile(this.getServletContext().getRealPath("upload\\"+fileName), "D:\\ftproot\\temp\\"+fileName);
+FileUpload.copyFile(this.getServletContext().getRealPath("upload\\"+fileName), "D:\\ftproot\\temp\\"+params.get("filename"));
 file.delete();
 out.println("上传成功");
 

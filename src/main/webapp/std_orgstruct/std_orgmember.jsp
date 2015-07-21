@@ -35,21 +35,24 @@ DataTable stafflist2=staff.getAllMemberList(positioncodezhuren,orgcode);
 <table width="100%"  height="6" border="0" cellpadding="0" cellspacing="0">
    <tr>
     <td class="table_td_jb_iframe"> 
-        		机构职能:<%=orginfo.getOrgDesc() %>
+        		<a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-reload',plain:true" 
+				       >机构职能：</a>
     </td>
+    <td><%=orginfo.getOrgDesc() %></td>
   </tr>
 </table>
-   <div style="text-align: center;position: relative;width: 100%;height:350px;overflow:auto;border:1px solid 1px #cccccc;" >
-    <table id="dg" class="easyui-datagrid" style=""
+   <div style="text-align: center;position: relative;width: 100%;overflow:auto;">
+    <table id="dg" class="easyui-datagrid" style="width:410px"
     data-options="fitColumns:true,singleSelect:true">
     <thead>
  
     <tr>
-    <th data-options="field:'staffcode',width:120">成员编码</th>
-    <th data-options="field:'idcard',width:150">身份证号</th>
-    <th data-options="field:'staffname',width:70">成员姓名</th>
-    <th data-options="field:'gender',width:50">性别</th>
-    <th data-options="field:'position',width:50">职位</th>
+    <th data-options="field:'staffcode'" align="center">成员编码</th>
+    <th data-options="field:'idcard'" align="center">身份证号</th>
+    <th data-options="field:'staffname'" align="center">成员姓名</th>
+    <th data-options="field:'gender'" align="center">性别</th>
+    <th data-options="field:'position'" align="center">职位</th>
     </tr>
     </thead>
     <tbody>

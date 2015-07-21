@@ -84,7 +84,16 @@
 <table style="width:600px;border-spacing:1px;" class="formtable">
      <tr>
 		<td align="right"><label class="Validform_label"> 供应商名称 </label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="supplier" name="supplier" value="${goodsUsed.supplier}" datatype="s2-10">
+		<td class="value">
+		<%if(request.getAttribute("suppliers")!=null) {%>
+		<select class="easyui-combobox" id="supplier" name="supplier" style="width:156px;">
+		<%
+		out.write(request.getAttribute("suppliers").toString());
+		%>
+        </select>
+        <%}else {%>
+		<input class="inputxt" style="width:150px;" id="supplier" name="supplier" value="${goodsUsed.supplier}" datatype="s2-10">
+        <%}%>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -97,6 +106,8 @@
 	<tr>
 	<td align="right"><label class="Validform_label"> 归口部门</label></td>
 		<td class="value"><input class="inputxt" style="width:150px;" id="usedDepart" name="usedDepart" value="${goodsUsed.usedDepart}">
+		<a id="btn_selectorg" href="#" class="easyui-linkbutton"
+				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -125,7 +136,42 @@
 <div style="width: 690px; height: 1px;"></div>
 
 </form>
-
+<script type="text/javascript">
+$("#btn_selectorg").click(function(){
+	
+	createwindow('选择部门','indexmanage/selectunit.jsp',500,500,returnorgValue );
+    });
+function returnorgValue(data){
+	var org = data.code;
+	var codes="";
+	if(org.length>1){
+		alert("最多只能选择一个部门");
+	}else{
+		$('#usedDepart').val(org[0].orgcode);
+	}
+}
+function createwindow(title, url, width, height,func) {
+	
+	$.dialog({
+			id:'CLHG1976D',
+			data:func,
+			content : 'url:' + url,
+			lock : true,
+			width : width,
+			height : height,
+			title : title,
+			zIndex :2000,
+			opacity : 0.3,
+			cache : false,
+			ok : function() {
+				$('#btn_ok', this.iframe.contentWindow.document).click();
+				return true;
+			},
+			cancelVal : '关闭',
+			cancel : true/* 为true等价于function(){} */
+		});
+}
+</script>
 <table style="display: none">
 	<tbody id="add_participant_table_template">
 		<tr>

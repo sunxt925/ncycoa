@@ -19,7 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	GoodsStoreEvent gse=new GoodsStoreEvent();
 	String name=request.getParameter("name");
     int page_no=Integer.parseInt(Format.NullToZero(request.getParameter("page_no")));
-	int per_page=((UserInfo)request.getSession().getAttribute("UserInfo")).getPerpage_half()-1;
+	int per_page=((UserInfo)request.getSession().getAttribute("UserInfo")).getPerpage_half()-4;
 	DataTable dt=gse.getAllGoodsStore(page_no,per_page,"出库");
 	DataTable dtcount=gse.getAllGoodsStore("出库");
 	int pagecount=0;
@@ -105,7 +105,7 @@ function F5()
 
 function detail(eventid)
 {
-	createwindow('明细', "goodsmanage/goodsinformOUTdetail.jsp?StoreEventNo="+eventid,1000,800)
+	createwindow('明细', "goodsmanage/goodsinformOUTdetail.jsp?StoreEventNo="+eventid,1000,550)
 }
 function dele(eventid)
 {

@@ -11,6 +11,10 @@ if (unitccm.equals("")) unitccm="NC";
 <HEAD>
 <TITLE>四川省南充烟草公司</TITLE>
 <link rel="stylesheet" type="text/css" href="../../css/style.css">
+<link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/icon.css">
+<script type="text/javascript" src="<%=path%>/jscomponent/jquery/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="<%=path%>/jscomponent/easyui/jquery.easyui.min.js"></script>
 <META http-equiv=Content-Type content="text/html; charset=gb2312">
 <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
 </HEAD>
@@ -184,7 +188,8 @@ document.getElementById("org").value=orgcode
           <td class="table_td_jb">当前单位：<%=res %></td>
       </tr>
       <tr>
-      <td><a href="#" onClick="F3()" >增加本层机构</a></td>
+      <td><a href="#" onClick="F3()" class="easyui-linkbutton"
+			data-options="iconCls:'icon-add',plain:true" >增加本层机构</a></td>
       </tr>
     </table>
     <%

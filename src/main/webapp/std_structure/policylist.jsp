@@ -36,7 +36,7 @@ DocPolicy policy=new DocPolicy();
 DataTable dt = policy.getPolicyBytype(type);
 %>
 <body>
-   <div style="text-align: center;position: relative;width: 80%;overflow:auto;border:1px solid 1px #cccccc;">
+   <div style="text-align: center;position: relative;width: 100%;overflow:auto;border:1px solid 1px #cccccc;">
     <table id="dg" class="easyui-datagrid" style=""
     data-options="fitColumns:true,singleSelect:true">
     <thead>

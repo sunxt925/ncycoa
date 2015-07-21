@@ -57,7 +57,7 @@ public ComplaintReply(){
 				sbuilder.append("\"replypersonname\":").append("\""+CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname", complaintreply.getReplypersoncode())+"\"").append(",");
 				sbuilder.append("\"replypersoncode\":").append("\""+complaintreply.getReplypersoncode()+"\"").append(",");
 				sbuilder.append("\"replycontent\":").append("\""+complaintreply.getReplycontent()+"\"").append(",");
-				sbuilder.append("\"replyfile\":").append("\"<a href='downweb.jsp?filename="+complaintreply.getReplyfile()+"'>"+complaintreply.getReplyfile()+"</a>\"").append(",");
+				sbuilder.append("\"replyfile\":").append("\"<a href='../fileupload/downweb.jsp?filename="+complaintreply.getReplyfile()+"'>"+complaintreply.getReplyfile()+"</a>\"").append(",");
 				sbuilder.append("\"replydate\":").append("\""+Format.dateToStr(complaintreply.getReplydate())+"\"").append(",");
 				sbuilder.append("\"enabledflag\":").append("\""+complaintreply.getEnabledflag()+"\"").append(",");
 				sbuilder.append("\"memo\":").append("\""+complaintreply.getMemo()+"\"");

@@ -62,40 +62,64 @@ else if(orgclass.equals("00080002"))
 <BODY class="mainbody" onLoad="document.all('staffcode').focus();">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
 <form name="form1" id="form1" method="post" action="../../servlet/PageHandler">
-  <tr>
-    <td width="3%" class="main_table_topbg" height="31"><img src="../../images/table_lt.jpg" width="22" height="31"></td>
-    <td width="94%" valign="middle" class="main_table_topbg" height="31">首页 &gt;&gt; 系统维护 &gt;&gt; 员工维护 &gt;&gt; 员工修改</td>
-    <td width="3%" align="right" class="main_table_topbg" height="31"><img src="../../images/table_rt.jpg" width="22" height="31"></td>
-  </tr>
-        <tr>
-    <td> <a id="F8" style="display:none" href="#" onClick="F8()">保存[F8]</a></td>
-  </tr>
+
+       
 <!--  <tr>-->
 <!--    <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;<a href="#" onClick="F8()">保存[F8]</a>　<a href="#" onClick="F3()">重填[F3]</a>　<a href="#" onClick="F5()">刷新[F5]</a></td>-->
 <!--  </tr>-->
+ <table cellpadding="5"  width="100%" align="left" >
+  <tr>
+    <td> <a id="F8" style="display:none" href="#" onClick="F8()">保存[F8]</a></td>
+  </tr>
+             <tr>
+				<td><span>员工编号：</span></td>
+				<td>
+					<input name="staffcode" type="text" class="easyui-textbox" id="staffcode" onKeyDown="EnterKeyDo('')" value="<%=staff.getStaffcode()%>"   size="30" maxlength="30"  readonly="readonly">
+				</td>
+			</tr>
+			 
+			<tr>
+				<td><span>员工姓名：</span></td>
+				<td>
+					<input name="staffname" type="text" class="easyui-textbox" id="staffname" onKeyDown="EnterKeyDo('')" value="<%=staff.getStaffname()%>" size="40" maxlength="40">
+				</td>
+			</tr>
+			<tr>
+				<td><span>性别：</span></td>
+				<td>
+					<input name="gender" type="radio" class="easyui-textbox" id="gender" onKeyDown="EnterKeyDo('')" value="<%=staff.getGender()%>" size="40" maxlength="40" checked ><%=staff.getGender() %></input>
+        <input name="gender" type="radio" class="easyui-textbox" id="gender" onKeyDown="EnterKeyDo('')" value="<%=othersex%>" size="40" maxlength="40"  ><%=othersex %></input>
+				</td>
+			</tr>
+			
+			<tr>
+				<td><span>身份证号：</span></td>
+				<td>
+					<input name="idcard" type="text" class="easyui-textbox" id="idcard" onKeyDown="EnterKeyDo('')" value="<%=staff.getIdcard() %>" size="40" maxlength="40">
+				</td>
+			</tr>
+			<tr>
+				<td><span>民族编码：</span></td>
+				<td>
+					<input name="nationalitycode" type="text" class="easyui-textbox" id="nationalitycode" onKeyDown="EnterKeyDo('')" size="40" maxlength="40">
+				</td>
+			</tr>
+			<tr>
+				<td><span>入职时间：</span></td>
+				<td>
+					<input name="positiontime" type="Wdate" class="easyui-textbox" id="positiontime" onfocus="new WdatePicker({lang:'zh-cn'})"  value="<%=staff.getPositiontime() %>" size="30"  maxlength="30">
+				</td>
+			</tr>
+			<tr>
+				<td><span>工作证号：</span></td>
+        <td><input name="memberid" type="text" class="easyui-textbox" id="memberid" onKeyDown="EnterKeyDo('')" value="<%=staff.getMemberid()%>" size="40" maxlength="40"></td>
+			</tr>
+  </table>
   <tr>
     <td colspan="3" valign="top" class="main_table_centerbg" align="center"><table width="100%" border="1" cellspacing="0" cellpadding="0" class="table_list1">
+     
       <tr>
-        <td width="20%"><div align="right">员工编号：</div></td>
-        <td width="80%"><input name="staffcode" type="text" class="input1" id="staffcode" onKeyDown="EnterKeyDo('')" value="<%=staff.getStaffcode()%>"   size="30" maxlength="30"  readonly="readonly"></td>
-      </tr>
-      <tr>
-        <td><div align="right">员工姓名：</div></td>
-        <td><input name="staffname" type="text" class="input1" id="staffname" onKeyDown="EnterKeyDo('')" value="<%=staff.getStaffname()%>" size="40" maxlength="40"></td>
-      </tr>
-      <tr>
-        <td><div align="right">身份证号：</div></td>
-        <td><input name="idcard" type="text" class="input1" id="idcard" onKeyDown="EnterKeyDo('')" value="<%=staff.getIdcard() %>" size="40" maxlength="40">
- 
-      </tr>
-      <tr>
-        <td><div align="right">性别：</div></td>
-        <td><input name="gender" type="radio" class="input1" id="gender" onKeyDown="EnterKeyDo('')" value="<%=staff.getGender()%>" size="40" maxlength="40" checked ><%=staff.getGender() %></input>
-        <input name="gender" type="radio" class="input1" id="gender" onKeyDown="EnterKeyDo('')" value="<%=othersex%>" size="40" maxlength="40"  ><%=othersex %></input></td>
-      </tr>
-      <tr>
-        <td><div align="right"><%=membid %>：</div></td>
-        <td><input name="memberid" type="text" class="input1" id="memberid" onKeyDown="EnterKeyDo('')" value="<%=staff.getMemberid()%>" size="40" maxlength="40"></td>
+        
         <input name="orgcode" type="hidden" id="orgcode" value="<%=orgcode %>">
         <input name="orgname" type="hidden" id="orgname" value="<%=orgname %>">
         <input name="positioncode" type="hidden" id="positioncode" value="<%=positioncode %>">
@@ -106,10 +130,7 @@ else if(orgclass.equals("00080002"))
           <input name="action_class" type="hidden" id="action_class" value="com.action.system.StaffAction"></td>
       </tr>
       
-      <tr>
-        <td><div align="right">入职时间：</div></td>
-        <td><input name="positiontime" type="Wdate" class="input1" id="positiontime" onfocus="new WdatePicker({lang:'zh-cn'})"  value="<%=staff.getPositiontime() %>" size="30"  maxlength="30"></td>
-      </tr>
+   
     </table></td>
   </tr>
   <tr>

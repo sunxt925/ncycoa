@@ -20,7 +20,7 @@
 		<h:dgColumn field="roomNo" title="会议室编号"  query="true"></h:dgColumn>
 		<h:dgColumn field="roomName" title="会议室名称"  query="true"></h:dgColumn>
 		
-		<h:dgColumn field="belongOrg" title="所属单位" ></h:dgColumn>
+		<h:dgColumn field="belongOrg" title="所属单位"  replace="市局公司部门_NC.00,顺庆区局_NC.01.20,高坪区局_NC.01.21,嘉陵区局_NC.01.22,西充县局_NC.01.24,南部县局_NC.01.25,阎中市局_NC.01.26,仪陇县局_NC.01.27,营山县局_NC.01.28,蓬安县局_NC.01.29,物流中心_NC.01.30"></h:dgColumn>
 		<h:dgColumn field="galleryful" title="容纳人数"  query="true" queryMode="scope"></h:dgColumn>
 		<h:dgColumn field="roomMemo" title="会议室说明"></h:dgColumn>
 		<h:dgToolBar url="meetingroom_management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>

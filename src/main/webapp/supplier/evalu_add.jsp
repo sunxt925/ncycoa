@@ -5,6 +5,7 @@
 
 <%
   String count=request.getAttribute("count").toString();
+  String sid=request.getAttribute("supplierID").toString();
 %>
 
 <!DOCTYPE html>
@@ -68,7 +69,7 @@
 		//alert(sum);
 		document.getElementById('score').value=sum;
 		document.getElementById('detail').value=detail;
-		alert($("input[name='detail']").val());
+		//alert($("input[name='detail']").val());
 	}
 	
 	$(function() {
@@ -99,25 +100,23 @@
 </script>
 </head>
 <body style="overflow-x:hidden">
+<!-- 
 <form id="formobj" name="formobj" action="supplier.htm?evalu_save"  method="post">
+ -->
+<%
+    //String id=request.getAttribute("sid").toString();
+    String html="<form id='formobj' name='formobj' action='supplier.htm?evalu_save&id="+sid+"' method='post'>";
+	out.write(html);
+%>
 <input type="hidden" id="btn_sub" class="btn_sub" onclick="makeScore()"/> 
 <input id="evaluID" name="evaluID" type="hidden" value="${evaluResult.evaluID}">
+
 <br>
-<span>选择部门:</span>
-<select class="easyui-combobox" id="evaluDepart" name="evaluDepart" style="width:156px;">
-		<%
-		out.write(request.getAttribute("evaluDepart").toString());
-		%>
-</select>
-<span>&nbsp;&nbsp;选择供应商:</span>
-<select class="easyui-combobox" id="evaluSupplier" name="evaluSupplier" style="width:156px;">
-		<%
-		out.write(request.getAttribute("evaluSupplier").toString());
-		%>
-</select>
+
+<!--
 <span>&nbsp;&nbsp;评价年度:</span>
 <input id="evaluYear" name="evaluYear" style="width: 50px" disabled="disabled" value="${evaluResult.evaluYear}">
-<br><br>
+ -->
 <table style="width:600px;border-spacing:1px;" class="formtable">
 	<%
 	out.write(request.getAttribute("evaluPanel").toString());

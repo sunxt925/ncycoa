@@ -18,6 +18,9 @@
 		<class>edu.cqu.ncycoa.domain.GoodsUsed</class>
 		<class>edu.cqu.ncycoa.domain.ContractInfo</class>
 		<class>edu.cqu.ncycoa.domain.MeetingInfo</class>
+		<class>edu.cqu.ncycoa.safety.PressurePipe</class>
+		<class>edu.cqu.ncycoa.safety.SpecialEquipment</class>
+		<class>edu.cqu.ncycoa.safety.SubSpecialEquipment</class>
 	</persistence-unit>
 
 </persistence> 

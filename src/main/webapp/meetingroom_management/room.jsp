@@ -92,7 +92,7 @@
 	<tr>
 		<td align="right"><label class="Validform_label"> ปแา้สาร๛ณฦ </label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="roomName" name="roomName" value="${meetingRoom.roomName}" datatype="s2-10">
+		<input class="inputxt" style="width:150px;" id="roomName" name="roomName" value="${meetingRoom.roomName}" datatype="s2-100">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>

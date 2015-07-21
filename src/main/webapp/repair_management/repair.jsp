@@ -92,7 +92,7 @@
 	<tr>
 		<td align="right"><label class="Validform_label"> 申请单位 </label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="apporgCode" name="apporgCode" value="${repairAudit.apporgCode}" datatype="s2-10">
+		<input class="inputxt" style="width:150px;" id="apporgCode" name="apporgCode" value="${repairAudit.apporgCode}" >
 		<a id="btn_selectobject" href="#" class="easyui-linkbutton"
 				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
@@ -101,7 +101,7 @@
 	<tr>
 		<td align="right"><label class="Validform_label"> 维修项目预算 </label></td>
 		<td class="value">
-		 <input  class="inputxt" style="width:150px;" id="repairFree" name="repairFree"   value="${repairAudit.repairFree}" >
+		 <input  class="inputxt" style="width:150px;" id="repairFree" name="repairFree"   value="${repairAudit.repairFree}" datatype="s2-5">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>

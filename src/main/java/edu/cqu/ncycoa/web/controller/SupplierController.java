@@ -1,5 +1,7 @@
 package edu.cqu.ncycoa.web.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -29,7 +31,9 @@ import edu.cqu.ncycoa.common.service.SystemService;
 import edu.cqu.ncycoa.common.tag.TagUtil;
 import edu.cqu.ncycoa.common.util.dao.QueryUtils;
 import edu.cqu.ncycoa.common.util.dao.TQOrder;
+import edu.cqu.ncycoa.common.util.dao.TQRestriction;
 import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
+import edu.cqu.ncycoa.dao.SupplierDao;
 import edu.cqu.ncycoa.domain.EvaluDefine;
 import edu.cqu.ncycoa.domain.EvaluResult;
 import edu.cqu.ncycoa.domain.GoodsUsed;
@@ -119,7 +123,7 @@ public class SupplierController {
 	@RequestMapping(params="update")
 	public ModelAndView update(HttpServletRequest request) {
 		String id = request.getParameter("id");
-		//System.out.println("###id##"+id);
+		System.out.println("###id##"+id);
 		Supplier t = systemService.findEntityById(Long.parseLong(id), Supplier.class);
 		//Supplier t=new Supplier();
 		ModelAndView mav=new ModelAndView("supplier/supplier_add");
@@ -152,6 +156,7 @@ public class SupplierController {
 		}
 		if(supplier.getValid()==null)
 			supplier.setValid("");
+		supplier.setManageDepart(SupplierDao.getOrgNamesByCodes(supplier.getManageDepart()));
 		if (supplier.getId() != null) {
 			message = "供应商更新成功";
 			Supplier t = systemService.findEntityById(supplier.getId(), Supplier.class);
@@ -203,6 +208,8 @@ public class SupplierController {
 		
 		//查询条件组装器
 		TypedQueryBuilder<Supplier> tqBuilder = QueryUtils.getTQBuilder(supplier, request.getParameterMap());
+		//只能看自己部门的供应商
+		tqBuilder.addRestriction(new TQRestriction( "manage_depart", "like", "%"+SupplierDao.getOneDepart()+"%"));
 		if (StringUtils.isNotEmpty(dg.getSort())) {
 			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
 		}
@@ -218,17 +225,20 @@ public class SupplierController {
 	//二.以下为物资使用记录操作：
 	//添加使用记录
 	@RequestMapping(params="used_addi")
-	public String usedAdd(HttpServletRequest request) {
-		return "supplier/used_add";
+	public ModelAndView usedAdd(HttpServletRequest request) {
+		ModelAndView mav=new ModelAndView("supplier/used_add");
+		mav.addObject("suppliers", SupplierDao.getAllSupplier());
+		return mav;
 	}
 	@RequestMapping(params = "used_save")
 	@ResponseBody
 	public void usedsave(GoodsUsed goodsUsed, HttpServletRequest request, HttpServletResponse response) {
 		AjaxResultJson j = new AjaxResultJson();
 		String message;
+		goodsUsed.setUsedDepart((SupplierDao.getOrgNamesByCodes(goodsUsed.getUsedDepart())));
 		if (goodsUsed.getId() != null) {
 			message = "物资使用记录更新成功";
-			Supplier t = systemService.findEntityById(goodsUsed.getId(), Supplier.class);
+			GoodsUsed t = systemService.findEntityById(goodsUsed.getId(), GoodsUsed.class);
 			try {
 				MyBeanUtils.copyBeanNotNull2Bean(goodsUsed, t);
 				systemService.saveEntity(t);
@@ -247,6 +257,15 @@ public class SupplierController {
 	}
 	
 	//更新使用记录   params=used_update
+	@RequestMapping(params="used_update")
+	public ModelAndView usedUpdate(HttpServletRequest request) {
+		String id = request.getParameter("id");
+		System.out.println("###id##"+id);
+		GoodsUsed t = systemService.findEntityById(Long.parseLong(id), GoodsUsed.class);
+		ModelAndView mav=new ModelAndView("supplier/used_add");
+		mav.addObject("goodsUsed", t);
+		return mav;
+	}
 	
 	//查询物资使用记录
 	@RequestMapping(params="useddgview")
@@ -263,6 +282,9 @@ public class SupplierController {
 		
 		//查询条件组装器
 		TypedQueryBuilder<GoodsUsed> tqBuilder = QueryUtils.getTQBuilder(goodsUsed, request.getParameterMap());
+		if(dg.getSort()==null){
+			dg.setSort("usedTime");	
+		}
 		if (StringUtils.isNotEmpty(dg.getSort())) {
 			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
 		}
@@ -371,26 +393,95 @@ public class SupplierController {
 		j.setMsg(message);
 		SystemUtils.jsonResponse(response, j);
 	}
+	//更新
+	@RequestMapping(params="update_index")
+	public ModelAndView updateIndex(HttpServletRequest request) {
+		String year = request.getParameter("year");
+		String code = request.getParameter("code");
+		EvaluDefine t =SupplierDao.getIndexByYearAndCode(year,code);
+		System.out.println("IIINNNN:"+t.getEvaluYear()+t.getIndexOption());
+		//Supplier t=new Supplier();
+		ModelAndView mav=new ModelAndView("supplier/evalu_index_update");
+	
+		mav.addObject("evaluDefine", t);
+		mav.addObject("option",t.getIndexOption());
+		//request.setAttribute("goodsType", getSelect);
+		return mav;
+	}
+	
+	//评价指标编辑表
+	@RequestMapping(params="show_index")
+	public String evaluShowIndex(HttpServletRequest request) {
+		return "supplier/evalu_indexlist";
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(params="evaluindexdgdata")
+	@ResponseBody
+	public void evaluIndexDgData(EvaluDefine evaluResult, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
+		QueryDescriptor<EvaluDefine> cq = new QueryDescriptor<EvaluDefine>(EvaluDefine.class, dg);
+		CommonService commonService = SystemUtils.getCommonService(request);
+		
+		//查询条件组装器
+		TypedQueryBuilder<EvaluDefine> tqBuilder = QueryUtils.getTQBuilder(evaluResult, request.getParameterMap());
+		//System.out.println(dg.getSort());
+		if(dg.getSort()==null){
+			dg.setSort("indexCode");	
+		}
+		if (StringUtils.isNotEmpty(dg.getSort())) {
+			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
+		}
+		cq.setTqBuilder(tqBuilder);
+		commonService.getDataGridReturn(cq, true);
+		TagUtil.datagrid(response, dg);
+	}
 	
 	//评价录入（需要改）
 	@RequestMapping(params="evalu_addi")
 	public ModelAndView evaluAdd(HttpServletRequest request) {
+		//String getSupplier=request.getParameter("name");
+		String supplierID=request.getParameter("id");
+		System.out.println(supplierID);
+		//String supplier=SupplierDao.getSupplierNameByID(supplierID);
 		ModelAndView mav=new ModelAndView("supplier/evalu_add");
 		int year=Calendar.getInstance().get(Calendar.YEAR);	
 		String content=SupplierServiceImpl.getEvaluContent(String.valueOf(year));
 		mav.addObject("evaluPanel", content);
 		mav.addObject("count", SupplierServiceImpl.getContentCount());
-		String getDepart=SupplierServiceImpl.getDepart();
-		String getSupplier=SupplierServiceImpl.getSupplier();
+		//String getDepart=SupplierDao.getOneDepart();
+		//String getSupplier=SupplierServiceImpl.getSupplier();
 		//System.out.println(SupplierDao.getContentCount());
-		mav.addObject("evaluDepart", getDepart);
-		mav.addObject("evaluSupplier", getSupplier);
+		//mav.addObject("evaluDepart", getDepart);
+		//String getSupplier="<form id='formobj' name='formobj' action='supplier.htm?evalu_save'  method='post'>";
+		//mav.addObject("evaluSupplier", getSupplier);
+		mav.addObject("supplierID", supplierID);
 		return mav;
 	}
+	
+	//查看已录入评价（需要改）
+		@RequestMapping(params="evalu_see")
+		public ModelAndView evaluSee(HttpServletRequest request) {
+			
+			String supplierID=request.getParameter("id");
+			//supplier="供应商9";
+			System.out.println(supplierID);
+			String supplier=SupplierDao.getSupplierNameByID(supplierID);
+			ModelAndView mav=new ModelAndView("supplier/evalu_add");
+			int year=Calendar.getInstance().get(Calendar.YEAR);	
+			String content=SupplierServiceImpl.getEvaluedContent(String.valueOf(year),supplier);
+			mav.addObject("evaluPanel", content);
+			mav.addObject("supplierID", supplierID);
+			mav.addObject("count", SupplierServiceImpl.getContentCount());
+			return mav;
+		}
+		
 	@RequestMapping(params = "evalu_save")
 	@ResponseBody
 	@Scope("prototype")
 	public void evaluSave(EvaluResult evaluResult, HttpServletRequest request, HttpServletResponse response) {
+		String supplierID=request.getParameter("id");
+		System.out.println(supplierID);
+		String supplier=SupplierDao.getSupplierNameByID(supplierID);
 		AjaxResultJson j = new AjaxResultJson();
 		int year=Calendar.getInstance().get(Calendar.YEAR);		
 		evaluResult.setEvaluYear(String.valueOf(year));
@@ -400,6 +491,8 @@ public class SupplierController {
 			SystemUtils.jsonResponse(response, j);
 		}else{
 			String message;
+			evaluResult.setEvaluDepart(SupplierDao.getOneDepart());
+			evaluResult.setEvaluSupplier(supplier);
 			int score=evaluResult.getScore();
 			if(score>=90&&score<=100)
 				evaluResult.setLevel((short)0);
@@ -457,7 +550,8 @@ public class SupplierController {
 	@RequestMapping(params="mainten_exit")
 	public ModelAndView maintenExit(HttpServletRequest request) {
 		ModelAndView mav=new ModelAndView("supplier/mainten_exit");
-		String getSupplier=SupplierServiceImpl.getAllSupplier();
+		//String getSupplier=SupplierServiceImpl.getAllSupplier();
+		String getSupplier=SupplierServiceImpl.getSupplier();
 		mav.addObject("suppliers", getSupplier);
 		return mav;
 	}
@@ -489,6 +583,7 @@ public class SupplierController {
 		
 		//查询条件组装器
 		TypedQueryBuilder<SupplierExit> tqBuilder = QueryUtils.getTQBuilder(supplierExit, request.getParameterMap());
+		//tqBuilder.addRestriction(new TQRestriction( "manage_depart", "like", "%市局（公司）企管科%"));
 		if (StringUtils.isNotEmpty(dg.getSort())) {
 			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
 		}

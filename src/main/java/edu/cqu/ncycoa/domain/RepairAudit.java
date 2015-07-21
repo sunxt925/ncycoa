@@ -58,6 +58,24 @@ public class RepairAudit {
 	@Column(name="REPAIRAUDIT_PROJECTTYPE")
 	private String projectType;
 	
+	@Column(name="REPAIRAUDIT_SERVICEPROVIDOR")
+	private String serviceProvider;//维修商
+	
+	@Column(name="REPAIRAUDIT_HANDLEPERSON")
+	private String handlePerson;//经办人
+
+	@Column(name="REPAIRAUDIT_TRUEFREE")
+	private double trueFree;//实际金额
+	
+	@Column(name="REPAIRAUDIT_HANDLEDATE")
+	private Date handleDate;//审批时间
+	
+	@Column(name="REPAIRAUDIT_ENDTIME")
+	private Date endTime;//完成时间
+	
+	@Column(name="REPAIRAUDIT_ACCEPTOR")
+	private String acceptor;//验收人
+	
 	public Long getId() {
 		return id;
 	}
@@ -170,6 +188,54 @@ public class RepairAudit {
 
 	public void setProjectType(String projectType) {
 		this.projectType = projectType;
+	}
+
+	public String getServiceProvider() {
+		return serviceProvider;
+	}
+
+	public void setServiceProvider(String serviceProvider) {
+		this.serviceProvider = serviceProvider;
+	}
+
+	public String getHandlePerson() {
+		return handlePerson;
+	}
+
+	public void setHandlePerson(String handlePerson) {
+		this.handlePerson = handlePerson;
+	}
+
+	public double getTrueFree() {
+		return trueFree;
+	}
+
+	public void setTrueFree(double trueFree) {
+		this.trueFree = trueFree;
+	}
+
+	public Date getHandleDate() {
+		return handleDate;
+	}
+
+	public void setHandleDate(Date handleDate) {
+		this.handleDate = handleDate;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+
+	public String getAcceptor() {
+		return acceptor;
+	}
+
+	public void setAcceptor(String acceptor) {
+		this.acceptor = acceptor;
 	}
 	
 	

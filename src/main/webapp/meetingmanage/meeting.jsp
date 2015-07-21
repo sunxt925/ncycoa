@@ -142,13 +142,15 @@
 		<td align="right"><label class="Validform_label"> 需求部门 </label></td>
 		<td class="value">
 		<input class="inputxt" style="width:150px;" id="applyOrgCode" name="applyOrgCode" value="${meetingInfo.applyOrgCode}" datatype="s2-10">
+		<a id="btn_selectorg" href="#" class="easyui-linkbutton"
+				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label"> 其他需求 </label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="meetingReport" name="meetingReport" value="${meetingInfo.meetingReport}" datatype="s2-10">
+		<input class="inputxt" style="width:150px;" id="meetingReport" name="meetingReport" value="${meetingInfo.meetingReport}" >
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -157,6 +159,20 @@
 </table>
 </form>
 <script type="text/javascript">
+$("#btn_selectorg").click(function(){
+	
+	createwindow('选择部门','indexmanage/selectunit.jsp',500,500,returnorgValue );
+    });
+function returnorgValue(data){
+	var org = data.code;
+	if(org.length>1){
+		alert("最多只能选择一个部门");
+	}else{
+		$('#applyOrgCode').val(org[0].orgcode);
+	}
+	
+	
+}
 $("#btn_selectroom").click(function(){
 	var begindate = $('#meetingBeginDate').val();
 	var enddate = $('#meetingEndDate').val();

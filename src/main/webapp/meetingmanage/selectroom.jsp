@@ -26,14 +26,14 @@ String basePath = request.getScheme()+"://"+
   <body class="easyui-layout">
    
 	<div id="center" data-options="region:'center'" style="padding:5px;background:#eee;">
-	     <table id="dg" class="easyui-datagrid" data-options="url:'roomjson.jsp',fitColumns:true,singleSelect:true">
+	     <table id="dg" class="easyui-datagrid" data-options="url:'roomjson.jsp',fitColumns:true,singleSelect:true" style="width: 490px">
 	     <thead>
     <tr>
         <th data-options="filed:'ck',checkbox:true"></th>
 	    <th data-options="field:'roomid',width:100">会议室编号</th>
-	    <th data-options="field:'roomname',width:100">会议室名称</th>
+	    <th data-options="field:'roomname',width:200">会议室名称</th>
 	    <th data-options="field:'galleryful',width:100">可容纳人数</th>
-	    <th data-options="field:'roommemo',width:100">会议室说明</th>
+	    <th data-options="field:'roommemo',width:300">会议室说明</th>
     </tr>
     </thead>
 	</table>
