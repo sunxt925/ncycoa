@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.activiti.engine.HistoryService;
+import org.activiti.engine.IdentityService;
 import org.activiti.engine.ManagementService;
+import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.common.CodeDictionary;
 import com.common.Format;
 import com.dao.system.UnitDao;
 import com.entity.index.AllMeritCollection;
@@ -72,6 +75,9 @@ public class RepairAuditController {
 	
 	@Resource(name="wfManagementService")
 	ManagementService managementService;
+	
+	@Resource(name="processEngine")
+	ProcessEngine processEngine;
 	
 	@RequestMapping(params="add")
 	public String add(HttpServletRequest request) {
@@ -138,6 +144,7 @@ public class RepairAuditController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("repair_management/repair");
 		mav.addObject("repairAudit",repairAudit);
+		mav.addObject("orgname",CodeDictionary.syscode_traslate("base_org","orgcode", "orgname", repairAudit.getApporgCode()));
 		return mav;
 	}
 	
@@ -309,7 +316,8 @@ public class RepairAuditController {
 			paras.put("company", companyaudit);
 			paras.put("objId", objId);
 			runtimeService.startProcessInstanceByKey(processID, objId, paras);
-			
+			IdentityService identityService=processEngine.getIdentityService();
+			identityService.setAuthenticatedUserId(((UserInfo)request.getSession().getAttribute("UserInfo")).getStaffcode());
 			message = "维修申请提交成功";
 			
 		} catch (Exception e) {
