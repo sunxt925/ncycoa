@@ -51,6 +51,20 @@ public class Plan {
 	@Column(name="TYPE")
 	private Short type;        // 岗位计划，部门计划
 	
+	@Column(name="STEP_TYPE")
+	private Short stepType;        // 自定义流程，固定流程
+	
+	@Column(name="FIX_Flow_Key")
+	private String fixFlowKey;
+	
+	public String getFixFlowKey() {
+		return fixFlowKey;
+	}
+
+	public void setFixFlowKey(String fixFlowKey) {
+		this.fixFlowKey = fixFlowKey;
+	}
+
 	@OneToMany(mappedBy = "plan", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@OrderBy("order")
 	private List<PlanStep> steps;
@@ -83,6 +97,14 @@ public class Plan {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public Short getStepType() {
+		return stepType;
+	}
+
+	public void setStepType(Short stepType) {
+		this.stepType = stepType;
 	}
 
 	public String getName() {
