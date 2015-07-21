@@ -69,8 +69,13 @@ ComponentUtil cu=new ComponentUtil();
                        out.print(cu.print("TBM_COMPLAINT", "MEMO"));
                     %></td>
                 </tr>
+                <tr>
+                <td></td>
+                <td><input type="button" id="btn_ok" style="display: " onclick="ret()" value="提交"></td>
+                </tr>
+               
             </table>
-            <input type="button" id="btn_ok" style="display: " onclick="ret()" value="提交">
+            
 		   <input type="hidden" id="TBM_COMPLAINT.COMPLAINTNO" name="TBM_COMPLAINT.COMPLAINTNO" value="<%=IndexCode.getRecno("CM")%>">
             <input type="hidden" id="TBM_COMPLAINT.COMPLAINTERCODE" name="TBM_COMPLAINT.COMPLAINTERCODE" value="<%=u.getStaffcode()%>">
             <input type="hidden" id="TBM_COMPLAINT.ENABLEDFLAG" name="TBM_COMPLAINT.ENABLEDFLAG" value="0">
@@ -120,7 +125,7 @@ ComponentUtil cu=new ComponentUtil();
     			cache : false,
     			ok : function() {
     				$('#btn_ok', this.iframe.contentWindow.document).click();
-    				return false;
+    				return true;
     			},
     			cancelVal : '关闭',
     			cancel : true/* 为true等价于function(){} */

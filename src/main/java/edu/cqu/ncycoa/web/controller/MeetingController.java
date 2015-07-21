@@ -80,6 +80,7 @@ public class MeetingController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("meetingmanage/meeting");
 		mav.addObject("meetingInfo",meetingInfo);
+		mav.addObject("applyOrgName",CodeDictionary.syscode_traslate("base_org","orgcode", "orgname", meetingInfo.getApplyOrgCode()));
 		return mav;
 	}
 	

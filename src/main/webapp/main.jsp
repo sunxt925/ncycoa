@@ -5,7 +5,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" content="ie=edge"/>
 <meta charset="gb2312">
 <title>南充烟草专卖局</title>
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/default/easyui.css">
@@ -27,6 +26,11 @@
 .deafult{background:url('../images/folder.png') no-repeat;}
 .easyui-tabs .panel-body{overflow:hidden;}
 </style>
+
+<script type="text/javascript" src="jscomponent/jquery/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="jscomponent/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
 </head>
 <%
     UserInfo u=(UserInfo)request.getSession().getAttribute("UserInfo");
@@ -87,6 +91,7 @@
 </table>
 </div>
 <!-- 左侧-->
+<script type="text/javascript" src="jscomponent/tools/leftmenu.js"></script>
 <div id="menu" data-options="region:'west',split:true,href:'main_menu.jsp'" title="导航菜单" style="width: 280px;"></div>
 <!-- 中间-->
 <div id="mainPanle" data-options="region:'center'" style="overflow-y: hidden;">
@@ -105,11 +110,5 @@
 <div id="mm-tabcloseleft">当前页左侧全部关闭</div>
 </div>
 
-<script type="text/javascript" src="jscomponent/jquery/jquery-1.8.0.min.js"></script>
-<script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="jscomponent/easyui/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" src="jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
-<script type="text/javascript" src="jscomponent/tools/datagrid.js"></script>
-<script type="text/javascript" src="jscomponent/tools/leftmenu.js"></script>
 </body>
 </html>

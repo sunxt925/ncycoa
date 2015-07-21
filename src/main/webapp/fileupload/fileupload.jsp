@@ -53,7 +53,7 @@ String staffcode=request.getParameter("staffcode");
              </td>  
              </tr>  
             </table>  
-	       <input type="button" id="btn_ok" style="display: none " onclick="ret()">
+	       <input type="button" id="btn_ok" style="display: " onclick="ret()" value="上传">
 	       
 </body>
 <script type="text/javascript">
@@ -69,7 +69,7 @@ String staffcode=request.getParameter("staffcode");
 	   $("#filename").val(filename);
 	   (api.data)({code:filename});
 	   formSubmit();
-	   window.close();
+	  // window.close();
     }
    function callback(){  
        $.ajax({  

@@ -82,7 +82,7 @@
 <body style="overflow-x:hidden">
 <form id="formobj" name="formobj" action="reformback_management.htm?save"  method="post">
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
-<table style="width:600px;border-spacing:1px;" class="formtable">
+<table style="border-spacing:1px;" class="formtable">
 	<tr>
 		<td align="right"><label class="Validform_label"> 反馈名称 </label></td>
 		<td class="value"><input class="inputxt" style="width:150px;" id="backname" name="backname"  datatype="s2-10">
@@ -124,7 +124,7 @@ function ret(){
 }
 
 $("#btn_uploadfile").click(function(){
-	createwindow('文件上传','complaintmanage/fileupload.jsp',350,130,returnFile);
+	createwindow('文件上传','fileupload/fileupload.jsp',350,130,returnFile);
 	    });
 
 function returnFile(data){

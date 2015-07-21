@@ -111,17 +111,17 @@ function dele(eventid)
 {
 var temp=eventid.split(",");
 document.getElementById("eventid").value=temp[0];
-if(!temp[1])
-{
+//if(!temp[1])
+//{
 	if (confirm("确定要删除吗？"))
 			{
 				document.all("Submit").click();
 			}
-}
-else
+//}
+/* else
 {
 	alert("该事件不能删除");
-}
+} */
 }
 
 var xmlHttp;

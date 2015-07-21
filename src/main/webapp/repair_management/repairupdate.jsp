@@ -82,7 +82,7 @@
 <form id="formobj" name="formobj" action="repair_management.htm?save"  method="post">
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
 <input id="id" name="id" type="hidden" value="${repairAudit.id}">
-<table style="width:600px;border-spacing:1px;" class="formtable">
+<table style="border-spacing:1px;" class="formtable">
 	
 	<tr>
 		<td align="right"><label class="Validform_label"> Œ¨–ﬁ…Í«Îµ•Œª</label></td>

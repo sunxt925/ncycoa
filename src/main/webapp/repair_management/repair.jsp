@@ -82,7 +82,7 @@
 <form id="formobj" name="formobj" action="repair_management.htm?save"  method="post">
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
 <input id="id" name="id" type="hidden" value="${repairAudit.id}">
-<table style="width:600px;border-spacing:1px;" class="formtable">
+<table style="border-spacing:1px;" class="formtable">
 	<tr>
 		<td align="right"><label class="Validform_label"> 项目名称 </label></td>
 		<td class="value"><input class="inputxt" style="width:150px;" id="projectName" name="projectName" value="${repairAudit.projectName}" datatype="s2-10">
@@ -92,7 +92,8 @@
 	<tr>
 		<td align="right"><label class="Validform_label"> 申请单位 </label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="apporgCode" name="apporgCode" value="${repairAudit.apporgCode}" >
+		<input class="inputxt" style="width:150px;display: none" id="apporgCode" name="apporgCode" value="${repairAudit.apporgCode}">
+		<input class="inputxt" style="width:150px;" id="apporgName" name="apporgName" value="${orgname }">
 		<a id="btn_selectobject" href="#" class="easyui-linkbutton"
 				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
@@ -126,6 +127,8 @@
 </table>
 </form>
 <script type="text/javascript">
+
+
 $("#btn_selectobject").click(function(){
 	
 	createwindow('选择部门','indexmanage/selectunit.jsp',500,500,returnobjValue );
@@ -136,6 +139,7 @@ function returnobjValue(data){
 		alert("最多只能选择一个部门");
 	}else{
 		$('#apporgCode').val(org[0].orgcode);
+		$('#apporgName').val(org[0].orgname);
 	}
 	
 	

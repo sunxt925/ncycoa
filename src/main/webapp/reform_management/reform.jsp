@@ -82,7 +82,7 @@
 <form id="formobj" name="formobj" action="reform_management.htm?save"  method="post">
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
 <input id="id" name="id" type="hidden" value="${reform.id}">
-<table style="width:600px;border-spacing:1px;" class="formtable">
+<table style="border-spacing:1px;" class="formtable">
 	<tr>
 		<td align="right"><label class="Validform_label"> 整改项目名称 </label></td>
 		<td class="value"><input class="inputxt" style="width:150px;" id="name" name="name" value="${reform.name}" datatype="s2-10">
@@ -92,7 +92,8 @@
 	<tr>
 		<td align="right"><label class="Validform_label"> 下达整改部门 </label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="xdzgOrgname" name="xdzgOrgname" value="${reform.xdzgOrgcode}">
+		
+		<input class="inputxt" style="width:150px;" id="xdzgOrgname" name="xdzgOrgname" value="${XdzgOrgname}">
 		<input type="hidden" id="xdzgOrgcode" name="xdzgOrgcode" value="${reform.clOrgcode}">
 		<a id="btn_selectorg" href="#" class="easyui-linkbutton"
 				       data-options="iconCls:'icon-search',plain:true">选择</a>
@@ -104,7 +105,7 @@
 	<tr>
 	<td align="right"><label class="Validform_label"> 要求整改部门 </label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="clOrgname" name="clOrgname" value="${reform.clOrgcode}" >
+		<input class="inputxt" style="width:150px;" id="clOrgname" name="clOrgname" value="${ClOrgname}" >
 		<input type="hidden" id="clOrgcode" name="clOrgcode" value="${reform.clOrgcode}">
 		<a id="btn_selectobject" href="#" class="easyui-linkbutton"
 				       data-options="iconCls:'icon-search',plain:true">选择</a>
@@ -175,7 +176,7 @@ function createwindow(title, url, width, height,func) {
 			cache : false,
 			ok : function() {
 				$('#btn_ok', this.iframe.contentWindow.document).click();
-				return false;
+				return true;
 			},
 			cancelVal : '关闭',
 			cancel : true/* 为true等价于function(){} */

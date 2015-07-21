@@ -36,11 +36,11 @@ String url = path+"/meritquery/unitjson.jsp?class=d";
    <input type="button" id="btn_ok" style="display: none" onclick="ret()">
     </body>
     <script type="text/javascript">
-    var roomNo='';
+    var roomNo;
     function change(){
     	$('#tt').tree({
  			onClick: function(node){
- 				roomNo = node.id;
+ 				roomNo = node;
  			}
  		});
     }
