@@ -1,3 +1,4 @@
+<%@page import="edu.cqu.ncycoa.domain.EvaluDefine"%>
 <%@ page language="java" pageEncoding="gb2312"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -22,6 +23,7 @@
 *{font-size:12px; font-family:微软雅黑,新宋体}
 </style>
 <script type="text/javascript">
+
 	function resetTrNum(tableId) {
 		$tbody = $("#" + tableId + "");
 		$tbody.find('>tr').each(function(i){
@@ -51,7 +53,7 @@
 				var win = frameElement.api.opener;
 				if (data.success == true) {
 					frameElement.api.close();
-					win.tip("hello");
+					win.tip("使用记录添加成功");
 					
 				} else {
 					if (data.responseText == ''|| data.responseText == undefined){
@@ -78,32 +80,84 @@
 </script>
 </head>
 <body style="overflow-x:hidden">
-<form id="formobj" name="formobj" action="supplier.htm?maintenexit_save"  method="post">
+<form id="formobj" name="formobj" action="supplier.htm?evalu_index_save"  method="post">
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
-<input id="id" name="id" type="hidden" value="${supplierExit.id}">
+
 <table style="width:600px;border-spacing:1px;" class="formtable">
 	<tr>
-		<td align="right"><label class="Validform_label"> 供应商名称 </label></td>
-		<td class="value">
-		<select class="easyui-combobox" id="name" name="name" style="width:156px;">
-		<%
-		out.write(request.getAttribute("suppliers").toString());
-		%>
-		</select>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label"> 退出原因</label></td>
-		<td class="value">
-		<select class="inputxt" id="reason" name="reason" style="width:156px;">
-			<option value="0">自行退出</option>
-			<option value="1">违规退出</option>
-		</select>
+		<td align="right"><label class="Validform_label"> 评价年份</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="evaluYear" name="evaluYear" value="${evaluDefine.evaluYear}" datatype="s2-10">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
+	<tr>
+	<td align="right"><label class="Validform_label">指标编码</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="indexCode" name="indexCode" value="${evaluDefine.indexCode}" datatype="s2-10">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label">指标类别</label></td>
+		<td class="value">
+		<%
+		String temp=request.getAttribute("option").toString();
+		if (temp.equals("()=()")){
+		%>
+		<input type="radio" name="isparent" value="1" checked="checked"/>一级
+        <input type="radio" name="isparent" value="0" />二级
+        <%
+		}
+        else{
+        %>
+        <input type="radio" name="isparent" value="1" />一级
+        <input type="radio" name="isparent" value="0" checked="checked"/>二级
+        <%
+        }
+        %>
+		</td>
+	</tr>
+	<tr>
+	<td align="right"><label class="Validform_label">指标内容</label></td>
+		<td class="value"><textarea class="inputxt" name="indexName" style="overflow-x:hidden;width:400px;height:100px">${evaluDefine.indexName}</textarea>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	
+	<tr id="tr1">
+	<td align="right"><label class="Validform_label">选项定义</label></td>
+		<td class="value"><textarea class="inputxt" name="indexOption" style="overflow-x:hidden;width:400px;height:100px">${evaluDefine.indexOption}</textarea>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr id="tr2">
+		<td align="right"><label class="Validform_label">说明</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="instruction" name="instruction" value="${evaluDefine.instruction}" >
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	
+	
 </table>
 <div style="width: 690px; height: 1px;"></div>
 
 </form>
+
 </body>
+<script>
+
+$("input[name='isparent']").change(function(){
+	   var p1=$("input[name='isparent']:checked").val();
+	   
+	     if(p1=="1"){
+	    	 //$("tr[id='tr1']").attr("hidden","true");
+	    	 //$("tr[id='tr1']").attr("style","display:none");
+	    	 $("tr[id='tr2']").attr("style","display:none");
+	    	 $("tr[id='tr1']").hide();
+	     }else if(p1=="0"){
+	    	 $("tr[id='tr1']").show();
+	    	 //$("tr[id='tr1']").attr("style","");
+	    	 $("tr[id='tr2']").attr("style","");
+	     }
+});
+
+</script> 

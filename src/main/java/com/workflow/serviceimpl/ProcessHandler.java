@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.activiti.engine.IdentityService;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
@@ -165,26 +166,10 @@ public boolean startProcessinstance(String staffcode,ProcessEngine processEngine
 		staffwhere.setApplywhere(towhere);
 		staffwhere.insert();
 	//////////////////////////////////////////////////////////////////////////////////
+		IdentityService identityService=processEngine.getIdentityService();
+		identityService.setAuthenticatedUserId(staffcode);
 	ProcessInstance pi=runtimeService.startProcessInstanceByKey("stdflow",map);
-	StaffInfo staffinfo=new StaffInfo(staffcode);
-	String staffname=staffinfo.getName();
-	Calendar c = Calendar.getInstance();
-	String year = "" + c.get(c.YEAR);
-	 String month = "" + (c.get(c.MONTH) + 1);
-	 String day = "" + c.get(c.DATE);
-	 String date=year+"-"+month+"-"+day;
-	 String INSTANCEID=pi.getId();
-	 InstanceInfo instanceInfo=new InstanceInfo();
-	 instanceInfo.setInitdate(date);
-	 instanceInfo.setInitstaffcode(staffcode);
-	 instanceInfo.setInitstaffname(staffname);
-	 instanceInfo.setInstanceid(INSTANCEID);
-	 instanceInfo.setPng("stdflow.png");
-	 instanceInfo.setInstancename("制修订标准流程");
-	 InstanceService instanceService=new InstanceServiceImpl();
-	 instanceService.deleteById(INSTANCEID);
-	 boolean flag=instanceService.saveInstance(instanceInfo);
-	 if(flag){
+	 if(pi!=null){
 		 return true;
 	 }else{
 		 return false;

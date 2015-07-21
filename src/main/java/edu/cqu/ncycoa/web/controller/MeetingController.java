@@ -117,8 +117,7 @@ public class MeetingController {
 			meetingInfo.setParticipants(stafflist);
 			meetingInfo.setAuditFlag("0");
 			meetingInfo.setMeetingFlag("0");
-			meetingService.addEntity(meetingInfo);
-			
+			meetingService.addEntity(meetingInfo);		
 		}
 		
 		j.setMsg(message);

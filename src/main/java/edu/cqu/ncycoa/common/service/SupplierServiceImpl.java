@@ -50,4 +50,8 @@ public class SupplierServiceImpl  extends SystemServiceImpl implements SupplierS
 		SupplierDao.closeEvalu();
 		
 	}
+
+	public static String getEvaluedContent(String year,String supplier) {
+		return SupplierDao.getEvaluedContent(year,supplier);
+	}
 }

@@ -44,6 +44,7 @@
 <%
 	for (ProcessDefinition processDefinition : repositoryService.createProcessDefinitionQuery().list()) {
 		pageContext.setAttribute("processDefinition", processDefinition);
+		//processDefinition.g
 %>
     <tr>
     <td>${processDefinition.id}</td>

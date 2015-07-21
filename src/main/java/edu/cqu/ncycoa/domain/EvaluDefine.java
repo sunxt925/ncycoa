@@ -19,7 +19,7 @@ public class EvaluDefine {
 	private String indexCode;
 	
 	@Column(name="INDEX_PARENTCODE")
-	private String indexParentCode;
+	private String indexParentCode; //父指标编码
 	
 	@Column(name="INDEX_NAME")
 	private String indexName; //指标名（题目）

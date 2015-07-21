@@ -134,7 +134,6 @@ function addTab(subtitle, url) {
 		$('#maintabs').tabs('select', subtitle);
 		$.messager.progress('close');
 	}
-
 	// $('#maintabs').tabs('select',subtitle);
 	tabClose();
 }
