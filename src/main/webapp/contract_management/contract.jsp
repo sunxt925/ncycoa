@@ -188,6 +188,7 @@
 	<tr>
 		<td align="right"><label class="Validform_label"> 存储路径 </label></td>
 		<td class="value"><input class="inputxt" id="contractFilePath" name="contractFilePath" value="${contract.contractFilePath}">
+		 <a id="btn_uploadfile" href="#"    class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">上传文件</a>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -195,4 +196,35 @@
 </table>
 
 </form>
+<script type="text/javascript">
+$("#btn_uploadfile").click(function(){
+	createwindow("文件上传","fileupload/fileupload.jsp",350,130,returnFile);
+	    });
+
+function returnFile(data){
+	$('#contractFilePath').val(data.code);
+   
+}
+function createwindow(title, url, width, height,func) {
+	
+	$.dialog({
+			id:'CLHG1976D',
+			data:func,
+			content : 'url:' + url,
+			lock : true,
+			width : width,
+			height : height,
+			title : title,
+			zIndex :2000,
+			opacity : 0.3,
+			cache : false,
+			ok : function() {
+				$('#btn_ok', this.iframe.contentWindow.document).click();
+				return true;
+			},
+			cancelVal : '关闭',
+			cancel : true/* 为true等价于function(){} */
+		});
+}
+</script>
 </body>
