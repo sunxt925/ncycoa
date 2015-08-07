@@ -15,22 +15,28 @@
 </style>
 </head>
 <body>
-	<h:datagrid actionUrl="accident_management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="accidentlist">
+	<h:datagrid actionUrl="eduplan_management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="safeconductmaterial">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
-		<h:dgColumn field="time" title="时间" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn>
-		<h:dgColumn field="place" title="地点"></h:dgColumn>
-		<h:dgColumn field="detial" title="事故概述" query="true"></h:dgColumn>
-	    <h:dgColumn field="analyze" title="事故分析"></h:dgColumn>
-		<h:dgColumn field="punish" title="事故责任处罚"></h:dgColumn>
-		<h:dgColumn field="cureInfo" title="伤亡人员救治" ></h:dgColumn>
-		<h:dgColumn field="memo" title="备注" ></h:dgColumn>
-		<h:dgToolBar url="accident_management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
-		<h:dgToolBar url="accident_management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
-		<h:dgToolBar url="accident_management.htm?update" icon="icon-reload" funname="myedit" title="更新"></h:dgToolBar>
+		<h:dgColumn field="className" title="课程名称" query="true"></h:dgColumn>
+		<h:dgColumn field="student" title="受训对象" ></h:dgColumn>
+		<h:dgColumn field="studentPos" title="受训者岗位" ></h:dgColumn>
+		<h:dgColumn field="trainTime" title="培训时间" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn>
+     	<h:dgColumn field="place" title="地点"></h:dgColumn>
+		<h:dgColumn field="peopleNum" title="人数" query="true"></h:dgColumn>
+		<h:dgColumn field="studyTime" title="学时（天）" query="true"></h:dgColumn>
+		<h:dgColumn field="manageDepart" title="承办单位 部门" query="true"  dictionary="base_org,orgcode,orgname"></h:dgColumn>
+		<h:dgColumn field="moneySource" title="资金来源"></h:dgColumn>
+		<h:dgColumn field="memo" title="备注" ></h:dgColumn>			
+		<h:dgToolBar url="eduplan_management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
+		<h:dgToolBar url="eduplan_management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
+		<h:dgToolBar url="eduplan_management.htm?update" icon="icon-reload" funname="myedit" title="更新"></h:dgToolBar>		
 	</h:datagrid>
 </body>
 
 <script type="text/javascript">
+function fileload(fileName){
+	   window.open("fileupload/downweb.jsp?filename="+fileName);
+}
 	$(document).ready(function(){
 		$("input[name='checkTime_begin']").attr("class","easyui-datebox");
 		$("input[name='checkTime_end']").attr("class","easyui-datebox");

@@ -84,19 +84,31 @@
 <table style="width:600px;border-spacing:1px;" class="formtable">
      <tr>
 		<td align="right"><label class="Validform_label">培训时间</label></td>
-		<td class="value"><input class="easyui-datebox" style="width:150px;" id="trainTime" name="trainTime"  value="${safetyedu.trainTime}">
+		<td class="value"><input class="easyui-datebox" style="width:150px;" id="trainTime" name="trainTime"  value="${safetyEdu.trainTime}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label">地点</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="place" name="place" value="${safetyEdu.place}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label">主题</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="theme" name="theme" value="${safetyEdu.theme}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label">讲师情况</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="teacher" name="teacher" value="${safetyedu.teacher}">
+		<td class="value"><input class="inputxt" style="width:150px;" id="teacher" name="teacher" value="${safetyEdu.teacher}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label">参加人员</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id=participants name="participants" value="${safetyedu.participants}">
+		<td class="value"><input class="inputxt" style="width:150px;" id=participants name="participants" value="${safetyEdu.participants}">
 			<a id="btn_selectobject" href="#" class="easyui-linkbutton"
 				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
@@ -105,14 +117,14 @@
     <tr>
 		<td align="right"><label class="Validform_label"> 附件</label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="filePath" name="filePath" value="${safetyedu.filePath}" >
+		<input class="inputxt" style="width:150px;" id="filePath" name="filePath" value="${safetyEdu.filePath}" >
 		 <a id="btn_uploadfile" href="#"    class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">上传文件</a>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label">考核结果</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="trainRes" name="trainRes" value="${safetyedu.trainRes}">
+		<td class="value"><input class="inputxt" style="width:150px;" id="trainRes" name="trainRes" value="${safetyEdu.trainRes}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>

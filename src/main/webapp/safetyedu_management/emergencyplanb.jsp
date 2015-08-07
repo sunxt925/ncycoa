@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>设备管理</title>
+<title>安全生产管理</title>
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/icon.css">
 <link rel="stylesheet" href="jscomponent/validform/css/style.css" type="text/css" />
@@ -78,25 +78,45 @@
 </script>
 </head>
 <body style="overflow-x:hidden">
-<form id="formobj" name="formobj" action="motorcar_management.htm?save"  method="post">
+<form id="formobj" name="formobj" action="emergencyplan_management.htm?save"  method="post">
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
-<input id="id" name="id" type="hidden" value="${motorcar.id}">
+<input id="id" name="id" type="hidden" value="${ep.id}">
 <table style="width:600px;border-spacing:1px;" class="formtable">
-     <tr>
-		<td align="right"><label class="Validform_label">用途</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="purpose" name="purpose"  value="${motorcar.purpose}">
+    <tr>
+		<td align="right"><label class="Validform_label">编号</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="no" name="no"  value="${ep.no}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">载重量</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="weight" name="weight" value="${motorcar.weight}">
+		<td align="right"><label class="Validform_label">预案名称</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="name" name="name"  value="${ep.name}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+    <tr hidden="true">
+		<td align="right"><label class="Validform_label">预案类别</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="type" name="type"  value="1">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">定时检验情况</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="checkStatus" name="checkStatus" value="${motorcar.checkStatus}">
+		<td align="right"><label class="Validform_label">发布修订时间</label></td>
+		<td class="value"><input class="easyui-datebox" style="width:150px;" id="makeTime" name="makeTime" value="${ep.makeTime}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label">附件上传</label></td>
+		<td class="value">
+		<input class="inputxt" style="width:150px;" id="filePath" name="filePath" value="${ep.filePath}" >
+		 <a id="btn_uploadfile" href="#"    class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">上传文件</a>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label">备注</label></td>
+		<td class="value"><input class="inputxt" style="width:160px;" id="memo" name="memo" value="${ep.memo}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -104,6 +124,55 @@
 <div style="width: 690px; height: 1px;"></div>
 
 </form>
+<script type="text/javascript">
+$("#btn_uploadfile").click(function(){
+	createwindow('文件上传','fileupload/fileupload.jsp',350,130,returnFile);
+	    });
+
+function returnFile(data){
+	$('#filePath').val(data.code);
+   
+}
+$("#btn_selectorg").click(function(){
+	
+	createwindow('选择部门','indexmanage/selectunit.jsp',500,500,returnorgValue );
+    });
+function returnorgValue(data){
+	var org = data.code;
+	var codes="";
+	if(org.length>1){
+		for(var i=0;i<org.length;i++){
+			codes+=org[i].orgcode;
+			codes+=",";
+		}
+		$('#checkedDepart').val(codes);
+	}else{
+		$('#checkedDepart').val(org[0].orgcode);
+	}
+}
+function createwindow(title, url, width, height,func) {
+	
+	$.dialog({
+			id:'CLHG1976D',
+			data:func,
+			content : 'url:' + url,
+			lock : true,
+			width : width,
+			height : height,
+			title : title,
+			zIndex :2000,
+			opacity : 0.3,
+			cache : false,
+			ok : function() {
+				$('#btn_ok', this.iframe.contentWindow.document).click();
+				return false;
+			},
+			cancelVal : '关闭',
+			cancel : true/* 为true等价于function(){} */
+		});
+}
+
+</script>
 
 <table style="display: none">
 	<tbody id="add_participant_table_template">

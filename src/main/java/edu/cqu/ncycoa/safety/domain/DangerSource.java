@@ -23,22 +23,25 @@ public class DangerSource {
 	private String jobActivity;//作业活动
 	
 	@Column(name="MAINDANGERSOURCE")
-	private String mainDangerSource;//重点危险源
+	private String mainDangerSource;//重点危险源 危险源
 	
 	@Column(name="DANGER")
 	private String danger;//可能导致的事故
 	
 	@Column(name="DANGERLEVEL")
-	private String dangerLevel;//风险级别
+	private Short dangerLevel;//风险级别 重大_0,一般_1
 	
 	@Column(name="MEASURE_A")
-	private String measureA;//控制措施A
+	private String measureA;//控制措施A  组织策划
 	
 	@Column(name="MEASURE_B")
-	private String measureB;//控制措施B
+	private String measureB;//控制措施B  现场监管
 	
 	@Column(name="MEASURE_C")
-	private String measureC;//控制措施C
+	private String measureC;//控制措施C  应急救援
+	
+	@Column(name="MEMO")
+	private String memo;//备注
 
 	public Long getId() {
 		return id;
@@ -80,11 +83,11 @@ public class DangerSource {
 		this.danger = danger;
 	}
 
-	public String getDangerLevel() {
+	public Short getDangerLevel() {
 		return dangerLevel;
 	}
 
-	public void setDangerLevel(String dangerLevel) {
+	public void setDangerLevel(Short dangerLevel) {
 		this.dangerLevel = dangerLevel;
 	}
 
@@ -110,6 +113,14 @@ public class DangerSource {
 
 	public void setMeasureC(String measureC) {
 		this.measureC = measureC;
+	}
+
+	public String getMemo() {
+		return memo;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo;
 	}
 	
 	

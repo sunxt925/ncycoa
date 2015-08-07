@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>安全生产管理</title>
+<title>设备管理</title>
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/icon.css">
 <link rel="stylesheet" href="jscomponent/validform/css/style.css" type="text/css" />
@@ -78,63 +78,30 @@
 </script>
 </head>
 <body style="overflow-x:hidden">
-<form id="formobj" name="formobj" action="checkrecord_management.htm?save"  method="post">
+<form id="formobj" name="formobj" action="jd_management.htm?save"  method="post">
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
-<input id="id" name="id" type="hidden" value="${checkRecord.id}">
+<input id="id" name="id" type="hidden" value="${jd.id}">
 <table style="width:600px;border-spacing:1px;" class="formtable">
      <tr>
-		<td align="right"><label class="Validform_label">检查地点</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="place" name="place"  value="${checkRecord.place}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label">检查时间</label></td>
-		<td class="value"><input class="easyui-datebox" style="width:150px;" id="checkTime" name="checkTime" value="${checkRecord.checkTime}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label">主持人</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="host" name="host" value="${checkRecord.host}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-
-	<tr>
-		<td align="right"><label class="Validform_label">参加人员</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="participants" name="participants" value="${checkRecord.participants}">
-		<a id="btn_selectobject" href="#" class="easyui-linkbutton"
-				       data-options="iconCls:'icon-search',plain:true">选择</a>
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label">检查内容</label></td>
-		<td class="value"><input class="inputxt" style="width:250px;" id="checkContent" name="checkContent" value="${checkRecord.checkContent}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label">检查结果</label></td>
-		<td class="value"><input class="inputxt" style="width:100px;" id="checkResult" name="checkResult" value="${checkRecord.checkResult}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label">整改要求</label></td>
-		<td class="value"><input class="inputxt" style="width:100px;" id="changeRequire" name="changeRequire" value="${checkRecord.changeRequire}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr hidden="true">
-		<td align="right"><label class="Validform_label">结果资料上传</label></td>
+		<td align="right"><label class="Validform_label">相关方名称</label></td>
 		<td class="value">
-		<!-- 
-		<input class="inputxt" style="width:150px;" id="filePath" name="filePath" value="${checkRecord.filePath}" >
-		 -->
-		 <input class="inputxt" style="width:150px;" id="filePath" name="filePath" value="2702.doc" >
-		 <a id="btn_uploadfile" href="#"    class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">上传文件</a>
+		<select class="easyui-combobox" id="partyName" name="partyName" style="width:156px;">
+		<%
+		out.write(request.getAttribute("parties").toString());
+		%>
+        </select>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label">交底时间</label></td>
+		<td class="value"><input class="easyui-datebox" style="width:150px;" id="jdTime" name="jdTime"  value="${jd.jdTime}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	 <tr>
+		<td align="right"><label class="Validform_label">交底内容</label></td>
+		<td class="value"><textarea class="inputxt" name="content" style="overflow-x:hidden;width:400px;height:100px">${jd.content}</textarea>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -142,52 +109,7 @@
 <div style="width: 690px; height: 1px;"></div>
 
 </form>
-<script type="text/javascript">
-$("#btn_uploadfile").click(function(){
-	createwindow('文件上传','fileupload/fileupload.jsp',350,130,returnFile);
-	    });
 
-function returnFile(data){
-	$('#filePath').val(data.code);
-   
-}
-
-$("#btn_selectobject").click(function(){
-	createwindow('选择人员','indexmanage/selectstaff.jsp',500,500,returnobjValue );
-    });
-function returnobjValue(data){
-
-	var array = data.code;
-	var staffs="";
-	for(var i=0;i<array.length;i++){
-		staffs += array[i].staffcode+",";
-	}
-	
-	$('#participants').val(staffs);
-	//$('#numAttendee').val(array.length);	
-}
-function createwindow(title, url, width, height,func) {
-	
-	$.dialog({
-			id:'CLHG1976D',
-			data:func,
-			content : 'url:' + url,
-			lock : true,
-			width : width,
-			height : height,
-			title : title,
-			zIndex :2000,
-			opacity : 0.3,
-			cache : false,
-			ok : function() {
-				$('#btn_ok', this.iframe.contentWindow.document).click();
-				return false;
-			},
-			cancelVal : '关闭',
-			cancel : true/* 为true等价于function(){} */
-		});
-}
-</script>
 <table style="display: none">
 	<tbody id="add_participant_table_template">
 		<tr>

@@ -15,23 +15,19 @@
 </style>
 </head>
 <body>
-	<h:datagrid actionUrl="safeconductmaterial_management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="safeconductmaterial">
-		
-	
-	
-	
-		
+	<h:datagrid actionUrl="emergencyplan_management.htm?dgdata_b" fit="true" fitColumns="true" queryMode="group" name="checkplanlist">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
-		<h:dgColumn field="content" title="内容" query="true"></h:dgColumn>
-		<h:dgColumn field="memo" title="说明" ></h:dgColumn>
-		<h:dgColumn field="filePath" title="文件名" query="true"></h:dgColumn>
-			
-		<h:dgToolBar url="safeconductmaterial_management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
-		<h:dgToolBar url="safeconductmaterial_management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
-		<h:dgToolBar url="safeconductmaterial_management.htm?update" icon="icon-reload" funname="myedit" title="更新"></h:dgToolBar>
-	    <h:dgColumn title="操作" field="opt"></h:dgColumn>
-		  <h:dgFunOpt funname="fileload({filePath})" title="附件下载"></h:dgFunOpt>
-		
+		<h:dgColumn field="no" title="编号" query="true"></h:dgColumn>
+		<h:dgColumn field="name" title="预案名称"></h:dgColumn>
+		<h:dgColumn field="type" title="预案类别" replace="综合预案_0,专项预案_1,现场处置预案_2" query="true"></h:dgColumn>
+		<h:dgColumn field="makeTime" title="发布修订时间" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn>	
+		<h:dgColumn field="filePath" title="附件"></h:dgColumn>
+		<h:dgColumn title="操作" field="opt"></h:dgColumn>
+		<h:dgFunOpt funname="fileload({filePath})" title="附件下载"></h:dgFunOpt>
+		<h:dgColumn field="memo" title="备注" ></h:dgColumn>
+		<h:dgToolBar url="emergencyplan_management.htm?add_b" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
+		<h:dgToolBar url="emergencyplan_management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
+		<h:dgToolBar url="emergencyplan_management.htm?update_b" icon="icon-reload" funname="myedit" title="更新"></h:dgToolBar>
 	</h:datagrid>
 </body>
 
@@ -39,9 +35,10 @@
 function fileload(fileName){
 	   window.open("fileupload/downweb.jsp?filename="+fileName);
 }
+
 	$(document).ready(function(){
-		$("input[name='checkTime_begin']").attr("class","easyui-datebox");
-		$("input[name='checkTime_end']").attr("class","easyui-datebox");
+		$("input[name='makeTime_begin']").attr("class","easyui-datebox");
+		$("input[name='makeTime_end']").attr("class","easyui-datebox");
 	});
 	
 	

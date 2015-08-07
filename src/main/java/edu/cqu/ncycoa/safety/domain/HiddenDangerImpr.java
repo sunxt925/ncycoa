@@ -13,33 +13,30 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="SAFE_DANGERIMPROVEMENT")
-public class HiddenDangerImpr {
+public class HiddenDangerImpr { //事故隐患登记
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="ID")
-	private Long id;   
-	
-	@Column(name="DNUMBER")
-	private String number;   //序号
+	private Long id;   //流水号 
 	
 	@Column(name="DPLACE")
-	private String place;   //地点
+	private String place;   //隐患部位
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="DANGER_DATE")
-	private Date date;  // 日期
+	private Date date;  // 发现时间
 	
 	@Column(name="DANGER_CONTENT")
-	private String dangerContent;  	 // 隐患内容
+	private String dangerContent;  	 // 隐患描述
 	
 	@Column(name="DANGER_TYPE")
 	private String dangerType;  // 隐患分类
 	
-	@Column(name="DANGER_LEVEL")
-	private Short dangerLevel;     //隐患分级 0一般 1重点
+	@Column(name="IMPROVE_METHOD")
+	private String improveMethod;     // 整改措施
 	
 	@Column(name="IMPROVE_STATUS")
-	private String improveStatus;     // 整改措施及完成情况
+	private String improveStatus;     // 完成情况
 	
 	@Column(name="IMPROVE_DEPART")
 	private String improveDepart;   // 整改责任单位/部门
@@ -49,6 +46,9 @@ public class HiddenDangerImpr {
 	
 	@Column(name="MEMO")
 	private String memo;   // 备注
+	
+	@Column(name="FILEPATH")
+	private String filePath; //文件路径名称  整改验证资料
 
 	public Long getId() {
 		return id;
@@ -56,14 +56,6 @@ public class HiddenDangerImpr {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getNumber() {
-		return number;
-	}
-
-	public void setNumber(String number) {
-		this.number = number;
 	}
 
 	public String getPlace() {
@@ -98,14 +90,6 @@ public class HiddenDangerImpr {
 		this.dangerType = dangerType;
 	}
 
-	public Short getDangerLevel() {
-		return dangerLevel;
-	}
-
-	public void setDangerLevel(Short dangerLevel) {
-		this.dangerLevel = dangerLevel;
-	}
-
 	public String getImproveStatus() {
 		return improveStatus;
 	}
@@ -137,5 +121,23 @@ public class HiddenDangerImpr {
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
+
+	public String getImproveMethod() {
+		return improveMethod;
+	}
+
+	public void setImproveMethod(String improveMethod) {
+		this.improveMethod = improveMethod;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+	
+	
 	
 }

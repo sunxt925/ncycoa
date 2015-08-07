@@ -19,20 +19,24 @@ import edu.cqu.ncycoa.common.tag.TagUtil;
 import edu.cqu.ncycoa.common.util.dao.QueryUtils;
 import edu.cqu.ncycoa.common.util.dao.TQOrder;
 import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
-import edu.cqu.ncycoa.safety.domain.LaborThings;
+import edu.cqu.ncycoa.dao.SafetyDao;
+import edu.cqu.ncycoa.safety.domain.RelevantPartyJD;
 import edu.cqu.ncycoa.util.ConvertUtils;
 import edu.cqu.ncycoa.util.Globals;
 import edu.cqu.ncycoa.util.MyBeanUtils;
 import edu.cqu.ncycoa.util.SystemUtils;
 
 @Controller
-@RequestMapping("/laborthings_management")
-public class LaborThingsController {
+@RequestMapping("/jd_management")
+public class RelecantPartyJDController {
 	@Resource(name="systemService")
 	SystemService systemService;
 	@RequestMapping(params="add")
-	public String add(HttpServletRequest request) {
-		return "equipment_management/addlaborthings";
+	public ModelAndView add(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("safeproduction_management/addjd");
+		mav.addObject("parties",SafetyDao.getAllRelevantParties());
+		return mav;
 	}
 	
 	@RequestMapping(params="del")
@@ -55,7 +59,7 @@ public class LaborThingsController {
 			return;
 		}
 		
-		systemService.removeEntities(ids, LaborThings.class);
+		systemService.removeEntities(ids, RelevantPartyJD.class);
 		message = "会议室删除成功";
 		j.setMsg(message);
 		SystemUtils.jsonResponse(response, j);
@@ -64,23 +68,27 @@ public class LaborThingsController {
 	@RequestMapping(params="update")
     public ModelAndView update(HttpServletRequest request, HttpServletResponse response){
 		String id = request.getParameter("id"); 
-		LaborThings laborThings = systemService.findEntityById(Long.parseLong(id), LaborThings.class);
+		RelevantPartyJD motorCar = systemService.findEntityById(Long.parseLong(id), RelevantPartyJD.class);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("equipment_management/addlaborthings");
-		mav.addObject("laborThings",laborThings);
+		mav.setViewName("safeproduction_management/addjd");
+		mav.addObject("jd",motorCar);
+		mav.addObject("parties",SafetyDao.getAllRelevantParties());
 		return mav;
 	}
 	
 	@RequestMapping(params = "save")
 	@ResponseBody
-	public void save(LaborThings laborThings, HttpServletRequest request, HttpServletResponse response) {
+	public void save(RelevantPartyJD motorCar, HttpServletRequest request, HttpServletResponse response) {
 		AjaxResultJson j = new AjaxResultJson();
 		String message;
-		if (laborThings.getId() != null) {
+		String partyName=motorCar.getPartyName();
+		motorCar.setPartyContent(SafetyDao.getPartyContentByName(partyName));
+		motorCar.setManager(SafetyDao.getManagerByName(partyName));
+		if (motorCar.getId() != null) {
 			message = "会议室更新成功";
-			LaborThings t = systemService.findEntityById(laborThings.getId(), LaborThings.class);
+			RelevantPartyJD t = systemService.findEntityById(motorCar.getId(), RelevantPartyJD.class);
 			try {
-				MyBeanUtils.copyBeanNotNull2Bean(laborThings, t);
+				MyBeanUtils.copyBeanNotNull2Bean(motorCar, t);
 				
 				systemService.saveEntity(t);
 				
@@ -91,7 +99,7 @@ public class LaborThingsController {
 		} else {
 			message = "会议室添加成功";
 			
-			systemService.addEntity(laborThings);
+			systemService.addEntity(motorCar);
 			
 		}
 		
@@ -103,7 +111,7 @@ public class LaborThingsController {
 	@RequestMapping(params="dgview")
 	public String dgView(HttpServletRequest request) {
 		
-		return "equipment_management/laborthingslist";
+		return "safeproduction_management/jdlist";
 		
 	}
 	
@@ -111,12 +119,12 @@ public class LaborThingsController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params="dgdata")
 	@ResponseBody
-	public void dgData(LaborThings laborThings, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
-		QueryDescriptor<LaborThings> cq = new QueryDescriptor<LaborThings>(LaborThings.class, dg);
+	public void dgData(RelevantPartyJD motorCar, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
+		QueryDescriptor<RelevantPartyJD> cq = new QueryDescriptor<RelevantPartyJD>(RelevantPartyJD.class, dg);
 		
 		CommonService commonService = SystemUtils.getCommonService(request);
 		//查询条件组装器
-		TypedQueryBuilder<LaborThings> tqBuilder = QueryUtils.getTQBuilder(laborThings, request.getParameterMap());
+		TypedQueryBuilder<RelevantPartyJD> tqBuilder = QueryUtils.getTQBuilder(motorCar, request.getParameterMap());
 		
 		if (StringUtils.isNotEmpty(dg.getSort())) {
 			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));

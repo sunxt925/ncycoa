@@ -82,49 +82,39 @@
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
 <input id="id" name="id" type="hidden" value="${hiddenDangerImprovement.id}">
 <table style="width:600px;border-spacing:1px;" class="formtable">
-     <tr>
-		<td align="right"><label class="Validform_label">序号</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="number" name="number"  value="${hiddenDangerImprovement.number}">
+	<tr>
+		<td align="right"><label class="Validform_label">隐患部位</label></td>
+		<td class="value"><input class="inputxt" disabled="disabled" style="width:150px;" id="place" name="place"  value="${hiddenDangerImprovement.place}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">地点</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="place" name="place"  value="${hiddenDangerImprovement.place}">
+		<td align="right"><label class="Validform_label">发现时间</label></td>
+		<td class="value"><input class="easyui-datebox" disabled="disabled" style="width:150px;" id="date" name="date" value="${hiddenDangerImprovement.date}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">日期</label></td>
-		<td class="value"><input class="easyui-datebox" style="width:150px;" id="date" name="date" value="${hiddenDangerImprovement.date}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label">隐患内容</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="dangerContent" name="dangerContent" value="${hiddenDangerImprovement.dangerContent}">
+		<td align="right"><label class="Validform_label">隐患描述</label></td>
+		<td class="value"><input class="inputxt" disabled="disabled" style="width:150px;" id="dangerContent" name="dangerContent" value="${hiddenDangerImprovement.dangerContent}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 
 	<tr>
 		<td align="right"><label class="Validform_label">隐患分类</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="dangerType" name="dangerType" value="${hiddenDangerImprovement.dangerType}">
+		<td class="value"><input class="inputxt" disabled="disabled" style="width:150px;" id="dangerType" name="dangerType" value="${hiddenDangerImprovement.dangerType}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">隐患分级</label></td>
-		<td class="value">
-		<select class="inputxt" id="dangerLevel" name="dangerLevel" style="width:100px;">
-		<option value="0">一般</option>  
-        <option value="1" >重点</option>
-		</select>
+		<td align="right"><label class="Validform_label">整改措施</label></td>
+		<td class="value"><input class="inputxt" style="width:250px;" id="improveMethod" name="improveMethod" value="${hiddenDangerImprovement.improveMethod}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">整改措施及完成情况</label></td>
+		<td align="right"><label class="Validform_label">完成情况</label></td>
 		<td class="value"><input class="inputxt" style="width:250px;" id="improveStatus" name="improveStatus" value="${hiddenDangerImprovement.improveStatus}">
 		<span class="Validform_checktip"></span>
 		</td>
@@ -147,10 +137,50 @@
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
+	
+	<tr hidden="true">
+		<td align="right"><label class="Validform_label">整改验证资料</label></td>
+		<td class="value">
+		<input class="inputxt" style="width:150px;" id="filePath" name="filePath" value="2703.doc" >
+		 <a id="btn_uploadfile" href="#"    class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">上传文件</a>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
 </table>
 <div style="width: 690px; height: 1px;"></div>
 
 </form>
+<script type="text/javascript">
+$("#btn_uploadfile").click(function(){
+	createwindow('文件上传','fileupload/fileupload.jsp',350,130,returnFile);
+	    });
+
+function returnFile(data){
+	$('#filePath').val(data.code);
+   
+}
+function createwindow(title, url, width, height,func) {
+	
+	$.dialog({
+			id:'CLHG1976D',
+			data:func,
+			content : 'url:' + url,
+			lock : true,
+			width : width,
+			height : height,
+			title : title,
+			zIndex :2000,
+			opacity : 0.3,
+			cache : false,
+			ok : function() {
+				$('#btn_ok', this.iframe.contentWindow.document).click();
+				return false;
+			},
+			cancelVal : '关闭',
+			cancel : true/* 为true等价于function(){} */
+		});
+}
+</script>
 
 <table style="display: none">
 	<tbody id="add_participant_table_template">

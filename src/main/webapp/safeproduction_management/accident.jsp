@@ -82,6 +82,18 @@
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
 <input id="id" name="id" type="hidden" value="${accident.id}">
 <table style="width:600px;border-spacing:1px;" class="formtable">
+    <tr>
+		<td align="right"><label class="Validform_label">时间</label></td>
+		<td class="value"><input class="easyui-datebox" style="width:150px;" id="time" name="time"  value="${accident.time}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label">地点</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="place" name="place"  value="${accident.place}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
      <tr>
 		<td align="right"><label class="Validform_label">事故概述</label></td>
 		<td class="value"><input class="inputxt" style="width:150px;" id="detial" name="detial"  value="${accident.detial}">
