@@ -19,8 +19,11 @@ public class CheckPlan {
 	@Column(name="ID")
 	private Long id;   
 	
+	@Column(name="PLAN_NUM")
+	private String planNum;   //计划编号
+	
 	@Column(name="TYPE")
-	private String type;   //检查类别
+	private Short type;   //检查类别  综合检查_0,专项检查_1,节假日检查_2,季节性检查_3
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="CHECK_TIME")
@@ -30,7 +33,7 @@ public class CheckPlan {
 	private String checker;  	 // 检查人
 	
 	@Column(name="CHECKED_DEPART")
-	private String checkedDepart;  // 受检单位/部门
+	private String checkedDepart;  // 受检单位/部门   可选择
 	
 	@Column(name="KEY_CONTENT")
 	private String keyContent;     //检查重点内容
@@ -49,11 +52,11 @@ public class CheckPlan {
 		this.id = id;
 	}
 
-	public String getType() {
+	public Short getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(Short type) {
 		this.type = type;
 	}
 
@@ -104,5 +107,14 @@ public class CheckPlan {
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
+
+	public String getPlanNum() {
+		return planNum;
+	}
+
+	public void setPlanNum(String planNum) {
+		this.planNum = planNum;
+	}
 	 
+	
 }

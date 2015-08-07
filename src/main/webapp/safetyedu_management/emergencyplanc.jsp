@@ -78,63 +78,45 @@
 </script>
 </head>
 <body style="overflow-x:hidden">
-<form id="formobj" name="formobj" action="checkrecord_management.htm?save"  method="post">
+<form id="formobj" name="formobj" action="emergencyplan_management.htm?save"  method="post">
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
-<input id="id" name="id" type="hidden" value="${checkRecord.id}">
+<input id="id" name="id" type="hidden" value="${ep.id}">
 <table style="width:600px;border-spacing:1px;" class="formtable">
-     <tr>
-		<td align="right"><label class="Validform_label">检查地点</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="place" name="place"  value="${checkRecord.place}">
+    <tr>
+		<td align="right"><label class="Validform_label">编号</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="no" name="no"  value="${ep.no}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">检查时间</label></td>
-		<td class="value"><input class="easyui-datebox" style="width:150px;" id="checkTime" name="checkTime" value="${checkRecord.checkTime}">
+		<td align="right"><label class="Validform_label">预案名称</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="name" name="name"  value="${ep.name}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+    <tr hidden="true">
+		<td align="right"><label class="Validform_label">预案类别</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="type" name="type"  value="2">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">主持人</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="host" name="host" value="${checkRecord.host}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-
-	<tr>
-		<td align="right"><label class="Validform_label">参加人员</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="participants" name="participants" value="${checkRecord.participants}">
-		<a id="btn_selectobject" href="#" class="easyui-linkbutton"
-				       data-options="iconCls:'icon-search',plain:true">选择</a>
+		<td align="right"><label class="Validform_label">发布修订时间</label></td>
+		<td class="value"><input class="easyui-datebox" style="width:150px;" id="makeTime" name="makeTime" value="${ep.makeTime}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">检查内容</label></td>
-		<td class="value"><input class="inputxt" style="width:250px;" id="checkContent" name="checkContent" value="${checkRecord.checkContent}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label">检查结果</label></td>
-		<td class="value"><input class="inputxt" style="width:100px;" id="checkResult" name="checkResult" value="${checkRecord.checkResult}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label">整改要求</label></td>
-		<td class="value"><input class="inputxt" style="width:100px;" id="changeRequire" name="changeRequire" value="${checkRecord.changeRequire}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr hidden="true">
-		<td align="right"><label class="Validform_label">结果资料上传</label></td>
+		<td align="right"><label class="Validform_label">附件上传</label></td>
 		<td class="value">
-		<!-- 
-		<input class="inputxt" style="width:150px;" id="filePath" name="filePath" value="${checkRecord.filePath}" >
-		 -->
-		 <input class="inputxt" style="width:150px;" id="filePath" name="filePath" value="2702.doc" >
+		<input class="inputxt" style="width:150px;" id="filePath" name="filePath" value="${ep.filePath}" >
 		 <a id="btn_uploadfile" href="#"    class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">上传文件</a>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label">备注</label></td>
+		<td class="value"><input class="inputxt" style="width:160px;" id="memo" name="memo" value="${checkPlan.memo}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -151,20 +133,22 @@ function returnFile(data){
 	$('#filePath').val(data.code);
    
 }
-
-$("#btn_selectobject").click(function(){
-	createwindow('选择人员','indexmanage/selectstaff.jsp',500,500,returnobjValue );
-    });
-function returnobjValue(data){
-
-	var array = data.code;
-	var staffs="";
-	for(var i=0;i<array.length;i++){
-		staffs += array[i].staffcode+",";
-	}
+$("#btn_selectorg").click(function(){
 	
-	$('#participants').val(staffs);
-	//$('#numAttendee').val(array.length);	
+	createwindow('选择部门','indexmanage/selectunit.jsp',500,500,returnorgValue );
+    });
+function returnorgValue(data){
+	var org = data.code;
+	var codes="";
+	if(org.length>1){
+		for(var i=0;i<org.length;i++){
+			codes+=org[i].orgcode;
+			codes+=",";
+		}
+		$('#checkedDepart').val(codes);
+	}else{
+		$('#checkedDepart').val(org[0].orgcode);
+	}
 }
 function createwindow(title, url, width, height,func) {
 	
@@ -187,7 +171,9 @@ function createwindow(title, url, width, height,func) {
 			cancel : true/* 为true等价于function(){} */
 		});
 }
+
 </script>
+
 <table style="display: none">
 	<tbody id="add_participant_table_template">
 		<tr>

@@ -19,20 +19,19 @@ import edu.cqu.ncycoa.common.tag.TagUtil;
 import edu.cqu.ncycoa.common.util.dao.QueryUtils;
 import edu.cqu.ncycoa.common.util.dao.TQOrder;
 import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
-import edu.cqu.ncycoa.safety.domain.LiftingEquipment;
+import edu.cqu.ncycoa.safety.domain.SafetyEduPlan;
 import edu.cqu.ncycoa.util.ConvertUtils;
 import edu.cqu.ncycoa.util.Globals;
 import edu.cqu.ncycoa.util.MyBeanUtils;
 import edu.cqu.ncycoa.util.SystemUtils;
-
 @Controller
-@RequestMapping("/liftingequipment_management")
-public class LiftingEquipmentController {
+@RequestMapping("/eduplan_management")
+public class SafetyEduPlanController {
 	@Resource(name="systemService")
 	SystemService systemService;
 	@RequestMapping(params="add")
 	public String add(HttpServletRequest request) {
-		return "equipment_management/addliftingequipment";
+		return "safetyedu_management/eduplan";
 	}
 	
 	@RequestMapping(params="del")
@@ -55,8 +54,8 @@ public class LiftingEquipmentController {
 			return;
 		}
 		
-		systemService.removeEntities(ids, LiftingEquipment.class);
-		message = "会议室删除成功";
+		systemService.removeEntities(ids, SafetyEduPlan.class);
+		message = "记录删除成功";
 		j.setMsg(message);
 		SystemUtils.jsonResponse(response, j);
 	}
@@ -64,34 +63,34 @@ public class LiftingEquipmentController {
 	@RequestMapping(params="update")
     public ModelAndView update(HttpServletRequest request, HttpServletResponse response){
 		String id = request.getParameter("id"); 
-		LiftingEquipment liftingEquipment = systemService.findEntityById(Long.parseLong(id), LiftingEquipment.class);
+		SafetyEduPlan safeConductMaterial = systemService.findEntityById(Long.parseLong(id), SafetyEduPlan.class);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("equipment_management/addliftingequipment");
-		mav.addObject("liftingEquipment",liftingEquipment);
+		mav.setViewName("safetyedu_management/eduplan");
+		mav.addObject("safeConductMaterial",safeConductMaterial);
 		return mav;
 	}
 	
 	@RequestMapping(params = "save")
 	@ResponseBody
-	public void save(LiftingEquipment liftingEquipment, HttpServletRequest request, HttpServletResponse response) {
+	public void save(SafetyEduPlan safeConductMaterial, HttpServletRequest request, HttpServletResponse response) {
 		AjaxResultJson j = new AjaxResultJson();
 		String message;
-		if (liftingEquipment.getId() != null) {
-			message = "会议室更新成功";
-			LiftingEquipment t = systemService.findEntityById(liftingEquipment.getId(), LiftingEquipment.class);
+		if (safeConductMaterial.getId() != null) {
+			message = "更新成功";
+			SafetyEduPlan t = systemService.findEntityById(safeConductMaterial.getId(), SafetyEduPlan.class);
 			try {
-				MyBeanUtils.copyBeanNotNull2Bean(liftingEquipment, t);
+				MyBeanUtils.copyBeanNotNull2Bean(safeConductMaterial, t);
 				
 				systemService.saveEntity(t);
 				
 			} catch (Exception e) {
-				message = "会议室更新失败";
+				message = "更新失败";
 				systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 			}
 		} else {
-			message = "会议室添加成功";
+			message = "添加成功";
 			
-			systemService.addEntity(liftingEquipment);
+			systemService.addEntity(safeConductMaterial);
 			
 		}
 		
@@ -103,7 +102,7 @@ public class LiftingEquipmentController {
 	@RequestMapping(params="dgview")
 	public String dgView(HttpServletRequest request) {
 		
-		return "equipment_management/liftingequipmentlist";
+		return "safetyedu_management/eduplanlist";
 		
 	}
 	
@@ -111,12 +110,12 @@ public class LiftingEquipmentController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params="dgdata")
 	@ResponseBody
-	public void dgData(LiftingEquipment liftingEquipment, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
-		QueryDescriptor<LiftingEquipment> cq = new QueryDescriptor<LiftingEquipment>(LiftingEquipment.class, dg);
+	public void dgData(SafetyEduPlan safeConductMaterial, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
+		QueryDescriptor<SafetyEduPlan> cq = new QueryDescriptor<SafetyEduPlan>(SafetyEduPlan.class, dg);
 		
 		CommonService commonService = SystemUtils.getCommonService(request);
 		//查询条件组装器
-		TypedQueryBuilder<LiftingEquipment> tqBuilder = QueryUtils.getTQBuilder(liftingEquipment, request.getParameterMap());
+		TypedQueryBuilder<SafetyEduPlan> tqBuilder = QueryUtils.getTQBuilder(safeConductMaterial, request.getParameterMap());
 		
 		if (StringUtils.isNotEmpty(dg.getSort())) {
 			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));

@@ -16,15 +16,17 @@
 </head>
 <body>
 	<h:datagrid actionUrl="checkrecord_management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="checkrecordlist">
-		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
+		<h:dgColumn field="id" title="流水号" ></h:dgColumn>
 		<h:dgColumn field="place" title="检查地点" query="true"></h:dgColumn>
 		<h:dgColumn field="checkTime" title="检查时间" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="scope"></h:dgColumn>
      	<h:dgColumn field="host" title="主持人"></h:dgColumn>
 		<h:dgColumn field="participants" title="参加人员" query="true"></h:dgColumn>
 		<h:dgColumn field="checkContent" title="检查内容" ></h:dgColumn>
 		<h:dgColumn field="checkResult" title="检查结果"></h:dgColumn>
-		<h:dgColumn field="changeRequire" title="整改要求" ></h:dgColumn>
-		<h:dgColumn field="changeStatus" title="整改情况" ></h:dgColumn>
+		<h:dgColumn field="changeRequire" title="整改要求"></h:dgColumn>
+		<h:dgColumn field="filePath" title="结果文件" query="true"></h:dgColumn>
+		<h:dgColumn title="操作" field="opt"></h:dgColumn>
+		<h:dgFunOpt funname="fileload({filePath},{id})" title="附件下载"></h:dgFunOpt>
 		<h:dgToolBar url="checkrecord_management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
 		<h:dgToolBar url="checkrecord_management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
 		<h:dgToolBar url="checkrecord_management.htm?update" icon="icon-reload" funname="myedit" title="更新"></h:dgToolBar>
@@ -32,6 +34,10 @@
 </body>
 
 <script type="text/javascript">
+function fileload(fileName,id){
+	   window.open("fileupload/downwebpoi.jsp?type=checkrecord&filename="+fileName+"&id="+id);
+}
+
 	$(document).ready(function(){
 		$("input[name='checkTime_begin']").attr("class","easyui-datebox");
 		$("input[name='checkTime_end']").attr("class","easyui-datebox");

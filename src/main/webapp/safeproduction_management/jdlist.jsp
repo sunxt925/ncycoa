@@ -15,19 +15,31 @@
 </style>
 </head>
 <body>
-	<h:datagrid actionUrl="motorcar_management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="motorcarlist">
+	<h:datagrid actionUrl="jd_management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="jdlist">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
-		<h:dgColumn field="purpose" title="用途" query="true"></h:dgColumn>
-     	<h:dgColumn field="weight" title="载重量" query="true"></h:dgColumn>
-		<h:dgColumn field="checkStatus" title="定时检验情况" ></h:dgColumn>
-		
-		<h:dgToolBar url="motorcar_management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
-		<h:dgToolBar url="motorcar_management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
-		<h:dgToolBar url="motorcar_management.htm?update" icon="icon-reload" funname="myedit" title="更新"></h:dgToolBar>
+		<h:dgColumn field="partyName" title="相关方名称" query="true"></h:dgColumn>
+     	<h:dgColumn field="partyContent" title="相关方从事业务"></h:dgColumn>
+		<h:dgColumn field="manager" title="归口管理部门/交底人" ></h:dgColumn>
+		<h:dgColumn field="jdTime" title="交底时间" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn>
+		<h:dgColumn field="content" title="交底内容" ></h:dgColumn>
+		<h:dgColumn title="操作" field="opt"></h:dgColumn>
+		<h:dgFunOpt funname="fileload({filePath},{id})" title="下载交底记录"></h:dgFunOpt>
+		<h:dgToolBar url="jd_management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
+		<h:dgToolBar url="jd_management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
+		<h:dgToolBar url="jd_management.htm?update" icon="icon-reload" funname="myedit" title="更新"></h:dgToolBar>
 	</h:datagrid>
 </body>
 
-<script type="text/javascript">	
+<script type="text/javascript">
+function fileload(fileName,id){
+	   window.open("fileupload/downwebpoi.jsp?type=relevant&filename=0903.doc&id="+id);
+}
+	$(document).ready(function(){
+		$("input[name='jdTime_begin']").attr("class","easyui-datebox");
+		$("input[name='jdTime_end']").attr("class","easyui-datebox");
+	});
+	
+	
 	function myedit(title, actionUrl, gname, width, height) {
 		gridname=gname;
 		var rows;

@@ -89,6 +89,18 @@
 		</td>
 	</tr>
 	<tr>
+		<td align="right"><label class="Validform_label">地点</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="place" name="place" value="${safetyEdu.place}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label">主题</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="theme" name="theme" value="${safetyEdu.theme}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
 		<td align="right"><label class="Validform_label">讲师情况</label></td>
 		<td class="value"><input class="inputxt" style="width:150px;" id="teacher" name="teacher" value="${safetyEdu.teacher}">
 		<span class="Validform_checktip"></span>

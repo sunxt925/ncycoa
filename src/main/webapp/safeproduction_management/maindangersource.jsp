@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>安全教育培训</title>
+<title>危险源管理</title>
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/icon.css">
 <link rel="stylesheet" href="jscomponent/validform/css/style.css" type="text/css" />
@@ -78,66 +78,79 @@
 </script>
 </head>
 <body style="overflow-x:hidden">
-<form id="formobj" name="formobj" action="safeconductmaterial_management.htm?save"  method="post">
+<form id="formobj" name="formobj" action="dangersource_management.htm?save"  method="post">
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
-<input id="id" name="id" type="hidden" value="${safeConductMaterial.id}">
+<input id="id" name="id" type="hidden" value="${dangerSource.id}">
 <table style="width:600px;border-spacing:1px;" class="formtable">
      <tr>
-		<td align="right"><label class="Validform_label">内容</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="content" name="content"  value="${safeConductMaterial.content}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	
-    <tr>
-		<td align="right"><label class="Validform_label"> 附件</label></td>
-		<td class="value">
-		<input class="inputxt" style="width:150px;" id="filePath" name="filePath" value="${safeConductMaterial.filePath}" >
-		 <a id="btn_uploadfile" href="#"    class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">上传文件</a>
+		<td align="right"><label class="Validform_label">活动类别或场所</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="activityType" name="activityType"  value="${dangerSource.activityType}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">说明</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="memo" name="memo" value="${safeConductMaterial.memo}">
+		<td align="right"><label class="Validform_label">作业活动</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="jobActivity" name="jobActivity" value="${dangerSource.jobActivity}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
-	
+	<tr>
+		<td align="right"><label class="Validform_label">重点危险源</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="mainDangerSource" name="mainDangerSource" value="${dangerSource.mainDangerSource}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+
+	<tr>
+		<td align="right"><label class="Validform_label">可能导致的事故</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="danger" name="danger" value="${dangerSource.danger}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label">风险级别</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="dangerLevel" name="dangerLevel" value="0">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label">控制措施A（组织策划）</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="measureA" name="measureA" value="${dangerSource.measureA}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label">控制措施B（现场监管）</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="measureB" name="measureB" value="${dangerSource.measureB}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label">控制措施C（应急救援）</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="measureC" name="measureC" value="${dangerSource.measureC}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+		<tr>
+		<td align="right"><label class="Validform_label">备注</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="memo" name="memo" value="${dangerSource.memo}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
 </table>
 <div style="width: 690px; height: 1px;"></div>
 
 </form>
-<script type="text/javascript">
-$("#btn_uploadfile").click(function(){
-	createwindow('文件上传','fileupload/fileupload.jsp',350,130,returnFile);
-	    });
 
-function returnFile(data){
-	$('#filePath').val(data.code);
-   
-}
-
-function createwindow(title, url, width, height,func) {
-	
-	$.dialog({
-			id:'CLHG1976D',
-			data:func,
-			content : 'url:' + url,
-			lock : true,
-			width : width,
-			height : height,
-			title : title,
-			zIndex :2000,
-			opacity : 0.3,
-			cache : false,
-			ok : function() {
-				$('#btn_ok', this.iframe.contentWindow.document).click();
-				return false;
-			},
-			cancelVal : '关闭',
-			cancel : true/* 为true等价于function(){} */
-		});
-}
-</script>
+<table style="display: none">
+	<tbody id="add_participant_table_template">
+		<tr>
+			<td align="center"><input style="width: 20px;" type="checkbox" name="ck" /></td>
+			<td align="left"><input name="name" type="text" value=""></td>
+			<td align="left"><input name="depart" type="text" value=""></td>
+			<td align="left"><input name="task" type="text" value=""></td>
+			<td align="left"><input name="memo" maxlength="200" type="text" value=""></td>
+		</tr>
+	</tbody>
+</table>
 </body>

@@ -17,17 +17,18 @@
 <body>
 	<h:datagrid actionUrl="safetyedu_management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="safetyedulist">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
-		<h:dgColumn field="trainTime" title="培训时间" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="scope"></h:dgColumn>
+		<h:dgColumn field="trainTime" title="培训时间" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn>
+     	<h:dgColumn field="place" title="地点"></h:dgColumn>
+     	<h:dgColumn field="theme" title="主题"></h:dgColumn>
      	<h:dgColumn field="teacher" title="讲师情况"></h:dgColumn>
-     	<h:dgColumn field="filePath" title="文件名" query="true"></h:dgColumn>
+     	<h:dgColumn field="filePath" title="路径" ></h:dgColumn>
 		<h:dgColumn field="trainRes" title="考核结果" query="true"></h:dgColumn>
-		
+		<h:dgColumn title="操作" field="opt"></h:dgColumn>
+		<h:dgOpenOpt url="safetyedu_management.htm?queryAttender&id={id}" title="参加人员" width="300" height="400"></h:dgOpenOpt>
+		 <h:dgFunOpt funname="fileload({filePath})" title="附件下载"></h:dgFunOpt>
 		<h:dgToolBar url="safetyedu_management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
 		<h:dgToolBar url="safetyedu_management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
 		<h:dgToolBar url="safetyedu_management.htm?update" icon="icon-reload" funname="myedit" title="更新"></h:dgToolBar>
-		<h:dgColumn title="操作" field="opt"></h:dgColumn>
-		<h:dgOpenOpt url="safetyedu_management.htm?queryAttender&id={id}" title="参加人员" width="300" height="400"></h:dgOpenOpt>
-		  <h:dgFunOpt funname="fileload({filePath})" title="附件下载"></h:dgFunOpt>
 	</h:datagrid>
 </body>
 

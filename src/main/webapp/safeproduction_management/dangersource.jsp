@@ -95,7 +95,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">重点危险源</label></td>
+		<td align="right"><label class="Validform_label">危险源</label></td>
 		<td class="value"><input class="inputxt" style="width:150px;" id="mainDangerSource" name="mainDangerSource" value="${dangerSource.mainDangerSource}">
 		<span class="Validform_checktip"></span>
 		</td>
@@ -107,9 +107,9 @@
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
-	<tr>
+	<tr hidden="true">
 		<td align="right"><label class="Validform_label">风险级别</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="dangerLevel" name="dangerLevel" value="${dangerSource.dangerLevel}">
+		<td class="value"><input class="inputxt" style="width:150px;" id="dangerLevel" name="dangerLevel" value="1">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -120,14 +120,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">控制措施B</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="measureB" name="measureB" value="${dangerSource.measureB}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label">控制措施C</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="measureC" name="measureC" value="${dangerSource.measureC}">
+		<td align="right"><label class="Validform_label">备注</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="memo" name="memo" value="${dangerSource.memo}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>

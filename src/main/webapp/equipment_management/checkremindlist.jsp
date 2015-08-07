@@ -15,28 +15,24 @@
 </style>
 </head>
 <body>
-	<h:datagrid actionUrl="hiddendangerimprovement_management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="hiddendangerimprovementlist">
-		<h:dgColumn field="id" title="流水号"></h:dgColumn>
-		<h:dgColumn field="place" title="隐患部位" ></h:dgColumn>
-		<h:dgColumn field="improveMethod" title="整改措施"></h:dgColumn>
-		<h:dgColumn field="improveStatus" title="完成情况" ></h:dgColumn>
-		<h:dgColumn field="improveDepart" title="整改责任单位/部门"></h:dgColumn>
-		<h:dgColumn field="improveChecker" title="整改验证人"></h:dgColumn>
-		<h:dgColumn field="memo" title="备注" ></h:dgColumn>
-		<h:dgColumn field="filePath" title="整改文件" query="true"></h:dgColumn>
-		<h:dgColumn title="操作" field="opt"></h:dgColumn>
-		<h:dgFunOpt funname="fileload({filePath},{id})" title="文件下载"></h:dgFunOpt>
-		<h:dgToolBar url="hiddendangerimprovement_management.htm?update" icon="icon-reload" funname="myedit" title="添加整改"></h:dgToolBar>
+	<h:datagrid actionUrl="specialequipment_management.htm?dgdata_remind" fit="true" fitColumns="true" queryMode="group" name="checkplanlist">
+		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
+		<h:dgColumn field="name" title="设备名称" query="true"></h:dgColumn>
+		<h:dgColumn field="type" title="设备类型" replace="电梯 _0,压力容器 _1,场内机动车 _2,机动车_3,消防设备_4,报警设备_5,巡逻设备_6,其他设备_7" query="true"></h:dgColumn>
+		<h:dgColumn field="maintenDepart" title="维保单位"></h:dgColumn>
+		<h:dgColumn field="checkCycle" title="检验周期（月）"></h:dgColumn>
+		<h:dgColumn field="checkDate" title="当前检测日期" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn>
+		<h:dgColumn field="checkStatus" title="当前检测情况"></h:dgColumn>
+     	<h:dgColumn field="nextCheckDate" title="下次检测日期" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn>
+		<h:dgToolBar url="specialequipment_management.htm?update_check" icon="icon-add" funname="myedit" title="添加检查日志"></h:dgToolBar>
+		<h:dgToolBar url="specialequipment_management.htm?sub" icon="icon-search" funname="myedit" title="查看检查记录"></h:dgToolBar>
 	</h:datagrid>
 </body>
 
 <script type="text/javascript">
-function fileload(fileName,id){
-	   window.open("fileupload/downwebpoi.jsp?type=dangerimprove&filename="+fileName+"&id="+id);
-}
 	$(document).ready(function(){
-		$("input[name='date_begin']").attr("class","easyui-datebox");
-		$("input[name='date_end']").attr("class","easyui-datebox");
+		$("input[name='madeTime_begin']").attr("class","easyui-datebox");
+		$("input[name='madeTime_end']").attr("class","easyui-datebox");
 	});
 	
 	

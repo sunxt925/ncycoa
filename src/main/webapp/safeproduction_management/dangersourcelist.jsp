@@ -19,12 +19,11 @@
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
 		<h:dgColumn field="activityType" title="活动类别和场所" query="true"></h:dgColumn>
 		<h:dgColumn field="jobActivity" title="作业活动"></h:dgColumn>
-     	<h:dgColumn field="mainDangerSource" title="重点危险源"></h:dgColumn>
+     	<h:dgColumn field="mainDangerSource" title="危险源"></h:dgColumn>
 		<h:dgColumn field="danger" title="可能导致的事故"></h:dgColumn>
-		<h:dgColumn field="dangerLevel" title="风险级别" query="true" ></h:dgColumn>
+		<h:dgColumn field="dangerLevel" title="风险级别" replace="重大_0,一般_1" query="true" ></h:dgColumn>
 		<h:dgColumn field="measureA" title="控制措施A"></h:dgColumn>
-		<h:dgColumn field="measureB" title="控制措施B"></h:dgColumn>
-		<h:dgColumn field="measureC" title="控制措施C"></h:dgColumn>
+		<h:dgColumn field="memo" title="备注"></h:dgColumn>
 		<h:dgToolBar url="dangersource_management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
 		<h:dgToolBar url="dangersource_management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
 		<h:dgToolBar url="dangersource_management.htm?update" icon="icon-reload" funname="myedit" title="更新"></h:dgToolBar>

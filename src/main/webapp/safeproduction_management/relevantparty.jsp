@@ -119,6 +119,7 @@
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
+<!-- 
 	<tr>
 		<td align="right"><label class="Validform_label">在本单位作业项目</label></td>
 		<td class="value"><input class="inputxt" style="width:150px;" id="projectname" name="projectname" value="${relevantParty.projectname}">
@@ -137,6 +138,7 @@
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
+	 -->
 		<tr>
 		<td align="right"><label class="Validform_label">在本单位归口管理部门</label></td>
 		<td class="value"><input class="inputxt" style="width:150px;" id="gkorgcode" name="gkorgcode" value="${relevantParty.gkorgcode}">
