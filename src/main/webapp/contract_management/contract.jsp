@@ -102,14 +102,35 @@
 	
 	<tr>
 		<td align="right"><label class="Validform_label"> 归口部门 </label></td>
-		<td class="value"><input class="inputxt" id="relevantDepartment" name="relevantDepartment" value="${contract.relevantDepartment}">
+		<td class="value">
+		
+		<input class="inputxt" disabled id="relevantDepartment_disp" name="relevantDepartment_disp" value="${relevantDepartment_disp}"></input>
+		<input type="hidden" id="relevantDepartment" name="relevantDepartment" value="${relevantDepartment}"></input>
+		<h:choose textname="text" hiddenid="id" inputTextname="relevantDepartment_disp" hiddenName="relevantDepartment" url="performance/departselection.jsp" icon="icon-search" title="部门列表" isclear="true"></h:choose>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	
 	<tr>
 		<td align="right"><label class="Validform_label"> 合同类别 </label></td>
-		<td class="value"><input class="inputxt" id="type" name="type" value="${contract.type}">
+		<td class="value">
+		<select class="inputxt" id="type" name="type">
+		<c:if test="${contract.type == 0 || contract.type == null}">
+			<option value="0" selected="selected">工程合同</option>
+			<option value="1">采购合同</option>
+			<option value="2">维修合同</option>
+		</c:if>
+		<c:if test="${contract.type == 1}">
+			<option value="0">工程合同</option>
+			<option value="1" selected="selected">采购合同</option>
+			<option value="2">维修合同</option>
+		</c:if>
+		<c:if test="${contract.type == 2}">
+			<option value="0">工程合同</option>
+			<option value="1">采购合同</option>
+			<option value="2" selected="selected">维修合同</option>
+		</c:if>
+		</select>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>

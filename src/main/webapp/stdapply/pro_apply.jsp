@@ -85,7 +85,7 @@ createwindowNoButton('企业标准修订申请表',url,'1000px','500px');
        <tr>
     <td colspan="3" valign="middle" class="table_td_jb">&nbsp;&nbsp;<a href="#" onClick="F1()" class="easyui-linkbutton"
 				        data-options="iconCls:'icon-add',plain:true" >提交[F1]</a>　<a href="deleteinstance.jsp?id=<%=taskId %>" class="easyui-linkbutton"
-				        data-options="iconCls:'icon-remove',plain:true" >删除实例</a>　</td>
+				        data-options="iconCls:'icon-remove',plain:true" >结束流程</a>　</td>
        </tr>
   <tr>
     <td colspan="3" valign="top" class="main_table_centerbg" align="center">

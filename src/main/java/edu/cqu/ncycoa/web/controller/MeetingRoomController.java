@@ -1,5 +1,8 @@
 package edu.cqu.ncycoa.web.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -64,11 +67,14 @@ public class MeetingRoomController {
 	
 	@RequestMapping(params="update")
     public ModelAndView update(HttpServletRequest request, HttpServletResponse response){
+		initmaps();
 		String id = request.getParameter("id"); 
 		MeetingRoom meetingRoom = systemService.findEntityById(Long.parseLong(id), MeetingRoom.class);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("meetingroom_management/room");
 		mav.addObject("meetingRoom",meetingRoom);
+		mav.addObject("orgname",orgcode2nameMaps.get(meetingRoom.getBelongOrg()));
+		
 		return mav;
 	}
 	
@@ -127,5 +133,20 @@ public class MeetingRoomController {
 		TagUtil.datagrid(response, dg);
 	}
 	
+	static Map<String, String> orgcode2nameMaps = new HashMap<String,String>();
+    public static void initmaps(){
+    	orgcode2nameMaps.put("NC.00", "市局公司部门");
+    	orgcode2nameMaps.put("NC.01.20", "顺庆区局");
+    	orgcode2nameMaps.put("NC.01.21", "高坪区局");
+    	orgcode2nameMaps.put("NC.01.22", "嘉陵区局");
+    	orgcode2nameMaps.put("NC.01.24", "西充县局");
+    	orgcode2nameMaps.put("NC.01.25", "南部县局");
+    	orgcode2nameMaps.put("NC.01.26", "阎中市局");
+    	orgcode2nameMaps.put("NC.01.27", "仪陇县局");
+    	orgcode2nameMaps.put("NC.01.28", "营山县局");
+    	orgcode2nameMaps.put("NC.01.29", "蓬安县局");
+    	orgcode2nameMaps.put("NC.01.30", "物流中心");
+    	
+    }
 	
 }

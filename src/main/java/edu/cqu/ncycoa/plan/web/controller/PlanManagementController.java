@@ -11,11 +11,17 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.activiti.engine.ProcessEngine;
+import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import edu.cqu.ncycoa.common.dto.AjaxResultJson;
 import edu.cqu.ncycoa.common.dto.DataGrid;
@@ -45,6 +51,27 @@ public class PlanManagementController {
 	@RequestMapping(params="add")
 	public String add(HttpServletRequest request, Model model) {
 		model.addAttribute("isAdmin", true);
+		
+		ProcessEngine processEngine = WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext())
+				.getBean("processEngine", ProcessEngine.class);
+		
+		Map<String, ProcessDefinition> tmp = new HashMap<String, ProcessDefinition>();
+		
+		
+		RepositoryService repositoryService = processEngine.getRepositoryService();
+		for (ProcessDefinition def : repositoryService.createProcessDefinitionQuery().list()) {
+			if(tmp.get(def.getKey()) != null){
+				ProcessDefinition anotherDef = tmp.get(def.getKey());
+				if(anotherDef.getVersion() < def.getVersion()){
+					tmp.put(def.getKey(), def);
+				}
+			} else {
+				tmp.put(def.getKey(), def);
+			}
+		}
+		
+		model.addAttribute("fixFlows", tmp.values());
+		
 		return "plan_management/plan";
 	}
 	
@@ -54,6 +81,24 @@ public class PlanManagementController {
 		List<PlanStep> steps = planService.findEntitiesByProperty("plan", plan, PlanStep.class);
 		model.addAttribute("taskList", steps);
 		model.addAttribute("plan", plan);
+		
+		Map<String, ProcessDefinition> tmp = new HashMap<String, ProcessDefinition>();
+		ProcessEngine processEngine = WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext())
+				.getBean("processEngine", ProcessEngine.class);
+		RepositoryService repositoryService = processEngine.getRepositoryService();
+		for (ProcessDefinition def : repositoryService.createProcessDefinitionQuery().list()) {
+			if(tmp.get(def.getKey()) != null){
+				ProcessDefinition anotherDef = tmp.get(def.getKey());
+				if(anotherDef.getVersion() < def.getVersion()){
+					tmp.put(def.getKey(), def);
+				}
+			} else {
+				tmp.put(def.getKey(), def);
+			}
+		}
+		
+		model.addAttribute("fixFlows", tmp.values());
+		
 		model.addAttribute("isAdmin", true);
 		return "plan_management/plan";
 	}
@@ -133,36 +178,37 @@ public class PlanManagementController {
 		}
 		plan.setParticipants( participants );
 		
-		
-		String[] taskid = request.getParameter("taskid").split("&");
-		String[] taskorder = request.getParameter("taskorder").split("&");
-		String[] taskparticipant = request.getParameter("taskparticipant").split("&");
-		String[] taskParticipantValue = request.getParameter("taskParticipantValue").split("&");
-		String[] tasktype = request.getParameter("tasktype").split("&");
-		String[] taskTypeValue = request.getParameter("taskTypeValue").split("&");
-		String[] taskcontent = request.getParameter("taskcontent").split("&");
-		
 		List<PlanStep> tasks = new ArrayList<PlanStep>();
-		for(int i=0; i<taskid.length; i++){
-			PlanStep task = new PlanStep();
-			task.setId(StringUtils.isBlank(taskid[i]) ? null : Long.parseLong(taskid[i]));
-			task.setOrder(Long.parseLong(taskorder[i]));
+		if(plan.getStepType() == 0){
 			
-			String[] taskParticipantList_ids = taskParticipantValue[i].split(",");
-			String[] taskParticipantLists = taskparticipant[i].split(",");
-			Map<String, String> taskParticipants = new HashMap<String, String>();
-			for(int k = 0; k < taskParticipantList_ids.length; k++){
-				taskParticipants.put(taskParticipantList_ids[k], taskParticipantLists[k]);
+			String[] taskid = request.getParameter("taskid").split("&");
+			String[] taskorder = request.getParameter("taskorder").split("&");
+			String[] taskparticipant = request.getParameter("taskparticipant").split("&");
+			String[] taskParticipantValue = request.getParameter("taskParticipantValue").split("&");
+			String[] tasktype = request.getParameter("tasktype").split("&");
+			String[] taskTypeValue = request.getParameter("taskTypeValue").split("&");
+			String[] taskcontent = request.getParameter("taskcontent").split("&");
+			
+			for(int i=0; i<taskid.length; i++){
+				PlanStep task = new PlanStep();
+				task.setId(StringUtils.isBlank(taskid[i]) ? null : Long.parseLong(taskid[i]));
+				task.setOrder(Long.parseLong(taskorder[i]));
+				
+				String[] taskParticipantList_ids = taskParticipantValue[i].split(",");
+				String[] taskParticipantLists = taskparticipant[i].split(",");
+				Map<String, String> taskParticipants = new HashMap<String, String>();
+				for(int k = 0; k < taskParticipantList_ids.length; k++){
+					taskParticipants.put(taskParticipantList_ids[k], taskParticipantLists[k]);
+				}
+				task.setParticipants( taskParticipants );
+				
+				task.setType(tasktype[i]);
+				task.setTypeValue(Short.parseShort(taskTypeValue[i]));
+				task.setContent(taskcontent[i]);
+				task.setStatus((short)0);
+				tasks.add(task);
 			}
-			task.setParticipants( taskParticipants );
-			
-			task.setType(tasktype[i]);
-			task.setTypeValue(Short.parseShort(taskTypeValue[i]));
-			task.setContent(taskcontent[i]);
-			task.setStatus((short)0);
-			tasks.add(task);
 		}
-		
 		
 		String message;
 		if (plan.getId() != null) {
@@ -354,4 +400,41 @@ public class PlanManagementController {
 		commonService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dg);
 	}
+	
+	@RequestMapping(params="sel_flow_view")
+	public String selFlowView(Long id, String fixFlowKey, HttpServletRequest request, Model model) {
+		model.addAttribute("planid", id);
+		ProcessEngine processEngine = WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext())
+				.getBean("processEngine", ProcessEngine.class);
+		
+		RuntimeService runtimeService = processEngine.getRuntimeService();
+		List<ProcessInstance> instances = runtimeService.createProcessInstanceQuery().processDefinitionKey(fixFlowKey).list();
+		model.addAttribute("instances", instances);
+		
+		return "plan_management/sel_flow_instance";
+	}
+	
+	@RequestMapping(params="plan_review")
+	public String plan_review(Long id, HttpServletRequest request, Model model) {
+		return "plan_management/plan_review_list";
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(params="dgdata_review")
+	@ResponseBody
+	public void dgDataReview(Plan plan, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
+		QueryDescriptor<Plan> cq = new QueryDescriptor<Plan>(Plan.class, dg);
+		CommonService commonService = SystemUtils.getCommonService(request);
+		
+		//查询条件组装器
+		TypedQueryBuilder<Plan> tqBuilder = QueryUtils.getTQBuilder(plan, request.getParameterMap());
+		if (StringUtils.isNotEmpty(dg.getSort())) {
+			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
+		}
+		tqBuilder.addRestriction("status", "in", Arrays.asList(new Short[]{PlanStatus.EXEC_FINISHING}));
+		cq.setTqBuilder(tqBuilder);
+		commonService.getDataGridReturn(cq, true);
+		TagUtil.datagrid(response, dg);
+	}
+	
 }

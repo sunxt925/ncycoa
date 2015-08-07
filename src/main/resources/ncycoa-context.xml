@@ -16,6 +16,7 @@
 	<context:component-scan base-package="edu.cqu.ncycoa.dao" />
 	<context:component-scan base-package="edu.cqu.ncycoa.common.service" />
 	<context:component-scan base-package="edu.cqu.ncycoa" />
+	<context:component-scan base-package="com.workflow" />
 	<!-- 开启Spring的Annotation注解处理器 -->
     <context:annotation-config />
 	<!-- 引入属性文件 -->

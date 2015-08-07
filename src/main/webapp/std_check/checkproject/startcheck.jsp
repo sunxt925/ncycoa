@@ -132,7 +132,7 @@ $.ajaxFileUpload({
 <form id="formobj" name="formobj" action="/ncycoa/std_check/havedo.jsp" enctype="multipart/form-data" method="post">
 &nbsp;&nbsp;<a href="#" onClick="ajaxFileUploadImg()" class="easyui-linkbutton"
 				        data-options="iconCls:'icon-add',plain:true" >提交[F1]</a>　<a href="/ncycoa/std_check/checkproject/deleteinstance.jsp?id=<%=taskId %>" class="easyui-linkbutton"
-				        data-options="iconCls:'icon-remove',plain:true" >删除实例</a>　
+				        data-options="iconCls:'icon-remove',plain:true" >结束流程</a>　
 <input id="staffCode" name="staffCode" type="hidden" value="<%=UserInfo.getStaffcode()%>">
 <input id="taskid" name="taskid" type="hidden" value="<%=taskId%>">
 <table style="width:100%;border-spacing:1px;"  class="formtable">

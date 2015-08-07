@@ -17,11 +17,11 @@
 <body>
 	<h:datagrid actionUrl="safetyedu_management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="safetyedulist">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
-		<h:dgColumn field="trainTime" title="培训时间" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="scope"></h:dgColumn>
+		<h:dgColumn field="trainTime" title="培训时间" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn>
      	<h:dgColumn field="place" title="地点"></h:dgColumn>
      	<h:dgColumn field="theme" title="主题"></h:dgColumn>
      	<h:dgColumn field="teacher" title="讲师情况"></h:dgColumn>
-     	<h:dgColumn field="filePath" title="路径" hidden="true"></h:dgColumn>
+     	<h:dgColumn field="filePath" title="路径" ></h:dgColumn>
 		<h:dgColumn field="trainRes" title="考核结果" query="true"></h:dgColumn>
 		<h:dgColumn title="操作" field="opt"></h:dgColumn>
 		<h:dgOpenOpt url="safetyedu_management.htm?queryAttender&id={id}" title="参加人员" width="300" height="400"></h:dgOpenOpt>

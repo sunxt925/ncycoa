@@ -82,7 +82,7 @@
 <form id="formobj" name="formobj" action="meetingroom_management.htm?save"  method="post">
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
 <input id="id" name="id" type="hidden" value="${meetingRoom.id}">
-<table style="width:600px;border-spacing:1px;" class="formtable">
+<table style="border-spacing:1px;" class="formtable">
 	<tr>
 		<td align="right"><label class="Validform_label"> 会议室编码 </label></td>
 		<td class="value"><input class="inputxt" style="width:150px;" id="roomNo" name="roomNo" value="${meetingRoom.roomNo}" datatype="s2-10">
@@ -101,7 +101,8 @@
 	<tr>
 	<td align="right"><label class="Validform_label"> 所属单位 </label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="belongOrg" name="belongOrg" value="${meetingRoom.belongOrg}" >
+		<input class="inputxt" style="width:150px;display: none" id="belongOrg" name="belongOrg" value="${meetingRoom.belongOrg}" >
+		<input class="inputxt" style="width:150px;" id="belongOrgname" name="belongOrgname" value="${orgname }">
 		<a id="btn_selectobject" href="#" class="easyui-linkbutton"
 				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
@@ -124,12 +125,14 @@
 </table>
 </form>
 <script type="text/javascript">
+
 $("#btn_selectobject").click(function(){
 	
 	createwindow('选择单位','meetingroom_management/selectunit.jsp',300,400,returnobjValue );
     });
 function returnobjValue(data){
-	$('#belongOrg').val(data.code);
+	$('#belongOrg').val(data.code.id);
+	$('#belongOrgname').val(data.code.text);
 	
 }
 function createwindow(title, url, width, height,func) {

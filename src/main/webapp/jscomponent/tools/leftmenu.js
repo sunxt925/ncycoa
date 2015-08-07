@@ -1,6 +1,9 @@
+//alert("This is in leftmenu.js");
+
 $(function() {
 	// easy ui树加载会在文档加载完执行,所以初始化菜单要延迟一秒
-	setTimeout(InitLeftMenu, 1000);
+	//setTimeout(InitLeftMenu, 1000);
+	
 	tabCloseEven();
 	// 释放内存
 	$.fn.panel.defaults = $.extend({}, $.fn.panel.defaults, {
@@ -131,7 +134,6 @@ function addTab(subtitle, url) {
 		$('#maintabs').tabs('select', subtitle);
 		$.messager.progress('close');
 	}
-
 	// $('#maintabs').tabs('select',subtitle);
 	tabClose();
 }
@@ -232,8 +234,3 @@ function tabCloseEven() {
 		$('#mm').menu('hide');
 	});
 }
-
-$.parser.onComplete = function() {/* 页面所有easyui组件渲染成功后，隐藏等待信息 */
-	if ($.browser.msie && $.browser.version < 7) {/* 解决IE6的PNG背景不透明BUG */}
-	window.setTimeout(function() {$.messager.progress('close');}, 200);
-};

@@ -84,7 +84,7 @@
 <form id="formobj" name="formobj" action="meeting_management.htm?save"  method="post">
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
 <input id="id" name="id" type="hidden" value="${meetingInfo.id}">
-<table style="width:600px;border-spacing:1px;" class="formtable">
+<table style="border-spacing:1px;" class="formtable">
 	<tr>
 		<td align="right"><label class="Validform_label"> 会议名称 </label></td>
 		<td class="value"><input class="inputxt" style="width:150px;" id="meetingName" name="meetingName" value="${meetingInfo.meetingName}" datatype="s2-10">
@@ -141,7 +141,8 @@
 	<tr>
 		<td align="right"><label class="Validform_label"> 需求部门 </label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="applyOrgCode" name="applyOrgCode" value="${meetingInfo.applyOrgCode}" datatype="s2-10">
+		<input type="hidden" style="width:150px;" id="applyOrgCode" name="applyOrgCode" value="${meetingInfo.applyOrgCode}">
+		<input class="inputxt" style="width:150px;" id="applyOrgName" name="applyOrgName" value="${applyOrgName}">
 		<a id="btn_selectorg" href="#" class="easyui-linkbutton"
 				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
@@ -169,6 +170,7 @@ function returnorgValue(data){
 		alert("最多只能选择一个部门");
 	}else{
 		$('#applyOrgCode').val(org[0].orgcode);
+		$('#applyOrgName').val(org[0].orgname);
 	}
 	
 	

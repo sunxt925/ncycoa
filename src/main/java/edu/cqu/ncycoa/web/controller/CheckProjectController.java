@@ -22,6 +22,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.activiti.engine.IdentityService;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -567,6 +568,7 @@ public class CheckProjectController{
 			return "std_check/sorry";
 		RuntimeService runtimeService = processEngine
 				.getRuntimeService();
+		IdentityService identityService=processEngine.getIdentityService();
 			Map<String,Object> map = new HashMap<String,Object>();
 		map.put("owner",user.getStaffcode());
 		List<String> checkprojectgroup=new ArrayList<String>();
@@ -590,34 +592,19 @@ public class CheckProjectController{
 			map.put("towhere","jishu");//技术委员会主任发起的，需要初评
 			map.put("jishuleader",user.getStaffcode());//技术委员会主任发起的评审，评审过程还由他上传初评报告
 		}
+		identityService.setAuthenticatedUserId(user.getStaffcode());
 		ProcessInstance pi=runtimeService.startProcessInstanceByKey("checkproject",map);
-		StaffInfo staffinfo=new StaffInfo(user.getStaffcode());
-		String staffname=staffinfo.getName();
-		Calendar c = Calendar.getInstance();
-		String year = "" + c.get(c.YEAR);
-		 String month = "" + (c.get(c.MONTH) + 1);
-		 String day = "" + c.get(c.DATE);
-		 String date=year+"-"+month+"-"+day;
-		 String INSTANCEID=pi.getId();
-		 InstanceInfo instanceInfo=new InstanceInfo();
-		 instanceInfo.setInitdate(date);
-		 instanceInfo.setInitstaffcode(user.getStaffcode());
-		 instanceInfo.setInitstaffname(staffname);
-		 instanceInfo.setInstanceid(INSTANCEID);
-		 instanceInfo.setPng("stdflow.png");
-		 instanceInfo.setInstancename("制修订标准流程");
-		 InstanceService instanceService=new InstanceServiceImpl();
-		 instanceService.deleteById(INSTANCEID);
-		 boolean f=instanceService.saveInstance(instanceInfo);
-		 if(f){
+		if(pi!=null){
 			 TaskService taskService = processEngine
 						.getTaskService();
 			 List<Task> groupTaskList=taskService.createTaskQuery().taskAssignee(user.getStaffcode()).orderByTaskCreateTime().desc().list();
 				Task task=groupTaskList.get(0);
 			 request.setAttribute("id", task.getId());
 			 return "std_check/checkproject/startcheck";
-		 }
-		return null;
+		}
+		else{
+			return null;
+		}
 	}
 	
 	
