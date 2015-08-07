@@ -17,12 +17,12 @@
 <body>
 	<h:datagrid actionUrl="meeting_management.htm?dgdata&flag=audited_y" fit="true" fitColumns="true" queryMode="group" name="meetinglist">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
-		<h:dgColumn field="meetingName" title="会议名称"  query="true"></h:dgColumn>
-		<h:dgColumn field="meetingTopics" title="会议主题"  query="true"></h:dgColumn>
+		<h:dgColumn field="meetingName" title="会议名称"></h:dgColumn>
+		<h:dgColumn field="meetingTopics" title="会议主题"  ></h:dgColumn>
 		<h:dgColumn field="meetingBeginDate" title="开始时段"  dateFormatter="yyyy-MM-dd hh:mm:ss" query="true"></h:dgColumn>
 		<h:dgColumn field="meetingEndDate" title="结束时段" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true"></h:dgColumn>
-		<h:dgColumn field="meetingRoom" title="开会地点"   dictionary="ncycoa_meetingroom,room_no,room_name"  query="true"></h:dgColumn>
-		<h:dgColumn field="numAttendee" title="会议人数"  query="true" queryMode="scope"></h:dgColumn>
+		<h:dgColumn field="meetingRoom" title="开会地点"   dictionary="ncycoa_meetingroom,room_no,room_name" ></h:dgColumn>
+		<h:dgColumn field="numAttendee" title="会议人数"  ></h:dgColumn>
 		<h:dgColumn field="auditFlag" title="审核状态" replace="通过_11" style="color:green_11" query="true"></h:dgColumn>
 		<h:dgColumn title="操作" field="opt"></h:dgColumn>
 		<h:dgOpenOpt url="meeting_management.htm?queryAttender&id={id}" title="参会人员" width="300" height="400"></h:dgOpenOpt>

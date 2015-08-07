@@ -106,7 +106,7 @@
 		
 		<input class="inputxt" disabled id="relevantDepartment_disp" name="relevantDepartment_disp" value="${relevantDepartment_disp}"></input>
 		<input type="hidden" id="relevantDepartment" name="relevantDepartment" value="${relevantDepartment}"></input>
-		<h:choose textname="text" hiddenid="id" inputTextname="relevantDepartment_disp" hiddenName="relevantDepartment" url="performance/departselection.jsp" icon="icon-search" title="部门列表" isclear="true"></h:choose>
+		 <h:choose textname="text" hiddenid="id" inputTextname="relevantDepartment_disp" hiddenName="relevantDepartment" url="performance/departselection.jsp" icon="icon-search" title="部门列表" isclear="true"></h:choose>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -114,23 +114,17 @@
 	<tr>
 		<td align="right"><label class="Validform_label"> 合同类别 </label></td>
 		<td class="value">
-		<select class="inputxt" id="type" name="type">
-		<c:if test="${contract.type == 0 || contract.type == null}">
-			<option value="0" selected="selected">工程合同</option>
-			<option value="1">采购合同</option>
-			<option value="2">维修合同</option>
+		<input class="inputxt" name="type" id="type" value="${type }" type="hidden">
+		<c:if test="${type == 0 || type == null}">
+		<input class="inputxt" name="typename" id="typename" value="工程合同" readonly="readonly">
 		</c:if>
-		<c:if test="${contract.type == 1}">
-			<option value="0">工程合同</option>
-			<option value="1" selected="selected">采购合同</option>
-			<option value="2">维修合同</option>
+		<c:if test="${type == 1 || type == null}">
+		<input class="inputxt" name="typename" id="typename" value="采购合同" readonly="readonly">
 		</c:if>
-		<c:if test="${contract.type == 2}">
-			<option value="0">工程合同</option>
-			<option value="1">采购合同</option>
-			<option value="2" selected="selected">维修合同</option>
+		<c:if test="${type == 2 || type == null}">
+		<input class="inputxt" name="typename" id="typename" value="维修合同" readonly="readonly">
 		</c:if>
-		</select>
+		
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -151,7 +145,7 @@
 	
 	<tr>
 		<td align="right"><label class="Validform_label"> 合同金额 </label></td>
-		<td class="value"><input class="inputxt" id="contractValue" name="contractValue" value="${contract.contractValue}">
+		<td class="value"><input class="easyui-numberbox" id="contractValue" name="contractValue" value="${contract.contractValue}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -165,7 +159,7 @@
 	
 	<tr>
 		<td align="right"><label class="Validform_label"> 签订日期 </label></td>
-		<td class="value"><input class="inputxt" id="signingDate" name="signingDate" value="${contract.signingDate}">
+		<td class="value"><input class="easyui-datebox" id="signingDate" name="signingDate" value="${contract.signingDate}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -179,7 +173,7 @@
 	
 	<tr>
 		<td align="right"><label class="Validform_label"> 完成日期 </label></td>
-		<td class="value"><input class="inputxt" id="finishingDate" name="finishingDate" value="${contract.finishingDate}">
+		<td class="value"><input class="easyui-datebox" id="finishingDate" name="finishingDate" value="${contract.finishingDate}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>

@@ -263,6 +263,25 @@ public class UnitDao {
 	
 	}
 	/**
+	 * 获取企管科科长
+	 * @return
+	 */
+	public static String getComAdminChief(){
+		try {
+			DBObject db=new DBObject();
+			String sql="select * from base_orgmember where orgcode='NC.01.02' and positioncode='01.0000.40'";
+			DataTable dt = db.runSelectQuery(sql);
+			if(dt!=null&&dt.getRowsCount()>=0){
+				return dt.get(0).getString("staffcode");
+			}else{
+				return "";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
+	/**
 	 * 获取市局办公室主任
 	 */
 	public static String getOfficeAudit(){

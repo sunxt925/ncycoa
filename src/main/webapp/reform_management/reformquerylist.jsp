@@ -17,11 +17,11 @@
 <body>
 	<h:datagrid actionUrl="reform_management.htm?dgdataquery" fit="true" fitColumns="true" queryMode="group" name="reformlist">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
-		<h:dgColumn field="name" title="整改项目名称"  query="true"></h:dgColumn>
+		<h:dgColumn field="name" title="整改项目名称" ></h:dgColumn>
 		<h:dgColumn field="xdzgOrgcode" title="整改下达单位"  dictionary="base_org,orgcode,orgname"  query="true"></h:dgColumn>
 		
 		<h:dgColumn field="handler" title="整改下达者"  dictionary="base_staff,staffcode,staffname"></h:dgColumn>
-		<h:dgColumn field="clOrgcode" title="要求整改部门"  dictionary="base_org,orgcode,orgname"  query="true" queryMode="scope"></h:dgColumn>
+		<h:dgColumn field="clOrgcode" title="要求整改部门"  dictionary="base_org,orgcode,orgname" ></h:dgColumn>
 		<h:dgColumn field="xdDate" title="下达日期" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="scope"></h:dgColumn>
 		<h:dgColumn field="fileName" title="附件">
 		<h:dgOpenOpt url="fileupload/download.jsp?filename={fileName}" title="{fileName}"></h:dgOpenOpt>

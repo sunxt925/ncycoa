@@ -135,9 +135,10 @@ public class GoodsStoreEvent {
 		try
 		{
 			DBObject db = new DBObject();
-			String sql="delete from com_outstoreitem where StoreEventNo='"+BmString+"'";
-			String sqltemp="delete from Com_StoreEvent where StoreEventNo='"+BmString+"'";
-			if(db.run(sql)&&db.run(sqltemp))
+			String sql="delete from com_outstoreitem where StoreEventNo='"+BmString+"'";//删除出库事件item
+			String sql_in="delete from com_instoreitem where StoreEventNo='"+BmString+"'";//删除入库事件item
+			String sqltemp="delete from Com_StoreEvent where StoreEventNo='"+BmString+"'";//删除出入库事件
+			if(db.run(sql)&&db.run(sql_in)&&db.run(sqltemp))
 				return true;
 			else
 				return false;

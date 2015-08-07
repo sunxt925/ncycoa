@@ -120,8 +120,13 @@ public class RepairAuditController {
 			RepairAudit t = systemService.findEntityById(repairAudit.getId(), RepairAudit.class);
 			try {
 				MyBeanUtils.copyBeanNotNull2Bean(repairAudit, t);
-				systemService.saveEntity(t);
-				systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
+				if(t.getAuditFlag().equals("1")){
+					message = "维修申请不能更新";
+				}else{
+					systemService.saveEntity(t);
+					systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
+				}
+				
 			} catch (Exception e) {
 				message = "维修申请更新失败";
 			}
@@ -319,6 +324,9 @@ public class RepairAuditController {
 			IdentityService identityService=processEngine.getIdentityService();
 			identityService.setAuthenticatedUserId(((UserInfo)request.getSession().getAttribute("UserInfo")).getStaffcode());
 			message = "维修申请提交成功";
+			//更新维修申请状态
+			repairAudit.setAuditFlag("1");
+			systemService.saveEntity(repairAudit);
 			
 		} catch (Exception e) {
 		}

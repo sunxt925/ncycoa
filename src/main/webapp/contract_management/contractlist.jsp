@@ -15,23 +15,28 @@
 </style>
 </head>
 <body>
-	<h:datagrid actionUrl="contract-management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="contractlist">
+	<h:datagrid actionUrl="contract-management.htm?dgdata&type=${type }" fit="true" fitColumns="true" queryMode="group" name="contractlist">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
-		<h:dgColumn field="code" title="合同编码" query="true"></h:dgColumn>
-		<h:dgColumn field="name" title="合同名称" query="true"></h:dgColumn>
-		<h:dgColumn field="relevantDepartment" title="归口部门" query="true"></h:dgColumn>
+		<h:dgColumn field="status" title="status" hidden="true"/>
+		<h:dgColumn field="code" title="合同编码" ></h:dgColumn>
+		<h:dgColumn field="name" title="合同名称"></h:dgColumn>
+		<h:dgColumn field="relevantDepartment" title="归口部门" ></h:dgColumn>
 		<h:dgColumn field="type" title="合同类别" query="true"></h:dgColumn>
-		<h:dgColumn field="partyA" title="甲方" query="true"></h:dgColumn>
-		<h:dgColumn field="partyB" title="乙方" query="true"></h:dgColumn>
+		<h:dgColumn field="partyA" title="甲方" ></h:dgColumn>
+		<h:dgColumn field="partyB" title="乙方" ></h:dgColumn>
 		<h:dgColumn field="contractValue" title="合同金额" query="true"></h:dgColumn>
-		<h:dgColumn field="contractObject" title="合同标的" query="true"></h:dgColumn>
+		<h:dgColumn field="contractObject" title="合同标的" ></h:dgColumn>
 		<h:dgColumn field="signingDate" title="签订日期" query="true"></h:dgColumn>
-		<h:dgColumn field="implementationStage" title="执行情况" query="true"></h:dgColumn>
+		<h:dgColumn field="implementationStage" title="执行情况" ></h:dgColumn>
 		<h:dgColumn field="finishingDate" title="完成日期"></h:dgColumn>
-		<h:dgColumn field="renewal" title="续签" query="true"></h:dgColumn>
+		<h:dgColumn field="renewal" title="续签" ></h:dgColumn>
 		<h:dgColumn field="contractFilePath" title="存储路径"></h:dgColumn>
-		
-		<h:dgToolBar url="contract-management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
+		<h:dgColumn field="audittable" title="存储"></h:dgColumn>
+		<h:dgColumn title="操作" field="opt"></h:dgColumn>
+		<h:dgFunOpt funname="commitcontract({id},{status})" title="提交合同"></h:dgFunOpt>
+		<h:dgFunOpt funname="producecontract({id},{status})" title="审批表生成"></h:dgFunOpt>
+		<h:dgFunOpt funname="downloadcontract({audittable})" title="审批表下载"></h:dgFunOpt>
+		<h:dgToolBar url="contract-management.htm?add&type=${type }" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
 		<h:dgToolBar url="contract-management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
 	</h:datagrid>
 </body>
@@ -42,5 +47,47 @@
 		$("input[name='inputDate_begin']").attr("class","easyui-datebox");
 		$("input[name='inputDate_end']").attr("class","easyui-datebox");
 	});
+	function commitcontract(id,flag){
+		if(flag == "0"){
+			$.post("contract-management.htm?commit&id="+id,function(data,status){
+				var obj = eval('(' + data + ')');
+				$.messager.show({
+		              title:'提示',
+		              msg:obj.msg,
+		              showType:'show'
+		          });
+				setTimeout(function(){
+		        	  window.location.reload();
+		   	      },800);
+			});
+		}else{
+			
+			$.dialog.alert("合同已提交，不能重复提交!");
+			
+		}
+	}
+	function producecontract(id,flag){
+		
+			
+			$.post("contract-management.htm?produceContract&id="+id,function(data,status){
+				var obj = eval('(' + data + ')');
+				$.messager.show({
+		              title:'提示',
+		              msg:obj.msg,
+		              showType:'show'
+		          });
+				setTimeout(function(){
+		        	  window.location.reload();
+		   	      },800);
+			});
+	}
+	function downloadcontract(audittable){
+		alert(audittable);
+		if(audittable != "null" && audittable !=""){
+			window.location.href="fileupload/downweb.jsp?filename="+audittable;
+		}else{
+			$.dialog.alert("审批表不存在，请生成审批表!");
+		}
+    }
 </script>
 </html>
