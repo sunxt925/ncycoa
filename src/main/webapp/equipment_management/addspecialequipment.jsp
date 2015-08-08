@@ -124,7 +124,8 @@
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label"> 使用部门</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="useDepart" name="useDepart" value="${specialEquipment.useDepart}">
+		<td class="value"><input class="inputxt" style="width:150px;display:none" id="useDepart" name="useDepart" value="${specialEquipment.useDepart}">
+		<input class="inputxt" style="width:150px;" id="apporgName" name="apporgName" value="${orgname}">
 		<a id="btn_selectorg" href="#" class="easyui-linkbutton"
 				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
@@ -150,7 +151,8 @@
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label">管理人员</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="manager" name="manager" value="${specialEquipment.manager}">
+		<td class="value"><input class="inputxt" style="width:150px;display:none" id="manager" name="manager" value="${specialEquipment.manager}">
+		<input class="inputxt" style="width:150px;" id="managerName" name="managerName" value="${staffname}">
 		<a id="btn_selectobject" href="#" class="easyui-linkbutton"
 				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
@@ -179,9 +181,11 @@ function returnorgValue(data){
 			codes+=org[i].orgcode;
 			codes+=",";
 		}
-		$('#useDepart').val(codes);
+		$('#useDepart').val(org[0].orgcode);
+		$('#apporgName').val(org[0].orgname);
 	}else{
 		$('#useDepart').val(org[0].orgcode);
+		$('#apporgName').val(org[0].orgname);
 	}
 }
 function createwindow(title, url, width, height,func) {
@@ -218,6 +222,7 @@ function returnobjValue(data){
 	}
 	
 	$('#manager').val(array[0].staffcode);
+	$('#managerName').val(array[0].staffname);
 	//$('#numAttendee').val(array.length);	
 }
 function createwindows(title, url, width, height,func) {

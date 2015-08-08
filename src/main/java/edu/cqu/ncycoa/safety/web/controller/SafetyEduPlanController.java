@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.common.CodeDictionary;
+
 import edu.cqu.ncycoa.common.dto.AjaxResultJson;
 import edu.cqu.ncycoa.common.dto.DataGrid;
 import edu.cqu.ncycoa.common.dto.QueryDescriptor;
@@ -67,6 +69,8 @@ public class SafetyEduPlanController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("safetyedu_management/eduplan");
 		mav.addObject("safeConductMaterial",safeConductMaterial);
+		mav.addObject("orgname",CodeDictionary.syscode_traslate("base_org","orgcode", "orgname", safeConductMaterial.getManageDepart()));
+
 		return mav;
 	}
 	

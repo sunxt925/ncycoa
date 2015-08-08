@@ -22,11 +22,11 @@
 		<h:dgColumn field="sign" title="设备牌号" query="true"></h:dgColumn>
 		<h:dgColumn field="type" title="设备类型" replace="电梯 _0,压力容器 _1,场内机动车 _2,机动车_3,消防设备_4,报警设备_5,巡逻设备_6,其他设备_7" query="true"></h:dgColumn>
 		<h:dgColumn field="installPosition" title="安装位置"></h:dgColumn>
-		<h:dgColumn field="useDepart" title="使用部门" query="true"></h:dgColumn>
+		<h:dgColumn field="useDepart" title="使用部门" dictionary="base_org,orgcode,orgname" query="true"></h:dgColumn>
 		<h:dgColumn field="maintenDepart" title="维保单位"></h:dgColumn>
 		<h:dgColumn field="checkCycle" title="检验周期（月）"></h:dgColumn>
      	<h:dgColumn field="useTime" title="启用时间" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn>
-     	<h:dgColumn field="manager" title="管理人员"></h:dgColumn>
+     	<h:dgColumn field="manager" title="管理人员" dictionary="base_staff,staffcode,staffname"></h:dgColumn>
      	<h:dgColumn field="memo" title="备注"></h:dgColumn>
   		<h:dgToolBar url="specialequipment_management.htm?add" icon="icon-add" funname="add" title="新增设备"></h:dgToolBar>
 		<h:dgToolBar url="specialequipment_management.htm?del" icon="icon-remove" funname="del" title="删除设备"></h:dgToolBar>

@@ -108,7 +108,8 @@
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label">参加人员</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id=participants name="participants" value="${safetyEdu.participants}">
+		<td class="value"><input class="inputxt" style="width:150px;display:none" id=participants name="participants" value="${safetyEdu.participants}">
+			<input class="inputxt" style="width:150px;" id="managerName" name="managerName" value="${safetyEdu.participants}">
 			<a id="btn_selectobject" href="#" class="easyui-linkbutton"
 				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
@@ -152,11 +153,14 @@ function returnobjValue(data){
 
 	var array = data.code;
 	var staffs="";
+	var names="";
 	for(var i=0;i<array.length;i++){
 		staffs += array[i].staffcode+",";
+		names += array[i].staffname+",";
 	}
 	
 	$('#participants').val(staffs);
+	$('#managerName').val(names);
 	
 }
 function createwindow(title, url, width, height,func) {
@@ -174,7 +178,7 @@ function createwindow(title, url, width, height,func) {
 			cache : false,
 			ok : function() {
 				$('#btn_ok', this.iframe.contentWindow.document).click();
-				return false;
+				return true;
 			},
 			cancelVal : '关闭',
 			cancel : true/* 为true等价于function(){} */

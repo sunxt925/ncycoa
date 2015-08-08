@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.common.CodeDictionary;
+
 import edu.cqu.ncycoa.common.dto.AjaxResultJson;
 import edu.cqu.ncycoa.common.dto.DataGrid;
 import edu.cqu.ncycoa.common.dto.QueryDescriptor;
@@ -87,6 +89,8 @@ public class SpecialEquipmentController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("equipment_management/addspecialequipment");
 		mav.addObject("specialEquipment",specialEquipment);
+		mav.addObject("orgname",CodeDictionary.syscode_traslate("base_org","orgcode", "orgname", specialEquipment.getUseDepart()));
+		mav.addObject("staffname",CodeDictionary.syscode_traslate("base_staff","staffcode", "staffname", specialEquipment.getManager()));
 		return mav;
 	}
 	

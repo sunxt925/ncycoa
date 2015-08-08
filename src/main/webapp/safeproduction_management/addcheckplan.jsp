@@ -116,7 +116,8 @@
 	<tr>
 		<td align="right"><label class="Validform_label">受检单位/部门</label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="checkedDepart" name="checkedDepart" value="${checkPlan.checkedDepart}">
+		<input class="inputxt" style="width:150px;display:none" id="checkedDepart" name="checkedDepart" value="${checkPlan.checkedDepart}">
+		<input class="inputxt" style="width:150px;" id="apporgName" name="apporgName" value="${orgname}">
 		<a id="btn_selectorg" href="#" class="easyui-linkbutton"
 				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
@@ -158,8 +159,10 @@ function returnorgValue(data){
 			codes+=",";
 		}
 		$('#checkedDepart').val(codes);
+		$('#apporgName').val(org[0].orgname);
 	}else{
 		$('#checkedDepart').val(org[0].orgcode);
+		$('#apporgName').val(org[0].orgname);
 	}
 }
 function createwindow(title, url, width, height,func) {
