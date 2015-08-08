@@ -159,7 +159,7 @@ public class ContractManagementController {
 		}
 		
 		
-		paras.put("finallyaudit", ((UserInfo)request.getSession().getAttribute("UserInfo")).getStaffcode());
+		paras.put("finallyaudit", UnitDao.getCityAudit());
 		
 		processEngine.getRuntimeService().startProcessInstanceByKey(processID, objId, paras);
 		String processinstanceid = processEngine.getRuntimeService().
@@ -332,7 +332,7 @@ public class ContractManagementController {
 		map.put("m0", c.get(Calendar.MONTH)+"");
 		map.put("d0", c.get(Calendar.DAY_OF_MONTH)+"");
 		map.put("projectname", Format.NullToBlank(contractInfo.getName()));
-		map.put("relevantDepartment", Format.NullToBlank(contractInfo.getRelevantDepartment()));
+		map.put("relevantDepartment", CodeDictionary.syscode_traslate("base_org", "orgcode", "orgname", Format.NullToBlank(contractInfo.getRelevantDepartment())));
 		map.put("contractValue", contractInfo.getContractValue()+"");
 		map.put("partyB", Format.NullToBlank(contractInfo.getPartyB()));
 		map.put("content", "");

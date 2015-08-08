@@ -10,6 +10,7 @@
 <script type="text/javascript" src="jscomponent/jquery/jquery-1.8.0.min.js"></script>
 <script type="text/javascript" src="jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
 <script type="text/javascript" src="jscomponent/tools/datagrid.js"></script>
+<script type="text/javascript" src="js/MyDatePicker/WdatePicker.js"></script>
 <style type="text/css">
 *{font-size:12px; font-family:微软雅黑,新宋体}
 </style>
@@ -26,12 +27,12 @@
 		<h:dgColumn field="partyB" title="乙方" ></h:dgColumn>
 		<h:dgColumn field="contractValue" title="合同金额" query="true"></h:dgColumn>
 		<h:dgColumn field="contractObject" title="合同标的" ></h:dgColumn>
-		<h:dgColumn field="signingDate" title="签订日期" query="true"></h:dgColumn>
+		<h:dgColumn field="signingDate" title="签订日期" dateFormatter="yyyy-MM-dd" query="true"></h:dgColumn>
 		<h:dgColumn field="implementationStage" title="执行情况" ></h:dgColumn>
-		<h:dgColumn field="finishingDate" title="完成日期"></h:dgColumn>
+		<h:dgColumn field="finishingDate" dateFormatter="yyyy-MM-dd" title="完成日期"></h:dgColumn>
 		<h:dgColumn field="renewal" title="续签" ></h:dgColumn>
-		<h:dgColumn field="contractFilePath" title="存储路径"></h:dgColumn>
-		<h:dgColumn field="audittable" title="存储"></h:dgColumn>
+		<h:dgColumn field="contractFilePath" title="" style="display:none"></h:dgColumn>
+		<h:dgColumn field="audittable" title="" style="display:none"></h:dgColumn>
 		<h:dgColumn title="操作" field="opt"></h:dgColumn>
 		<h:dgFunOpt funname="commitcontract({id},{status})" title="提交合同"></h:dgFunOpt>
 		<h:dgFunOpt funname="producecontract({id},{status})" title="审批表生成"></h:dgFunOpt>
@@ -82,7 +83,6 @@
 			});
 	}
 	function downloadcontract(audittable){
-		alert(audittable);
 		if(audittable != "null" && audittable !=""){
 			window.location.href="fileupload/downweb.jsp?filename="+audittable;
 		}else{

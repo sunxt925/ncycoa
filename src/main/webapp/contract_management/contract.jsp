@@ -88,14 +88,14 @@
 <table style="width:100%;border-spacing:1px;" class="formtable">
 	<tr>
 		<td align="right"><label class="Validform_label"> 合同编码 </label></td>
-		<td class="value"><input class="inputxt" id="code" name="code" value="${contract.code}" datatype="s2-10">
+		<td class="value"><input class="inputxt" id="code" name="code" value="${contract.code}" datatype="s2-20">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 
 	<tr>
 		<td align="right"><label class="Validform_label"> 合同名称 </label></td>
-		<td class="value"><input class="inputxt" id="name" name="name" value="${contract.name}" datatype="s2-10">
+		<td class="value"><input class="inputxt" id="name" name="name" value="${contract.name}" datatype="s2-50">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -106,7 +106,7 @@
 		
 		<input class="inputxt" disabled id="relevantDepartment_disp" name="relevantDepartment_disp" value="${relevantDepartment_disp}"></input>
 		<input type="hidden" id="relevantDepartment" name="relevantDepartment" value="${relevantDepartment}"></input>
-		 <h:choose textname="text" hiddenid="id" inputTextname="relevantDepartment_disp" hiddenName="relevantDepartment" url="performance/departselection.jsp" icon="icon-search" title="部门列表" isclear="true"></h:choose>
+		 <h:choose textname="orgname" hiddenid="orgcode" inputTextname="relevantDepartment_disp" hiddenName="relevantDepartment" url="indexmanage/selectunit.jsp" icon="icon-search" title="部门列表" isclear="true"></h:choose>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>

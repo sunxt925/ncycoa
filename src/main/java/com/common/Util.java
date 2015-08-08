@@ -3,6 +3,8 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Properties;
 import java.util.Random;
 
@@ -71,7 +73,10 @@ public class Util {
 	 */
 	public static  String getName() {
 		Random random = new Random();
-		return "" + random.nextInt(10000)
+		Date date = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		return calendar.get(Calendar.YEAR)+"/"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH)+"/" + random.nextInt(10000)
 				+ System.currentTimeMillis();
 	}
 
