@@ -58,17 +58,18 @@ String staffcode=request.getParameter("staffcode");
 </body>
 <script type="text/javascript">
    function ret(){
-	   var date = new Date();
+	 
+    var date = new Date();
 	    var api = frameElement.api;
 	   var val=$("#file").val();
 	   var v=new Array();
 	   v=val.split("\\");
 	   var timestamp = Date.parse( new Date());
 	   var va = v[v.length-1].split(".");
-	   var filename = date.getFullYear()+"/"+date.getMonth()+"-"+date.getDay()+"/"+timestamp+"."+va[va.length-1];
+	   var filename = date.getFullYear()+"\\"+date.getMonth()+"-"+date.getDay()+"\\"+timestamp+"."+va[va.length-1];
 	   $("#filename").val(filename);
 	   (api.data)({code:filename});
-	   formSubmit(); 
+	   formSubmit();  
 	  // window.close();
     }
    function callback(){  
