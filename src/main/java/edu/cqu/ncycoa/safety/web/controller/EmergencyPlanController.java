@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.common.CodeDictionary;
+
 import edu.cqu.ncycoa.common.dto.AjaxResultJson;
 import edu.cqu.ncycoa.common.dto.DataGrid;
 import edu.cqu.ncycoa.common.dto.QueryDescriptor;
@@ -80,6 +82,7 @@ public class EmergencyPlanController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("safetyedu_management/emergencyplan");
 		mav.addObject("ep",safeConductMaterial);
+		mav.addObject("orgname",CodeDictionary.syscode_traslate("base_org","orgcode", "orgname", safeConductMaterial.getManageDepart()));
 		return mav;
 	}
 	@RequestMapping(params="update_b")
@@ -89,6 +92,7 @@ public class EmergencyPlanController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("safetyedu_management/emergencyplanb");
 		mav.addObject("ep",safeConductMaterial);
+		mav.addObject("orgname",CodeDictionary.syscode_traslate("base_org","orgcode", "orgname", safeConductMaterial.getManageDepart()));
 		return mav;
 	}
 	@RequestMapping(params="update_c")
@@ -98,6 +102,7 @@ public class EmergencyPlanController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("safetyedu_management/emergencyplanc");
 		mav.addObject("ep",safeConductMaterial);
+		mav.addObject("orgname",CodeDictionary.syscode_traslate("base_org","orgcode", "orgname", safeConductMaterial.getManageDepart()));
 		return mav;
 	}
 	

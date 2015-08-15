@@ -29,7 +29,9 @@
 		<h:dgToolBar url="dangersource_management.htm?add_main" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
 		<h:dgToolBar url="dangersource_management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
 		<h:dgToolBar url="dangersource_management.htm?update_main" icon="icon-reload" funname="myedit" title="更新"></h:dgToolBar>
+		<h:dgToolBar onclick="success()" url="dangersource_management.htm?importm" icon="icon-reload" title="从Excel导入"></h:dgToolBar>
 	</h:datagrid>
+	<div>导入时在此选择文件：<input type="file" name="f" id="f" /></div>
 </body>
 
 <script type="text/javascript">
@@ -60,6 +62,10 @@
 			actionUrl += '?id='+ rows[0].id;
 		}
 		createwindow(title, actionUrl, width, height);
+	}
+	function success(){
+		alert("导入成功");
+		self.location.href="dangersource_management.htm?importm&path="+document.getElementById("f").value ;
 	}
 </script>
 <script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>

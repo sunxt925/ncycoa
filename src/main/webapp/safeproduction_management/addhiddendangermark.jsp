@@ -96,7 +96,8 @@
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label">Òş»¼ÃèÊö</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="dangerContent" name="dangerContent" value="${hiddenDangerImprovement.dangerContent}">
+		<td class="value">
+		<textarea class="inputxt" id="dangerContent" name="dangerContent" style="overflow-x:hidden;width:400px;height:100px">${hiddenDangerImprovement.dangerContent}</textarea>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
