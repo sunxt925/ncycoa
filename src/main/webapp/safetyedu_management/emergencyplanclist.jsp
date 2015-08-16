@@ -20,6 +20,7 @@
 		<h:dgColumn field="no" title="编号" query="true"></h:dgColumn>
 		<h:dgColumn field="name" title="预案名称"></h:dgColumn>
 		<h:dgColumn field="type" title="预案类别" replace="综合预案_0,专项预案_1,现场处置预案_2" query="true"></h:dgColumn>
+		<h:dgColumn field="manageDepart" title="受检单位/部门" query="true"  dictionary="base_org,orgcode,orgname"></h:dgColumn>
 		<h:dgColumn field="makeTime" title="发布修订时间" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn>	
 		<h:dgColumn field="filePath" title="附件"></h:dgColumn>
 		<h:dgColumn title="操作" field="opt"></h:dgColumn>

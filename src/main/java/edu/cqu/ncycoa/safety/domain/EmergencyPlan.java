@@ -31,7 +31,10 @@ public class EmergencyPlan {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="MAKE_TIME")
-	private Date makeTime;  // 发布修订时间
+	private Date makeTime;  // 发布修订时间 预案编制部门
+	
+	@Column(name="MANAGE_DEPART")
+	private String manageDepart;//预案编制部门
 	
 	@Column(name="FILENAME")
 	private String filePath;//文件
@@ -95,4 +98,13 @@ public class EmergencyPlan {
 		this.memo = memo;
 	}
 
+	public String getManageDepart() {
+		return manageDepart;
+	}
+
+	public void setManageDepart(String manageDepart) {
+		this.manageDepart = manageDepart;
+	}
+
+	
 }

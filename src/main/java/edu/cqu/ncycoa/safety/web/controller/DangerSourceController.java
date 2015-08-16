@@ -1,8 +1,12 @@
 package edu.cqu.ncycoa.safety.web.controller;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +29,7 @@ import edu.cqu.ncycoa.common.util.dao.TQOrder;
 import edu.cqu.ncycoa.common.util.dao.TQRestriction;
 import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
 import edu.cqu.ncycoa.safety.domain.DangerSource;
+import edu.cqu.ncycoa.safety.poi.ExcelReader;
 import edu.cqu.ncycoa.util.ConvertUtils;
 import edu.cqu.ncycoa.util.Globals;
 import edu.cqu.ncycoa.util.MyBeanUtils;
@@ -42,6 +47,76 @@ public class DangerSourceController {
 	@RequestMapping(params="add")
 	public String add(HttpServletRequest request) {
 		return "safeproduction_management/dangersource";
+	}
+	
+	@RequestMapping(params="import")
+	public String importXLS(HttpServletRequest request) {
+		String path=request.getParameter("path");
+		System.out.println(path);
+		ExcelReader excelReader = new ExcelReader();
+		InputStream is2 = null;
+		try {
+			is2 = new FileInputStream(path.replace("\\", "/"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Map<Integer, String> map=excelReader.readExcelContent(is2);
+		for (int i = 1; i <= map.size(); i++) {
+			String[] values=map.get(i).split(",");
+			DangerSource ds=new DangerSource();
+			//ds.setId(Long.valueOf(values[0]));
+			ds.setActivityType(values[1]);
+			ds.setJobActivity(values[2]);
+			ds.setMainDangerSource(values[3]);
+			ds.setDanger(values[4]);
+			if(values[5].equals("重大"))
+				ds.setDangerLevel(new Short((short)0));
+			else{
+				ds.setDangerLevel(new Short((short)1));
+			}
+			ds.setMeasureA(values[6]);
+			ds.setMeasureB(values[7]);
+			ds.setMeasureC(values[8]);
+			ds.setMemo(values[9]);
+			systemService.addEntity(ds);
+        }
+		return "safeproduction_management/dangersourcelist";
+	}
+	
+	@RequestMapping(params="importm")
+	public String importXLSm(HttpServletRequest request) {
+		String path=request.getParameter("path");
+		System.out.println(path);
+		ExcelReader excelReader = new ExcelReader();
+		InputStream is2 = null;
+		try {
+			is2 = new FileInputStream(path.replace("\\", "/"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Map<Integer, String> map=excelReader.readExcelContent(is2);
+		for (int i = 1; i <= map.size(); i++) {
+			String[] values=map.get(i).split(",");
+			DangerSource ds=new DangerSource();
+			//ds.setId(Long.valueOf(values[0]));
+			ds.setActivityType(values[1]);
+			ds.setJobActivity(values[2]);
+			ds.setMainDangerSource(values[3]);
+			ds.setDanger(values[4]);
+			if(values[5].equals("重大"))
+				ds.setDangerLevel(new Short((short)0));
+			else{
+				ds.setDangerLevel(new Short((short)1));
+			}
+			ds.setMeasureA(values[6]);
+			ds.setMeasureB(values[7]);
+			ds.setMeasureC(values[8]);
+			ds.setMemo(values[9]);
+			systemService.addEntity(ds);
+        }
+		return "safeproduction_management/maindangersourcelist";
 	}
 	
 	@RequestMapping(params="del")

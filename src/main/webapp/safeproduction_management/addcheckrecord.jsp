@@ -112,19 +112,22 @@
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label">检查内容</label></td>
-		<td class="value"><input class="inputxt" style="width:250px;" id="checkContent" name="checkContent" value="${checkRecord.checkContent}">
+		<td class="value">
+		<textarea class="inputxt" id="checkContent" name="checkContent" style="overflow-x:hidden;width:400px;height:100px">${checkRecord.checkContent}</textarea>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label">检查结果</label></td>
-		<td class="value"><input class="inputxt" style="width:100px;" id="checkResult" name="checkResult" value="${checkRecord.checkResult}">
+		<td class="value">
+		<textarea class="inputxt" id="checkResult" name="checkResult" style="overflow-x:hidden;width:400px;height:100px">${checkRecord.checkResult}</textarea>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label">整改要求</label></td>
-		<td class="value"><input class="inputxt" style="width:100px;" id="changeRequire" name="changeRequire" value="${checkRecord.changeRequire}">
+		<td class="value">
+		<textarea class="inputxt" id="changeRequire" name="changeRequire" style="overflow-x:hidden;width:400px;height:100px">${checkRecord.changeRequire}</textarea>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>

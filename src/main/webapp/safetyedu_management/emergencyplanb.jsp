@@ -94,6 +94,15 @@
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label">预案编制部门</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;display:none" id="manageDepart" name="manageDepart"  value="${ep.manageDepart}">
+		<input class="inputxt" style="width:150px;" id="apporgName" name="apporgName" value="${orgname}">
+		<a id="btn_selectorg" href="#" class="easyui-linkbutton"
+				       data-options="iconCls:'icon-search',plain:true">选择</a>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
     <tr hidden="true">
 		<td align="right"><label class="Validform_label">预案类别</label></td>
 		<td class="value"><input class="inputxt" style="width:150px;" id="type" name="type"  value="1">
@@ -145,9 +154,10 @@ function returnorgValue(data){
 			codes+=org[i].orgcode;
 			codes+=",";
 		}
-		$('#checkedDepart').val(codes);
+		$('#manageDepart').val(codes);
 	}else{
-		$('#checkedDepart').val(org[0].orgcode);
+		$('#manageDepart').val(org[0].orgcode);
+		$('#apporgName').val(org[0].orgname);
 	}
 }
 function createwindow(title, url, width, height,func) {
@@ -165,7 +175,7 @@ function createwindow(title, url, width, height,func) {
 			cache : false,
 			ok : function() {
 				$('#btn_ok', this.iframe.contentWindow.document).click();
-				return false;
+				return true;
 			},
 			cancelVal : '关闭',
 			cancel : true/* 为true等价于function(){} */

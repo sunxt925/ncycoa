@@ -27,7 +27,9 @@
 		<h:dgToolBar url="dangersource_management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
 		<h:dgToolBar url="dangersource_management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
 		<h:dgToolBar url="dangersource_management.htm?update" icon="icon-reload" funname="myedit" title="更新"></h:dgToolBar>
+		<h:dgToolBar onclick="success()" url="dangersource_management.htm?import" icon="icon-reload" title="从Excel导入"></h:dgToolBar>
 	</h:datagrid>
+	<div>导入时在此选择文件：<input type="file" name="f" id="f" /></div> 
 </body>
 
 <script type="text/javascript">
@@ -59,6 +61,41 @@
 		}
 		createwindow(title, actionUrl, width, height);
 	}
+	
+	function success(){
+		alert("导入成功");
+		//alert(document.getElementById("f").value);
+		//alert(getPath(document.getElementById("f"));
+		self.location.href="dangersource_management.htm?import&path="+document.getElementById("f").value ;
+	}
+	
+	//附带不用修改浏览器安全配置的javascript代码，兼容ie， firefox全系列
+
+	function getPath(obj)  
+	{  
+	  if(obj)  
+	    {  
+	 
+	    if (window.navigator.userAgent.indexOf("MSIE")>=1)  
+	      {  
+	        obj.select();  
+	 
+	      return document.selection.createRange().text;  
+	      }  
+	 
+	    else if(window.navigator.userAgent.indexOf("Firefox")>=1)  
+	      {  
+	      if(obj.files)  
+	        {  
+	 
+	        return obj.files.item(0).getAsDataURL();  
+	        }  
+	      return obj.value;  
+	      }  
+	    return obj.value;  
+	    }  
+	}  
+	//参数obj为input file对象
 </script>
 <script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>
 </html>
