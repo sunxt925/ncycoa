@@ -1,9 +1,6 @@
 package edu.cqu.ncycoa.web.controller;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -14,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -52,6 +48,7 @@ import edu.cqu.ncycoa.common.util.dao.QueryUtils;
 import edu.cqu.ncycoa.common.util.dao.TQOrder;
 import edu.cqu.ncycoa.common.util.dao.TQRestriction;
 import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
+import edu.cqu.ncycoa.domain.ActivityComment;
 import edu.cqu.ncycoa.domain.ContractInfo;
 import edu.cqu.ncycoa.plan.domain.Plan;
 import edu.cqu.ncycoa.util.ConvertUtils;
@@ -132,6 +129,20 @@ public class ContractManagementController {
 		SystemUtils.jsonResponse(response, j);
 	}
 	
+	@RequestMapping(params="update")
+    public ModelAndView update(HttpServletRequest request, HttpServletResponse response){
+		String id = request.getParameter("id"); 
+		String type = request.getParameter("type"); 
+		ContractInfo contractInfo = systemService.findEntityById(Long.parseLong(id), ContractInfo.class);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("contract_management/contract");
+		mav.addObject("contract",contractInfo);
+		mav.addObject("relevantDepartment_disp",CodeDictionary.syscode_traslate("base_org", "orgcode", "orgname", contractInfo.getRelevantDepartment()));
+		
+		mav.addObject("type",type);
+		return mav;
+	}
+	
 	@RequestMapping(params = "commit")
 	@ResponseBody
 	public void commit(HttpServletRequest request, HttpServletResponse response) {
@@ -153,7 +164,7 @@ public class ContractManagementController {
 		if(contractInfo.getType().equals("0")){
 			paras.put("chief", UnitDao.getComAdminChief());
 		}else if(contractInfo.getType().equals("1")){
-			paras.put("chief", UnitDao.getOfficeAudit());
+			paras.put("chief", UnitDao.getComAdminChief());
 		}else if(contractInfo.getType().equals("2")){
 			paras.put("chief", UnitDao.getOfficeAudit());
 		}
@@ -231,10 +242,20 @@ public class ContractManagementController {
 				comments.addAll(taskList);
 			}
 		}
+		List<ActivityComment> accomment = new ArrayList<ActivityComment>();
+		
+		for(Comment comment : comments){
+			ActivityComment activityComment = new ActivityComment();
+			activityComment.setTime(Format.dateToStr(comment.getTime()));
+			activityComment.setUsername(CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname", comment.getUserId()));
+			activityComment.setMsg(comment.getFullMessage());
+			accomment.add(activityComment);
+			
+		}
 		mav.addObject("contract",contractInfo);
 		mav.addObject("outcomelist", list);
 		mav.addObject("taskId",taskId);
-		mav.addObject("comments", comments);
+		mav.addObject("comments", accomment);
 		return mav;
 	}
 	
@@ -243,6 +264,8 @@ public class ContractManagementController {
 	public void exetask(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		AjaxResultJson j = new AjaxResultJson();
 		String message = "";
+		String id = request.getParameter("id");
+		ContractInfo contractInfo = systemService.findEntityById(Long.parseLong(id), ContractInfo.class);
 		String taskId = request.getParameter("taskId");
 		String outcome = request.getParameter("outcome"); 
 		
@@ -260,6 +283,20 @@ public class ContractManagementController {
 		paras.put("outcome", outcome);
 		
 		taskService.complete(taskId,paras);
+		
+		boolean flag = true;
+		List<ProcessInstance> processInstances = processEngine.getRuntimeService().createProcessInstanceQuery().list();
+
+		for(ProcessInstance processInstance : processInstances){
+			if(processInstance.getProcessInstanceId().equals(contractInfo.getProcessInstanceId())){
+				flag = false;
+			}
+		}
+		
+		if(flag){
+			contractInfo.setStatus((short)2);
+			systemService.saveEntity(contractInfo);
+		}
 		try {
 			message = "合同审批提交成功";
 			
@@ -305,6 +342,10 @@ public class ContractManagementController {
 					}
 				}
 				String tempfilename = Util.getName();
+				File f = new File(Util.getfileCfg().get("uploadfilepath")+tempfilename+".doc");
+				if (!f.getParentFile().exists())
+					f.getParentFile().mkdirs();
+
 				WordUtils.produceWord(Util.getfileCfg().get("uploadfilepath")+tempfilename+".doc", Util.getFilepath("wordtemplate/contractaudit_template.doc"), getCommentMap(contractInfo,comments));
 				contractInfo.setAudittable(tempfilename+".doc");
 				systemService.saveEntity(contractInfo);

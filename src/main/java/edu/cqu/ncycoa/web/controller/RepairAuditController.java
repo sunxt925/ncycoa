@@ -48,6 +48,7 @@ import edu.cqu.ncycoa.common.tag.TagUtil;
 import edu.cqu.ncycoa.common.util.dao.QueryUtils;
 import edu.cqu.ncycoa.common.util.dao.TQOrder;
 import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
+import edu.cqu.ncycoa.domain.ActivityComment;
 import edu.cqu.ncycoa.domain.RepairAudit;
 import edu.cqu.ncycoa.util.ConvertUtils;
 import edu.cqu.ncycoa.util.Globals;
@@ -437,10 +438,22 @@ public class RepairAuditController {
 				comments.addAll(taskList);
 			}
 		}
+		
+        List<ActivityComment> accomment = new ArrayList<ActivityComment>();
+		
+		for(Comment comment : comments){
+			ActivityComment activityComment = new ActivityComment();
+			activityComment.setTime(Format.dateToStr(comment.getTime()));
+			activityComment.setUsername(CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname", comment.getUserId()));
+			activityComment.setMsg(comment.getFullMessage());
+			accomment.add(activityComment);
+			
+		}
+		
 		mav.addObject("repairAudit",repairAudit);
 		mav.addObject("outcomelist", list);
 		mav.addObject("taskId",taskId);
-		mav.addObject("comments", comments);
+		mav.addObject("comments", accomment);
 		return mav;
 	}
 	

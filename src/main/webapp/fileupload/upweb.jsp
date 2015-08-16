@@ -21,10 +21,10 @@ try {
 } catch (Exception e) {  
     e.printStackTrace();  
 }  
-File f = new File("e:\\ftproot\\temp\\"+params.get("filename"));
+File f = new File("d:\\ftproot\\temp\\"+params.get("filename"));
 if (!f.getParentFile().exists())
 	f.getParentFile().mkdirs();
-FileUpload.copyFile(this.getServletContext().getRealPath("upload\\"+fileName), "e:\\ftproot\\temp\\"+params.get("filename"));
+FileUpload.copyFile(this.getServletContext().getRealPath("upload\\"+fileName), "d:\\ftproot\\temp\\"+params.get("filename"));
 file.delete();
 out.println("上传成功");
 
