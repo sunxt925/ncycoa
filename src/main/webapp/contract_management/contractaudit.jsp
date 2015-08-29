@@ -191,11 +191,14 @@ $(function() {
 					   </tr>
 					   <tr>
 					   <td>
-					<c:forEach items="${outcomelist }" var="item">
+					   <input type="button"   value="Åú×¼"  onclick="sub('true')">
+					    <input type="button"   value="»ØÍË"  onclick="sub('false')">
+					  
+				<%-- 	<c:forEach items="${outcomelist }" var="item">
 					   
 	                   <input type="button"   value="${item }"  onclick="sub(this)">
 	                   
-	                 </c:forEach>
+	                 </c:forEach> --%>
 	                 </td>
 	                   </tr>
 					</table>
@@ -221,7 +224,8 @@ $(function() {
 <script type="text/javascript">
 function sub(val){
 
-	$('#outcome').val($(val).val());
+	
+	$('#outcome').val(val);
 	$('#formobj').submit();
 	ret();
 }

@@ -52,7 +52,8 @@
 	});
 	function commitcontract(id,flag){
 		if(flag == "0"){
-			$.post("contract-management.htm?commit&id="+id,function(data,status){
+			createwindow2('提交审批',"contract_management/chooseaudit.jsp?id="+id,300,400);
+			/* $.post("contract-management.htm?commit&id="+id,function(data,status){
 				var obj = eval('(' + data + ')');
 				$.messager.show({
 		              title:'提示',
@@ -62,7 +63,7 @@
 				setTimeout(function(){
 		        	  window.location.reload();
 		   	      },800);
-			});
+			}); */
 		}else{
 			
 			$.dialog.alert("合同已提交，不能重复提交!");
@@ -116,5 +117,32 @@
 		}
 		createwindow(title, actionUrl, width, height);
 	}
+	function returnValue(data){
+		$.dialog({id:'choose01'}).close();
+		 $.dialog.confirm('审核成功',function(){
+			   window.location.reload();
+           });
+	}
+function createwindow2(title, url, width, height) {
+		
+		$.dialog({
+			id:'choose01',
+			data:returnValue,
+			content : 'url:' + url,
+			lock : true,
+			width : width,
+			height : height,
+			title : title,
+			opacity : 0.3,
+			cache : false,
+			ok : function() {
+				$('#btn_ok', this.iframe.contentWindow.document).click();
+				return false;
+			},
+			cancelVal : '关闭',
+			cancel : true/* 为true等价于function(){} */
+		});
+	
+}
 </script>
 </html>

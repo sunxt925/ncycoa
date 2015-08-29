@@ -10,8 +10,6 @@ import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import oracle.jdbc.OracleTypes;
-
 import com.db.ConnectionPool;
 import com.db.ExecSql;
 import com.db.Parameter;

@@ -27,7 +27,7 @@ public class Staff {
 	public Staff(String staffcode) {
 		try {
 			DBObject db = new DBObject();
-			String sql = "select * from BASE_ORGMEMBER where staffcode=?";
+			String sql = "select * from BASE_ORGMEMBER where staffcode=? order by orgcode";
 			Parameter.SqlParameter[] pp = new Parameter.SqlParameter[] { new Parameter.String(staffcode) };
 
 			DataTable dt = db.runSelectQuery(sql, pp);

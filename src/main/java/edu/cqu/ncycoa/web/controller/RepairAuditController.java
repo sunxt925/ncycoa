@@ -341,7 +341,8 @@ public class RepairAuditController {
 		
 		UserInfo userInfo = (UserInfo)request.getSession().getAttribute("UserInfo");
 	    List<Task> tasks = taskService.createTaskQuery()
-	    		                      .taskAssignee(userInfo.getStaffcode())
+	    		.taskCandidateUser(userInfo.getStaffcode())/*
+	    		                      .taskAssignee(userInfo.getStaffcode())*/
 	    		                      .list();
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("repair_management/tasklist");
