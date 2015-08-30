@@ -1,11 +1,11 @@
 //alert("This is in leftmenu.js");
 
 $(function() {
-	// easy uiï¿½ï¿½ï¿½ï¿½ï¿½Ø»ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½,ï¿½ï¿½ï¿½Ô³ï¿½Ê¼ï¿½ï¿½ï¿½Ëµï¿½Òªï¿½Ó³ï¿½Ò»ï¿½ï¿½
+	// easy uiÊ÷¼ÓÔØ»áÔÚÎÄµµ¼ÓÔØÍêÖ´ÐÐ,ËùÒÔ³õÊ¼»¯²Ëµ¥ÒªÑÓ³ÙÒ»Ãë
 	//setTimeout(InitLeftMenu, 1000);
 	
 	tabCloseEven();
-	// ï¿½Í·ï¿½ï¿½Ú´ï¿½
+	// ÊÍ·ÅÄÚ´æ
 	$.fn.panel.defaults = $.extend({}, $.fn.panel.defaults, {
 		onBeforeDestroy : function() {
 			var frame = $('iframe', this);
@@ -26,13 +26,13 @@ $(function() {
 	});
 	
 	$('#maintabs').tabs('add',{
-		title : 'ï¿½ÒµÄ¹ï¿½ï¿½ï¿½',
+		title : 'ÎÒµÄ¹¤×÷',
 		content : createFrame('pending-task.htm?dgview'),
 		closable : false,
 	});
 	
 	$('#maintabs').tabs('add',{
-		title : 'é€šçŸ¥å…¬å‘Š',
+		title : 'Í¨Öª¹«¸æ',
 		content : createFrame('notice.htm?dgview_see'),
 		closable : false,
 	});
@@ -46,7 +46,7 @@ $(function() {
 });
 
 var rowid = "";
-// ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½
+// ³õÊ¼»¯×ó²à
 function InitLeftMenu() {
 	$("#nav").show();
 	$('.easyui-accordion').accordion('resize');
@@ -97,7 +97,7 @@ function openNode(node) {
 String.prototype.replaceAll = function(s1, s2) {
 	return this.replace(new RegExp(s1, "gm"), s2);
 };
-// ï¿½ï¿½È¡ï¿½ï¿½àµ¼ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½
+// »ñÈ¡×ó²àµ¼º½µÄÍ¼±ê
 function getIcon(menuid) {
 	var icon = 'icon ';
 	$.each(_menus.menus, function(i, n) {
@@ -117,11 +117,11 @@ function addTab(subtitle, url) {
 	}
 	rowid = "";
 //	$.messager.progress({
-//		text : 'Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½....',
+//		text : 'Ò³Ãæ¼ÓÔØÖÐ....',
 //		interval : 200
 //	});
 	if (!$('#maintabs').tabs('exists', subtitle)) {
-		// ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½iframeï¿½ï¿½Ê½ï¿½ï¿½tabï¿½ï¿½Ä¬ï¿½ï¿½Îªhrefï¿½ï¿½Ê½
+		// ÅÐ¶ÏÊÇ·ñ½øÐÐiframe·½Ê½´ò¿ªtab£¬Ä¬ÈÏÎªhref·½Ê½
 		if (url.indexOf('isIframe') != -1) {
 			$('#maintabs').tabs('add',{
 					title : subtitle,
@@ -145,7 +145,7 @@ function addTab(subtitle, url) {
 }
 function addmask() {
 	$.messager.progress({
-		text : 'Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½....',
+		text : 'Ò³Ãæ¼ÓÔØÖÐ....',
 		interval : 100
 	});
 }
@@ -156,12 +156,12 @@ function createFrame(url) {
 }
 
 function tabClose() {
-	/* Ë«ï¿½ï¿½ï¿½Ø±ï¿½TABÑ¡ï¿½î¿¨ */
+	/* Ë«»÷¹Ø±ÕTABÑ¡Ïî¿¨ */
 	$(".tabs-inner").dblclick(function() {
 		var subtitle = $(this).children(".tabs-closable").text();
 		$('#tabs').tabs('close', subtitle);
 	});
-	/* ÎªÑ¡ï¿½î¿¨ï¿½ï¿½ï¿½Ò¼ï¿½ */
+	/* ÎªÑ¡Ïî¿¨°ó¶¨ÓÒ¼ü */
 	$(".tabs-inner").bind('contextmenu', function(e) {
 		$('#mm').menu('show', {
 			left : e.pageX,
@@ -173,9 +173,9 @@ function tabClose() {
 		return false;
 	});
 }
-// ï¿½ï¿½ï¿½Ò¼ï¿½ï¿½Ëµï¿½ï¿½Â¼ï¿½
+// °ó¶¨ÓÒ¼ü²Ëµ¥ÊÂ¼þ
 function tabCloseEven() {
-	// Ë¢ï¿½ï¿½
+	// Ë¢ÐÂ
 	$('#mm-tabupdate').click(function() {
 		var currTab = $('#maintabs').tabs('getSelected');
 		var url = $(currTab.panel('options').content).attr('src');
@@ -186,31 +186,31 @@ function tabCloseEven() {
 			}
 		});
 	});
-	// ï¿½Ø±Õµï¿½Ç°
+	// ¹Ø±Õµ±Ç°
 	$('#mm-tabclose').click(function() {
 		var currtab_title = $('#mm').data("currtab");
 		$('#maintabs').tabs('close', currtab_title);
 	});
-	// È«ï¿½ï¿½ï¿½Ø±ï¿½
+	// È«²¿¹Ø±Õ
 	$('#mm-tabcloseall').click(function() {
 		$('.tabs-inner span').each(function(i, n) {
 			var t = $(n).text();
-			if (t != 'ï¿½ÒµÄ¹ï¿½ï¿½ï¿½') {
+			if (t != 'ÎÒµÄ¹¤×÷') {
 				$('#maintabs').tabs('close', t);
 			}
 		});
 	});
-	// ï¿½Ø±Õ³ï¿½ï¿½ï¿½Ç°Ö®ï¿½ï¿½ï¿½TAB
+	// ¹Ø±Õ³ýµ±Ç°Ö®ÍâµÄTAB
 	$('#mm-tabcloseother').click(function() {
 		$('#mm-tabcloseright').click();
 		$('#mm-tabcloseleft').click();
 	});
-	// ï¿½Ø±Õµï¿½Ç°ï¿½Ò²ï¿½ï¿½TAB
+	// ¹Ø±Õµ±Ç°ÓÒ²àµÄTAB
 	$('#mm-tabcloseright').click(function() {
 		var nextall = $('.tabs-selected').nextAll();
 		if (nextall.length == 0) {
-			// msgShow('ÏµÍ³ï¿½ï¿½Ê¾','ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½~~','error');
-			alert('ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½~~');
+			// msgShow('ÏµÍ³ÌáÊ¾','ºó±ßÃ»ÓÐÀ²~~','error');
+			alert('ºó±ßÃ»ÓÐÀ²~~');
 			return false;
 		}
 		nextall.each(function(i, n) {
@@ -219,23 +219,23 @@ function tabCloseEven() {
 		});
 		return false;
 	});
-	// ï¿½Ø±Õµï¿½Ç°ï¿½ï¿½ï¿½ï¿½TAB
+	// ¹Ø±Õµ±Ç°×ó²àµÄTAB
 	$('#mm-tabcloseleft').click(function() {
 		var prevall = $('.tabs-selected').prevAll();
 		if (prevall.length == 0) {
-			alert('ï¿½ï¿½Í·ï¿½Ë£ï¿½Ç°ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½~~');
+			alert('µ½Í·ÁË£¬Ç°±ßÃ»ÓÐÀ²~~');
 			return false;
 		}
 		prevall.each(function(i, n) {
 			var t = $('a:eq(0) span', $(n)).text();
-			if (t != 'ï¿½ÒµÄ¹ï¿½ï¿½ï¿½') {
+			if (t != 'ÎÒµÄ¹¤×÷') {
 				$('#maintabs').tabs('close', t);
 			}
 		});
 		return false;
 	});
 
-	// ï¿½Ë³ï¿½
+	// ÍË³ö
 	$("#mm-exit").click(function() {
 		$('#mm').menu('hide');
 	});
