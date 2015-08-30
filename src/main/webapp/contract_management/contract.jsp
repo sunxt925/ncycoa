@@ -105,7 +105,7 @@
 		<td class="value">
 		
 		<input class="inputxt" disabled id="relevantDepartment_disp" name="relevantDepartment_disp" value="${relevantDepartment_disp}"></input>
-		<input type="hidden" id="relevantDepartment" name="relevantDepartment" value="${relevantDepartment}"></input>
+		<input type="hidden" id="relevantDepartment" name="relevantDepartment" value="${contract.relevantDepartment}"></input>
 		 <h:choose textname="orgname" hiddenid="orgcode" inputTextname="relevantDepartment_disp" hiddenName="relevantDepartment" url="indexmanage/selectunit.jsp" icon="icon-search" title="部门列表" isclear="true"></h:choose>
 		<span class="Validform_checktip"></span>
 		</td>

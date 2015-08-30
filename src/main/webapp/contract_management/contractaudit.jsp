@@ -180,6 +180,7 @@ $(function() {
 	</div>
 	</div>
 	<form  id="formobj" name="formobj"  action="contract-management.htm?exetask"  method="post">
+	<input  type="hidden" id="id" name="id" value="${contract.id}">
 	<input  type="hidden" id="taskId" name="taskId" value="${taskId}">
 			<div style="width: 100%;padding: 20px">
 				<div id="p" class="easyui-panel" title="批注"
@@ -190,11 +191,14 @@ $(function() {
 					   </tr>
 					   <tr>
 					   <td>
-					<c:forEach items="${outcomelist }" var="item">
+					   <input type="button"   value="批准"  onclick="sub('true')">
+					    <input type="button"   value="回退"  onclick="sub('false')">
+					  
+				<%-- 	<c:forEach items="${outcomelist }" var="item">
 					   
 	                   <input type="button"   value="${item }"  onclick="sub(this)">
 	                   
-	                 </c:forEach>
+	                 </c:forEach> --%>
 	                 </td>
 	                   </tr>
 					</table>
@@ -207,7 +211,7 @@ $(function() {
 	                 <tbody >
                       <c:forEach items="${comments }" var="item">
 	                   <tr>
-	                   <td>${item.time }</td><td>${item.userId }</td><td> ${item.fullMessage }</td>
+	                   <td>${item.time }</td><td>${item.username }</td><td> ${item.msg }</td>
 	                   </tr>
 	                   </c:forEach>
 	                  </tbody>
@@ -220,7 +224,8 @@ $(function() {
 <script type="text/javascript">
 function sub(val){
 
-	$('#outcome').val($(val).val());
+	
+	$('#outcome').val(val);
 	$('#formobj').submit();
 	ret();
 }

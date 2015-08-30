@@ -3,8 +3,6 @@ package com.dao.system;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-
 import com.db.DBObject;
 import com.db.DataRow;
 import com.db.DataTable;
@@ -261,6 +259,52 @@ public class UnitDao {
 			return "";
 		}
 	
+	}
+
+	/**
+	 * 获取市局部门负责人
+	 * @param orgcode
+	 * @return
+	 */
+	public static String getCityComanyAudit(String orgcode){
+		try {
+			DBObject db=new DBObject();
+			String sql="select * from base_orgmember where orgcode like '"+orgcode+"%' order by orgcode,positioncode";
+			DataTable dt = db.runSelectQuery(sql);
+			if(dt!=null&&dt.getRowsCount()>=0){
+				return dt.get(0).getString("staffcode");
+			}else{
+				return "";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+	
+	}
+	/**
+	 * 获取多部门负责人
+	 * @param orgcode
+	 * @return
+	 */
+	public static List<String> getManyComanyAudit(List<String> orgcodes){
+		List<String> auditors = new ArrayList<String>();
+		try {
+			for(String orgcode:orgcodes){
+				DBObject db=new DBObject();
+				String sql="select * from base_orgmember where orgcode like '"+orgcode+"%' order by orgcode,positioncode";
+				DataTable dt = db.runSelectQuery(sql);
+				if(dt!=null&&dt.getRowsCount()>=0){
+					auditors.add(dt.get(0).getString("staffcode"));
+				}
+			}
+			return auditors;
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	/**
 	 * 获取企管科科长
