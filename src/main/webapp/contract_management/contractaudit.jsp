@@ -170,7 +170,7 @@ $(function() {
 	<tr>
 		<td align="right"><label class="Validform_label"> 下载附件 </label></td>
 		<td class="value">
-		<a href="${contract.contractFilePath}">附件</a>
+		<a href="fileupload/downweb.jsp?filename=${contract.contractFilePath}">附件</a>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
