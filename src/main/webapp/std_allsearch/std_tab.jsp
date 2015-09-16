@@ -89,8 +89,7 @@ function search0()
 		 url='std_list.jsp'+'?begin='+begin+'&type='+type;
 		 window.open(url,"stdlist");
 	}else{
-		 url="std_list.jsp?beign="+begin+"&end="+end+"&type="+type+"";
-	
+		 url="std_list.jsp?begin="+begin+"&end="+end+"&type="+type+"";
 		 window.open(url,"stdlist");
 		
 	}
