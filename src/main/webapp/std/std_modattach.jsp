@@ -10,7 +10,7 @@
 </HEAD>
 <script language=
                 "javascript" type="text/javascript" src="../js/MyDatePicker/WdatePicker.js">  </script>
-<script language="javascript" src="../js/public/key.js"></script>
+
 <script language="javascript" src="../js/public/check.js"></script>
 <script language="javascript">
 function F5()
@@ -68,7 +68,7 @@ function fun(DocClassName)
     <td colspan="3" valign="top" class="main_table_centerbg" align="center"><table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0" class="table_list1">
       <tr>
         <td width="20%"><div align="right">¸½¼þ±àºÅ£º</div></td>
-        <td width="80%"><input name="DocCode" type="text" class="input1" id="DocCode" onKeyDown="EnterKeyDo('')" value="<%=mo.getDocCode()%>" size="30" maxlength="30" readonly="readonly"></td>
+        <td width="80%"><input name="DocCode" type="text" class="input1" id="DocCode" onKeyDown="EnterKeyDo('')" value="<%=mo.getDocCode()%>" size="30" maxlength="30"></td>
       </tr>
       <tr>
         <td><div align="right">¸½¼þÃû³Æ£º</div></td>
@@ -131,6 +131,8 @@ function fun(DocClassName)
         <input name="ValidBeginDate" type="hidden" id="ValidBeginDate" value="<%=mo.getValidBeginDate()%>">
         <input name="ValidEndDate" type="hidden" id="ValidEndDate" value="<%=mo.getValidEndDate()%>">
         <input name="DocVersionStatus" type="hidden" id="DocVersionStatus" value="<%=mo.getDocVersionStatus()%>">
+        <input name="orgcode" type="hidden" id="orgcode" value="<%=orgcode%>">
+        <input name="olddoccode" type="hidden" id="olddoccode" value="<%=mo.getDocCode()%>">
         </div></td>
         <td><input name="action_class" type="hidden" id="action_class" value="com.action.std.StdManageAction"></td>
       </tr>

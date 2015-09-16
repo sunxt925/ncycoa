@@ -776,7 +776,6 @@ public DataTable getStdListSearch(int pageno, int perpage,String begin,String en
 				sql="select doccode as 标准编号,DocVersionName as 标准名称,to_char(DRAWUPDATE,'yyyy-mm-dd') as 修订日期,docno as 有无附件,'<a href=\"#\" onClick=F1(\"'||docno||'\") class=\"button4\">标准信息</a> ' as 操作  from std_docmetaversioninfo where belongdocno = 'no' and Flag='修订' and DOCVERSIONSTATUS<>'历史版本' "+sort;
 			}
 		}
-		
 		String sql_run = Format.getFySql(sql, pageno, perpage);
 		return db.runSelectQuery(sql_run);
 	}

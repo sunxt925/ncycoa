@@ -18,6 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 	String orgcode=request.getParameter("orgcode");
 	String doccode=request.getParameter("doccode");
+	System.out.println("doccode::::::"+doccode);
 	OrgPosition orgpost = new OrgPosition();
 	int page_no = Integer.parseInt(Format.NullToZero(request.getParameter("page_no")));
 	int per_page=((UserInfo)request.getSession().getAttribute("UserInfo")).getPerpage_half();
