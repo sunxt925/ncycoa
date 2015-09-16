@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.activiti.engine.HistoryService;
+import org.activiti.engine.IdentityService;
 import org.activiti.engine.ManagementService;
+import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.common.CodeDictionary;
 import com.common.Format;
 import com.dao.system.UnitDao;
 import com.entity.index.AllMeritCollection;
@@ -45,6 +48,7 @@ import edu.cqu.ncycoa.common.tag.TagUtil;
 import edu.cqu.ncycoa.common.util.dao.QueryUtils;
 import edu.cqu.ncycoa.common.util.dao.TQOrder;
 import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
+import edu.cqu.ncycoa.domain.ActivityComment;
 import edu.cqu.ncycoa.domain.RepairAudit;
 import edu.cqu.ncycoa.util.ConvertUtils;
 import edu.cqu.ncycoa.util.Globals;
@@ -72,6 +76,9 @@ public class RepairAuditController {
 	
 	@Resource(name="wfManagementService")
 	ManagementService managementService;
+	
+	@Resource(name="processEngine")
+	ProcessEngine processEngine;
 	
 	@RequestMapping(params="add")
 	public String add(HttpServletRequest request) {
@@ -114,8 +121,13 @@ public class RepairAuditController {
 			RepairAudit t = systemService.findEntityById(repairAudit.getId(), RepairAudit.class);
 			try {
 				MyBeanUtils.copyBeanNotNull2Bean(repairAudit, t);
-				systemService.saveEntity(t);
-				systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
+				if(t.getAuditFlag().equals("1")){
+					message = "Î¬ÐÞÉêÇë²»ÄÜ¸üÐÂ";
+				}else{
+					systemService.saveEntity(t);
+					systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
+				}
+				
 			} catch (Exception e) {
 				message = "Î¬ÐÞÉêÇë¸üÐÂÊ§°Ü";
 			}
@@ -138,6 +150,7 @@ public class RepairAuditController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("repair_management/repair");
 		mav.addObject("repairAudit",repairAudit);
+		mav.addObject("orgname",CodeDictionary.syscode_traslate("base_org","orgcode", "orgname", repairAudit.getApporgCode()));
 		return mav;
 	}
 	
@@ -309,8 +322,12 @@ public class RepairAuditController {
 			paras.put("company", companyaudit);
 			paras.put("objId", objId);
 			runtimeService.startProcessInstanceByKey(processID, objId, paras);
-			
+			IdentityService identityService=processEngine.getIdentityService();
+			identityService.setAuthenticatedUserId(((UserInfo)request.getSession().getAttribute("UserInfo")).getStaffcode());
 			message = "Î¬ÐÞÉêÇëÌá½»³É¹¦";
+			//¸üÐÂÎ¬ÐÞÉêÇë×´Ì¬
+			repairAudit.setAuditFlag("1");
+			systemService.saveEntity(repairAudit);
 			
 		} catch (Exception e) {
 		}
@@ -324,7 +341,8 @@ public class RepairAuditController {
 		
 		UserInfo userInfo = (UserInfo)request.getSession().getAttribute("UserInfo");
 	    List<Task> tasks = taskService.createTaskQuery()
-	    		                      .taskAssignee(userInfo.getStaffcode())
+	    		.taskCandidateUser(userInfo.getStaffcode())/*
+	    		                      .taskAssignee(userInfo.getStaffcode())*/
 	    		                      .list();
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("repair_management/tasklist");
@@ -421,10 +439,22 @@ public class RepairAuditController {
 				comments.addAll(taskList);
 			}
 		}
+		
+        List<ActivityComment> accomment = new ArrayList<ActivityComment>();
+		
+		for(Comment comment : comments){
+			ActivityComment activityComment = new ActivityComment();
+			activityComment.setTime(Format.dateToStr(comment.getTime()));
+			activityComment.setUsername(CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname", comment.getUserId()));
+			activityComment.setMsg(comment.getFullMessage());
+			accomment.add(activityComment);
+			
+		}
+		
 		mav.addObject("repairAudit",repairAudit);
 		mav.addObject("outcomelist", list);
 		mav.addObject("taskId",taskId);
-		mav.addObject("comments", comments);
+		mav.addObject("comments", accomment);
 		return mav;
 	}
 	

@@ -17,10 +17,11 @@
 <body>
 	<h:datagrid actionUrl="checkplan_management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="checkplanlist">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
-		<h:dgColumn field="type" title="检查类别" query="true"></h:dgColumn>
-		<h:dgColumn field="checkTime" title="检查时间" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="scope"></h:dgColumn>
+		<h:dgColumn field="planNum" title="计划编号" query="true"></h:dgColumn>
+		<h:dgColumn field="type" title="检查类别" replace="综合检查_0,专项检查_1,节假日检查_2,季节性检查_3" query="true"></h:dgColumn>
+		<h:dgColumn field="checkTime" title="检查时间" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn>
      	<h:dgColumn field="checker" title="检查人"></h:dgColumn>
-		<h:dgColumn field="checkedDepart" title="受检单位/部门" query="true"></h:dgColumn>
+		<h:dgColumn field="checkedDepart" title="受检单位/部门" query="true"  dictionary="base_org,orgcode,orgname"></h:dgColumn>
 		<h:dgColumn field="keyContent" title="检查重点内容" ></h:dgColumn>
 		<h:dgColumn field="checkMethod" title="检查方法"></h:dgColumn>
 		<h:dgColumn field="memo" title="备注" ></h:dgColumn>

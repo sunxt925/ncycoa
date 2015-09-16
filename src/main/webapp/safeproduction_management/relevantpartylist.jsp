@@ -14,6 +14,10 @@
 *{font-size:12px; font-family:微软雅黑,新宋体}
 </style>
 </head>
+<!-- 		h:dgColumn field="projectname" title="在本单位作业项目"
+		h:dgColumn field="jobplace" title="在本单位作业区域"
+	h:dgColumn field="jobpersoncount" title="在本单位作业人员数"
+		 -->
 <body>
 	<h:datagrid actionUrl="relevantparty_management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="relevantpartylist">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
@@ -23,9 +27,7 @@
 		<h:dgColumn field="telephone" title="相关方联系电话"></h:dgColumn>
 		<h:dgColumn field="address" title="相关方地址" query="true" ></h:dgColumn>
 		<h:dgColumn field="aptitude" title="具备的资质"></h:dgColumn>
-		<h:dgColumn field="projectname" title="在本单位作业项目"></h:dgColumn>
-		<h:dgColumn field="jobplace" title="在本单位作业区域"></h:dgColumn>
-		<h:dgColumn field="jobpersoncount" title="在本单位作业人员数"></h:dgColumn>
+
 		<h:dgColumn field="gkorgcode" title="在本单位归口管理部门"  dictionary="base_org,orgcode,orgname"></h:dgColumn>
 		<h:dgToolBar url="relevantparty_management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
 		<h:dgToolBar url="relevantparty_management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>

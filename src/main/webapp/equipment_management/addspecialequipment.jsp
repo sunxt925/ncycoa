@@ -95,21 +95,24 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">生产厂家</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="manufacturer" name="manufacturer" value="${specialEquipment.manufacturer}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-
-	<tr>
-		<td align="right"><label class="Validform_label">出场编号</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="serialNum" name="serialNum" value="${specialEquipment.serialNum}">
+		<td align="right"><label class="Validform_label">设备牌号</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="sign" name="sign" value="${specialEquipment.sign}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">设备重量</label></td>
-		<td class="value"><input class="inputxt" style="width:250px;" id="weight" name="weight" value="${specialEquipment.weight}">
+		<td align="right"><label class="Validform_label">设备类型</label></td>
+		<td class="value">
+		<select class="inputxt" id="type" name="type" style="width:156px;">
+			<option value="0">电梯</option>
+			<option value="1">压力容器</option>
+			<option value="2">场内机动车</option>
+			<option value="3">机动车</option>
+			<option value="4">消防设备</option>
+			<option value="5">报警设备</option>
+			<option value="6">巡逻设备</option>
+			<option value="7">其他设备</option>
+		</select>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -120,20 +123,23 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">档案编号</label></td>
-		<td class="value"><input class="inputxt" style="width:160px;" id="fileNum" name="fileNum" value="${specialEquipment.fileNum}">
+		<td align="right"><label class="Validform_label"> 使用部门</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;display:none" id="useDepart" name="useDepart" value="${specialEquipment.useDepart}">
+		<input class="inputxt" style="width:150px;" id="apporgName" name="apporgName" value="${orgname}">
+		<a id="btn_selectorg" href="#" class="easyui-linkbutton"
+				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">外形尺寸</label></td>
-		<td class="value"><input class="inputxt" style="width:160px;" id="size" name="size" value="${specialEquipment.size}">
+		<td align="right"><label class="Validform_label">维保单位</label></td>
+		<td class="value"><input class="inputxt" style="width:160px;" id="maintenDepart" name="maintenDepart" value="${specialEquipment.maintenDepart}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">制造日期</label></td>
-		<td class="value"><input class="easyui-datebox" style="width:150px;" id="madeTime" name="madeTime" value="${specialEquipment.madeTime}">
+		<td align="right"><label class="Validform_label">检查周期</label></td>
+		<td class="value"><input class="inputxt" style="width:160px;" id="checkCycle" name="checkCycle" value="${specialEquipment.checkCycle}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -143,11 +149,104 @@
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label">管理人员</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;display:none" id="manager" name="manager" value="${specialEquipment.manager}">
+		<input class="inputxt" style="width:150px;" id="managerName" name="managerName" value="${staffname}">
+		<a id="btn_selectobject" href="#" class="easyui-linkbutton"
+				       data-options="iconCls:'icon-search',plain:true">选择</a>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label">备注</label></td>
+		<td class="value"><input class="inputxt" style="width:160px;" id="memo" name="memo" value="${specialEquipment.memo}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
 </table>
 <div style="width: 690px; height: 1px;"></div>
 
 </form>
+<script type="text/javascript">
+$("#btn_selectorg").click(function(){
+	
+	createwindow('选择部门','indexmanage/selectunit.jsp',500,500,returnorgValue );
+    });
+function returnorgValue(data){
+	var org = data.code;
+	var codes="";
+	if(org.length>1){
+		for(var i=0;i<org.length;i++){
+			codes+=org[i].orgcode;
+			codes+=",";
+		}
+		$('#useDepart').val(org[0].orgcode);
+		$('#apporgName').val(org[0].orgname);
+	}else{
+		$('#useDepart').val(org[0].orgcode);
+		$('#apporgName').val(org[0].orgname);
+	}
+}
+function createwindow(title, url, width, height,func) {
+	
+	$.dialog({
+			id:'CLHG1976D',
+			data:func,
+			content : 'url:' + url,
+			lock : true,
+			width : width,
+			height : height,
+			title : title,
+			zIndex :2000,
+			opacity : 0.3,
+			cache : false,
+			ok : function() {
+				$('#btn_ok', this.iframe.contentWindow.document).click();
+				return true;
+			},
+			cancelVal : '关闭',
+			cancel : true/* 为true等价于function(){} */
+		});
+}
 
+$("#btn_selectobject").click(function(){
+	createwindows('选择人员','indexmanage/selectstaff.jsp',500,500,returnobjValue );
+    });
+function returnobjValue(data){
+
+	var array = data.code;
+	var staffs="";
+	for(var i=0;i<array.length;i++){
+		staffs += array[i].staffcode+",";
+	}
+	
+	$('#manager').val(array[0].staffcode);
+	$('#managerName').val(array[0].staffname);
+	//$('#numAttendee').val(array.length);	
+}
+function createwindows(title, url, width, height,func) {
+	
+	$.dialog({
+			id:'CLHG1976D',
+			data:func,
+			content : 'url:' + url,
+			lock : true,
+			width : width,
+			height : height,
+			title : title,
+			zIndex :2000,
+			opacity : 0.3,
+			cache : false,
+			ok : function() {
+				$('#btn_ok', this.iframe.contentWindow.document).click();
+				return true;
+			},
+			cancelVal : '关闭',
+			cancel : true/* 为true等价于function(){} */
+		});
+}
+</script>
 <table style="display: none">
 	<tbody id="add_participant_table_template">
 		<tr>

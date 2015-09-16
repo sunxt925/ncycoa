@@ -533,5 +533,25 @@ public class SupplierDao {
 		return result;
 	}
 
+	public static String getOneDepartCode() {
+		String result="";
+		
+		try {
+			DBObject db = new DBObject();
+			String sql = "select * from BASE_ORGMEMBER where staffcode=?";
+			Parameter.SqlParameter[] pp = new Parameter.SqlParameter[] { new Parameter.String(SystemUtils.getSessionUser().getStaffcode()) };
+
+			DataTable dt = db.runSelectQuery(sql, pp);
+			if (dt != null&& dt.getRowsCount() >= 1) {
+				
+					DataRow r = dt.get(0);
+					result=r.getString("orgcode");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 	
 }

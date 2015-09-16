@@ -19,19 +19,18 @@
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
 		<h:dgColumn field="name" title="设备名称" query="true"></h:dgColumn>
 		<h:dgColumn field="model" title="设备型号" query="true"></h:dgColumn>
-		<h:dgColumn field="manufacturer" title="生产厂家"></h:dgColumn>
-		<h:dgColumn field="serialNum" title="出场编号" query="true"></h:dgColumn>
-		<h:dgColumn field="weight" title="设备重量"></h:dgColumn>
+		<h:dgColumn field="sign" title="设备牌号" query="true"></h:dgColumn>
+		<h:dgColumn field="type" title="设备类型" replace="电梯 _0,压力容器 _1,场内机动车 _2,机动车_3,消防设备_4,报警设备_5,巡逻设备_6,其他设备_7" query="true"></h:dgColumn>
 		<h:dgColumn field="installPosition" title="安装位置"></h:dgColumn>
-		<h:dgColumn field="fileNum" title="档案编号" query="true"></h:dgColumn>
-		<h:dgColumn field="size" title="外形尺寸" query="true"></h:dgColumn>
-		<h:dgColumn field="madeTime" title="制造日期" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="scope"></h:dgColumn>
-     	<h:dgColumn field="useTime" title="启用时间" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="scope"></h:dgColumn>
-  		<h:dgToolBar url="specialequipment_management.htm?add" icon="icon-add" funname="add" title="新增特种设备"></h:dgToolBar>
-		<h:dgToolBar url="specialequipment_management.htm?del" icon="icon-remove" funname="del" title="删除特种设备"></h:dgToolBar>
-		<h:dgToolBar url="specialequipment_management.htm?update" icon="icon-reload" funname="myedit" title="更新特种设备"></h:dgToolBar>
-		<h:dgToolBar url="specialequipment_management.htm?addsub" icon="icon-add" funname="myedit" title="添加附属设备"></h:dgToolBar>
-		<h:dgToolBar url="specialequipment_management.htm?sub" icon="icon-search" funname="myedit" title="查看附属设备"></h:dgToolBar>
+		<h:dgColumn field="useDepart" title="使用部门" dictionary="base_org,orgcode,orgname" query="true"></h:dgColumn>
+		<h:dgColumn field="maintenDepart" title="维保单位"></h:dgColumn>
+		<h:dgColumn field="checkCycle" title="检验周期（月）"></h:dgColumn>
+     	<h:dgColumn field="useTime" title="启用时间" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn>
+     	<h:dgColumn field="manager" title="管理人员" dictionary="base_staff,staffcode,staffname"></h:dgColumn>
+     	<h:dgColumn field="memo" title="备注"></h:dgColumn>
+  		<h:dgToolBar url="specialequipment_management.htm?add" icon="icon-add" funname="add" title="新增设备"></h:dgToolBar>
+		<h:dgToolBar url="specialequipment_management.htm?del" icon="icon-remove" funname="del" title="删除设备"></h:dgToolBar>
+		<h:dgToolBar url="specialequipment_management.htm?update" icon="icon-reload" funname="myedit" title="更新设备"></h:dgToolBar>
 	</h:datagrid>
 </body>
 

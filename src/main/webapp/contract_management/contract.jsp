@@ -88,28 +88,43 @@
 <table style="width:100%;border-spacing:1px;" class="formtable">
 	<tr>
 		<td align="right"><label class="Validform_label"> 合同编码 </label></td>
-		<td class="value"><input class="inputxt" id="code" name="code" value="${contract.code}" datatype="s2-10">
+		<td class="value"><input class="inputxt" id="code" name="code" value="${contract.code}" datatype="s2-20">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 
 	<tr>
 		<td align="right"><label class="Validform_label"> 合同名称 </label></td>
-		<td class="value"><input class="inputxt" id="name" name="name" value="${contract.name}" datatype="s2-10">
+		<td class="value"><input class="inputxt" id="name" name="name" value="${contract.name}" datatype="s2-50">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	
 	<tr>
 		<td align="right"><label class="Validform_label"> 归口部门 </label></td>
-		<td class="value"><input class="inputxt" id="relevantDepartment" name="relevantDepartment" value="${contract.relevantDepartment}">
+		<td class="value">
+		
+		<input class="inputxt" disabled id="relevantDepartment_disp" name="relevantDepartment_disp" value="${relevantDepartment_disp}"></input>
+		<input type="hidden" id="relevantDepartment" name="relevantDepartment" value="${contract.relevantDepartment}"></input>
+		 <h:choose textname="orgname" hiddenid="orgcode" inputTextname="relevantDepartment_disp" hiddenName="relevantDepartment" url="indexmanage/selectunit.jsp" icon="icon-search" title="部门列表" isclear="true"></h:choose>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	
 	<tr>
 		<td align="right"><label class="Validform_label"> 合同类别 </label></td>
-		<td class="value"><input class="inputxt" id="type" name="type" value="${contract.type}">
+		<td class="value">
+		<input class="inputxt" name="type" id="type" value="${type }" type="hidden">
+		<c:if test="${type == 0 || type == null}">
+		<input class="inputxt" name="typename" id="typename" value="工程合同" readonly="readonly">
+		</c:if>
+		<c:if test="${type == 1 || type == null}">
+		<input class="inputxt" name="typename" id="typename" value="采购合同" readonly="readonly">
+		</c:if>
+		<c:if test="${type == 2 || type == null}">
+		<input class="inputxt" name="typename" id="typename" value="维修合同" readonly="readonly">
+		</c:if>
+		
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -130,7 +145,7 @@
 	
 	<tr>
 		<td align="right"><label class="Validform_label"> 合同金额 </label></td>
-		<td class="value"><input class="inputxt" id="contractValue" name="contractValue" value="${contract.contractValue}">
+		<td class="value"><input class="easyui-numberbox" id="contractValue" name="contractValue" value="${contract.contractValue}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -144,7 +159,7 @@
 	
 	<tr>
 		<td align="right"><label class="Validform_label"> 签订日期 </label></td>
-		<td class="value"><input class="inputxt" id="signingDate" name="signingDate" value="${contract.signingDate}">
+		<td class="value"><input class="easyui-datebox" id="signingDate" name="signingDate" value="${contract.signingDate}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -158,7 +173,7 @@
 	
 	<tr>
 		<td align="right"><label class="Validform_label"> 完成日期 </label></td>
-		<td class="value"><input class="inputxt" id="finishingDate" name="finishingDate" value="${contract.finishingDate}">
+		<td class="value"><input class="easyui-datebox" id="finishingDate" name="finishingDate" value="${contract.finishingDate}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -173,6 +188,7 @@
 	<tr>
 		<td align="right"><label class="Validform_label"> 存储路径 </label></td>
 		<td class="value"><input class="inputxt" id="contractFilePath" name="contractFilePath" value="${contract.contractFilePath}">
+		 <a id="btn_uploadfile" href="#"    class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">上传文件</a>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -180,4 +196,35 @@
 </table>
 
 </form>
+<script type="text/javascript">
+$("#btn_uploadfile").click(function(){
+	createwindow("文件上传","fileupload/fileupload.jsp",350,130,returnFile);
+	    });
+
+function returnFile(data){
+	$('#contractFilePath').val(data.code);
+   
+}
+function createwindow(title, url, width, height,func) {
+	
+	$.dialog({
+			id:'CLHG1976D',
+			data:func,
+			content : 'url:' + url,
+			lock : true,
+			width : width,
+			height : height,
+			title : title,
+			zIndex :2000,
+			opacity : 0.3,
+			cache : false,
+			ok : function() {
+				$('#btn_ok', this.iframe.contentWindow.document).click();
+				return true;
+			},
+			cancelVal : '关闭',
+			cancel : true/* 为true等价于function(){} */
+		});
+}
+</script>
 </body>

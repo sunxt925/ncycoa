@@ -17,14 +17,14 @@
 <body>
 	<h:datagrid actionUrl="meeting_management.htm?dgdata&flag=depart" fit="true" fitColumns="true" queryMode="group" name="meetinglist">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
-		<h:dgColumn field="meetingName" title="会议名称"  query="true"></h:dgColumn>
-		<h:dgColumn field="meetingTopics" title="会议主题"  query="true"></h:dgColumn>
+		<h:dgColumn field="meetingName" title="会议名称" ></h:dgColumn>
+		<h:dgColumn field="meetingTopics" title="会议主题" ></h:dgColumn>
 		<h:dgColumn field="meetingBeginDate" title="开始时段"  dateFormatter="yyyy-MM-dd hh:mm:ss" query="true"></h:dgColumn>
 		<h:dgColumn field="meetingEndDate" title="结束时段" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true"></h:dgColumn>
-		<h:dgColumn field="meetingRoom" title="开会地点"   dictionary="ncycoa_meetingroom,room_no,room_name"  query="true"></h:dgColumn>
-		<h:dgColumn field="numAttendee" title="会议人数"  query="true" queryMode="scope"></h:dgColumn>
+		<h:dgColumn field="meetingRoom" title="开会地点"   dictionary="ncycoa_meetingroom,room_no,room_name"  ></h:dgColumn>
+		<h:dgColumn field="numAttendee" title="会议人数" ></h:dgColumn>
 		<h:dgColumn field="meetingFlag" title="会议状态" replace="完成_11,取消_10,未处理_0" style="color:green_10,color:red_0,color:blue_11" query="true"></h:dgColumn>
-		<h:dgColumn field="auditFlag" title="审核状态" replace="通过_11" style="color:color:green_11" query="true"></h:dgColumn>
+		<h:dgColumn field="auditFlag" title="审核状态" replace="通过_11" style="color:color:green_11" ></h:dgColumn>
 		<h:dgColumn title="操作" field="opt"></h:dgColumn>
 		<h:dgToolBar url="meeting_management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
 		<h:dgConfOpt title="完成" url="meeting_management.htm?execute&id={id}&res=yes" message="确认完成？" />

@@ -103,7 +103,7 @@ function select()
     <legend>查询条件</legend>
     <table>
     <tr>
-    <td><input type="checkbox" value="0" id="0" name="0">入库&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="1" id="1" name="1" >领用</td>
+    <td><input type="checkbox" value="0" id="0" name="0">入库&nbsp;&nbsp;<input type="checkbox" value="1" id="1" name="1" >领用&nbsp;&nbsp; <a href="#" onClick="select()" class="button4">查询</a></td>
     </tr>
     
     <tr><td> 部门名称：<input name="department" type="text" class="input1" id="department"  value=""  ></td></tr>
@@ -126,7 +126,7 @@ function select()
 	<ul id="treeDemo" class="ztree"></ul>
 </div>
 <div>
-	<a href="#" onClick="select()" class="button4">查询</a>
+	
 </div>
 <input type="hidden" id="entity" name="entity" value="COM_INSTOREITEM"/>
 <input type="submit" name="Submit" value="提交" style="display:none">

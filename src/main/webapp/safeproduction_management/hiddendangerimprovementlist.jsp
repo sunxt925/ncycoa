@@ -16,24 +16,24 @@
 </head>
 <body>
 	<h:datagrid actionUrl="hiddendangerimprovement_management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="hiddendangerimprovementlist">
-		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
-		<h:dgColumn field="number" title="序号" query="true"></h:dgColumn>
-		<h:dgColumn field="place" title="地点" ></h:dgColumn>
-		<h:dgColumn field="date" title="日期" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="scope"></h:dgColumn>
-     	<h:dgColumn field="dangerContent" title="隐患内容"></h:dgColumn>
-		<h:dgColumn field="dangerType" title="隐患分类" query="true"></h:dgColumn>
-		<h:dgColumn field="dangerLevel" title="隐患分级" replace="一般_0,重点 _1"></h:dgColumn>
-		<h:dgColumn field="improveStatus" title="整改措施及完成情况" ></h:dgColumn>
+		<h:dgColumn field="id" title="流水号"></h:dgColumn>
+		<h:dgColumn field="place" title="隐患部位" ></h:dgColumn>
+		<h:dgColumn field="improveMethod" title="整改措施"></h:dgColumn>
+		<h:dgColumn field="improveStatus" title="完成情况" ></h:dgColumn>
 		<h:dgColumn field="improveDepart" title="整改责任单位/部门"></h:dgColumn>
 		<h:dgColumn field="improveChecker" title="整改验证人"></h:dgColumn>
 		<h:dgColumn field="memo" title="备注" ></h:dgColumn>
-		<h:dgToolBar url="hiddendangerimprovement_management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
-		<h:dgToolBar url="hiddendangerimprovement_management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
-		<h:dgToolBar url="hiddendangerimprovement_management.htm?update" icon="icon-reload" funname="myedit" title="更新"></h:dgToolBar>
+		<h:dgColumn field="filePath" title="整改文件" query="true"></h:dgColumn>
+		<h:dgColumn title="操作" field="opt"></h:dgColumn>
+		<h:dgFunOpt funname="fileload({filePath},{id})" title="文件下载"></h:dgFunOpt>
+		<h:dgToolBar url="hiddendangerimprovement_management.htm?update" icon="icon-reload" funname="myedit" title="添加整改"></h:dgToolBar>
 	</h:datagrid>
 </body>
 
 <script type="text/javascript">
+function fileload(fileName,id){
+	   window.open("fileupload/downwebpoi.jsp?type=dangerimprove&filename="+fileName+"&id="+id);
+}
 	$(document).ready(function(){
 		$("input[name='date_begin']").attr("class","easyui-datebox");
 		$("input[name='date_end']").attr("class","easyui-datebox");

@@ -17,7 +17,7 @@ public class CheckRecord {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="ID")
-	private Long id;   
+	private Long id;   //流水号
 	
 	@Column(name="PLACE")
 	private String place;   //检查地点
@@ -39,10 +39,11 @@ public class CheckRecord {
 	private String checkResult;     // 检查结果
 	
 	@Column(name="CHANGE_REQUIRE")
-	private String changeRequire;   // 整改要求
+	private String changeRequire;     // 整改要求
 	
-	@Column(name="CHANGE_STATUS")
-	private String changeStatus;   // 整改情况
+	@Column(name="RESULT_FILEPATH")
+	private String filePath; //文件路径名称
+	
 
 	public Long getId() {
 		return id;
@@ -100,6 +101,14 @@ public class CheckRecord {
 		this.checkResult = checkResult;
 	}
 
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+
 	public String getChangeRequire() {
 		return changeRequire;
 	}
@@ -108,12 +117,5 @@ public class CheckRecord {
 		this.changeRequire = changeRequire;
 	}
 
-	public String getChangeStatus() {
-		return changeStatus;
-	}
-
-	public void setChangeStatus(String changeStatus) {
-		this.changeStatus = changeStatus;
-	}
 	
 }

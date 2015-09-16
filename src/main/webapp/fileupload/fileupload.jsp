@@ -53,23 +53,24 @@ String staffcode=request.getParameter("staffcode");
              </td>  
              </tr>  
             </table>  
-	       <input type="button" id="btn_ok" style="display: none " onclick="ret()">
+	       <input type="button" id="btn_ok" style="display: " onclick="ret()" value="上传">
 	       
 </body>
 <script type="text/javascript">
    function ret(){
-	  
-	   var api = frameElement.api;
+	 
+    var date = new Date();
+	    var api = frameElement.api;
 	   var val=$("#file").val();
 	   var v=new Array();
 	   v=val.split("\\");
 	   var timestamp = Date.parse( new Date());
 	   var va = v[v.length-1].split(".");
-	   var filename = timestamp+"."+va[va.length-1];
+	   var filename = date.getFullYear()+"/"+date.getMonth()+"-"+date.getDay()+"/"+timestamp+"."+va[va.length-1];
 	   $("#filename").val(filename);
 	   (api.data)({code:filename});
-	   formSubmit();
-	   window.close();
+	   formSubmit();  
+	  // window.close();
     }
    function callback(){  
        $.ajax({  

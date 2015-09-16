@@ -104,7 +104,7 @@ public class GoodsStoreEvent {
 			DBObject db = new DBObject();
 			
 
-			String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||StoreEventNo||'\">' as 选择,StoreEventNo as 事件流水号,EventType as 事件类别,EventDesc as 事件说明,GoodsItemNum as 商品类别数量,InputOrgCode as 录入部门,AuditorCode as 操作人员, to_char(inputDate,'yyyy-mm-dd') as 录入日期,memo as 备注,'<a href=\"#\" onClick=detail(\"'||StoreEventNo||'\") class=\"button4\">明细</a><a href=\"#\" onClick=dele(\"'||StoreEventNo||','||GoodsItemNum||'\") class=\"button4\">删除</a>' as 操作   from Com_StoreEvent where EventType='"+type+"' ORDER BY StoreEventNo ";
+			String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||StoreEventNo||'\">' as 选择,StoreEventNo as 事件流水号,EventType as 事件类别,EventDesc as 事件说明,GoodsItemNum as 商品类别数量,InputOrgCode as 录入部门,AuditorCode as 操作人员, to_char(inputDate,'yyyy-mm-dd') as 录入日期,memo as 备注,'<a href=\"#\" onClick=detail(\"'||StoreEventNo||'\") class=\"button4\">明细</a><a href=\"#\" onClick=dele(\"'||StoreEventNo||','||GoodsItemNum||'\") class=\"button4\">删除</a>' as 操作   from Com_StoreEvent where EventType='"+type+"' ORDER BY INPUTDATE desc";
 
 			String sql_run = Format.getFySql(base_sql, pageno, perpage);
 			return db.runSelectQuery(sql_run);
@@ -135,8 +135,10 @@ public class GoodsStoreEvent {
 		try
 		{
 			DBObject db = new DBObject();
-			String sqltemp="delete from Com_StoreEvent where StoreEventNo='"+BmString+"'";
-			if(db.run(sqltemp))
+			String sql="delete from com_outstoreitem where StoreEventNo='"+BmString+"'";//删除出库事件item
+			String sql_in="delete from com_instoreitem where StoreEventNo='"+BmString+"'";//删除入库事件item
+			String sqltemp="delete from Com_StoreEvent where StoreEventNo='"+BmString+"'";//删除出入库事件
+			if(db.run(sql)&&db.run(sql_in)&&db.run(sqltemp))
 				return true;
 			else
 				return false;

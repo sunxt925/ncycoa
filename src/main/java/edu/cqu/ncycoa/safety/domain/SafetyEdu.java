@@ -25,6 +25,12 @@ public class SafetyEdu {
 	@Column(name="SAFETYEDU_TIME")
 	private Date trainTime;//培训时间
 	
+	@Column(name="SAFETYEDU_PLACE")
+	private String place;//地点
+	
+	@Column(name="SAFETYEDU_THEME")
+	private String theme;//主题
+	
 	@Column(name="SAFETYEDU_TEACHER")
 	private String teacher;//讲师情况
 	
@@ -86,6 +92,23 @@ public class SafetyEdu {
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
+
+	public String getPlace() {
+		return place;
+	}
+
+	public void setPlace(String place) {
+		this.place = place;
+	}
+
+	public String getTheme() {
+		return theme;
+	}
+
+	public void setTheme(String theme) {
+		this.theme = theme;
+	}
+	
 	
 	
 }

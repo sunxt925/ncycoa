@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.common.CodeDictionary;
+
 import edu.cqu.ncycoa.common.dto.AjaxResultJson;
 import edu.cqu.ncycoa.common.dto.DataGrid;
 import edu.cqu.ncycoa.common.dto.QueryDescriptor;
@@ -67,6 +69,7 @@ public class RelevantPartyController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("safeproduction_management/relevantparty");
 		mav.addObject("relevantParty",relevantParty);
+		mav.addObject("orgname",CodeDictionary.syscode_traslate("base_org","orgcode", "orgname", relevantParty.getGkorgcode()));
 		return mav;
 	}
 	

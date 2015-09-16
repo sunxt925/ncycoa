@@ -82,9 +82,21 @@
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
 <input id="id" name="id" type="hidden" value="${checkPlan.id}">
 <table style="width:600px;border-spacing:1px;" class="formtable">
+    <tr>
+		<td align="right"><label class="Validform_label">计划编号</label></td>
+		<td class="value"><input class="inputxt" style="width:150px;" id="planNum" name="planNum"  value="${checkPlan.planNum}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
      <tr>
 		<td align="right"><label class="Validform_label">检查类别</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="type" name="type"  value="${checkPlan.type}">
+		<td class="value">
+		<select class="inputxt" id="type" name="type" style="width:156px;">
+			<option value="0">综合检查</option>
+			<option value="1">专项检查</option>
+			<option value="2">节假日检查</option>
+			<option value="3">季节性检查</option>
+		</select>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -103,7 +115,11 @@
 
 	<tr>
 		<td align="right"><label class="Validform_label">受检单位/部门</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="checkedDepart" name="checkedDepart" value="${checkPlan.checkedDepart}">
+		<td class="value">
+		<input class="inputxt" style="width:150px;display:none" id="checkedDepart" name="checkedDepart" value="${checkPlan.checkedDepart}">
+		<input class="inputxt" style="width:150px;" id="apporgName" name="apporgName" value="${orgname}">
+		<a id="btn_selectorg" href="#" class="easyui-linkbutton"
+				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -129,6 +145,49 @@
 <div style="width: 690px; height: 1px;"></div>
 
 </form>
+<script type="text/javascript">
+$("#btn_selectorg").click(function(){
+	
+	createwindow('选择部门','indexmanage/selectunit.jsp',500,500,returnorgValue );
+    });
+function returnorgValue(data){
+	var org = data.code;
+	var codes="";
+	if(org.length>1){
+		for(var i=0;i<org.length;i++){
+			codes+=org[i].orgcode;
+			codes+=",";
+		}
+		$('#checkedDepart').val(codes);
+		$('#apporgName').val(org[0].orgname);
+	}else{
+		$('#checkedDepart').val(org[0].orgcode);
+		$('#apporgName').val(org[0].orgname);
+	}
+}
+function createwindow(title, url, width, height,func) {
+	
+	$.dialog({
+			id:'CLHG1976D',
+			data:func,
+			content : 'url:' + url,
+			lock : true,
+			width : width,
+			height : height,
+			title : title,
+			zIndex :2000,
+			opacity : 0.3,
+			cache : false,
+			ok : function() {
+				$('#btn_ok', this.iframe.contentWindow.document).click();
+				return true;
+			},
+			cancelVal : '关闭',
+			cancel : true/* 为true等价于function(){} */
+		});
+}
+
+</script>
 
 <table style="display: none">
 	<tbody id="add_participant_table_template">

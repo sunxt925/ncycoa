@@ -17,6 +17,8 @@
 <body>
 	<h:datagrid actionUrl="accident_management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="accidentlist">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
+		<h:dgColumn field="time" title="时间" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn>
+		<h:dgColumn field="place" title="地点"></h:dgColumn>
 		<h:dgColumn field="detial" title="事故概述" query="true"></h:dgColumn>
 	    <h:dgColumn field="analyze" title="事故分析"></h:dgColumn>
 		<h:dgColumn field="punish" title="事故责任处罚"></h:dgColumn>

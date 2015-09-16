@@ -206,7 +206,7 @@ public class GoodsStoreInfo {
 			DBObject db = new DBObject();
 			
 			//,'<a href=\"#\" onclick=F1(\"'||GoodsCode||','||GoodsName||','||AvailableNumber||'\") class=\"button4\">出库</a>' as 操作
-			String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||GoodsCode||'\">' as 选择,GoodsCode as 物资品名代码,GoodsName as 物资品名,GoodsDesc as 说明,GoodsStyle as 规格型号,MeasureUnit as 计量单位,TotalNumber as 总数,InCount as 入库次数,AvailableNumber as 可用数量,OutNumber as 领用数量,outCount as 出库次数,to_char(FirstInDate,'yyyy-mm-dd') as 最早入库时间,to_char(LastOutDate,'yyyy-mm-dd') as 最后出库时间,Memo as 备注     from Com_StoreInfo where GoodsCode like'"+goodscode+"%'";
+			String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||GoodsCode||'\">' as 选择,GoodsCode as 物资品名代码,GoodsName as 物资品名,GoodsDesc as 说明,GoodsStyle as 规格型号,MeasureUnit as 计量单位,TotalNumber as 总数,InCount as 入库次数,AvailableNumber as 可用数量,OutNumber as 领用数量,outCount as 出库次数,to_char(FirstInDate,'yyyy-mm-dd') as 最早入库时间,to_char(LastOutDate,'yyyy-mm-dd') as 最后出库时间,Memo as 备注     from Com_StoreInfo where GoodsCode like'"+goodscode+"%' and TotalNumber!=0";
 			//System.out.println(base_sql);
 			String sql_run = Format.getFySql(base_sql, pageno, perpage);
 			return db.runSelectQuery(sql_run);

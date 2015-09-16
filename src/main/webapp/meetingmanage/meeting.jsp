@@ -84,7 +84,7 @@
 <form id="formobj" name="formobj" action="meeting_management.htm?save"  method="post">
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
 <input id="id" name="id" type="hidden" value="${meetingInfo.id}">
-<table style="width:600px;border-spacing:1px;" class="formtable">
+<table style="border-spacing:1px;" class="formtable">
 	<tr>
 		<td align="right"><label class="Validform_label"> 会议名称 </label></td>
 		<td class="value"><input class="inputxt" style="width:150px;" id="meetingName" name="meetingName" value="${meetingInfo.meetingName}" datatype="s2-10">
@@ -116,7 +116,8 @@
 	<tr>
 		<td align="right"><label class="Validform_label"> 开会地点 </label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="meetingRoom" name="meetingRoom" value="${meetingInfo.meetingRoom}" >
+		<input type="hidden" id="meetingRoom" name="meetingRoom" value="${meetingInfo.meetingRoom}">
+		<input class="inputxt" style="width:150px;" id="meetingRoomName" name="meetingRoomName" value="${meetingRoomName}" >
 		<a id="btn_selectroom" href="#" class="easyui-linkbutton"
 				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
@@ -132,7 +133,8 @@
 	<tr>
 		<td align="right"><label class="Validform_label"> 参与人员 </label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="participants" name="participants" value="${meetingInfo.participants}">
+		<input type="hidden" name="participants" id="participants" value="${meetingInfo.participants}">
+		<input class="inputxt" style="width:150px;" id="participantsname" name="participantsname" value="${participantsname}">
 		<a id="btn_selectobject" href="#" class="easyui-linkbutton"
 				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
@@ -141,7 +143,8 @@
 	<tr>
 		<td align="right"><label class="Validform_label"> 需求部门 </label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="applyOrgCode" name="applyOrgCode" value="${meetingInfo.applyOrgCode}" datatype="s2-10">
+		<input type="hidden" style="width:150px;" id="applyOrgCode" name="applyOrgCode" value="${meetingInfo.applyOrgCode}">
+		<input class="inputxt" style="width:150px;" id="applyOrgName" name="applyOrgName" value="${applyOrgName}">
 		<a id="btn_selectorg" href="#" class="easyui-linkbutton"
 				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
@@ -169,6 +172,7 @@ function returnorgValue(data){
 		alert("最多只能选择一个部门");
 	}else{
 		$('#applyOrgCode').val(org[0].orgcode);
+		$('#applyOrgName').val(org[0].orgname);
 	}
 	
 	
@@ -198,6 +202,7 @@ function returnroomValue(data){
 	$.get(url,function(data,status){
 		if(data=="1"){
 			$('#meetingRoom').val(room.roomid);
+			$('#meetingRoomName').val(room.roomname);
 		}else{
 			$('#meetingRoom').val('');
 			alert("选择的会议室有冲突");
@@ -216,12 +221,15 @@ $("#btn_selectobject").click(function(){
 function returnobjValue(data){
 
 	var array = data.code;
-	var staffs="";
+	var staffcodes="";
+	var staffnames="";
 	for(var i=0;i<array.length;i++){
-		staffs += array[i].staffcode+",";
+		staffcodes += array[i].staffcode+",";
+		staffnames += array[i].staffname+",";
 	}
 	
-	$('#participants').val(staffs);
+	$('#participants').val(staffcodes);
+	$('#participantsname').val(staffnames);
 	$('#numAttendee').val(array.length);
 	
 }

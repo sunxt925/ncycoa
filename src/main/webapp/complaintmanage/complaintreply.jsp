@@ -61,6 +61,10 @@ ComponentUtil cu=new ComponentUtil();
                        out.print(cu.print("TBM_COMPLAINTREPLY", "MEMO"));
                     %></td>
                 </tr>
+                <tr>
+                <td></td>
+                <td><input type="button" id="btn_ok" style="display: " onclick="ret()" value="提交"></td>
+                </tr>
              <input type="hidden" id="TBM_COMPLAINTREPLY.REPLYNO" name="TBM_COMPLAINTREPLY.REPLYNO" value="<%=IndexCode.getRecno("CR")%>">
             <input type="hidden" id="TBM_COMPLAINTREPLY.COMPLAINTNO" name="TBM_COMPLAINTREPLY.COMPLAINTNO" value="<%=complaintno%>">
             <input type="hidden" id="TBM_COMPLAINTREPLY.ENABLEDFLAG" name="TBM_COMPLAINTREPLY.ENABLEDFLAG" value="1">
@@ -71,7 +75,7 @@ ComponentUtil cu=new ComponentUtil();
              <input name="action_class" type="hidden" id="action_class" value="com.action.index.ComplaintReplyAction">
              <input type="submit" name="Submit" value="提交" style="display:none">
              <input type="reset" name="reset" value="重置" style="display:none">
-              <input type="button" id="btn_ok" style="display: " onclick="ret()" value="提交">
+              
         </form>
        
         
@@ -102,7 +106,7 @@ ComponentUtil cu=new ComponentUtil();
     			cache : false,
     			ok : function() {
     				$('#btn_ok', this.iframe.contentWindow.document).click();
-    				return false;
+    				return true;
     			},
     			cancelVal : '关闭',
     			cancel : true/* 为true等价于function(){} */

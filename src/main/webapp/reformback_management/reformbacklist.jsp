@@ -25,7 +25,6 @@
 		<h:dgColumn field="subDate" title="提交日期" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="scope"></h:dgColumn>
 		<h:dgColumn field="subUser" title="提交者"   dictionary="base_staff,staffcode,staffname"></h:dgColumn>
 		<h:dgToolBar url="reformback_management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
-		<h:dgToolBar url="reformback_management.htm?update" icon="icon-add" funname="update" title="编辑"></h:dgToolBar>
 		
 		<h:dgToolBar url="reformback_management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
 		

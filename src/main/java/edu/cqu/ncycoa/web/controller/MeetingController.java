@@ -31,6 +31,7 @@ import edu.cqu.ncycoa.common.util.dao.TQOrder;
 import edu.cqu.ncycoa.common.util.dao.TQRestriction;
 import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
 import edu.cqu.ncycoa.domain.MeetingInfo;
+import edu.cqu.ncycoa.domain.MeetingRoom;
 import edu.cqu.ncycoa.util.ConvertUtils;
 import edu.cqu.ncycoa.util.Globals;
 import edu.cqu.ncycoa.util.MyBeanUtils;
@@ -80,6 +81,14 @@ public class MeetingController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("meetingmanage/meeting");
 		mav.addObject("meetingInfo",meetingInfo);
+		List<String> staffnames = new ArrayList<String>();
+		
+		for(String staffcode : meetingInfo.getParticipants()){
+			staffnames.add(CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname", staffcode));
+		}
+		mav.addObject("participantsname", staffnames);
+		mav.addObject("meetingRoomName",meetingService.findEntityByJPQL("from MeetingRoom room where room.roomNo='"+meetingInfo.getMeetingRoom()+"'", MeetingRoom.class).getRoomName());
+		mav.addObject("applyOrgName",CodeDictionary.syscode_traslate("base_org","orgcode", "orgname", meetingInfo.getApplyOrgCode()));
 		return mav;
 	}
 	

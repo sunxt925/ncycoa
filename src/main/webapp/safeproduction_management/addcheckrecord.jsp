@@ -103,7 +103,8 @@
 
 	<tr>
 		<td align="right"><label class="Validform_label">参加人员</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="participants" name="participants" value="${checkRecord.participants}">
+		<td class="value"><input class="inputxt" style="width:150px;display:none" id="participants" name="participants" value="${checkRecord.participants}">
+		<input class="inputxt" style="width:150px;" id="managerName" name="managerName" value="${checkRecord.participants}">
 		<a id="btn_selectobject" href="#" class="easyui-linkbutton"
 				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
@@ -111,25 +112,33 @@
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label">检查内容</label></td>
-		<td class="value"><input class="inputxt" style="width:250px;" id="checkContent" name="checkContent" value="${checkRecord.checkContent}">
+		<td class="value">
+		<textarea class="inputxt" id="checkContent" name="checkContent" style="overflow-x:hidden;width:400px;height:100px">${checkRecord.checkContent}</textarea>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label">检查结果</label></td>
-		<td class="value"><input class="inputxt" style="width:100px;" id="checkResult" name="checkResult" value="${checkRecord.checkResult}">
+		<td class="value">
+		<textarea class="inputxt" id="checkResult" name="checkResult" style="overflow-x:hidden;width:400px;height:100px">${checkRecord.checkResult}</textarea>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label">整改要求</label></td>
-		<td class="value"><input class="inputxt" style="width:160px;" id="changeRequire" name="changeRequire" value="${checkRecord.changeRequire}">
+		<td class="value">
+		<textarea class="inputxt" id="changeRequire" name="changeRequire" style="overflow-x:hidden;width:400px;height:100px">${checkRecord.changeRequire}</textarea>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label">整改情况</label></td>
-		<td class="value"><input class="inputxt" style="width:160px;" id="changeStatus" name="changeStatus" value="${checkRecord.changeStatus}">
+	<tr hidden="true">
+		<td align="right"><label class="Validform_label">结果资料上传</label></td>
+		<td class="value">
+		<!-- 
+		<input class="inputxt" style="width:150px;" id="filePath" name="filePath" value="${checkRecord.filePath}" >
+		 -->
+		 <input class="inputxt" style="width:150px;" id="filePath" name="filePath" value="2702.doc" >
+		 <a id="btn_uploadfile" href="#"    class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">上传文件</a>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -138,19 +147,30 @@
 
 </form>
 <script type="text/javascript">
+$("#btn_uploadfile").click(function(){
+	createwindow('文件上传','fileupload/fileupload.jsp',350,130,returnFile);
+	    });
+
+function returnFile(data){
+	$('#filePath').val(data.code);
+   
+}
+
 $("#btn_selectobject").click(function(){
-	alert("adsf");
 	createwindow('选择人员','indexmanage/selectstaff.jsp',500,500,returnobjValue );
     });
 function returnobjValue(data){
 
 	var array = data.code;
 	var staffs="";
+	var names="";
 	for(var i=0;i<array.length;i++){
 		staffs += array[i].staffcode+",";
+		names += array[i].staffname+",";
 	}
 	
 	$('#participants').val(staffs);
+	$('#managerName').val(names);
 	//$('#numAttendee').val(array.length);	
 }
 function createwindow(title, url, width, height,func) {

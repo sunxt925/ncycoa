@@ -31,7 +31,7 @@ public class ContractInfo {
 	private String type;     			// 合同类别
 	
 	@Column(name="RELEVANT_DEPART")
-	private String relevantDepartment;  // 归口部门
+	private String relevantDepartment;  // 实施部门
 	
 	@Column(name="PARTY_A")
 	private String partyA;	 			// 合同甲方
@@ -61,6 +61,101 @@ public class ContractInfo {
 	
 	@Column(name="CONTRACT_FILE_PATH")
 	private String contractFilePath;    // 合同文本存储路径
+	
+	@Column(name="CONTRACT_AUDITFILE_PATH")//审核表文件路径
+	private String audittable;
+	
+	@Column(name="CONTENT")
+	private String content;
+	
+	@Column(name="CONTACTER")
+	private String contacter;
+	
+	@Column(name="CONTACT_METHOD")
+	private String contactMethod;
+	
+	@Column(name="STATUS")
+	private Short status;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name="APP_DATE")
+	private Date appDate;
+	
+	@Column(name="APP_DEPART")
+	private String appDepart;
+	
+	@Column(name="IMPL_METHOD")
+	private String implMethod;
+	
+	@Column(name="PROCESS_INS_ID")
+	private String processInstanceId;
+	
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getContacter() {
+		return contacter;
+	}
+
+	public void setContacter(String contacter) {
+		this.contacter = contacter;
+	}
+
+	public String getContactMethod() {
+		return contactMethod;
+	}
+
+	public void setContactMethod(String contactMethod) {
+		this.contactMethod = contactMethod;
+	}
+
+	public Short getStatus() {
+		return status;
+	}
+
+	public void setStatus(Short status) {
+		this.status = status;
+	}
+
+	public Date getAppDate() {
+		return appDate;
+	}
+
+	public void setAppDate(Date appDate) {
+		this.appDate = appDate;
+	}
+
+	public String getAppDepart() {
+		return appDepart;
+	}
+
+	public void setAppDepart(String appDepart) {
+		this.appDepart = appDepart;
+	}
+
+	public String getImplMethod() {
+		return implMethod;
+	}
+
+	public void setImplMethod(String implMethod) {
+		this.implMethod = implMethod;
+	}
+
+	public String getMemo() {
+		return memo;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
+
+	private String memo;
+	
 
 	public Long getId() {
 		return id;
@@ -172,6 +267,22 @@ public class ContractInfo {
 
 	public void setContractFilePath(String contractFilePath) {
 		this.contractFilePath = contractFilePath;
+	}
+
+	public String getProcessInstanceId() {
+		return processInstanceId;
+	}
+
+	public void setProcessInstanceId(String processInstanceId) {
+		this.processInstanceId = processInstanceId;
+	}
+
+	public String getAudittable() {
+		return audittable;
+	}
+
+	public void setAudittable(String audittable) {
+		this.audittable = audittable;
 	}
 	
 }

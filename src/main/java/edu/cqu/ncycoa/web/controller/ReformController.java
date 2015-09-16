@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.common.CodeDictionary;
 import com.common.Format;
 import com.dao.system.UnitDao;
 import com.entity.system.UserInfo;
@@ -77,6 +78,8 @@ public class ReformController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("reform_management/reform");
 		mav.addObject("reform",reform);
+		mav.addObject("ClOrgname",CodeDictionary.syscode_traslate("base_org","orgcode", "orgname", reform.getClOrgcode()));
+		mav.addObject("XdzgOrgname",CodeDictionary.syscode_traslate("base_org","orgcode", "orgname", reform.getXdzgOrgcode()));
 		return mav;
 	}
 	

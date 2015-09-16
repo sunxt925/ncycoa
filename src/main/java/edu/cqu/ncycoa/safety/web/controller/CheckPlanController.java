@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.common.CodeDictionary;
+
 import edu.cqu.ncycoa.common.dto.AjaxResultJson;
 import edu.cqu.ncycoa.common.dto.DataGrid;
 import edu.cqu.ncycoa.common.dto.QueryDescriptor;
@@ -68,6 +70,7 @@ public class CheckPlanController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("safeproduction_management/addcheckplan");
 		mav.addObject("checkPlan",checkPlan);
+		mav.addObject("orgname",CodeDictionary.syscode_traslate("base_org","orgcode", "orgname", checkPlan.getCheckedDepart()));
 		return mav;
 	}
 	

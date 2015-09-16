@@ -125,7 +125,7 @@ $(function() {
 	                 <tbody >
                       <c:forEach items="${comments }" var="item">
 	                   <tr>
-	                   <td>${item.time }</td><td>${item.userId }</td><td> ${item.fullMessage }</td>
+	                   <td>${item.time }</td><td>${item.username }</td><td> ${item.msg }</td>
 	                   </tr>
 	                   </c:forEach>
 	                  </tbody>

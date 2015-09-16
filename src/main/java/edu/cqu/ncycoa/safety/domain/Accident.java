@@ -1,11 +1,15 @@
 package edu.cqu.ncycoa.safety.domain;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="SAFE_ACCIDENT")
@@ -15,6 +19,13 @@ public class Accident {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="ACCIDENT_ID")
 	private Long id;//编号
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="ACCIDENT_TIME")
+	private Date time;  // 时间
+	
+	@Column(name="ACCIDENT_place")
+	private String place;//地点
 	
 	@Column(name="ACCIDENT_DETIAL")
 	private String detial;//事故概述
@@ -79,6 +90,22 @@ public class Accident {
 
 	public void setMemo(String memo) {
 		this.memo = memo;
+	}
+
+	public Date getTime() {
+		return time;
+	}
+
+	public void setTime(Date time) {
+		this.time = time;
+	}
+
+	public String getPlace() {
+		return place;
+	}
+
+	public void setPlace(String place) {
+		this.place = place;
 	}
 	
 	
