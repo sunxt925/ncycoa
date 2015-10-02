@@ -105,9 +105,9 @@ public class StdApplyAction extends ActionInterface{
 					map.put("applyid",applyidString);
 					taskService.complete(taskid,map);
 
-				res += "alert('保存成功');";
+				res += "alert('保存成功');  var api = frameElement.api; W = api.opener; W.reloadTable();api.close();";
 			} else {
-				res += "alert('保存失败，请检查！');";
+				res += "alert('保存失败，请检查！'); var api = frameElement.api; W = api.opener; W.reloadTable();api.close();";
 			}
 		} else if (action != null && action.equals("appro1")) {
 			
@@ -136,18 +136,18 @@ public class StdApplyAction extends ActionInterface{
 				map.put("pass", true);//批准
 				map.put("back", false);//驳回
 				taskService.setVariables(taskid,map); 
-				res += "alert('审核通过并跳过委员会成员');";
+				res += "alert('审核通过并跳过委员会成员'); var api = frameElement.api; W = api.opener; W.reloadTable();api.close();";
 			}else if(result != null && "3".equals(result)){
 				map.put("passtomember", true);//批准
 				map.put("pass", false);//批准
 				map.put("back", false);//驳回
 				taskService.setVariables(taskid,map); 
-				res += "alert('审核通过并转到委员会成员');";
+				res += "alert('审核通过并转到委员会成员'); var api = frameElement.api;W = api.opener; W.reloadTable();api.close();";
 			}else if(result != null && "2".equals(result)){
 				map.put("passtomember", false);//批准
 				map.put("pass", false);//批准
 				map.put("back", true);//驳回
-				res += "alert('已驳回！');";
+				res += "alert('已驳回！'); var api = frameElement.api;W = api.opener; W.reloadTable();api.close();";
 			}
 			taskService.complete(taskid,map);//执行  有参
 
@@ -182,11 +182,11 @@ public class StdApplyAction extends ActionInterface{
 					map.put("go", true);//批准
 					map.put("back", false);//驳回
 					taskService.setVariables(taskid,map); 
-					res += "alert('审核通过');";
+					res += "alert('审核通过'); var api = frameElement.api;W = api.opener; W.reloadTable();api.close();";
 				}else if(result != null && "2".equals(result)){
 					map.put("go", false);//批准
 					map.put("back", true);//驳回
-					res += "alert('已驳回！');";
+					res += "alert('已驳回！'); var api = frameElement.api; W = api.opener; W.reloadTable();api.close();";
 				}
 				taskService.complete(taskid,map);//执行  有参
 

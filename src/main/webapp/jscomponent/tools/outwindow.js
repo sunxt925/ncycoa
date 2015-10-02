@@ -1,5 +1,4 @@
 function createwindow(title, url, width, height) {
-	alert(url);
 		width = width ? width : 700;
 		height = height ? height : 400;
 		if (width == "100%" || height == "100%") {

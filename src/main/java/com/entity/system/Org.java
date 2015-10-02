@@ -257,6 +257,25 @@ public class Org implements ReviewableObj {
 			return null;
 		}
 	}
+	public DataTable getOrgList2(int pageno, int perpage,String orgcode)
+	{
+		try
+		{
+			DBObject db = new DBObject();
+			
+
+			String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||OrgCode||'\">' as 选择,OrgCode as 机构编码,OrgName as 机构全称,OrgSimpleName as 机构简称,PositionCount as 岗位数   from base_org where PARENTORGCODE ='"+orgcode+"'order by orgcode";
+			//String base_sql = "select '选择' as 选择,OrgCode as 机构编码,OrgName as 机构全称,OrgSimpleName as 机构简称,OrgDesc as 机构职能,MemberCount as 成员数,PositionCount as 岗位数,OffcieAddress as 办公地址,PostCode as 邮政编码,ContactInfo as 联系方式,Memo as 备注,'操作' as 操作   from base_org where PARENTORGCODE ='"+orgcode+"'order by orgcode";
+
+			String sql_run = Format.getFySql(base_sql, pageno, perpage);
+			return db.runSelectQuery(sql_run);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
 	public DataTable getOrgListAddName(int pageno, int perpage,String orgcode)
 	{
 		try

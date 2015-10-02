@@ -109,7 +109,7 @@ function getmember(positioncode,positionname)
           
           <td align="right">
           <%
-         String position = "orgcode="+orgcode+"&orgname="+orgname+"&orgclass="+orgclass;
+         String position = "unitccm="+orgcode+"&orgname="+orgname+"&orgclass="+orgclass;
       	out.print(PageUtil.DividePage(page_no,pagecount,"postion_list.jsp",position));
        %>
        </td>
