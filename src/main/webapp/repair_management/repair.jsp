@@ -102,7 +102,7 @@
 	<tr>
 		<td align="right"><label class="Validform_label"> Î¬ÐÞÏîÄ¿Ô¤Ëã </label></td>
 		<td class="value">
-		 <input  class="inputxt" style="width:150px;" id="repairFree" name="repairFree"   value="${repairAudit.repairFree}" datatype="s2-5">
+		 <input  class="easyui-numberbox" style="width:150px;" id="repairFree" name="repairFree"   value="${repairAudit.repairFree}" datatype="s2-5">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>

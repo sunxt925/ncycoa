@@ -11,7 +11,7 @@
     //String  orgcode=request.getParameter("bm");
      SystemRole role=new SystemRole();
 	int page_no=Integer.parseInt(Format.NullToZero(request.getParameter("page_no")));
-	int per_page=20;
+	int per_page=5;
 	//System.out.println(orgcode+"sdfsdfds");
 	DataTable dt=role.getRoleList(page_no,per_page);
 	DataTable dtcount=role.getAllRoleList();
@@ -80,10 +80,10 @@ document.all("form1").submit();
 		<td>
 		<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
 		  <tr valign="top">
-            <td valign="top"><iframe src="empty1.jsp" name="rolelist" id="rolelist" width="100%" height="100%" scrolling="no" frameborder="0"></iframe></td>
+            <td valign="top"><iframe src="empty1.jsp" name="rolelist" id="rolelist" width="95%" height="95%" scrolling="yes" frameborder="0"></iframe></td>
 		  </tr>
 		  <tr valign="bottom">
-		    <td valign="bottom"><iframe src="" name="temp" id="temp" width="100%" height="100%" scrolling="no" frameborder="0"></iframe></td>
+		    <td valign="bottom"><iframe src="" name="temp" id="temp" width="95%" height="95%" scrolling="yes" frameborder="0"></iframe></td>
 		  </tr>
 		</table>
 		</td>

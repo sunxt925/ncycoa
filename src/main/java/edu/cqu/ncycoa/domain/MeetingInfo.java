@@ -76,6 +76,15 @@ public class MeetingInfo {
 	@Column(name="MEETING_AUDITFLAG")
     private String auditFlag;
 	
+	@Column(name="MEETING_EATTYPE")
+	private String eatType; //就餐类型
+	
+	@Column(name="MEETING_EATPNUM")
+	private int eatpnum; //就餐人数
+	
+	@Column(name="MEETING_ACCOMMODATIONNUM")
+	private int accommodationnum;//住宿人数
+	
 	@Column(name="MEETING_MEMO")
     private String memo;
 
@@ -232,6 +241,30 @@ public class MeetingInfo {
 
 	public void setMemo(String memo) {
 		this.memo = memo;
+	}
+
+	public String getEatType() {
+		return eatType;
+	}
+
+	public void setEatType(String eatType) {
+		this.eatType = eatType;
+	}
+
+	public int getEatpnum() {
+		return eatpnum;
+	}
+
+	public void setEatpnum(int eatpnum) {
+		this.eatpnum = eatpnum;
+	}
+
+	public int getAccommodationnum() {
+		return accommodationnum;
+	}
+
+	public void setAccommodationnum(int accommodationnum) {
+		this.accommodationnum = accommodationnum;
 	}
 
 	

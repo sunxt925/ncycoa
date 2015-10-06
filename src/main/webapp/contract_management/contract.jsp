@@ -101,7 +101,7 @@
 	</tr>
 	
 	<tr>
-		<td align="right"><label class="Validform_label"> 归口部门 </label></td>
+		<td align="right"><label class="Validform_label"> 实施部门 </label></td>
 		<td class="value">
 		
 		<input class="inputxt" disabled id="relevantDepartment_disp" name="relevantDepartment_disp" value="${relevantDepartment_disp}"></input>
@@ -124,11 +124,68 @@
 		<c:if test="${type == 2 || type == null}">
 		<input class="inputxt" name="typename" id="typename" value="维修合同" readonly="readonly">
 		</c:if>
-		
+		<c:if test="${type == 3 || type == null}">
+		<input class="inputxt" name="typename" id="typename" value="其他合同" readonly="readonly">
+		</c:if>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
-	
+    <tr>
+    <td align="right"><label class="Validform_label"> 实施方式 </label></td>
+		<td class="value"><select id="contactMethod" name="contactMethod" >
+		<c:if test="${contactMethod == null}">
+		  <option value="0">公开招标</option>
+		  <option value="1">邀请招标</option>
+		  <option value="2">竞争性谈判</option>
+		  <option value="3">询价</option>
+		  <option value="4">单一来源</option>
+		</c:if>
+		<c:if test="${contactMethod == 0}">
+		  <option value="0" selected="selected">公开招标</option>
+		  <option value="1">邀请招标</option>
+		  <option value="2">竞争性谈判</option>
+		  <option value="3">询价</option>
+		  <option value="4">单一来源</option>
+		</c:if>
+		<c:if test="${contactMethod == 1}">
+		  <option value="0">公开招标</option>
+		  <option value="1"  selected="selected">邀请招标</option>
+		  <option value="2">竞争性谈判</option>
+		  <option value="3">询价</option>
+		  <option value="4">单一来源</option>
+		</c:if>
+		<c:if test="${contactMethod == 2}">
+		  <option value="0">公开招标</option>
+		  <option value="1">邀请招标</option>
+		  <option value="2"  selected="selected">竞争性谈判</option>
+		  <option value="3">询价</option>
+		  <option value="4">单一来源</option>
+		</c:if>
+		<c:if test="${contactMethod == 3}">
+		  <option value="0">公开招标</option>
+		  <option value="1">邀请招标</option>
+		  <option value="2">竞争性谈判</option>
+		  <option value="3"  selected="selected">询价</option>
+		  <option value="4">单一来源</option>
+		</c:if>
+		<c:if test="${contactMethod == 4}">
+		  <option value="0">公开招标</option>
+		  <option value="1">邀请招标</option>
+		  <option value="2">竞争性谈判</option>
+		  <option value="3">询价</option>
+		  <option value="4"  selected="selected">单一来源</option>
+		</c:if>
+		</select>
+		
+		</span>
+		</td>
+    </tr>
+    <tr>
+		<td align="right"><label class="Validform_label"> 合同内容 </label></td>
+		<td class="value"><input class="inputxt" id="content" name="content" value="${contract.content}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label"> 甲方 </label></td>
 		<td class="value"><input class="inputxt" id="partyA" name="partyA" value="${contract.partyA}">
@@ -170,10 +227,21 @@
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
-	
+	<tr>
+		<td align="right"><label class="Validform_label"> 执行金额 </label></td>
+		<td class="value"><input class="easyui-numberbox" id="implementationFree" name="implementationFree" value="${contract.implementationFree}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label"> 完成日期 </label></td>
 		<td class="value"><input class="easyui-datebox" id="finishingDate" name="finishingDate" value="${contract.finishingDate}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 有效期 </label></td>
+		<td class="value"><input class="easyui-datebox" id="effectiveDate" name="effectiveDate" value="${contract.effectiveDate}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>

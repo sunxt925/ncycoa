@@ -1,6 +1,7 @@
 <%@page import="com.common.FileUpload"%>
 <%@page import="java.io.*"%>
 <%@page import="java.util.Map"%>
+<%@page import="com.common.Util"%>
 <%@page import="org.apache.commons.fileupload.FileItem"%>
 <%@page contentType="application/json;charset=utf-8" language="java"  errorPage="" %>
 <%
@@ -21,10 +22,10 @@ try {
 } catch (Exception e) {  
     e.printStackTrace();  
 }  
-File f = new File("d:\\ftproot\\temp\\"+params.get("filename"));
+File f = new File(Util.getfileCfg().get("uploadfilepath")+params.get("filename"));
 if (!f.getParentFile().exists())
 	f.getParentFile().mkdirs();
-FileUpload.copyFile(this.getServletContext().getRealPath("upload\\"+fileName), "d:\\ftproot\\temp\\"+params.get("filename"));
+FileUpload.copyFile(this.getServletContext().getRealPath("upload\\"+fileName), Util.getfileCfg().get("uploadfilepath")+params.get("filename"));
 file.delete();
 out.println("上传成功");
 

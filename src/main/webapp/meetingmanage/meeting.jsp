@@ -151,6 +151,39 @@
 		</td>
 	</tr>
 	<tr>
+	 <td align="right"><label class="Validform_label"> 就餐时间</label></td>
+		<td class="value"><select id="eatType" name="eatType" >
+		<c:if test="${eatType == null}">
+		  <option value="0">午餐</option>
+		  <option value="1">晚餐</option>
+		</c:if>
+		<c:if test="${eatType == 0}">
+		  <option value="0" selected="selected">午餐</option>
+		  <option value="1">晚餐</option>
+		</c:if>
+		<c:if test="${eatType == 1}">
+		  <option value="0" >午餐</option>
+		  <option value="1" selected="selected">晚餐</option>
+		</c:if>
+		</select>
+		</span>
+		</td>
+    </tr>
+    <tr>
+		<td align="right"><label class="Validform_label"> 就餐人数 </label></td>
+		<td class="value">
+		<input class="easyui-numberbox" style="width:150px;" id="eatpnum" name="eatpnum" value="${meetingInfo.eatpnum}" datatype="s1-3">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 住宿人数 </label></td>
+		<td class="value">
+		<input class="easyui-numberbox" style="width:150px;" id="accommodationnum" name="accommodationnum" value="${meetingInfo.accommodationnum}" datatype="s1-3">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
 		<td align="right"><label class="Validform_label"> 其他需求 </label></td>
 		<td class="value">
 		<input class="inputxt" style="width:150px;" id="meetingReport" name="meetingReport" value="${meetingInfo.meetingReport}" >

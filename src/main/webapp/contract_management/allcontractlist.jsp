@@ -16,7 +16,7 @@
 </style>
 </head>
 <body>
-	<h:datagrid actionUrl="contract-management.htm?dgdata&type=${type }" fit="true" fitColumns="true" queryMode="group" name="contractlist">
+	<h:datagrid actionUrl="contract-management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="contractlist">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
 		<h:dgColumn field="status" title="status" hidden="true"/>
 		<h:dgColumn field="code" title="合同编码" ></h:dgColumn>
@@ -36,12 +36,10 @@
 		<h:dgColumn field="audittable" title="" style="display:none"></h:dgColumn>
 		<h:dgColumn field="status" title="" style="display:none"></h:dgColumn>
 		<h:dgColumn title="操作" field="opt"></h:dgColumn>
-		<h:dgFunOpt funname="commitcontract({id},{status})" title="提交合同"></h:dgFunOpt>
-		<h:dgFunOpt funname="producecontract({id},{status})" title="审批表生成"></h:dgFunOpt>
 		<h:dgFunOpt funname="downloadcontract({audittable})" title="审批表下载"></h:dgFunOpt>
-		<h:dgToolBar url="contract-management.htm?add&type=${type }" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
-		<h:dgToolBar url="contract-management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
-		<h:dgToolBar url="contract-management.htm?update&type=${type }" icon="icon-add" funname="update" title="更新台账"></h:dgToolBar>
+		<h:dgFunOpt funname="downloadfile({contractFilePath})" title="合同下载"></h:dgFunOpt>
+		<h:dgToolBar url="contract-management.htm?update" icon="icon-add" funname="update" title="更新台账"></h:dgToolBar>
+		<h:dgToolBar url="contract-management.htm?exportExcel" icon="icon-print" funname="exportExcel" title="导出台账"></h:dgToolBar>
 	</h:datagrid>
 </body>
 
@@ -53,18 +51,8 @@
 	});
 	function commitcontract(id,flag){
 		if(flag == "0"){
-			createwindow2('提交审批',"contract_management/chooseaudit.jsp?id="+id,300,400);
-			/* $.post("contract-management.htm?commit&id="+id,function(data,status){
-				var obj = eval('(' + data + ')');
-				$.messager.show({
-		              title:'提示',
-		              msg:obj.msg,
-		              showType:'show'
-		          });
-				setTimeout(function(){
-		        	  window.location.reload();
-		   	      },800);
-			}); */
+			createwindow2('提交审批',"contract_management/chooseaudit.jsp?id="+id,300,400,returnValue);
+			
 		}else{
 			
 			$.dialog.alert("合同已提交，不能重复提交!");
@@ -93,7 +81,13 @@
 			$.dialog.alert("审批表不存在，请生成审批表!");
 		}
     }
-	
+	function downloadfile(filename){
+		if(filename != "null" && filename !=""){
+			window.location.href="fileupload/downweb.jsp?filename="+filename;
+		}else{
+			$.dialog.alert("合同文件不存在!");
+		}
+    }
 	function update(title, actionUrl, gname, width, height){
 		var rows = null;
 		try{rows=$('#'+gname).datagrid('getSelections');}catch(ex){}
@@ -118,17 +112,24 @@
 		}
 		createwindow(title, actionUrl, width, height);
 	}
+	function returnValue2(data){
+		window.location.href="contract-management.htm?exportExcel&sDate="+data.sDate+"&eDate="+data.eDate;
+		$.dialog({id:'choose01'}).close();
+	}
+	function exportExcel(title, actionUrl, gname, width, height){
+		createwindow2('导出Excel',"contract_management/contract_dg_export.jsp",200,200,returnValue2);
+	}
 	function returnValue(data){
 		$.dialog({id:'choose01'}).close();
 		 $.dialog.confirm('审核成功',function(){
 			   window.location.reload();
            });
 	}
-function createwindow2(title, url, width, height) {
+    function createwindow2(title, url, width, height,func) {
 		
 		$.dialog({
 			id:'choose01',
-			data:returnValue,
+			data:func,
 			content : 'url:' + url,
 			lock : true,
 			width : width,

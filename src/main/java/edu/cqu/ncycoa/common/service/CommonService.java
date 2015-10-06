@@ -6,6 +6,7 @@ import java.util.Set;
 
 import edu.cqu.ncycoa.common.dto.DataGridReturn;
 import edu.cqu.ncycoa.common.dto.QueryDescriptor;
+import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
 
 public interface CommonService {
 
@@ -49,4 +50,5 @@ public interface CommonService {
 
 	public abstract <T> T saveEntity(T entity);
 	
+	public <T> List<T> getQueryRes(TypedQueryBuilder<T> tqBuilder);
 }

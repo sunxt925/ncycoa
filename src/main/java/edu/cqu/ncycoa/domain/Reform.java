@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 @Entity
 @Table(name="NCYCOA_REFORM")
-public class Reform {
+public class Reform implements Cloneable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -111,6 +111,11 @@ public class Reform {
 
 	public void setFlag(String flag) {
 		this.flag = flag;
+	}
+
+	public Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
 	}
 	
 	

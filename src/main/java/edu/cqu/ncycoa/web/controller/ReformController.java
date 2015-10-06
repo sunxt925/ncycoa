@@ -85,7 +85,7 @@ public class ReformController {
 	
 	@RequestMapping(params = "save")
 	@ResponseBody
-	public void save(Reform reform, HttpServletRequest request, HttpServletResponse response) {
+	public void save(Reform reform, HttpServletRequest request, HttpServletResponse response) throws CloneNotSupportedException {
 		AjaxResultJson j = new AjaxResultJson();
 		String message;
 		if (reform.getId() != null) {
@@ -102,10 +102,15 @@ public class ReformController {
 			}
 		} else {
 			message = "整改任务下达成功";
-			reform.setHandler(((UserInfo)request.getSession().getAttribute("UserInfo")).getStaffcode());
-			reform.setXdDate(Format.strToDate(Format.getNowtime()));
-			reform.setFlag("0");
-			systemService.addEntity(reform);
+			String[] orgs = reform.getClOrgcode().split(",");
+			for(String org : orgs){
+				Reform reform_tmp = (Reform) reform.clone();
+				reform_tmp.setClOrgcode(org);
+				reform_tmp.setHandler(((UserInfo)request.getSession().getAttribute("UserInfo")).getStaffcode());
+				reform_tmp.setXdDate(Format.strToDate(Format.getNowtime()));
+				reform_tmp.setFlag("0");
+				systemService.addEntity(reform_tmp);
+			}
 			
 		}
 		
