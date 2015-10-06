@@ -107,35 +107,59 @@ public class DocOrgPost {
 		{	boolean flag=false;
 			Vector v = new Vector();
 			DBObject db = new DBObject();
-			DataTable  dt = db.runSelectQuery("select orgcode,doccode from std_org_post where recid = '"+ recid+"'");
-			String orgcode=dt.get(0).get(0).toString();
-			String doccode=dt.get(0).get(1).toString();
+
 			if (recid.indexOf(",") == -1)
 			{
-				v.add("delete from std_org_post where recid like '" + recid
-						+ "%'");
+				DataTable  dt = db.runSelectQuery("select orgcode,doccode from std_org_post where recid = '"+ recid+"'");
+				String orgcode=dt.get(0).get(0).toString();
+				String doccode=dt.get(0).get(1).toString();
+				v.add("delete from std_org_post where recid = '" + recid
+						+ "'");
+				if (db.executeBatch(v))
+				{
+					flag=true;
+				}
+				if(flag){
+	
+					DataTable  dt2 = db.runSelectQuery("select * from std_org_post where doccode = '"+ doccode+"' and orgcode= '"+orgcode+"'");
+					if(dt2.getRowsCount()==0&&(!orgcode.equals(myorgcode))){
+						String sql="delete from std_docorg where orgcode = '" +orgcode+"' and doccode='"+doccode+"'";
+						if (db.run(sql))
+						{
+							flag=true;
+						}
+					}
+				}
 			}
 			else
 			{
 				String[] bm = recid.split(",");
 				for (int i = 0; i < bm.length; i++)
 				{
-					v.add("delete from std_org_post where recid like '" +bm[i]
-							+ "%'");
+					DataTable  dt = db.runSelectQuery("select orgcode,doccode from std_org_post where recid = '"+ bm[i]+"'");
+					String orgcode=dt.get(0).get(0).toString();
+					String doccode=dt.get(0).get(1).toString();
+					v.add("delete from std_org_post where recid = '" +bm[i]
+							+ "'");
+					if (db.executeBatch(v))
+					{
+						flag=true;
+					}
+					if(flag){
+
+						DataTable  dt2 = db.runSelectQuery("select * from std_org_post where doccode = '"+ doccode+"' and orgcode= '"+orgcode+"'");
+						if(dt2.getRowsCount()==0&&(!orgcode.equals(myorgcode))){
+							String sql="delete from std_docorg where orgcode = '" +orgcode+"' and doccode='"+doccode+"'";
+							if (db.run(sql))
+							{
+								flag=true;
+							}
+						}
+					}
 				}
 			}
-			if (db.executeBatch(v))
-			{
-				flag=true;
-			}
-			DataTable  dt2 = db.runSelectQuery("select * from std_org_post where doccode = '"+ doccode+"' and orgcode= '"+orgcode+"'");
-			if(dt2.getRowsCount()==0&&(!orgcode.equals(myorgcode))){
-				String sql="delete from std_docorg where orgcode = '" +orgcode+"' and doccode='"+doccode+"'";
-				if (db.run(sql))
-				{
-					flag=true;
-				}
-			}
+
+
 			return flag;
 		}
 		catch (Exception e)
@@ -237,7 +261,7 @@ public class DocOrgPost {
 		{
 			DBObject db = new DBObject();
 			//DataTable dt = db.runSelectQuery("select positioncode , positionname from base_position where positioncode in ( select positioncode from std_org_post where doccode = '"+ doccode +"' and orgcode = '" + orgcode + "' )" );
-			DataTable dt = db.runSelectQuery("select positioncode , positionname from base_position where positioncode in ( select positioncode from std_org_post where doccode = '"+ doccode + "' )" );
+			DataTable dt = db.runSelectQuery(" select std_org_post.recid,base_org.orgcode, base_org.orgname,std_org_post.positioncode, base_position.positionname from base_org,base_position, std_org_post where base_position.positioncode=std_org_post.positioncode and base_org.orgcode=std_org_post.orgcode and std_org_post.doccode = '"+ doccode + "'" );
 			return dt;
 		}
 		catch (Exception e)
@@ -253,7 +277,7 @@ public class DocOrgPost {
 			DBObject db = new DBObject();
 
 			//String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||std_org_post.recid||'\">' as 选择,std_org_post.positioncode as 岗位编码 , base_position.positionname 岗位名称,'<a href=\"#\" onClick=dele(\"'||std_org_post.recid||'\") class=\"button4\">删除</a>' as 操作  from base_position FULL JOIN std_org_post on base_position.positioncode=std_org_post.positioncode  where std_org_post.doccode = '" + doccode + "' and std_org_post.orgcode = '" + orgcode + "'";
-			String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||std_org_post.recid||'\">' as 选择,std_org_post.positioncode as 岗位编码 , base_position.positionname as 岗位名称,'<a href=\"#\" onClick=dele(\"'||std_org_post.recid||'\") class=\"button4\">删除</a>' as 操作  from base_position FULL JOIN std_org_post on base_position.positioncode=std_org_post.positioncode  where std_org_post.doccode = '" + doccode +  "' order by std_org_post.positioncode";
+			String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||std_org_post.recid||'\">' as 选择,base_org.orgcode as 机构编码, base_org.orgname as 机构名称 ,std_org_post.positioncode as 岗位编码 , base_position.positionname as 岗位名称,'<a href=\"#\" onClick=dele(\"'||std_org_post.recid||'\") class=\"button4\">删除</a>' as 操作  from base_org,base_position, std_org_post where base_position.positioncode=std_org_post.positioncode and base_org.orgcode=std_org_post.orgcode and  std_org_post.doccode = '" + doccode +  "' order by std_org_post.positioncode";
 
 			String sql_run = Format.getFySql(base_sql, pageno, perpage);
 			return db.runSelectQuery(sql_run);

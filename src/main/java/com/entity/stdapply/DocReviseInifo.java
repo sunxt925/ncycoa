@@ -311,7 +311,7 @@ public boolean Std_PublicInsert(String docno) throws Exception{
 				 String storefileno=ftp.FtpUpload(file,in);
 				 if(storefileno==""||storefileno==null)
 					 flag=false;
-			 if(!(applyfile.getFileContentType()).equals("pdf")&&!(applyfile.getFileContentType()).equals("vsd")){
+			 /*if(!(applyfile.getFileContentType()).equals("pdf")&&!(applyfile.getFileContentType()).equals("vsd")){
 				 FtpStoreFile pdffile=new FtpStoreFile();
 				 FtpStoreFile swffile=new FtpStoreFile();
 				 pdffile.setCreatedate((applyfile.getCreatedate()).substring(0, 10));
@@ -405,7 +405,7 @@ public boolean Std_PublicInsert(String docno) throws Exception{
 			    	 if(!applyfile3.Insert())
 			    		 flag=false;
 			     }
-			 }
+			 }*/
 		 }
 	 }
 	return flag;
@@ -634,10 +634,10 @@ public String  StdPublic(String applyid,String applyercode) throws Exception{
 			}
 		}
 		if(flag){
-			res +=  "alert('发布成功');";
+			res +=  "alert('发布成功'); var api = frameElement.api; W = api.opener; W.reloadTable();api.close();";
 
 		}else{
-			res +=  "alert('发布失败');";
+			res +=  "alert('发布失败'); var api = frameElement.api;W = api.opener; W.reloadTable();api.close();";
 		}
 	return res;
 	

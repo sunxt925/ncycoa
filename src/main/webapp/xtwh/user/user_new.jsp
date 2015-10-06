@@ -22,7 +22,7 @@ String orgname=request.getParameter("orgname");
 </HEAD>
 <script language=
                 "javascript" type="text/javascript" src="../../js/MyDatePicker/WdatePicker.js">  </script>
-<script language="javascript" src="../../js/public/key.js"></script>
+
 <script language="javascript" src="../../js/public/check.js"></script>
 <script language="javascript" src="../../js/public/select.js"></script>
 

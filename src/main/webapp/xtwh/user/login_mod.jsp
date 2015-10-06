@@ -16,7 +16,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <META http-equiv=Content-Type content="text/html; charset=gb2312">
 <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
 </HEAD>
-<script language="javascript" src="../../js/public/key.js"></script>
+
 <script language="javascript" src="../../js/public/check.js"></script>
 <script language="javascript">
 function F5()

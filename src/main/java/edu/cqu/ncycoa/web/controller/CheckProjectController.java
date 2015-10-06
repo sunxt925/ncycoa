@@ -469,6 +469,9 @@ public class CheckProjectController{
 			}
 		}
 		if(result != null && "1".equals(result)){
+			String where=(taskService.getVariable(taskid, "towherestart")).toString();
+			System.out.println(where);
+			map.put("towhere",where);
 			map.put("suggest",suggest);
 			if(approvenum==1){
 			CheckProject checkproject = new CheckProject();
@@ -588,8 +591,10 @@ public class CheckProjectController{
 		map.put("banleader",banzhuren.get(0).getString("staffcode"));//为办公室主任上传全市报告结点分人员
 		if((user.getStaffcode()).equals(banzhuren.get(0).getString("staffcode"))){
 			map.put("towhere","pass");//是办公室主任发起的，就不需要相应分技术委员会初评
+			map.put("towherestart","pass");
 		}else{
 			map.put("towhere","jishu");//技术委员会主任发起的，需要初评
+			map.put("towherestart","jishu");
 			map.put("jishuleader",user.getStaffcode());//技术委员会主任发起的评审，评审过程还由他上传初评报告
 		}
 		identityService.setAuthenticatedUserId(user.getStaffcode());
@@ -600,7 +605,7 @@ public class CheckProjectController{
 			 List<Task> groupTaskList=taskService.createTaskQuery().taskAssignee(user.getStaffcode()).orderByTaskCreateTime().desc().list();
 				Task task=groupTaskList.get(0);
 			 request.setAttribute("id", task.getId());
-			 return "std_check/checkproject/startcheck";
+			 return "std_check/checkproject/startcheck1";
 		}
 		else{
 			return null;

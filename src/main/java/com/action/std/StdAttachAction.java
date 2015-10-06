@@ -178,7 +178,14 @@ public class StdAttachAction  extends ActionInterface
 	    	attachInfo.setValidBeginDate(ValidBeginDate);
 	    	attachInfo.setValidEndDate(ValidEndDate);
 	    	attachInfo.setStoreFileFlag(StoreFileFlag);
-			
+			String olddoccode=request.getParameter("olddoccode");
+			String newdoccode=request.getParameter("DocCode");
+			if(!olddoccode.equals(newdoccode)){
+				DocMetaInfo docmetainfo=new DocMetaInfo();
+				docmetainfo.setDocCode(newdoccode);
+				docmetainfo.setDocName(request.getParameter("DocVersionName"));
+				docmetainfo.insert();//文档编码表中插入新的一条
+			}
 			if (attachInfo.Update())
 			{
 				res += "alert('修改成功');";

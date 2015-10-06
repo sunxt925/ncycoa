@@ -91,10 +91,6 @@ function removeOldFile(evt, id){
     return true;  
 } 
 function ajaxFileUploadImg(){  
-// 	var s=document.formobj.result.value;
-// 	if(s==null||s==''){
-// 		alert("请选择操作！");
-// 	}else if(s=='1'){
 						    //获取file的全部id  
 						    var uplist = $("input[name^=uploads]");  
 						var arrId = [];  
@@ -127,17 +123,6 @@ function ajaxFileUploadImg(){
 						    error: function(data){  
 						    }  
 						});  
-// 	}else if(s=='2'){
-<%--  	   $.post("/ncycoa/std_check/checkproject/deleteinstance.jsp?id=<%=taskId %>", --%>
-//   			    {
-
-//   			    },
-//   				 function(data,status){
-//   			    	result(data);
-//   			    	//window.location.reload();
-//   			    }); 
-// 	}
-
 }
 
 
@@ -146,7 +131,7 @@ function ajaxFileUploadImg(){
 <body style="overflow-x:hidden">
 <form id="formobj" name="formobj" action="/ncycoa/std_check/havedo.jsp" enctype="multipart/form-data" method="post">
 &nbsp;&nbsp;<a href="#" onClick="ajaxFileUploadImg()" class="easyui-linkbutton"
-				        data-options="iconCls:'icon-add',plain:true" >提交</a>　<a href="/ncycoa/std_check/checkproject/deleteinstance.jsp?id=<%=taskId %>" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-add',plain:true" >提交[F1]</a>　<a href="/ncycoa/std_check/checkproject/deleteinstance.jsp?id=<%=taskId %>" class="easyui-linkbutton"
 				        data-options="iconCls:'icon-remove',plain:true" >结束流程</a>　
 <input id="staffCode" name="staffCode" type="hidden" value="<%=UserInfo.getStaffcode()%>">
 <input id="taskid" name="taskid" type="hidden" value="<%=taskId%>">
@@ -195,13 +180,6 @@ function ajaxFileUploadImg(){
 		</td>
         </tr> 
 	<%} %>
-<!-- 	  <tr> -->
-<!-- 	       <td align="right"><a id="btn_sub" name="btn_sub" style="display:none" href="#" onClick="ajaxFileUploadImg()">保存[F8]</a><input type="submit" name="Submit" value="提交" style="display:none"></td> -->
-<!-- 		  <td class="value"> -->
-<!-- 		  	<label><input name="result" type="radio" value="1" />提交 </label>  -->
-<!-- 			<label><input name="result" type="radio" value="2" />结束流程 </label>  -->
-<!-- 		</td> -->
-<!--         </tr>  -->
 </table>
 
 </form>

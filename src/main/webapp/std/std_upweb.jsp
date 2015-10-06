@@ -48,33 +48,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				smart.save("UploadTemp");
 				docno=smart.getRequest().getParameter("DocNo");
 				docclass=smart.getRequest().getParameter("storetype");
+				String[] otherfiles=smart.getRequest().getParameterValues("otherfile");
 				if(docclass.equals("1")){
 					docclass="标准类";
 				}else if(docclass.equals("2")){
 					docclass="个人类";
 				}else{docclass="机构类";}
 				type=filename.substring(filename.length()-4,filename.length());
-				if(type.equals(".doc")||type.equals(".dot")||type.equals(".ppt")||type.equals(".xls")){
-			        pdfname=filename.substring(0,filename.length()-4)+".pdf";
-			        swfname=filename.substring(0,filename.length()-4)+".swf";
-			        pdfPath = pathtemp +"\\"+pdfname;
-			        swfPath = pathtemp +"\\"+swfname;
-			       	Office2Pdf office2Pdf=new Office2Pdf();
-					office2Pdf.createPDF(officePath,pdfPath);
-			       // createPDF(officePath,pdfPath);   
-			       PdfToSwf pdftoswf= new PdfToSwf();
-				   pdftoswf.PdfSwf(pdfPath);
-		    	 }else if(type.equals("docx")||type.equals("xlsx")||type.equals("pptx")){
-			        pdfname=filename.substring(0,filename.length()-4)+"pdf";
-			        pdfPath = pathtemp +"\\"+pdfname;
-			        swfname=filename.substring(0,filename.length()-4)+"swf";
-			        swfPath = pathtemp +"\\"+swfname;
-			        //createPDF(officePath,pdfPath);
-			        Office2Pdf office2Pdf=new Office2Pdf();
-					office2Pdf.createPDF(officePath,pdfPath);
-					PdfToSwf pdftoswf= new PdfToSwf();
-				    pdftoswf.PdfSwf(pdfPath);
-		        }
+				if(otherfiles!=null&&otherfiles.length==1){
+						if(type.equals(".doc")||type.equals(".dot")||type.equals(".ppt")||type.equals(".xls")){
+					        pdfname=filename.substring(0,filename.length()-4)+".pdf";
+					        swfname=filename.substring(0,filename.length()-4)+".swf";
+					        pdfPath = pathtemp +"\\"+pdfname;
+					        swfPath = pathtemp +"\\"+swfname;
+						    Office2Pdf office2Pdf=new Office2Pdf();
+							office2Pdf.createPDF(officePath,pdfPath);
+						    // createPDF(officePath,pdfPath);   
+						    PdfToSwf pdftoswf= new PdfToSwf();
+							pdftoswf.PdfSwf(pdfPath);
+					       
+				    	 }else if(type.equals("docx")||type.equals("xlsx")||type.equals("pptx")){
+					        pdfname=filename.substring(0,filename.length()-4)+"pdf";
+					        pdfPath = pathtemp +"\\"+pdfname;
+					        swfname=filename.substring(0,filename.length()-4)+"swf";
+					        swfPath = pathtemp +"\\"+swfname;
+					        //createPDF(officePath,pdfPath);
+					        Office2Pdf office2Pdf=new Office2Pdf();
+							office2Pdf.createPDF(officePath,pdfPath);
+							PdfToSwf pdftoswf= new PdfToSwf();
+						    pdftoswf.PdfSwf(pdfPath);
+				        }
+				}
 		
 
 		
@@ -199,7 +203,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        file.setDocclass(docclass);
 	        String storefileno1="";
 	        String storefileno2="";
-	        if(!file.getFilecontenttype().equals("vsd")){
+	        boolean flag=true;
+	        if(!file.getFilecontenttype().equals("vsd")&&otherfiles!=null&&otherfiles.length==1){
 	        	    FileInputStream pdfIn = new FileInputStream(pdfPath);
 	        		pdffile.setCreatedate(date);
 	        		pdffile.setLastupdatedate(date);
@@ -216,12 +221,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        		swffile.setDocno(docno);
 	        		swffile.setDocclass(docclass);
 	        		storefileno2=ftp.FtpUpload(swffile,swfIn);
+	        		if(storefileno1==null||storefileno2==null){
+	        			flag=false;
+	        		}
 	        }else{
 	        		storefileno1="novsd";
 	        }
 	        String storefileno=ftp.FtpUpload(file,officeIn);
 	        
-	  	    if(storefileno!=""&&storefileno!=null&&storefileno1!=""&&storefileno1!=null&&storefileno2!=""&&storefileno2!=null){
+	  	    if(storefileno!=""&&storefileno!=null&&flag){
 	     		String res=""; 
 	     				res += "alert('上传成功！');";
 	     				res +="var api = frameElement.api;api.close();";

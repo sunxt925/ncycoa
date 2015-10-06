@@ -184,7 +184,7 @@ $.ajaxFileUpload({
 	%>
 	<tr>
 		<td align="right"><label class="Validform_label"> 初评报告<%=i+1 %> </label></td>
-		<td class="value"><input type="button"  value=" 评审方案内容   " onclick="officeopen('<%=reportpaths[i]%>')" />
+		<td class="value"><input type="button"  value=" 初评报告内容   " onclick="officeopen('<%=reportpaths[i]%>')" />
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
