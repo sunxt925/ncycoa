@@ -18,6 +18,15 @@
 <script type="text/javascript" src="jscomponent/tools/datagrid.js"></script>
 <script type="text/javascript" src="jscomponent/validform/js/Validform_v5.3.1_ncr_min.js"></script>
 <script type="text/javascript" src="jscomponent/validform/js/Validform_Datatype.js"></script>
+<script type="text/javascript" src="jscomponent/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="js/MyDatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+$(function(){
+	var description = $("#description_ctn").val();
+	CKEDITOR.replace('description');
+	CKEDITOR.instances.description.setData(description);
+});
+</script>
 <style type="text/css">
 *{font-size:12px; font-family:微软雅黑,新宋体}
 </style>
@@ -52,32 +61,17 @@
 	</tr>
 	</c:if>
 	<tr>
-		<td align="right"><label class="Validform_label"> 计划描述 </label></td>
+		<td align="right"><label class="Validform_label"> 开始时间 </label></td>
 		<td class="value">
-		<textarea class="inputxt" id="description" name="description" style="overflow-x:hidden;width:400px;height:100px">${plan.description}</textarea>
+		<input name="planBeginDate" type="Wdate" class="input1" id="planBeginDate" onfocus="new WdatePicker({dateFmt:'yyyy-MM-dd'})"  value="${plan.planBeginDate}" size="30"  maxlength="30">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label"> 计划参与人员 </label></td>
+		<td align="right"><label class="Validform_label"> 计划描述 </label></td>
 		<td class="value">
-		
-		<c:set var="planpart_code" value=""/>
-		<c:set var="planpart_name" value=""/>
-		<c:forEach items="${plan.participants}" var="aPlanPart" varStatus="plan_status">
-		<c:if test="${plan_status.last }">
-		<c:set var="planpart_code" value="${planpart_code}${aPlanPart.key}"/>
-		<c:set var="planpart_name" value="${planpart_name}${aPlanPart.value}"/>
-		</c:if>
-		<c:if test="${!plan_status.last }">
-		<c:set var="planpart_code" value="${planpart_code}${aPlanPart.key},"/>
-		<c:set var="planpart_name" value="${planpart_name}${aPlanPart.value},"/>
-		</c:if>
-		</c:forEach>
-		
-		<input class="inputxt" style="width:400px;" disabled id="participantList" name="participantList" value="${planpart_name}"></input>
-		<input type="hidden" id="participantList_id" name="participantList_id" value="${planpart_code}"></input>
-		<h:choose textname="staffname" hiddenid="staffcode" inputTextname="participantList" hiddenName="participantList_id" url="indexmanage/selectstaff.jsp" icon="icon-search" title="员工列表" isclear="true"></h:choose>
+		<textarea class="inputxt" id="description" name="description" style="overflow-x:hidden;width:400px;height:100px"></textarea>
+		<input id="description_ctn" type="hidden" value="${plan.description}"/>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -114,7 +108,7 @@
 	<tr bgcolor="#E6E6E6">
 		<td align="center" bgcolor="#EEEEEE">序号</td>
 		<td align="left" bgcolor="#EEEEEE">负责人</td>
-		<td align="left" bgcolor="#EEEEEE">任务类型</td>
+		<td align="left" bgcolor="#EEEEEE">持续时间(天)</td>
 		<td align="left" bgcolor="#EEEEEE">任务内容</td>
 	</tr>
 	<tbody id="add_steps_table" >
@@ -130,10 +124,12 @@
 			<input name="taskParticipantValue" type="hidden" value=""/>
 			</td>
 			<td align="left">
-			<input name="tasktype" type="text" disabled value=""/>
-			<input name="taskTypeValue" type="hidden" value=""/>
+			<input name="taskTimeConsuming" type="text" disabled value=""/>
 			</td>
-			<td align="left"><input name="taskcontent" style="width: 400px;" disabled type="text" value=""/></td>
+			<td align="left">
+			<input name="tasksummary" style="width: 400px;" disabled type="text" value=""/>
+			<input name="taskcontent" type="hidden" value=""/>
+			</td>
 		</tr>
 		</c:if>
 		<c:if test="${fn:length(taskList)  > 0 }">
@@ -164,11 +160,11 @@
 					<input name="taskParticipantValue" type="hidden" value="${part_code }"/>
 					</td>
 					<td align="left">
-					<input name="tasktype" type="text" disabled value="${task.type }"/>
-					<input name="taskTypeValue" type="hidden" value="${task.typeValue }"/>
+					<input name="taskTimeConsuming" type="text" disabled value="${task.timeConsuming }"/>
 					</td>
 					<td align="left">
-					<input name="taskcontent" style="width: 400px;" disabled type="text" value="${task.content }"/>
+					<input name="tasksummary" style="width: 400px;" disabled type="text" value="${task.summary }"/>
+					<input name="taskcontent" type="hidden" value="${task.content }"/>
 					</td>
 				</tr>
 			</c:forEach>
@@ -221,10 +217,12 @@
 			<input name="taskParticipantValue" type="hidden" value=""/>
 			</td>
 			<td align="left">
-			<input name="tasktype" type="text" disabled value=""/>
-			<input name="taskTypeValue" type="hidden" value=""/>
+			<input name="taskTimeConsuming" type="text" disabled value=""/>
 			</td>
-			<td align="left"><input name="taskcontent" style="width: 400px;" disabled type="text" value=""/></td>
+			<td align="left">
+			<input name="tasksummary" style="width: 400px;" disabled type="text" value=""/>
+			<input name="taskcontent" type="hidden" value=""/>
+			</td>
 		</tr>
 	</tbody>
 </table>
@@ -255,15 +253,21 @@
 			data.id = $("#id").val();
 			data.name= $("#name").val();
 			data.type= $("#type").val();
-			data.description=$("#description").val();
+			data.description=CKEDITOR.instances.description.getData();
+			data.summary=CKEDITOR.instances.description.document.getBody().getText();
+	     	if(data.summary.length > 20) {
+	     		data.summary = data.summary.slice(0, 20);
+	     		data.summary += '...';
+	     	}
+	     	data.planBeginDate=$("#planBeginDate").val();
 			data.participantList_id=$("#participantList_id").val();
 			data.participantList=$("#participantList").val();
 			
 			data.taskparticipant="";
 			data.taskParticipantValue="";
-			data.tasktype="";
-			data.taskTypeValue="";
+			data.taskTimeConsuming="";
 			data.taskcontent="";
+			data.tasksummary="";
 			data.taskid="";
 			data.taskorder="";
 			
@@ -272,23 +276,23 @@
 				if($('#add_steps_table > tr.tpl') == null || $('#add_steps_table > tr.tpl').length == 0){
 					
 					$('#add_steps_table > tr').each(function(i){
-						data.taskparticipant += $("input[name=taskparticipant]", this).val() + "&";
-						data.taskParticipantValue += $("input[name=taskParticipantValue]", this).val() + "&";
-						data.tasktype += $("input[name=tasktype]", this).val()+"&";
-						data.taskTypeValue += $("input[name=taskTypeValue]", this).val()+"&";
-						data.taskcontent += $("input[name=taskcontent]", this).val()+"&";
-						data.taskid += $("input[name=taskid]", this).val()+"&";
-						data.taskorder += $("input[name=taskorder]", this).val()+"&";
+						data.taskparticipant += $("input[name=taskparticipant]", this).val() + ":;;:";
+						data.taskParticipantValue += $("input[name=taskParticipantValue]", this).val() + ":;;:";
+						data.taskTimeConsuming += $("input[name=taskTimeConsuming]", this).val()+":;;:";
+						data.taskcontent += $("input[name=taskcontent]", this).val()+":;;:";
+						data.tasksummary += $("input[name=tasksummary]", this).val()+":;;:";
+						data.taskid += $("input[name=taskid]", this).val()+":;;:";
+						data.taskorder += $("input[name=taskorder]", this).val()+":;;:";
 					});
 					
 					if($('#add_steps_table > tr').length > 0){
-						data.taskparticipant.substring(0, data.taskparticipant.length - 1);
-						data.taskParticipantValue.substring(0, data.taskParticipantValue.length - 1);
-						data.tasktype.substring(0, data.tasktype.length - 1);
-						data.taskTypeValue.substring(0, data.taskTypeValue.length - 1);
-						data.taskcontent.substring(0, data.taskcontent.length - 1);
-						data.taskid.substring(0, data.taskid.length - 1);
-						data.taskorder.substring(0, data.taskorder.length - 1);
+						data.taskparticipant.substring(0, data.taskparticipant.length - 4);
+						data.taskParticipantValue.substring(0, data.taskParticipantValue.length - 4);
+						data.taskTimeConsuming.substring(0, data.taskTimeConsuming.length - 4);
+						data.taskcontent.substring(0, data.taskcontent.length - 4);
+						data.tasksummary.substring(0, data.tasksummary.length - 4);
+						data.taskid.substring(0, data.taskid.length - 4);
+						data.taskorder.substring(0, data.taskorder.length - 4);
 					}
 				
 				}
@@ -333,9 +337,9 @@
 	 		
 	 		$("input[name=taskparticipant]", tr).val(data.participant);
 	 		$("input[name=taskParticipantValue]", tr).val(data.participantValue);
-	 		$("input[name=tasktype]", tr).val(data.type);
-	 		$("input[name=taskTypeValue]", tr).val(data.typeValue);
+	 		$("input[name=taskTimeConsuming]", tr).val(data.taskTimeConsuming);
 	 		$("input[name=taskcontent]", tr).val(data.content);
+	 		$("input[name=tasksummary]", tr).val(data.summary);
 	 		
 		 	if($("#add_steps_table").children(".tpl") && $("#add_steps_table").children(".tpl").length > 0) {
 		 		$("#add_steps_table tr").remove();
@@ -375,8 +379,7 @@
 			var data = {};
 			data.participant = $("input[name='taskparticipant']", tr).val();
 			data.participantValue = $("input[name='taskParticipantValue']", tr).val();
-			data.type = $("input[name='tasktype']", tr).val();
-			data.typeValue = $("input[name='taskTypeValue']", tr).val();
+			data.taskTimeConsuming = $("input[name='taskTimeConsuming']", tr).val();
 			data.content = $("input[name='taskcontent']", tr).val();
 			data.id = $("input[name='ck']", tr).val();
 			

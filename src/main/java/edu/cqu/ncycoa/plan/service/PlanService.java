@@ -17,5 +17,7 @@ public interface PlanService extends CommonService{
 	public Map<PlanStep, List<PlanTask>> findPlanTasks(PlanInstance planInstance);
 
 	public PlanInstance findPlanInstanceByPlanId(Long planId);
+	
+	public void auditAndRunPlan(Long planId, Boolean isPassed);
 
 }

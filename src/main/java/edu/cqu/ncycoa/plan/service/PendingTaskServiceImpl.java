@@ -1,8 +1,9 @@
 package edu.cqu.ncycoa.plan.service;
 
-import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,15 +18,13 @@ import edu.cqu.ncycoa.plan.domain.PlanTask;
 @Service("pendingTaskService")
 @Transactional
 public class PendingTaskServiceImpl extends CommonServiceImpl implements PendingTaskService {
-
+	
 	@Override
-	public void handleAuditTask(Long pendingTaskId, Long planTaskId, int audit, Short type){
+	public void handleNotAdmission(Long pendingTaskId, Long planTaskId) {
 		PlanTask task = commonDao.readEntityById(planTaskId, PlanTask.class);
-		
-		//设置已处理该待办事项
 		task.setStatus(PlanTask.FINISHED);
 		task.setHandleDate(new Date());
-		task.setResult(audit == 0 ? "通过" : "驳回");
+		task.setResult("驳回");
 		
 		PendingTask pendingTask = commonDao.readEntityById(pendingTaskId, PendingTask.class);
 		pendingTask.setStatus((short)1);
@@ -33,12 +32,10 @@ public class PendingTaskServiceImpl extends CommonServiceImpl implements Pending
 		
 		List<PlanTask> tasks = commonDao.readEntitiesByJPQL("select e from PlanTask e where e.planInstance=?1 and e.step=?2 and e.status!=?3", 
 				PlanTask.class, task.getPlanInstance(), task.getStep(), PlanTask.FINISHED);
-		if(tasks != null && tasks.size() > 0){
+		if(tasks != null && tasks.size() > 0) {
 			return;
 		}
-		
 		task.getStep().setStatus(PlanStep.FINISHED);
-		
 		PlanStep nextStep = null;
 		List<PlanStep> steps = task.getPlanInstance().getPlan().getSteps();
 		int i=0;
@@ -92,72 +89,21 @@ public class PendingTaskServiceImpl extends CommonServiceImpl implements Pending
 			
 		}
 		
+		
 	}
 	
 	@Override
-	public void handleTask(Long pendingTaskId, Long planTaskId, String result, Short type){
-		PlanTask task = commonDao.readEntityById(planTaskId, PlanTask.class);
-		if(task.getTaskType() != type){
-			return;
-		}
-		
-		//设置已处理该待办事项
-		task.setStatus(PlanTask.FINISHED);
-		task.setHandleDate(new Date());
-		task.setResult(result);
-		
-		PendingTask pendingTask = commonDao.readEntityById(pendingTaskId, PendingTask.class);
-		pendingTask.setStatus((short)1);
-		pendingTask.setHandleDate(new Date());
-		
-		//设置该事项对应的流程节点的状态为，已完成
-		List<PlanTask> tasks = commonDao.readEntitiesByJPQL("select e from PlanTask e where e.planInstance=?1 and e.step=?2 and e.status!=?3", 
-				PlanTask.class, task.getPlanInstance(), task.getStep(), PlanTask.FINISHED);
-		if(tasks != null && tasks.size() > 0){
-			return;
-		}
-		
-		task.getStep().setStatus(PlanStep.FINISHED);
-		
-		List<PlanStep> steps = task.getPlanInstance().getPlan().getSteps();
-		int i=0;
-		for(;i<steps.size(); i++){
-			if(steps.get(i).getId().equals(task.getStep().getId())){
-				break;
-			}
-		}
-		if(i == steps.size() - 1) { //如果流程已走完，修改计划的状态
-			task.getPlanInstance().getPlan().setStatus((short)5);
-			task.getPlanInstance().setStatus(PlanInstance.FINISHED);
-		} else { //流程还未走完，取下一个流程节点，并推送新的待办事项
-			PlanStep step = steps.get(i+1);
-			step.setStatus(PlanStep.EXECUTING);
-			task.getPlanInstance().setCurrentStep(step);
-			
-			List<PlanTask> nextTasks = commonDao.readEntitiesByJPQL("select e from PlanTask e where planInstance=?1 and step=?2", 
-					PlanTask.class, task.getPlanInstance(), step);
-			
-			for(PlanTask tmp : nextTasks){
-				tmp.setStatus(PlanTask.EXECUTING);
-				
-				PendingTask aPendingTask = PendingTaskServiceUtil.createPendingTaskByPlanTask(tmp);
-				commonDao.saveEntity(aPendingTask);
-			}
-		}
-	}
-	
-	@Override
-	public void handleUploadTask(Long pendingTaskId, Long planTaskId, List<Asset> assets, Short type){
+	public void handleTask(Long pendingTaskId, Long planTaskId, String description, List<Asset> assets){
 		PlanTask task = commonDao.readEntityById(planTaskId, PlanTask.class);
 		task.setStatus(PlanTask.FINISHED);
 		task.setHandleDate(new Date());
-		String result = "";
+		task.setResult("通过");
+		task.setUploadedFiles(assets);
+		task.setDescription(description);
+		
 		for(Asset asset : assets) {
-			commonDao.saveEntity(asset);
-			result += asset.getId() + "@@";
+			asset.setTask(task);
 		}
-		if(result.length() > 0) result = result.substring(result.length() - 2, result.length());
-		task.setResult(result);
 		
 		PendingTask pendingTask = commonDao.readEntityById(pendingTaskId, PendingTask.class);
 		pendingTask.setStatus((short)1);
@@ -169,7 +115,6 @@ public class PendingTaskServiceImpl extends CommonServiceImpl implements Pending
 		if(tasks != null && tasks.size() > 0){
 			return;
 		}
-		
 		task.getStep().setStatus(PlanStep.FINISHED);
 		
 		List<PlanStep> steps = task.getPlanInstance().getPlan().getSteps();
@@ -200,24 +145,18 @@ public class PendingTaskServiceImpl extends CommonServiceImpl implements Pending
 	}
 	
 	@Override
-	public List<PlanTask> findPreTasksByTaskId(Long taskId){
+	public Map<PlanStep, List<PlanTask>> findPreTasksByTaskId(Long taskId){
 		PlanTask task = commonDao.readEntityById(taskId, PlanTask.class);
 		List<PlanStep> steps = task.getPlanInstance().getPlan().getSteps();
 		int i=0;
+		Map<PlanStep, List<PlanTask>> ret = new HashMap<PlanStep, List<PlanTask>>();
 		for(;i<steps.size(); i++){
 			if(steps.get(i).getId().equals(task.getStep().getId())){
 				break;
 			}
+			List<PlanTask> preTasks = commonDao.readEntitiesByJPQL("select e from PlanTask e where planInstance=?1 and step=?2", PlanTask.class, task.getPlanInstance(), steps.get(i));
+			ret.put(steps.get(i), preTasks);
 		}
-		if(i == 0) { 
-			return Collections.emptyList();
-		} else { //流程还未走完，取下一个流程节点，并推送新的待办事项
-			PlanStep step = steps.get(i-1);
-			
-			List<PlanTask> preTasks = commonDao.readEntitiesByJPQL("select e from PlanTask e where planInstance=?1 and step=?2", 
-					PlanTask.class, task.getPlanInstance(), step);
-			
-			return preTasks;
-		}
+		return ret;
 	}
 }
