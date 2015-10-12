@@ -6,6 +6,7 @@ import com.action.ActionInterface;
 import com.db.DataTable;
 import com.entity.std.DocOrg;
 import com.entity.std.DocOrgPost;
+import com.entity.system.Org;
 import com.entity.system.OrgPosition;
 
 public class StdAboutPostAction extends ActionInterface {
@@ -41,11 +42,8 @@ public class StdAboutPostAction extends ActionInterface {
 				if(flag){
 					String all=request.getParameter("all");
 					if(all.equals("all")){//从全局添加
-						OrgPosition orgPosition=new OrgPosition();
-						DataTable dataTable=orgPosition.getOrgcodebyPost(postcodes[i]);
-						if(dataTable.getRowsCount()>0){
 						try {
-							String orgcodeall=dataTable.get(0).get(0).toString();
+							String orgcodeall=orgcode;
 							DocOrg docorg=new DocOrg();
 							docorg.setDocCode(doccode);
 							docorg.setOrgCode(orgcodeall);
@@ -61,9 +59,36 @@ public class StdAboutPostAction extends ActionInterface {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+					}else if(all.equals("allpos")){
+						OrgPosition orgPosition=new OrgPosition();
+						DataTable dataTable=orgPosition.getOrgcodebyPost(postcodes[i]);
+						for(int ii=0;ii<dataTable.getRowsCount();ii++){
+							String orgcodeall="";
+							try {
+								orgcodeall = dataTable.get(ii).getString("orgcode");
+								System.out.println("orgcode:::::::"+orgcodeall+"::::doccode:::::"+doccode+":::positioncode:::::"+postcodes[i]);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							DocOrg docorg=new DocOrg();
+							docorg.setDocCode(doccode);
+							docorg.setOrgCode(orgcodeall);
+							docorg.setRelation("间接");
+							docorg.insert();
+							
+							docorgpost.setDocCode(doccode);
+							docorgpost.setOrgCode(orgcodeall);
+							docorgpost.setPositionCode(postcodes[i]);
+							docorgpost.setRelation("直接");
+							docorgpost.insert();
 						}
-					}
-					else{
+					}else if(all.equals("allorg")){
+						String[] orgs=request.getParameterValues("items");
+						for(int j=0;j<orgs.length;j++){
+							iorgposition(doccode,orgs[j]);
+						}
+					}else{
 						docorgpost.setDocCode(doccode);
 						docorgpost.setOrgCode(orgcode);
 						docorgpost.setPositionCode(postcodes[i]);
@@ -95,7 +120,7 @@ public class StdAboutPostAction extends ActionInterface {
 		else if (action!=null && action.equals("del"))
 		{
 			
-			/*			String[] ids=request.getParameterValues("items");
+			String[] ids=request.getParameterValues("items");
 			String para="";
 			for (int i=0;i<ids.length;i++)
 			{
@@ -107,11 +132,11 @@ public class StdAboutPostAction extends ActionInterface {
 				{
 					para=para+ids[i]+",";
 				}
-			}*/
-			String del=request.getParameter("recid");
+			}
+			//String del=request.getParameter("recid");
 			String orgcode=request.getParameter("orgcode");
 			docorgpost=new DocOrgPost();
-			if(docorgpost.Delete(del,orgcode))
+			if(docorgpost.Delete(para,orgcode))
 			{
 				res += "alert('删除成功');";
 				res += "var rand=Math.floor(Math.random()*10000);";
@@ -137,5 +162,37 @@ public class StdAboutPostAction extends ActionInterface {
 		{
 		}
 		return res;
+	}
+	public void iorgposition(String doccode,String parentorgcode){
+		Org org=new Org();
+		DataTable childlist=org.getAllOrgList(parentorgcode);
+		for(int j=0;j<childlist.getRowsCount();j++){
+			try {
+				iorgposition(doccode,childlist.get(j).getString("OrgCode"));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		OrgPosition orgPosition=new OrgPosition();
+		DataTable poslist=orgPosition.getAllOrgPositionList(parentorgcode);
+		for(int i=0;i<poslist.getRowsCount();i++){
+				DocOrg docorg=new DocOrg();
+				docorg.setDocCode(doccode);
+				docorg.setOrgCode(parentorgcode);
+				docorg.setRelation("间接");
+				docorg.insert();
+				DocOrgPost docorgpost=new DocOrgPost();
+				docorgpost.setDocCode(doccode);
+				docorgpost.setOrgCode(parentorgcode);
+				try {
+					docorgpost.setPositionCode(poslist.get(i).getString("positioncode"));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				docorgpost.setRelation("直接");
+				docorgpost.insert();
+		}
 	}
 }

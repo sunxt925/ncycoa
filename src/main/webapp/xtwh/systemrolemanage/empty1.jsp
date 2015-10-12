@@ -15,7 +15,7 @@
     //String  orgcode=request.getParameter("bm");
      SystemRole role=new SystemRole();
 	int page_no=Integer.parseInt(Format.NullToZero(request.getParameter("page_no")));
-	int per_page=20;
+	int per_page=5;
 	//System.out.println(orgcode+"sdfsdfds");
 	DataTable dt=role.getRoleList(page_no,per_page);
 	DataTable dtcount=role.getAllRoleList();
@@ -107,7 +107,7 @@ document.all("form1").submit();
         <input type="hidden" id="entity" name="entity" value="SYSTEM_ROLE"/>
        <table width="100%" border="0" cellpadding="3" cellspacing="0" >
          <tr>
-           <td width="51%">【<a href="#" onClick="SelectAll('form1')">全选</a>】【<a href="#" onClick="ChangeSelect('form1')">反选</a>】【<a href="#" onClick="UnSelectAll('form1')">清空</a>】</td>
+           <td width="51%">【<a href="#" onClick="SelectAll('form1')">全选1</a>】【<a href="#" onClick="ChangeSelect('form1')">反选</a>】【<a href="#" onClick="UnSelectAll('form1')">清空</a>】</td>
            <td width="49%" align="right"><%
           String unitccmtemp="";
       	out.print(PageUtil.DividePage(page_no,pagecount,"systemrole_manage.jsp",unitccmtemp));

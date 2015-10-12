@@ -52,6 +52,9 @@ public class ContractInfo {
 	@Column(name="IMPLEMET_STAGE")
 	private String implementationStage; // 合同执行情况
 	
+	@Column(name="IMPLEMET_FREE")
+	private BigDecimal implementationFree; // 合同执行金额
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name="FINISHING_DATE")
 	private Date finishingDate;		    // 合同完成时间
@@ -89,6 +92,9 @@ public class ContractInfo {
 	
 	@Column(name="PROCESS_INS_ID")
 	private String processInstanceId;
+	
+	@Column(name="EFFECTIVEDATE")
+	private Date effectiveDate;   //有效期
 	
 	public String getContent() {
 		return content;
@@ -283,6 +289,22 @@ public class ContractInfo {
 
 	public void setAudittable(String audittable) {
 		this.audittable = audittable;
+	}
+
+	public BigDecimal getImplementationFree() {
+		return implementationFree;
+	}
+
+	public void setImplementationFree(BigDecimal implementationFree) {
+		this.implementationFree = implementationFree;
+	}
+
+	public Date getEffectiveDate() {
+		return effectiveDate;
+	}
+
+	public void setEffectiveDate(Date effectiveDate) {
+		this.effectiveDate = effectiveDate;
 	}
 	
 }

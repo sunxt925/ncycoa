@@ -167,27 +167,27 @@ public class PlanManagementController {
 	public void save(Plan plan, HttpServletRequest request, HttpServletResponse response) {
 		AjaxResultJson j = new AjaxResultJson();
 		
-		String participantList_id = request.getParameter("participantList_id");
-		String participantList = request.getParameter("participantList");
-		String[] participantList_ids = participantList_id.split(",");
-		String[] participantLists = participantList.split(",");
-		
-		Map<String, String> participants = new HashMap<String, String>();
-		for(int i = 0; i < participantList_ids.length; i++){
-			participants.put(participantList_ids[i], participantLists[i]);
-		}
-		plan.setParticipants( participants );
+//		String participantList_id = request.getParameter("participantList_id");
+//		String participantList = request.getParameter("participantList");
+//		String[] participantList_ids = participantList_id.split(",");
+//		String[] participantLists = participantList.split(",");
+//		
+//		Map<String, String> participants = new HashMap<String, String>();
+//		for(int i = 0; i < participantList_ids.length; i++){
+//			participants.put(participantList_ids[i], participantLists[i]);
+//		}
+//		plan.setParticipants( participants );
 		
 		List<PlanStep> tasks = new ArrayList<PlanStep>();
 		if(plan.getStepType() == 0){
 			
-			String[] taskid = request.getParameter("taskid").split("&");
-			String[] taskorder = request.getParameter("taskorder").split("&");
-			String[] taskparticipant = request.getParameter("taskparticipant").split("&");
-			String[] taskParticipantValue = request.getParameter("taskParticipantValue").split("&");
-			String[] tasktype = request.getParameter("tasktype").split("&");
-			String[] taskTypeValue = request.getParameter("taskTypeValue").split("&");
-			String[] taskcontent = request.getParameter("taskcontent").split("&");
+			String[] taskid = request.getParameter("taskid").split(":;;:");
+			String[] taskorder = request.getParameter("taskorder").split(":;;:");
+			String[] taskparticipant = request.getParameter("taskparticipant").split(":;;:");
+			String[] taskParticipantValue = request.getParameter("taskParticipantValue").split(":;;:");
+			String[] taskTimeConsuming = request.getParameter("taskTimeConsuming").split(":;;:");
+			String[] taskcontent = request.getParameter("taskcontent").split(":;;:");
+			String[] tasksummary = request.getParameter("tasksummary").split(":;;:");
 			
 			for(int i=0; i<taskid.length; i++){
 				PlanStep task = new PlanStep();
@@ -201,10 +201,9 @@ public class PlanManagementController {
 					taskParticipants.put(taskParticipantList_ids[k], taskParticipantLists[k]);
 				}
 				task.setParticipants( taskParticipants );
-				
-				task.setType(tasktype[i]);
-				task.setTypeValue(Short.parseShort(taskTypeValue[i]));
+				task.setSummary(tasksummary[i]);
 				task.setContent(taskcontent[i]);
+				task.setTimeConsuming(Integer.parseInt(taskTimeConsuming[i]));
 				task.setStatus((short)0);
 				tasks.add(task);
 			}
@@ -305,15 +304,11 @@ public class PlanManagementController {
 		}
 		
 		boolean isPassed = request.getParameter("pass").equals("true") ? true : false;
-		
-		Plan plan;
 		for(Long tmp : ids) {
-			plan = planService.findEntityById(tmp, Plan.class);
-			plan.setStatus(isPassed ? (short)2 : (short)3);
-			planService.saveEntity(plan);
+			planService.auditAndRunPlan(tmp, isPassed);
 		}
 		
-		message = "审核完成";
+		message = "计划审核通过，并开始执行";
 		j.setMsg(message);
 		SystemUtils.jsonResponse(response, j);
 	}

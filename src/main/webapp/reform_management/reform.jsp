@@ -151,14 +151,20 @@ function returnFile(data){
    
 }
 function returnorgValue(data){
-	$('#xdzgOrgcode').val(data.code.orgcode);
-	$('#xdzgOrgname').val(data.code.orgname);
+	$('#xdzgOrgcode').val(data.code[0].orgcode);
+	$('#xdzgOrgname').val(data.code[0].orgname);
 	
 }    
     
 function returnobjValue(data){
-	$('#clOrgcode').val(data.code.orgcode);
-	$('#clOrgname').val(data.code.orgname);
+	var orgcodes="";
+	var orgnames="";
+	for(var i=0;i<data.code.length;i++){
+		orgcodes+=data.code[i].orgcode+",";
+		orgnames+=data.code[i].orgname+",";
+	}
+	$('#clOrgcode').val(orgcodes);
+	$('#clOrgname').val(orgnames);
 	
 }
 function createwindow(title, url, width, height,func) {

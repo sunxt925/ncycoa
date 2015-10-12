@@ -102,5 +102,60 @@ public class PlanInstance {
 	public void setStatus(Short status) {
 		this.status = status;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((currentStep == null) ? 0 : currentStep.hashCode());
+		result = prime * result + ((execDate == null) ? 0 : execDate.hashCode());
+		result = prime * result + ((executor == null) ? 0 : executor.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((plan == null) ? 0 : plan.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PlanInstance other = (PlanInstance) obj;
+		if (currentStep == null) {
+			if (other.currentStep != null)
+				return false;
+		} else if (!currentStep.equals(other.currentStep))
+			return false;
+		if (execDate == null) {
+			if (other.execDate != null)
+				return false;
+		} else if (!execDate.equals(other.execDate))
+			return false;
+		if (executor == null) {
+			if (other.executor != null)
+				return false;
+		} else if (!executor.equals(other.executor))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (plan == null) {
+			if (other.plan != null)
+				return false;
+		} else if (!plan.equals(other.plan))
+			return false;
+		if (status == null) {
+			if (other.status != null)
+				return false;
+		} else if (!status.equals(other.status))
+			return false;
+		return true;
+	}
 	
 }

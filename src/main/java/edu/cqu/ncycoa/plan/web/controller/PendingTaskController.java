@@ -8,8 +8,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -38,6 +38,7 @@ import edu.cqu.ncycoa.common.util.dao.QueryUtils;
 import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
 import edu.cqu.ncycoa.plan.domain.Asset;
 import edu.cqu.ncycoa.plan.domain.PendingTask;
+import edu.cqu.ncycoa.plan.domain.PlanStep;
 import edu.cqu.ncycoa.plan.domain.PlanTask;
 import edu.cqu.ncycoa.plan.service.PendingTaskService;
 import edu.cqu.ncycoa.util.SystemUtils;
@@ -68,64 +69,13 @@ public class PendingTaskController {
 	public String handle(HttpServletRequest request, Model model) {
 		Long id = Long.parseLong(request.getParameter("id"));
 		Long taskId = Long.parseLong(request.getParameter("taskId"));
-		String type = request.getParameter("type");
 		model.addAttribute("id", id);
 		model.addAttribute("taskId", taskId);
-		if("normal".equals(type)){
-			return "plan_management/plan_step_normal";
-		} else if("audit".equals(type)){
-			
-			List<PlanTask> tasks = pendingTaskService.findPreTasksByTaskId(taskId);
-			model.addAttribute("preTasks", tasks);
-			
-			return "plan_management/plan_step_audit";
-		} else {
-			return "plan_management/plan_step_upload";
-		}
-	}
-	
-	@RequestMapping(params="h_normal")
-	@ResponseBody
-	public void handleNormal(HttpServletRequest request, HttpServletResponse response) {
-		AjaxResultJson j = new AjaxResultJson();
-		String message;
-		try {
-			Long id = Long.parseLong(request.getParameter("id"));
-			Long taskId = Long.parseLong(request.getParameter("taskId"));
-			String description = request.getParameter("description");
-			pendingTaskService.handleTask(id, taskId, description, (short)0);
-		} catch (Exception e) {
-			message = "执行失败";
-			j.setSuccess(false);
-			SystemUtils.jsonResponse(response, j);
-			return;
-		}
 		
-		message = "执行成功";
-		j.setMsg(message);
-		SystemUtils.jsonResponse(response, j);
-	}
-	
-	@RequestMapping(params="h_audit")
-	@ResponseBody
-	public void handleAudit(HttpServletRequest request, HttpServletResponse response) {
-		AjaxResultJson j = new AjaxResultJson();
-		String message;
-		try {
-			Long id = Long.parseLong(request.getParameter("id"));
-			Long taskId = Long.parseLong(request.getParameter("taskId"));
-			int audit = Integer.parseInt(request.getParameter("audit"));
-			pendingTaskService.handleAuditTask(id, taskId, audit, (short)0);
-		} catch (Exception e) {
-			message = "执行失败";
-			j.setSuccess(false);
-			SystemUtils.jsonResponse(response, j);
-			return;
-		}
+		Map<PlanStep, List<PlanTask>> tasks = pendingTaskService.findPreTasksByTaskId(taskId);
+		model.addAttribute("preTasks", tasks);
 		
-		message = "执行成功";
-		j.setMsg(message);
-		SystemUtils.jsonResponse(response, j);
+		return "plan_management/plan_step_audit";
 	}
 	
 	private File saveFileFromInputStream(InputStream stream, String path, String filename) throws IOException {
@@ -151,28 +101,35 @@ public class PendingTaskController {
 		try {
 			Long id = Long.parseLong(request.getParameter("id"));
 			Long taskId = Long.parseLong(request.getParameter("taskId"));
-			List<Asset> assets = new ArrayList<Asset>();
+			int audit = Integer.parseInt(request.getParameter("audit"));
 			
-			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request;
-			String path = multipartRequest.getSession().getServletContext().getRealPath("doc/plan_task");
-			for (Iterator<MultipartFile> it = multipartRequest.getFiles("files").iterator(); it.hasNext();) {
-				MultipartFile file = it.next();
-				String newFileName = UUID.randomUUID().toString();
-				String originalName = file.getOriginalFilename();
-				String extName = originalName.substring(originalName.lastIndexOf("."), originalName.length());
+			if(audit == 1) {
+				pendingTaskService.handleNotAdmission(id, taskId);
+			} else {
 				
-				Asset asset = new Asset();
-				asset.setDescription("");
-				asset.setExtName(extName);
-				asset.setFriendlyName(originalName);
-				asset.setRealName(path + newFileName + extName);
-				asset.setId(newFileName);
-				assets.add(asset);
-				
-				saveFileFromInputStream(file.getInputStream(), path, newFileName + extName);
+				String description = request.getParameter("description");
+				List<Asset> assets = new ArrayList<Asset>();
+				MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request;
+				String path = multipartRequest.getSession().getServletContext().getRealPath("doc/plan_task");
+				for(Map.Entry<String, MultipartFile> entry : multipartRequest.getFileMap().entrySet()){
+					MultipartFile file = entry.getValue();
+					String newFileName = UUID.randomUUID().toString();
+					String originalName = file.getOriginalFilename();
+					String extName = originalName.substring(originalName.lastIndexOf("."), originalName.length());
+					
+					Asset asset = new Asset();
+					asset.setDescription("");
+					asset.setExtName(extName);
+					asset.setFriendlyName(originalName);
+					asset.setRealName(path +"/"+ newFileName + extName);
+					asset.setId(newFileName);
+					assets.add(asset);
+					
+					saveFileFromInputStream(file.getInputStream(), path, newFileName + extName);
+				}
+				pendingTaskService.handleTask(id, taskId, description, assets);
 			}
 			
-			pendingTaskService.handleUploadTask(id, taskId, assets, (short)0);
 		} catch (Exception e) {
 			message = "执行失败";
 			j.setSuccess(false);

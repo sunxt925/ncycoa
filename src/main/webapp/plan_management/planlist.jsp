@@ -35,7 +35,7 @@ a.dgopt{
 			replace="编辑状态_0,等待审核_1,审核通过_2,审核未通过_3,正在执行_4,执行结束_5,执行中断_6" 
 			style="color:#4d77cc_0,color:#ce3f38_1,color:#5eaf5e_2,color:#ce3f38_3,color:#fa9f1e_4" query="true">
 		</h:dgColumn>
-		<h:dgColumn field="description" title="描述"></h:dgColumn>
+		<h:dgColumn field="summary" title="描述"></h:dgColumn>
 		<h:dgColumn field="inputUser" title="录入员" dictionary="base_staff,staffcode,staffname" query="false"></h:dgColumn>
 		<h:dgColumn field="inputDate" title="录入时间" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="scope"></h:dgColumn>
 		<h:dgToolBar url="plan-management.htm?add" icon="icon-add" funname="add" title="建立新计划"></h:dgToolBar>
@@ -120,6 +120,8 @@ function mydel(title, actionUrl, gname) {
 
 
 $(document).ready(function(){
+	$("input[name='planBeginDate_begin']").click(function(){WdatePicker();});
+	$("input[name='planBeginDate_end']").click(function(){WdatePicker();});
 	$("input[name='inputDate_begin']").click(function(){WdatePicker();});
 	$("input[name='inputDate_end']").click(function(){WdatePicker();});
 });

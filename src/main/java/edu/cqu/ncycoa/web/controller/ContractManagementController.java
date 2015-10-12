@@ -2,9 +2,11 @@ package edu.cqu.ncycoa.web.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -50,8 +53,10 @@ import edu.cqu.ncycoa.common.util.dao.TQRestriction;
 import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
 import edu.cqu.ncycoa.domain.ActivityComment;
 import edu.cqu.ncycoa.domain.ContractInfo;
+import edu.cqu.ncycoa.domain.ContractQuery;
 import edu.cqu.ncycoa.plan.domain.Plan;
 import edu.cqu.ncycoa.util.ConvertUtils;
+import edu.cqu.ncycoa.util.ExportExcel;
 import edu.cqu.ncycoa.util.Globals;
 import edu.cqu.ncycoa.util.MyBeanUtils;
 import edu.cqu.ncycoa.util.SystemUtils;
@@ -139,7 +144,9 @@ public class ContractManagementController {
 		mav.setViewName("contract_management/contract");
 		mav.addObject("contract",contractInfo);
 		mav.addObject("relevantDepartment_disp",CodeDictionary.syscode_traslate("base_org", "orgcode", "orgname", contractInfo.getRelevantDepartment()));
-		
+		if(null==type || type.equals("")){
+			type = contractInfo.getType();
+		}
 		mav.addObject("type",type);
 		return mav;
 	}
@@ -181,34 +188,31 @@ public class ContractManagementController {
     			//02,04,05,06,10,11
     			List<String> auditorg = new ArrayList<String>();
     			auditorg.add("NC.01.02");
-    			auditorg.add("NC.01.04");
     			auditorg.add("NC.01.05");
     			auditorg.add("NC.01.06");
     			auditorg.add("NC.01.10");
     			auditorg.add("NC.01.11");
     			auditorg.remove(userinfo.getOrgCode());
     			paras.put("finallyauditGroup", UnitDao.getManyComanyAudit(auditorg));
-    		}else if(contractInfo.getType().equals("1")){
+    		}else if(contractInfo.getType().equals("1")||contractInfo.getType().equals("3")){
     			//企管、法规、审计、内管、财务部
-    			//02,04,05,06,10
+    			//02,04,05,06,11
     			List<String> auditorg = new ArrayList<String>();
     			auditorg.add("NC.01.02");
-    			auditorg.add("NC.01.04");
     			auditorg.add("NC.01.05");
     			auditorg.add("NC.01.06");
-    			auditorg.add("NC.01.10");
+    			auditorg.add("NC.01.11");
     			auditorg.remove(userinfo.getOrgCode());
     			paras.put("finallyauditGroup", UnitDao.getManyComanyAudit(auditorg));
     		}else if(contractInfo.getType().equals("2")){
     			//办公室、法规、财务、审计、企管、内管
-    			//01,02,04,05,06,10
+    			//01,02,04,05,06,11
     			List<String> auditorg = new ArrayList<String>();
     			auditorg.add("NC.01.01");
     			auditorg.add("NC.01.02");
-    			auditorg.add("NC.01.04");
     			auditorg.add("NC.01.05");
     			auditorg.add("NC.01.06");
-    			auditorg.add("NC.01.10");
+    			auditorg.add("NC.01.11");
     			auditorg.remove(userinfo.getOrgCode());
     			paras.put("finallyauditGroup", UnitDao.getManyComanyAudit(auditorg));
     		}
@@ -222,7 +226,7 @@ public class ContractManagementController {
 			}
 			paras.put("finallyauditGroup", auditor);
 		}
-		
+        paras.put("fgchief", UnitDao.getCityComanyAudit("NC.01.04"));
 		
 		
 		
@@ -234,6 +238,14 @@ public class ContractManagementController {
 		processEngine.getRuntimeService().startProcessInstanceByKey(processID, objId, paras);
 		String processinstanceid = processEngine.getRuntimeService().
 				createProcessInstanceQuery().processInstanceBusinessKey(objId,processID).list().get(0).getProcessInstanceId();
+		if(Integer.parseInt((companycode.split("\\.")[2])) >= 20){
+			//区县
+			contractInfo.setAppDepart(companycode);
+		}else{
+			//市局
+			contractInfo.setAppDepart(userinfo.getOrgCode());
+		}
+		
 		contractInfo.setStatus((short)1);//修改提交状态
 		contractInfo.setProcessInstanceId(processinstanceid);//存入流程实例号
 		systemService.saveEntity(contractInfo);
@@ -415,7 +427,13 @@ public class ContractManagementController {
 				if (!f.getParentFile().exists())
 					f.getParentFile().mkdirs();
 
-				WordUtils.produceWord(Util.getfileCfg().get("uploadfilepath")+tempfilename+".doc", Util.getFilepath("wordtemplate/contractaudit_template.doc"), getCommentMap(contractInfo,comments));
+				if(contractInfo.getType().equals("0")){
+					WordUtils.produceWord(Util.getfileCfg().get("uploadfilepath")+tempfilename+".doc", Util.getFilepath("wordtemplate/contractaudit_template_0.doc"), getCommentMap(contractInfo,comments));
+				}else if(contractInfo.getType().equals("1")||contractInfo.getType().equals("3")){
+					WordUtils.produceWord(Util.getfileCfg().get("uploadfilepath")+tempfilename+".doc", Util.getFilepath("wordtemplate/contractaudit_template_1.doc"), getCommentMap(contractInfo,comments));
+				}else if(contractInfo.getType().equals("2")){
+					WordUtils.produceWord(Util.getfileCfg().get("uploadfilepath")+tempfilename+".doc", Util.getFilepath("wordtemplate/contractaudit_template_2.doc"), getCommentMap(contractInfo,comments));
+				}
 				contractInfo.setAudittable(tempfilename+".doc");
 				systemService.saveEntity(contractInfo);
 			}
@@ -436,18 +454,39 @@ public class ContractManagementController {
 	
 	public Map<String, String> getCommentMap(ContractInfo contractInfo,List<Comment> comments){
 		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> methods = new HashMap<String, String>();
+		methods.put("0", "公开招标");
+		methods.put("1", "邀请招标");
+		methods.put("2", "竞争性谈判");
+		methods.put("3", "询价");
+		methods.put("4", "单一来源");
 		Calendar c = Calendar.getInstance();
 		c.setTime(contractInfo.getAppDate());
 		map.put("y0", c.get(Calendar.YEAR)+"");
-		map.put("m0", c.get(Calendar.MONTH)+"");
+		map.put("m0", (c.get(Calendar.MONTH)+1)+"");
 		map.put("d0", c.get(Calendar.DAY_OF_MONTH)+"");
 		map.put("projectname", Format.NullToBlank(contractInfo.getName()));
 		map.put("relevantDepartment", CodeDictionary.syscode_traslate("base_org", "orgcode", "orgname", Format.NullToBlank(contractInfo.getRelevantDepartment())));
+		if(null!=contractInfo.getContactMethod()&&!contractInfo.getContactMethod().equals("")){
+			map.put("contactMethod", methods.get(contractInfo.getContactMethod()));
+		}else{
+			map.put("contactMethod", "");
+		}
+		
 		map.put("contractValue", contractInfo.getContractValue()+"");
 		map.put("partyB", Format.NullToBlank(contractInfo.getPartyB()));
-		map.put("content", "");
+		map.put("content", contractInfo.getContent());
 		
 	
+		String comm6 = "";
+		
+		if(contractInfo.getType().equals("0")){
+			comm6 = "NC.01.10";
+		}else if(contractInfo.getType().equals("1")||contractInfo.getType().equals("3")){
+			comm6 = "NC.01.02";
+		}else if(contractInfo.getType().equals("2")){
+			comm6 = "NC.01.02";
+		}
 		for(Comment comment : comments){
 
 			if(comment.getUserId().equals(UnitDao.getCityComanyAudit(contractInfo.getAppDepart()))){
@@ -456,7 +495,7 @@ public class ContractManagementController {
 				map.put("comment1", comment.getFullMessage());
 				map.put("chief1", CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname", comment.getUserId()) );
 				map.put("y1", c_f.get(Calendar.YEAR)+"");
-				map.put("m1", c_f.get(Calendar.MONTH)+"");
+				map.put("m1", (c_f.get(Calendar.MONTH)+1)+"");
 				map.put("d1", c_f.get(Calendar.DAY_OF_MONTH)+"");
 			}
 			if(comment.getUserId().equals(UnitDao.getCityComanyAudit(contractInfo.getRelevantDepartment()))){
@@ -465,25 +504,26 @@ public class ContractManagementController {
 				map.put("comment2", comment.getFullMessage());
 				map.put("chief2", CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname", comment.getUserId()) );
 				map.put("y2", c_f.get(Calendar.YEAR)+"");
-				map.put("m2", c_f.get(Calendar.MONTH)+"");
+				map.put("m2", (c_f.get(Calendar.MONTH)+1)+"");
 				map.put("d2", c_f.get(Calendar.DAY_OF_MONTH)+"");
 			}
-			if(comment.getUserId().equals(UnitDao.getCityComanyAudit("NC.01.04"))){
+			if(comment.getUserId().equals(UnitDao.getCityComanyAudit("NC.01.11"))){
 				Calendar c_f = Calendar.getInstance();
 				c_f.setTime(comment.getTime());
 				map.put("comment3", comment.getFullMessage());
 				map.put("chief3", CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname", comment.getUserId()) );
 				map.put("y3", c_f.get(Calendar.YEAR)+"");
-				map.put("m3", c_f.get(Calendar.MONTH)+"");
+				map.put("m3", (c_f.get(Calendar.MONTH)+1)+"");
 				map.put("d3", c_f.get(Calendar.DAY_OF_MONTH)+"");
 			}
+			
 			if(comment.getUserId().equals(UnitDao.getCityComanyAudit("NC.01.05"))){
 				Calendar c_f = Calendar.getInstance();
 				c_f.setTime(comment.getTime());
 				map.put("comment4", comment.getFullMessage());
 				map.put("chief4", CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname", comment.getUserId()) );
 				map.put("y4", c_f.get(Calendar.YEAR)+"");
-				map.put("m4", c_f.get(Calendar.MONTH)+"");
+				map.put("m4", (c_f.get(Calendar.MONTH)+1)+"");
 				map.put("d4", c_f.get(Calendar.DAY_OF_MONTH)+"");
 			}
 			if(comment.getUserId().equals(UnitDao.getCityComanyAudit("NC.01.06"))){
@@ -492,25 +532,30 @@ public class ContractManagementController {
 				map.put("comment5", comment.getFullMessage());
 				map.put("chief5", CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname", comment.getUserId()) );
 				map.put("y5", c_f.get(Calendar.YEAR)+"");
-				map.put("m5", c_f.get(Calendar.MONTH)+"");
+				map.put("m5", (c_f.get(Calendar.MONTH)+1)+"");
 				map.put("d5", c_f.get(Calendar.DAY_OF_MONTH)+"");
+			}
+			if(comment.getUserId().equals(UnitDao.getCityComanyAudit(comm6))){
+				Calendar c_f = Calendar.getInstance();
+				c_f.setTime(comment.getTime());
+				map.put("comment6", comment.getFullMessage());
+				map.put("chief6", CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname", comment.getUserId()) );
+				map.put("y6", c_f.get(Calendar.YEAR)+"");
+				map.put("m6", (c_f.get(Calendar.MONTH)+1)+"");
+				map.put("d6", c_f.get(Calendar.DAY_OF_MONTH)+"");
+			}
+			if(comment.getUserId().equals(UnitDao.getCityComanyAudit("NC.01.04"))){
+				Calendar c_f = Calendar.getInstance();
+				c_f.setTime(comment.getTime());
+				map.put("comment7", comment.getFullMessage());
+				map.put("chief7", CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname", comment.getUserId()) );
+				map.put("y7", c_f.get(Calendar.YEAR)+"");
+				map.put("m7", (c_f.get(Calendar.MONTH)+1)+"");
+				map.put("d7", c_f.get(Calendar.DAY_OF_MONTH)+"");
 			}
 		}
 		
 	
-		
-		map.put("comment6", " ");
-		map.put("chief6", " ");
-		map.put("y6", " ");
-		map.put("m6", " ");
-		map.put("d6", " ");
-		
-		
-		map.put("comment7", " ");
-		map.put("chief7", " ");
-		map.put("y7", " ");
-		map.put("m7", " ");
-		map.put("d7", " ");
 		return map;
 	}
 	
@@ -522,7 +567,12 @@ public class ContractManagementController {
 		mav.addObject("type",type);
 		return mav;
 	}
-	
+	@RequestMapping(params="dgallview")
+	public ModelAndView dgAllView(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("contract_management/allcontractlist");
+		return mav;
+	}
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params="dgdata")
 	@ResponseBody
@@ -535,7 +585,9 @@ public class ContractManagementController {
 		if (StringUtils.isNotEmpty(dg.getSort())) {
 			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
 		}
-		tqBuilder.addRestriction(new TQRestriction("type", "in",type));
+		if(null!=type&&!type.equals("")){
+			tqBuilder.addRestriction(new TQRestriction("type", "in",type));
+		}
 		cq.setTqBuilder(tqBuilder);
 		commonService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dg);
@@ -560,6 +612,7 @@ public class ContractManagementController {
 		}
 		tqBuilder.addRestriction(tqBuilder.getRootAlias() + ".status", "=", (short)0);
 		cq.setTqBuilder(tqBuilder);
+		
 		commonService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dg);
 	}
@@ -595,5 +648,36 @@ public class ContractManagementController {
 		j.setMsg(message);
 		SystemUtils.jsonResponse(response, j);
 	}
-	
+	@RequestMapping(params="exportExcel")
+	@ResponseBody
+	public void exportExcel(HttpServletRequest request, HttpServletResponse response) throws IOException, ParseException{
+		response.setCharacterEncoding("utf-8");  
+		String sDate = request.getParameter("sDate");
+		String eDate = request.getParameter("eDate");
+		SimpleDateFormat DATE = new SimpleDateFormat("yyyy-MM-dd");
+		
+		//查询条件组装器
+		TypedQueryBuilder<ContractInfo> tqBuilder = new TypedQueryBuilder<ContractInfo>(ContractInfo.class,"e");
+		if(null!=sDate && !sDate.equals("")){
+			tqBuilder.addRestriction(new TQRestriction("signingDate", ">=",DATE.parse(sDate)));
+		}
+		if(null!=eDate && !eDate.equals("")){
+		tqBuilder.addRestriction(new TQRestriction("signingDate", "<=",DATE.parse(eDate)));
+		}
+		List<ContractInfo> contractInfos = systemService.getQueryRes(tqBuilder);
+	    response.setContentType("multipart/form-data"); 
+	    response.setHeader("Content-Disposition", "attachment;fileName="+Util.getName()+".xls");  
+	    OutputStream os=response.getOutputStream();  
+		try {
+			
+			String[] headers = {"合同编码","合同名称","合同类别","实施部门","实施方式","甲方","乙方","合同标的","合同金额","签订日期","执行情况","执行金额","完成日期","续签情况"}; 
+			ExportExcel<ContractQuery> excel = new ExportExcel<ContractQuery>();
+			excel.exportExcel(headers, ContractQuery.getContractQuery(contractInfos), os);
+		} finally{
+			if(os!=null){
+				os.close();
+			}
+		}
+		
+	}
 }

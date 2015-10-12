@@ -331,7 +331,7 @@ public class UnitDao {
 	public static String getOfficeAudit(){
 		try {
 			DBObject db=new DBObject();
-			String sql="select * from base_orgmember where orgcode='NC.01.01' and positioncode='01.0100.23'";
+			String sql="select * from base_orgmember where orgcode='NC.01.01' and positioncode='01.0000.41'";
 			DataTable dt = db.runSelectQuery(sql);
 			if(dt!=null&&dt.getRowsCount()>=0){
 				return dt.get(0).getString("staffcode");

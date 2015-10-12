@@ -29,7 +29,7 @@ String basePath = request.getScheme()+"://"+
 			</ul>
 	</div>
 	<div id="center" data-options="region:'center'" style="padding:5px;background:#eee;">
-	     <table id="dg" class="easyui-datagrid" data-options="fitColumns:true,singleSelect:true">
+	     <table id="dg" class="easyui-datagrid" data-options="fitColumns:true,singleSelect:false">
 	    
 	</table>
 	</div>
@@ -52,7 +52,7 @@ String basePath = request.getScheme()+"://"+
 	    }
 	    function ret(){
 	    	var api = frameElement.api;
-	    	var row = $('#dg').datagrid('getSelected');
+	    	var row = $('#dg').datagrid('getSelections');
 	    	(api.data)({code:(row)});
 	    	
 	    }

@@ -28,7 +28,7 @@
 	<tr>
 		<td align="right"><label class="Validform_label"> 文件 </label></td>
 		<td class="value">
-		<h:upload name="files" buttonText="选择要上传的文件" dialog=false uploader="pending-task.htm?h_upload" callback="onComplete" extend="*.*;" id="file_upload"></h:upload>
+		<h:upload name="files" buttonText="选择要上传的文件" dialog="false" uploader="pending-task.htm?h_upload" callback="onComplete" extend="*.*;" id="file_upload"></h:upload>
 		</td>
 	</tr>
 	<tr>
@@ -50,17 +50,17 @@ $(function() {
 		 return true;
 	});
 	
-	function onComplete(queueData){
-		$.dialog.tips('成功上传' + queueData.uploadsSuccessful + '个文件', 600, null, function(){
-			var windowapi = frameElement.api;
-			var win = windowapi.opener; 	  
-	        win.reloadTable();
-	        win.tip(serverMsg);
-			windowapi.close();
-		});
-	}
-	
 });
+
+function onComplete(queueData){
+	$.dialog.tips('成功上传' + queueData.uploadsSuccessful + '个文件', 600, null, function(){
+		var windowapi = frameElement.api;
+		var win = windowapi.opener; 	  
+        win.reloadTable();
+        win.tip(serverMsg);
+		windowapi.close();
+	});
+}
 </script>
 </body>
 </html>

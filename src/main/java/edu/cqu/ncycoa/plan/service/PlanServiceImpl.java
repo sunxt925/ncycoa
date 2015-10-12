@@ -23,6 +23,17 @@ import edu.cqu.ncycoa.util.SystemUtils;
 public class PlanServiceImpl extends CommonServiceImpl implements PlanService {
 
 	@Override
+	public void auditAndRunPlan(Long planId, Boolean isPassed) {
+		Plan plan = commonDao.readEntityById(planId, Plan.class);
+		if(isPassed) {
+			plan.setStatus((short)2);
+			runPlan(planId);
+		} else {
+			plan.setStatus((short)3);
+		}
+	}
+	
+	@Override
 	public void runPlan(Long planId){
 		Plan plan = commonDao.readEntityById(planId, Plan.class);
 		//设置计划为执行态

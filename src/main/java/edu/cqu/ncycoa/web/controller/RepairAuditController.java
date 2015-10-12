@@ -290,12 +290,12 @@ public class RepairAuditController {
 			Map<String, Object> paras =new HashMap<String, Object>();
 			paras.put("inputUser", ((UserInfo)request.getSession().getAttribute("UserInfo")).getStaffcode());
 			RepairAudit repairAudit = systemService.findEntityById(Long.parseLong(id), RepairAudit.class);
-			String orgcode = repairAudit.getApporgCode(); 
+		/*	String orgcode = repairAudit.getApporgCode(); 
 			Org org = new Org(orgcode);
 			String orgaudit = "";
 			String companyaudit = "";
-			String companycode = AllMeritCollection.getcompanyByobject(orgcode);
-			if(repairAudit.getRepairFree() > 20000){
+			String companycode = AllMeritCollection.getcompanyByobject(orgcode);*/
+			/*if(repairAudit.getRepairFree() > 20000){
 				//市局
 				orgaudit = UnitDao.getOfficeAudit();
 				companyaudit = UnitDao.getCityAudit();
@@ -316,18 +316,31 @@ public class RepairAuditController {
 					}
 					
 				}
-			}
+			}*/
+			String orgaudit = UnitDao.getOfficeAudit();
+			String companyaudit = UnitDao.getCityAudit();
 			
 			paras.put("orgcode", orgaudit);
 			paras.put("company", companyaudit);
 			paras.put("objId", objId);
-			runtimeService.startProcessInstanceByKey(processID, objId, paras);
+			//runtimeService.startProcessInstanceByKey(processID, objId, paras);
+			
+			processEngine.getRuntimeService().startProcessInstanceByKey(processID, objId, paras);
+			String processinstanceid = processEngine.getRuntimeService().
+					createProcessInstanceQuery().processInstanceBusinessKey(objId,processID).list().get(0).getProcessInstanceId();
+			
+			
 			IdentityService identityService=processEngine.getIdentityService();
 			identityService.setAuthenticatedUserId(((UserInfo)request.getSession().getAttribute("UserInfo")).getStaffcode());
 			message = "维修申请提交成功";
 			//更新维修申请状态
 			repairAudit.setAuditFlag("1");
 			systemService.saveEntity(repairAudit);
+			UserInfo userinfo = (UserInfo)request.getSession().getAttribute("UserInfo");
+			List<Task> task_tmp = processEngine.getTaskService().createTaskQuery().taskAssignee(userinfo.getStaffcode()).processInstanceId(processinstanceid).orderByDueDate().desc().list();
+			Map<String, Object> paras_tmp =new HashMap<String, Object>();
+			paras_tmp.put("outcome", true);
+			processEngine.getTaskService().complete(task_tmp.get(0).getId(),paras_tmp);
 			
 		} catch (Exception e) {
 		}

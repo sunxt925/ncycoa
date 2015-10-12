@@ -159,7 +159,7 @@ function logininfo()
     {
     var rand=Math.floor(Math.random()*10000);
     var url="xtwh/user/login_mod.jsp?sid="+rand+"&staffcode="+staffcode;
-    createwindowNoRefresh('登录信息',url,'350px','300px');
+    createwindow('登录信息',url,'350px','300px');
  //   window.showModalDialog("login_mod.jsp?sid="+rand+"&staffcode="+staffcode,window,"scroll=no;status=no;dialogWidth=350px;dialogHeight=300px;center=yes;help=no;");
 	//window.open("login_mod.jsp?sid="+rand+"&staffcode="+staffcode , "_self");
 	}

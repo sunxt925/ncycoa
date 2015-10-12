@@ -10,6 +10,7 @@ import com.db.Parameter;
 import com.entity.std.DocMetaInfo;
 import com.entity.std.DocMetaVersionInfo;
 import com.entity.std.DocOrg;
+import com.entity.std.DocOrgPost;
 
 public class StdManageAction extends ActionInterface
 {
@@ -150,6 +151,38 @@ public class StdManageAction extends ActionInterface
 			stdinfo.setValidBeginDate(request.getParameter("ValidBeginDate"));
 			stdinfo.setValidEndDate(request.getParameter("ValidEndDate"));
 			stdinfo.setFlag(request.getParameter("flag"));
+			String olddoccode=request.getParameter("olddoccode");
+			String newdoccode=request.getParameter("DocCode");
+			if(!olddoccode.equals(newdoccode)){
+				DocMetaInfo docmetainfo=new DocMetaInfo();
+				docmetainfo.setDocCode(newdoccode);
+				docmetainfo.setDocName(request.getParameter("DocVersionName"));
+				docmetainfo.insert();//文档编码表中插入新的一条
+				DocOrg docorg=new DocOrg();
+				docorg.setDocCode(newdoccode);
+				String orgcode=request.getParameter("orgcode");
+				docorg.setOrgCode(orgcode);
+				docorg.setRelation("直接");
+				docorg.insert();// 标准-机构表     中插入一条
+				DocOrgPost docorgpost=new DocOrgPost();
+				DataTable dt11=docorgpost.getpostByOrgdocCode(orgcode, olddoccode);
+				for(int i=0;i<dt11.getRowsCount();i++){
+					String positioncode="";
+					try {
+						positioncode = dt11.get(i).getString("positioncode");
+						System.out.println("positioncode:::::::::::::"+positioncode);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					docorgpost.setDocCode(newdoccode);
+					docorgpost.setOrgCode(orgcode);
+					docorgpost.setPositionCode(positioncode);
+					docorgpost.setRelation("直接");
+					docorgpost.insert();
+				}
+				docorgpost.DeleteByDocCode(olddoccode);
+			}
 			
 			if (stdinfo.Update())
 			{
