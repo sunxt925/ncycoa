@@ -4,7 +4,7 @@
 
 <html>
 <head>
-	<title>JBPM4-行政处罚流程</title>
+	<title>南充烟草专卖局</title>
 </head>
  <script type="text/javascript" src="<%=request.getContextPath()%>/jscomponent/jquery/jquery-1.8.0.min.js"></script>
 

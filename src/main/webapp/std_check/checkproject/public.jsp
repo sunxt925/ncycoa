@@ -24,7 +24,7 @@ String path = request.getContextPath();
 %>
 <html>
 <head>
-<title>计划管理</title>
+<title>南充烟草专卖局</title>
 <link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/icon.css">
 <link rel="stylesheet" href="<%=path%>/jscomponent/validform/css/style.css" type="text/css" />

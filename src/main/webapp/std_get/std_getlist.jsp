@@ -8,7 +8,7 @@ String path = request.getContextPath();
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>四川南充烟草专卖</title>
+<title>南充烟草专卖局</title>
 <link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/icon.css">
 <script type="text/javascript" src="<%=path%>/jscomponent/jquery/jquery-1.8.0.min.js"></script>

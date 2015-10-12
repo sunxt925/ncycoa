@@ -14,7 +14,7 @@
 	//禁用右击事件
 	doc.setDisableWindowRightClick(true);
 	//给数据区域赋值，即把数据填充到模板中相应的位置
-	doc.openDataRegion("PO_company").setValue("北京卓正志远软件有限公司  ");
+	doc.openDataRegion("PO_company").setValue("南充烟草专卖局  ");
 	fmCtrl.setSaveFilePage("/ncycoa/std/std_saveaspdf.jsp");
 	fmCtrl.setWriter(doc);
 	//fmCtrl.setJsFunction_OnProgressComplete("OnProgressComplete()");

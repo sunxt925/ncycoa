@@ -7,6 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
+  <script type="text/javascript" src="<%=path%>/jscomponent/jquery/jquery-1.8.0.min.js"></script>
     <base href="<%=basePath%>">
     
     <title>My JSP 'sorry.jsp' starting page</title>
@@ -21,7 +22,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	-->
 
   </head>
-  
+  <script type="text/javascript">
+
+  var api = frameElement.api;
+  W = api.opener;
+  W.reloadTable();
+  api.close();
+  </script>
   <body>
     	“—¥¶¿Ì£° <br>
   </body>

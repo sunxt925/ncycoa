@@ -156,6 +156,11 @@ public class SupplierController {
 		}
 		if(supplier.getValid()==null)
 			supplier.setValid("");
+		//判断是否在禁入年限内
+		if(SupplierDao.isBannedByCode(supplier.getCode())){
+			message = "供应商更新失败,在禁入年限内！";
+		}else{
+		
 		supplier.setManageDepart(SupplierDao.getOrgNamesByCodes(supplier.getManageDepart()));
 		if (supplier.getId() != null) {
 			message = "供应商更新成功";
@@ -173,6 +178,7 @@ public class SupplierController {
 			//supplier.setInputTime(new Date());
 			systemService.addEntity(supplier);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
+		}
 		}
 		j.setMsg(message);
 		SystemUtils.jsonResponse(response, j);
@@ -562,6 +568,7 @@ public class SupplierController {
 		AjaxResultJson j = new AjaxResultJson();
 		String message;
 		message = "供应商退出成功";
+		supplierExit.setCode(SupplierDao.getCodeByName(supplierExit.getName()));
 		supplierExit.setExitTime(new Date());
 		systemService.addEntity(supplierExit);
 		SupplierServiceImpl.removeByName(supplierExit.getName());
@@ -590,5 +597,21 @@ public class SupplierController {
 		cq.setTqBuilder(tqBuilder);
 		commonService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dg);
+	}
+	
+	@RequestMapping(params="judge")
+	@ResponseBody
+	public void judge(HttpServletRequest request, HttpServletResponse response) {
+		String code=request.getParameter("code");
+		System.out.println("code:"+code);
+		String message = "";
+		AjaxResultJson j = new AjaxResultJson();
+		//这里判断
+		if(SupplierDao.isBannedByCode(code)){
+			message = "该供应商在禁入年限内，不能添加";
+			j.setSuccess(false);
+		}
+		j.setMsg(message);
+		SystemUtils.jsonResponse(response, j);
 	}
 }

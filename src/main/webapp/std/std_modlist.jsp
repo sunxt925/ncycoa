@@ -10,7 +10,7 @@
 </HEAD>
 <script language=
                 "javascript" type="text/javascript" src="../js/MyDatePicker/WdatePicker.js">  </script>
-<script language="javascript" src="../js/public/key.js"></script>
+
 <script language="javascript" src="../js/public/check.js"></script>
 <script language="javascript">
 function F5()
@@ -68,7 +68,7 @@ function fun(DocClassName)
     <td colspan="3" valign="top" class="main_table_centerbg" align="center"><table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0" class="table_list1">
       <tr>
         <td width="20%"><div align="right">标准编号：</div></td>
-        <td width="80%"><input name="DocCode" type="text" class="input1" id="DocCode" onKeyDown="EnterKeyDo('')" value="<%=mo.getDocCode()%>" size="30" maxlength="30" readonly="readonly"></td>
+        <td width="80%"><input name="DocCode" type="text" class="input1" id="DocCode" onKeyDown="EnterKeyDo('')" value="<%=mo.getDocCode()%>" size="30" maxlength="30"></td>
       </tr>
       <tr>
         <td><div align="right">标准名称：</div></td>
@@ -166,6 +166,8 @@ function fun(DocClassName)
         <input name="TempleteFlag" type="hidden" id="TempleteFlag" value="<%=mo.getTempleteFlag()%>">
         <input name="StoreFileFlag" type="hidden" id="StoreFileFlag" value="<%=mo.getStoreFileFlag()%>">
         <input name="PartDocCount" type="hidden" id="PartDocCount" value="<%=mo.getPartDocCount()%>">
+        <input name="olddoccode" type="hidden" id="olddoccode" value="<%=mo.getDocCode()%>">
+        <input name="orgcode" type="hidden" id="orgcode" value="<%=orgcode%>">
         </div></td>
         <td><input name="action_class" type="hidden" id="action_class" value="com.action.std.StdManageAction"></td>
       </tr>

@@ -12,7 +12,7 @@ String orgclass = request.getParameter("orgclass");
 %>
 <HTML>
 <HEAD>
-<TITLE>南充市烟草公司</TITLE>
+<TITLE>南充烟草专卖局</TITLE>
 <link rel="stylesheet" type="text/css" href="../css/style.css">
 <META http-equiv=Content-Type content="text/html; charset=gb2312">
 <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
@@ -109,7 +109,7 @@ function getmember(positioncode,positionname)
           
           <td align="right">
           <%
-         String position = "orgcode="+orgcode+"&orgname="+orgname+"&orgclass="+orgclass;
+         String position = "unitccm="+orgcode+"&orgname="+orgname+"&orgclass="+orgclass;
       	out.print(PageUtil.DividePage(page_no,pagecount,"postion_list.jsp",position));
        %>
        </td>

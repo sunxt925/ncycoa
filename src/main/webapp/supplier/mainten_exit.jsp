@@ -102,6 +102,13 @@
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label">½ûÈëÄêÏÞ</label></td>
+		<td class="value">
+		<input class="inputxt" style="width:150px;" id="fobbidenTime" name="fobbidenTime" value="${supplierExit.fobbidenTime}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
 </table>
 <div style="width: 690px; height: 1px;"></div>
 

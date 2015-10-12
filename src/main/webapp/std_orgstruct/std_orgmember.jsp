@@ -8,7 +8,7 @@ String path = request.getContextPath();
 <html lang="zh-CN">
 <head>
 <meta charset="gb2312">
-<title>四川南充烟草专卖</title>
+<title>南充烟草专卖局</title>
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
 <meta http-equiv="expires" content="0">    

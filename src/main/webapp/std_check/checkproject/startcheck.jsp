@@ -30,7 +30,7 @@ String datestr = format.format(date);
 %>
 <html>
 <head>
-<title>计划管理</title>
+<title>南充烟草专卖局</title>
 <link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/icon.css">
 <link rel="stylesheet" href="<%=path%>/jscomponent/validform/css/style.css" type="text/css" />
@@ -91,38 +91,53 @@ function removeOldFile(evt, id){
     return true;  
 } 
 function ajaxFileUploadImg(){  
-    //获取file的全部id  
-    var uplist = $("input[name^=uploads]");  
-var arrId = [];  
-for (var i=0; i< uplist.length; i++){  
-    if(uplist[i].value){  
-        arrId[i] = uplist[i].id;  
-    }  
-    }  
-    ////////////////
-    var staffCode=document.getElementById("staffCode").value;
-    var taskid=document.getElementById("taskid").value;
-    var staffName=document.getElementById("staffName").value;
-    var checkName=document.getElementById("checkName").value;
-    var startTime=document.getElementById("startTime").value;
-    var checkCode=document.getElementById("checkCode").value;
-    ////////////////
-$.ajaxFileUpload({  
-    url:'/ncycoa/checkproject.htm?upfile',  
-    secureuri:false,  
-    fileElementId: arrId,  //这里不在是以前的id了，要写成数组的形式哦！  
-    dataType: 'plain',  
-    data: {  
-                 //需要传输的数据  
-    	staffCode:staffCode,taskid:taskid,staffName:staffName,checkName:checkName,
-    	startTime:startTime,checkCode:checkCode,
-            },  
-    success: function (data){  
-    	document.all("formobj").submit();
-    },  
-    error: function(data){  
-    }  
-});  
+// 	var s=document.formobj.result.value;
+// 	if(s==null||s==''){
+// 		alert("请选择操作！");
+// 	}else if(s=='1'){
+						    //获取file的全部id  
+						    var uplist = $("input[name^=uploads]");  
+						var arrId = [];  
+						for (var i=0; i< uplist.length; i++){  
+						    if(uplist[i].value){  
+						        arrId[i] = uplist[i].id;  
+						    }  
+						    }  
+						    ////////////////
+						    var staffCode=document.getElementById("staffCode").value;
+						    var taskid=document.getElementById("taskid").value;
+						    var staffName=document.getElementById("staffName").value;
+						    var checkName=document.getElementById("checkName").value;
+						    var startTime=document.getElementById("startTime").value;
+						    var checkCode=document.getElementById("checkCode").value;
+						    ////////////////
+						$.ajaxFileUpload({  
+						    url:'/ncycoa/checkproject.htm?upfile',  
+						    secureuri:false,  
+						    fileElementId: arrId,  //这里不在是以前的id了，要写成数组的形式哦！  
+						    dataType: 'plain',  
+						    data: {  
+						                 //需要传输的数据  
+						    	staffCode:staffCode,taskid:taskid,staffName:staffName,checkName:checkName,
+						    	startTime:startTime,checkCode:checkCode,
+						            },  
+						    success: function (data){  
+						    	document.all("formobj").submit();
+						    },  
+						    error: function(data){  
+						    }  
+						});  
+// 	}else if(s=='2'){
+<%--  	   $.post("/ncycoa/std_check/checkproject/deleteinstance.jsp?id=<%=taskId %>", --%>
+//   			    {
+
+//   			    },
+//   				 function(data,status){
+//   			    	result(data);
+//   			    	//window.location.reload();
+//   			    }); 
+// 	}
+
 }
 
 
@@ -131,7 +146,7 @@ $.ajaxFileUpload({
 <body style="overflow-x:hidden">
 <form id="formobj" name="formobj" action="/ncycoa/std_check/havedo.jsp" enctype="multipart/form-data" method="post">
 &nbsp;&nbsp;<a href="#" onClick="ajaxFileUploadImg()" class="easyui-linkbutton"
-				        data-options="iconCls:'icon-add',plain:true" >提交[F1]</a>　<a href="/ncycoa/std_check/checkproject/deleteinstance.jsp?id=<%=taskId %>" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-add',plain:true" >提交</a>　<a href="/ncycoa/std_check/checkproject/deleteinstance.jsp?id=<%=taskId %>" class="easyui-linkbutton"
 				        data-options="iconCls:'icon-remove',plain:true" >结束流程</a>　
 <input id="staffCode" name="staffCode" type="hidden" value="<%=UserInfo.getStaffcode()%>">
 <input id="taskid" name="taskid" type="hidden" value="<%=taskId%>">
@@ -180,6 +195,13 @@ $.ajaxFileUpload({
 		</td>
         </tr> 
 	<%} %>
+<!-- 	  <tr> -->
+<!-- 	       <td align="right"><a id="btn_sub" name="btn_sub" style="display:none" href="#" onClick="ajaxFileUploadImg()">保存[F8]</a><input type="submit" name="Submit" value="提交" style="display:none"></td> -->
+<!-- 		  <td class="value"> -->
+<!-- 		  	<label><input name="result" type="radio" value="1" />提交 </label>  -->
+<!-- 			<label><input name="result" type="radio" value="2" />结束流程 </label>  -->
+<!-- 		</td> -->
+<!--         </tr>  -->
 </table>
 
 </form>

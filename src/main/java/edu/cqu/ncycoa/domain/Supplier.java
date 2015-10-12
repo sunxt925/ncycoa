@@ -42,7 +42,7 @@ public class Supplier {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="OUTPUT_TIME")
-	private Date outputTime;     // 出库时间  
+	private Date outputTime;     // 出库时间  ，有效期 到期时间
 	//机构代码，经营范围，注册资金，法人代表，公司地址，联系电话
 	
 	@Column(name="SUPPLIER_RANGE")

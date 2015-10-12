@@ -85,6 +85,11 @@ document.all("Submit").click();
 <td><input type="submit"  name="Submit" value="上传"  style="display:none" ><input type="hidden" name="DocNo" value="<%=DocNo %>"></td>
 
 </tr>
+<tr>
+<td></td>
+<td>			<input type="checkbox" name="otherfile" value="pdf"/>是否另存一份pdf和flash</td>
+
+</tr>
 
 </table>
 
