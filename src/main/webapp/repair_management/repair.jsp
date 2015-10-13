@@ -131,7 +131,7 @@
 
 $("#btn_selectobject").click(function(){
 	
-	createwindow('选择部门','indexmanage/selectunit.jsp',500,500,returnobjValue );
+	createwindow('选择部门','indexmanage/selectunit.jsp',650,500,returnobjValue );
     });
 function returnobjValue(data){
 	var org = data.code;

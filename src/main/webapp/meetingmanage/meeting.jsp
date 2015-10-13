@@ -247,7 +247,7 @@ function returnroomValue(data){
 }
 $("#btn_selectobject").click(function(){
 	
-	createwindow('选择人员','indexmanage/selectstaff.jsp',500,500,returnobjValue );
+	createwindow('选择人员','indexmanage/selectstaff.jsp',750,500,returnobjValue );
     });
     
  

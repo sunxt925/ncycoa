@@ -76,6 +76,9 @@ public class RepairAudit {
 	@Column(name="REPAIRAUDIT_ACCEPTOR")
 	private String acceptor;//验收人
 	
+	@Column(name="PROCESS_INS_ID")
+	private String processInstanceId;//流程实例ID
+	
 	public Long getId() {
 		return id;
 	}
@@ -236,6 +239,14 @@ public class RepairAudit {
 
 	public void setAcceptor(String acceptor) {
 		this.acceptor = acceptor;
+	}
+
+	public String getProcessInstanceId() {
+		return processInstanceId;
+	}
+
+	public void setProcessInstanceId(String processInstanceId) {
+		this.processInstanceId = processInstanceId;
 	}
 	
 	

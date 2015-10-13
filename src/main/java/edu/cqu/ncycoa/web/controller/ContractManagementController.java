@@ -174,7 +174,7 @@ public class ContractManagementController {
 		
 		String companycode = AllMeritCollection.getcompanyByobject(userinfo.getOrgCode());
 		
-		
+		//设置第二级审核人员
 		if(Integer.parseInt((companycode.split("\\.")[2])) >= 20){
 			//区县
 			paras.put("chief", UnitDao.getComanyAudit(companycode));
@@ -182,6 +182,20 @@ public class ContractManagementController {
 			//市局
 			paras.put("chief", UnitDao.getCityComanyAudit(userinfo.getOrgCode()));
 		}
+		
+		
+		//当没有填写实施部门时，默认设置实施部门
+		if(null==contractInfo.getRelevantDepartment()||contractInfo.getRelevantDepartment().equals("")){
+			if(Integer.parseInt((companycode.split("\\.")[2])) >= 20){
+				//区县
+				contractInfo.setRelevantDepartment(companycode);
+			}else{
+				//市局
+				contractInfo.setRelevantDepartment(userinfo.getOrgCode());
+			}
+		}
+		
+		//设置终审审核人员
         if(type.equals("0")){//固定流程
         	if(contractInfo.getType().equals("0")){
     			//企管、法规、审计、内管、财务、安管科
@@ -226,6 +240,8 @@ public class ContractManagementController {
 			}
 			paras.put("finallyauditGroup", auditor);
 		}
+        
+        //设置法规科审核
         paras.put("fgchief", UnitDao.getCityComanyAudit("NC.01.04"));
 		
 		
@@ -487,6 +503,12 @@ public class ContractManagementController {
 		}else if(contractInfo.getType().equals("2")){
 			comm6 = "NC.01.02";
 		}
+		String comm2 = "";
+		if(contractInfo.getType().equals("0")||contractInfo.getType().equals("1")||contractInfo.getType().equals("3")){
+			comm2 = "NC.01.02";
+		}else if(contractInfo.getType().equals("2")){
+			comm2 = "NC.01.01";
+		}
 		for(Comment comment : comments){
 
 			if(comment.getUserId().equals(UnitDao.getCityComanyAudit(contractInfo.getAppDepart()))){
@@ -498,7 +520,7 @@ public class ContractManagementController {
 				map.put("m1", (c_f.get(Calendar.MONTH)+1)+"");
 				map.put("d1", c_f.get(Calendar.DAY_OF_MONTH)+"");
 			}
-			if(comment.getUserId().equals(UnitDao.getCityComanyAudit(contractInfo.getRelevantDepartment()))){
+			if(comment.getUserId().equals(UnitDao.getCityComanyAudit(comm2))){
 				Calendar c_f = Calendar.getInstance();
 				c_f.setTime(comment.getTime());
 				map.put("comment2", comment.getFullMessage());
@@ -588,6 +610,7 @@ public class ContractManagementController {
 		if(null!=type&&!type.equals("")){
 			tqBuilder.addRestriction(new TQRestriction("type", "in",type));
 		}
+		tqBuilder.addOrder(new TQOrder("signingDate", false));
 		cq.setTqBuilder(tqBuilder);
 		commonService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dg);
