@@ -1,8 +1,11 @@
 package edu.cqu.ncycoa.web.controller;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +37,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.common.CodeDictionary;
 import com.common.Format;
+import com.common.Util;
+import com.common.WordUtils;
 import com.dao.system.UnitDao;
 import com.entity.system.UserInfo;
 
@@ -200,6 +205,7 @@ public class RepairAuditController {
 		if (StringUtils.isNotEmpty(dg.getSort())) {
 			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
 		}
+		tqBuilder.addOrder(new TQOrder("appDate", false));
 		cq.setTqBuilder(tqBuilder);
 		commonService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dg);
@@ -319,6 +325,7 @@ public class RepairAuditController {
 			String companyaudit = UnitDao.getCityAudit();
 			
 			paras.put("orgcode", orgaudit);
+			paras.put("ysorgcode", UnitDao.getCityComanyAudit("NC.01.05"));
 			paras.put("company", companyaudit);
 			paras.put("objId", objId);
 			//runtimeService.startProcessInstanceByKey(processID, objId, paras);
@@ -488,5 +495,93 @@ public class RepairAuditController {
 	}
 	
 	
+	@RequestMapping(params = "produceContract")
+	@ResponseBody
+	public void produceContract(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		AjaxResultJson j = new AjaxResultJson();
+		boolean flag = true;
+		String message;
+		String id = request.getParameter("id");
+		
+		RepairAudit repairAudit = systemService.findEntityById(Long.parseLong(id), RepairAudit.class);
+		if(null !=repairAudit.getAudittable()&&!repairAudit.getAudittable().equals("")){
+			message = "审核表已经存在!!!";
+		}else{
+			List<ProcessInstance> processInstances = processEngine.getRuntimeService().createProcessInstanceQuery().list();
+
+			for(ProcessInstance processInstance : processInstances){
+				if(processInstance.getProcessInstanceId().equals(repairAudit.getProcessInstanceId())){
+					flag = false;
+				}
+			}
+			
+			if(flag){
+				/**
+				 * 获取历史批注
+				 */
+				List<Comment> comments = new ArrayList<Comment>();
+				List<HistoricTaskInstance> historicTaskInstances = processEngine.getHistoryService().createHistoricTaskInstanceQuery()
+						                                                         .processInstanceId(repairAudit.getProcessInstanceId())
+						                                                         .list();
+				if(historicTaskInstances !=null && historicTaskInstances.size() > 0){
+					for(HistoricTaskInstance historicTaskInstance : historicTaskInstances){
+						String htaskId = historicTaskInstance.getId();
+						List<Comment> taskList = processEngine.getTaskService().getTaskComments(htaskId);
+						comments.addAll(taskList);
+					}
+				}
+				String tempfilename = Util.getName();
+				File f = new File(Util.getfileCfg().get("uploadfilepath")+tempfilename+".doc");
+				if (!f.getParentFile().exists())
+					f.getParentFile().mkdirs();
+
+				WordUtils.produceWord(Util.getfileCfg().get("uploadfilepath")+tempfilename+".doc", Util.getFilepath("wordtemplate/repairaudit_template.doc"), getCommentMap(repairAudit,comments));
+				
+				repairAudit.setAudittable(tempfilename+".doc");
+				systemService.saveEntity(repairAudit);
+			}
+			if(flag){
+				message = "合同生成成功";
+			}else{
+				message = "合同还在审核中，无法生成";
+			}
+			
+		}
+		
+		j.setMsg(message);
+		SystemUtils.jsonResponse(response, j);
+		
+		
+		
+	}
 	
+	public Map<String, String> getCommentMap(RepairAudit repairAudit,List<Comment> comments){
+		Map<String, String> map = new HashMap<String, String>();
+		Calendar c = Calendar.getInstance();
+		c.setTime(repairAudit.getAppDate());
+		map.put("y0", c.get(Calendar.YEAR)+"");
+		map.put("m0", (c.get(Calendar.MONTH)+1)+"");
+		map.put("d0", c.get(Calendar.DAY_OF_MONTH)+"");
+		map.put("projectName", Format.NullToBlank(repairAudit.getProjectName()));
+		map.put("apporgCode", CodeDictionary.syscode_traslate("base_org", "orgcode", "orgname", Format.NullToBlank(repairAudit.getApporgCode())));
+		map.put("repairFree", repairAudit.getRepairFree()+"");
+		map.put("repairContent", repairAudit.getRepairContent());
+		map.put("apporgOpinion", repairAudit.getApporgOpinion());
+		for(Comment comment : comments){
+
+			if(comment.getUserId().equals(UnitDao.getOfficeAudit())){
+				map.put("gkorgOpinion", comment.getFullMessage());
+			}
+			
+			if(comment.getUserId().equals(UnitDao.getOfficeAudit())){
+				map.put("ysorgOpinion", comment.getFullMessage());
+			}
+			if(comment.getUserId().equals(UnitDao.getCityComanyAudit("NC.01.05"))){
+				map.put("sxborgOpinion", comment.getFullMessage());
+			}
+		}
+		
+	
+		return map;
+	}
 }
