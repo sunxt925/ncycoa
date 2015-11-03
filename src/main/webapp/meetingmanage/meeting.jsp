@@ -101,14 +101,14 @@
 	<tr>
 		<td align="right"><label class="Validform_label"> 开始时段 </label></td>
 		<td class="value">
-		 <input name="meetingBeginDate" type="Wdate" class="input1" id="meetingBeginDate" onfocus="new WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="${meetingInfo.meetingBeginDate}" size="30"  maxlength="30">
+		 <input name="meetingBeginDate" type="text" class="Wdate" id="meetingBeginDate" onfocus="new WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="${meetingInfo.meetingBeginDate}" size="30"  maxlength="30" style="width: 150px">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label"> 结束时段 </label></td>
 		<td class="value">
-		<input name="meetingEndDate" type="Wdate" class="input1" id="meetingEndDate" onfocus="new WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="${meetingInfo.meetingEndDate}" size="30"  maxlength="30">
+		<input name="meetingEndDate" type="text" class="Wdate" id="meetingEndDate" onfocus="new WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="${meetingInfo.meetingEndDate}" size="30"  maxlength="30"  style="width: 150px">
 		
 		<span class="Validform_checktip"></span>
 		</td>
@@ -247,7 +247,7 @@ function returnroomValue(data){
 }
 $("#btn_selectobject").click(function(){
 	
-	createwindow('选择人员','indexmanage/selectstaff.jsp',500,500,returnobjValue );
+	createwindow('选择人员','indexmanage/selectstaff.jsp',750,500,returnobjValue );
     });
     
  

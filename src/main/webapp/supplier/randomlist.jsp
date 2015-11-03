@@ -15,24 +15,26 @@
 </style>
 </head>
 <body>
-	<h:datagrid actionUrl="specialequipment_management.htm?dgdata_remind" fit="true" fitColumns="true" queryMode="group" name="checkplanlist">
+	<h:datagrid actionUrl="random.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="randomlist">
+		<h:dgColumn field="ID" title="id" hidden="true"></h:dgColumn>
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
-		<h:dgColumn field="name" title="设备名称" query="true"></h:dgColumn>
-		<h:dgColumn field="type" title="设备类型" replace="电梯 _0,压力容器 _1,场内机动车 _2,机动车_3,消防设备_4,报警设备_5,巡逻设备_6,其他设备_7" query="true"></h:dgColumn>
-<%-- 		<h:dgColumn field="maintenDepart" title="维保单位"></h:dgColumn> --%>
-<%-- 		<h:dgColumn field="checkCycle" title="检验周期（月）"></h:dgColumn> --%>
-<%-- 		<h:dgColumn field="checkDate" title="当前检测日期" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn> --%>
-<%-- 		<h:dgColumn field="checkStatus" title="当前检测情况"></h:dgColumn> --%>
-     	<h:dgColumn field="nextCheckDate" title="下次检测日期" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn>
-<%-- 		<h:dgToolBar url="specialequipment_management.htm?update_check" icon="icon-add" funname="myedit" title="添加检查日志"></h:dgToolBar> --%>
-<%-- 		<h:dgToolBar url="specialequipment_management.htm?sub" icon="icon-search" funname="myedit" title="查看检查记录"></h:dgToolBar> --%>
+		<h:dgColumn field="randomTime" title="抽取时间" dateFormatter="yyyy-MM-dd"  queryMode="scope"></h:dgColumn>
+		<h:dgColumn field="depart" title="抽取部门" query="true" dictionary="base_org,orgcode,orgname"></h:dgColumn>
+     	<h:dgColumn field="purpose" title="抽取目的"></h:dgColumn>
+     	<h:dgColumn field="result" title="抽取结果"></h:dgColumn>
+		<h:dgColumn title="操作2" field="opt"></h:dgColumn>
+		<h:dgOpenOpt url="random.htm?queryAttender&id={ID}" title="候选机构" width="300" height="400"></h:dgOpenOpt>
+		
 	</h:datagrid>
 </body>
 
 <script type="text/javascript">
+function fileload(fileName){
+	   window.open("fileupload/downweb.jsp?filename="+fileName);
+}
 	$(document).ready(function(){
-		$("input[name='madeTime_begin']").attr("class","easyui-datebox");
-		$("input[name='madeTime_end']").attr("class","easyui-datebox");
+		$("input[name='randomTime_begin']").attr("class","easyui-datebox");
+		$("input[name='randomTime_end']").attr("class","easyui-datebox");
 	});
 	
 	

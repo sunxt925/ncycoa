@@ -202,7 +202,7 @@
 	
 	<tr>
 		<td align="right"><label class="Validform_label"> 合同金额 </label></td>
-		<td class="value"><input class="easyui-numberbox" id="contractValue" name="contractValue" value="${contract.contractValue}">
+		<td class="value"><input class="easyui-numberbox" id="contractValue" name="contractValue" value="${contract.contractValue}" style="width: 151px">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -216,7 +216,7 @@
 	
 	<tr>
 		<td align="right"><label class="Validform_label"> 签订日期 </label></td>
-		<td class="value"><input class="easyui-datebox" id="signingDate" name="signingDate" value="${contract.signingDate}">
+		<td class="value"><input class="easyui-datebox" id="signingDate" name="signingDate" value="${contract.signingDate}" style="width: 157px">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -229,19 +229,19 @@
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label"> 执行金额 </label></td>
-		<td class="value"><input class="easyui-numberbox" id="implementationFree" name="implementationFree" value="${contract.implementationFree}">
+		<td class="value"><input class="easyui-numberbox" id="implementationFree" name="implementationFree" value="${contract.implementationFree}" style="width: 151px">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label"> 完成日期 </label></td>
-		<td class="value"><input class="easyui-datebox" id="finishingDate" name="finishingDate" value="${contract.finishingDate}">
+		<td class="value"><input class="easyui-datebox" id="finishingDate" name="finishingDate" value="${contract.finishingDate}" style="width: 157px">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label"> 有效期 </label></td>
-		<td class="value"><input class="easyui-datebox" id="effectiveDate" name="effectiveDate" value="${contract.effectiveDate}">
+		<td class="value"><input class="easyui-datebox" id="effectiveDate" name="effectiveDate" value="${contract.effectiveDate}"  style="width: 157px">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>

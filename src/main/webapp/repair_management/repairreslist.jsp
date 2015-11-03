@@ -28,6 +28,7 @@
 		<h:dgColumn field="handleDate" title="审批时间"  dateFormatter="yyyy-MM-dd hh:mm:ss" query="true"></h:dgColumn>
 		<h:dgColumn field="endTime" title="完成时间"  dateFormatter="yyyy-MM-dd hh:mm:ss" query="true"></h:dgColumn>
 	    <h:dgColumn field="acceptor" title="验收人" dictionary="base_staff,staffcode,staffname"></h:dgColumn>
+	    <h:dgColumn field="auditFlag" title="审核状态" replace="未提交_0,已提交_1,审核完成_2" style="color:red_1,color:green_0,color:blue_2" ></h:dgColumn>
 	    <h:dgToolBar url="repair_management.htm?updaterec" icon="icon-add" funname="update" title="更新记录"></h:dgToolBar>
 	</h:datagrid>
 </body>

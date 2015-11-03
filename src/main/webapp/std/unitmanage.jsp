@@ -8,7 +8,7 @@ if (unitccm.equals("")) unitccm="NC";
 %>
 <HTML>
 <HEAD>
-<TITLE>四川省南充烟草公司</TITLE>
+<TITLE>南充烟草专卖局</TITLE>
 <link rel="stylesheet" type="text/css" href="<%=path%>/css/style.css">
 <META http-equiv=Content-Type content="text/html; charset=gb2312">
 <META content="MSHTML 6.00.2900.2873" name=GENERATOR>

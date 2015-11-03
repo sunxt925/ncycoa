@@ -35,8 +35,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.common.CodeDictionary;
 import com.common.Format;
 import com.dao.system.UnitDao;
-import com.entity.index.AllMeritCollection;
-import com.entity.system.Org;
 import com.entity.system.UserInfo;
 
 import edu.cqu.ncycoa.common.dto.AjaxResultJson;
@@ -329,6 +327,7 @@ public class RepairAuditController {
 			String processinstanceid = processEngine.getRuntimeService().
 					createProcessInstanceQuery().processInstanceBusinessKey(objId,processID).list().get(0).getProcessInstanceId();
 			
+			repairAudit.setProcessInstanceId(processinstanceid);//存入流程实例号
 			
 			IdentityService identityService=processEngine.getIdentityService();
 			identityService.setAuthenticatedUserId(((UserInfo)request.getSession().getAttribute("UserInfo")).getStaffcode());
@@ -368,12 +367,13 @@ public class RepairAuditController {
 	public void exetask(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		AjaxResultJson j = new AjaxResultJson();
 		String message = "";
+		String id = request.getParameter("id");
 		String taskId = request.getParameter("taskId");
 		String outcome = request.getParameter("outcome"); 
 		
 		String comment = request.getParameter("comment");
 		  
-		
+		RepairAudit repairAudit = systemService.findEntityById(Long.parseLong(id), RepairAudit.class);
 		
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 		String pi = task.getProcessInstanceId();
@@ -385,6 +385,22 @@ public class RepairAuditController {
 		paras.put("outcome", outcome);
 		
 		taskService.complete(taskId,paras);
+		
+		boolean flag = true;
+		List<ProcessInstance> processInstances = processEngine.getRuntimeService().createProcessInstanceQuery().list();
+
+		for(ProcessInstance processInstance : processInstances){
+			if(processInstance.getProcessInstanceId().equals(repairAudit.getProcessInstanceId())){
+				flag = false;
+			}
+		}
+		
+		if(flag){
+			repairAudit.setAuditFlag("2");
+			systemService.saveEntity(repairAudit);
+		}
+		
+		
 		try {
 			message = "维修申请提交成功";
 			

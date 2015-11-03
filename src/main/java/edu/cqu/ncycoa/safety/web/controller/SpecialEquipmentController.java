@@ -258,7 +258,7 @@ public class SpecialEquipmentController {
 	@ResponseBody
 	public void dgDataRemind(SpecialEquipment specialEquipment, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
 		QueryDescriptor<SpecialEquipment> cq = new QueryDescriptor<SpecialEquipment>(SpecialEquipment.class, dg);
-		SafetyDao.setRemindFlag();
+		SafetyDao.setRemindFlag();//设置遍历是否该提示（一个月内就提示）
 		CommonService commonService = SystemUtils.getCommonService(request);
 		//查询条件组装器
 		TypedQueryBuilder<SpecialEquipment> tqBuilder = QueryUtils.getTQBuilder(specialEquipment, request.getParameterMap());
