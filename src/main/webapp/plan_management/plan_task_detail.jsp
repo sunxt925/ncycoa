@@ -25,6 +25,12 @@ a.attachment{
 $(function() {
 	var description = $("#description_ctn").val();
 	CKEDITOR.replace('description');
+	CKEDITOR.on('instanceReady',function(event){
+		editor=event.editor;
+		editor.setReadOnly(true); //Ö»¶Á
+		$('#'+editor.id+'_top').hide();
+		$('#'+editor.id+'_bottom').hide();
+	});
 	CKEDITOR.instances.description.setData(description);
 	
 	$("a.attachment").click(function(){
@@ -65,9 +71,5 @@ $(function() {
 	</tr>
 </table>
 </form>
-
-
-
-
 </body>
 </html>

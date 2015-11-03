@@ -249,6 +249,12 @@ $(function(){
 	    }
 		
 		$("#btn_sub").bind('click', function(){
+			
+			if($("input[name='step_type']:checked").val() == 0 && ($('#add_steps_table > tr.tpl') != null && $('#add_steps_table > tr.tpl').length > 0)) {
+				alert("自定义流程需要至少一个步骤节点")
+				return;
+			}
+			
 			var data = {};
 			data.id = $("#id").val();
 			data.name= $("#name").val();
@@ -274,7 +280,6 @@ $(function(){
 			if($("input[name='step_type']:checked").val() == 0){
 				data.stepType = 0;
 				if($('#add_steps_table > tr.tpl') == null || $('#add_steps_table > tr.tpl').length == 0){
-					
 					$('#add_steps_table > tr').each(function(i){
 						data.taskparticipant += $("input[name=taskparticipant]", this).val() + ":;;:";
 						data.taskParticipantValue += $("input[name=taskParticipantValue]", this).val() + ":;;:";
@@ -300,8 +305,6 @@ $(function(){
 				data.stepType = 1;
 				data.fixFlowKey = $("#selFixflow").val();
 			}
-			
-			
 			
 			var url = $("#formobj").attr("action");
 			$.post(url, data, function(data){

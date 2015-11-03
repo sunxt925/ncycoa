@@ -1,14 +1,15 @@
 package edu.cqu.ncycoa.plan.service;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.cqu.ncycoa.common.service.CommonServiceImpl;
+import edu.cqu.ncycoa.plan.PlanStatus;
 import edu.cqu.ncycoa.plan.domain.Asset;
 import edu.cqu.ncycoa.plan.domain.PendingTask;
 import edu.cqu.ncycoa.plan.domain.PlanInstance;
@@ -65,8 +66,9 @@ public class PendingTaskServiceImpl extends CommonServiceImpl implements Pending
 			
 			nextStep = steps.get(i - 1);
 		} else if(!cannotpass && i == steps.size() - 1){ //
-			task.getPlanInstance().getPlan().setStatus((short)5);
+			task.getPlanInstance().getPlan().setStatus(PlanStatus.EXEC_FINISHING);
 			task.getPlanInstance().setStatus(PlanInstance.FINISHED);
+			task.getPlanInstance().setEndingDate(task.getHandleDate());
 			nextStep = null;
 		} else {
 			nextStep = steps.get(i + 1);
@@ -149,7 +151,7 @@ public class PendingTaskServiceImpl extends CommonServiceImpl implements Pending
 		PlanTask task = commonDao.readEntityById(taskId, PlanTask.class);
 		List<PlanStep> steps = task.getPlanInstance().getPlan().getSteps();
 		int i=0;
-		Map<PlanStep, List<PlanTask>> ret = new HashMap<PlanStep, List<PlanTask>>();
+		TreeMap<PlanStep, List<PlanTask>> ret = new TreeMap<PlanStep, List<PlanTask>>();
 		for(;i<steps.size(); i++){
 			if(steps.get(i).getId().equals(task.getStep().getId())){
 				break;
@@ -157,6 +159,7 @@ public class PendingTaskServiceImpl extends CommonServiceImpl implements Pending
 			List<PlanTask> preTasks = commonDao.readEntitiesByJPQL("select e from PlanTask e where planInstance=?1 and step=?2", PlanTask.class, task.getPlanInstance(), steps.get(i));
 			ret.put(steps.get(i), preTasks);
 		}
-		return ret;
+		return ret.descendingMap();
 	}
+	
 }
