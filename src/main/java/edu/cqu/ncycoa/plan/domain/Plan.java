@@ -44,6 +44,17 @@ public class Plan {
 	@Temporal(TemporalType.DATE)
 	private Date planBeginDate;
 	
+	@Temporal(TemporalType.DATE)
+	private Date planEndDate;
+	
+	public Date getPlanEndDate() {
+		return planEndDate;
+	}
+
+	public void setPlanEndDate(Date planEndDate) {
+		this.planEndDate = planEndDate;
+	}
+
 	@ElementCollection
 	@CollectionTable(name="NCYCOA_PLAN_PART", joinColumns=@JoinColumn(name="PLAN_ID"))
 	@MapKeyColumn(name="PARTICIPANT_CODE")
@@ -60,7 +71,7 @@ public class Plan {
 	private Short type;        // 岗位计划，部门计划
 	
 	@Column(name="STEP_TYPE")
-	private Short stepType;        // 自定义流程，固定流程
+	private Short stepType;    // 自定义流程，固定流程
 	
 	@Column(name="FIX_Flow_Key")
 	private String fixFlowKey;

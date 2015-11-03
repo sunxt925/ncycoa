@@ -26,10 +26,10 @@ public class PlanServiceImpl extends CommonServiceImpl implements PlanService {
 	public void auditAndRunPlan(Long planId, Boolean isPassed) {
 		Plan plan = commonDao.readEntityById(planId, Plan.class);
 		if(isPassed) {
-			plan.setStatus((short)2);
+			plan.setStatus(PlanStatus.AUDIT_PASS);
 			runPlan(planId);
 		} else {
-			plan.setStatus((short)3);
+			plan.setStatus(PlanStatus.AUDIT_NO_PASS);
 		}
 	}
 	
@@ -45,9 +45,25 @@ public class PlanServiceImpl extends CommonServiceImpl implements PlanService {
 		planInstance.setExecDate(new Date());
 		planInstance.setStatus(PlanInstance.EXECUTING);
 		
+		planInstance.setPlanId(plan.getId());
+		planInstance.setPlanBeginDate(plan.getPlanBeginDate());
+		planInstance.setPlanEndDate(plan.getPlanEndDate());
+		planInstance.setName(plan.getName());
+		planInstance.setSummary(plan.getSummary());
+		
+		String participants = "";
+		String participantIds = "";
 		List<PlanStep> steps = plan.getSteps();
 		for(int i = 0; i < steps.size(); i++){
 			PlanStep step = steps.get(i);
+			
+			for(String id : step.getParticipants().keySet()){
+				if(!participantIds.contains(id)) {
+					participantIds += id + ",";
+					participants += step.getParticipants().get(id) + ",";
+				}
+			}
+			
 			if(i == 0){
 				step.setStatus(PlanStep.EXECUTING);
 				planInstance.setCurrentStep(step);
@@ -69,6 +85,14 @@ public class PlanServiceImpl extends CommonServiceImpl implements PlanService {
 				}
 			}
 		}
+		
+		if(participantIds.length() > 0) {
+			participantIds = participantIds.substring(0,  participantIds.length() - 1);
+			participants = participants.substring(0,  participants.length() - 1);
+		}
+		planInstance.setParticipantIds(participantIds);
+		planInstance.setParticipantNames(participants);
+		commonDao.saveEntity(planInstance);
 		
 	}
 	
@@ -94,6 +118,27 @@ public class PlanServiceImpl extends CommonServiceImpl implements PlanService {
 				ret.put(task.getStep(), new ArrayList<PlanTask>());
 			}
 			ret.get(task.getStep()).add(task);
+		}
+		return ret;
+	}
+	
+	
+	@Override
+	public void planReview(Long id, String result){
+		PlanInstance plan = commonDao.readEntityById(id, PlanInstance.class);
+		plan.setReview(result);
+		plan.setStatus(PlanInstance.REVIEWED);
+	}
+	
+	@Override
+	public Map<PlanStep, List<PlanTask>> findAllTasksByPlanId(Long planId){
+		Plan plan = commonDao.readEntityById(planId, Plan.class);
+		List<PlanStep> steps = plan.getSteps();
+		int i=0;
+		TreeMap<PlanStep, List<PlanTask>> ret = new TreeMap<PlanStep, List<PlanTask>>();
+		for(;i<steps.size(); i++){
+			List<PlanTask> preTasks = commonDao.readEntitiesByJPQL("select e from PlanTask e where step=?1", PlanTask.class, steps.get(i));
+			ret.put(steps.get(i), preTasks);
 		}
 		return ret;
 	}

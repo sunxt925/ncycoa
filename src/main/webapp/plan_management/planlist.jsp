@@ -35,6 +35,8 @@ a.dgopt{
 			replace="编辑状态_0,等待审核_1,审核通过_2,审核未通过_3,正在执行_4,执行结束_5,执行中断_6" 
 			style="color:#4d77cc_0,color:#ce3f38_1,color:#5eaf5e_2,color:#ce3f38_3,color:#fa9f1e_4" query="true">
 		</h:dgColumn>
+		<h:dgColumn field="planBeginDate" title="开始时间" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn>
+		<h:dgColumn field="planEndDate" title="结束时间" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn>
 		<h:dgColumn field="summary" title="描述"></h:dgColumn>
 		<h:dgColumn field="inputUser" title="录入员" dictionary="base_staff,staffcode,staffname" query="false"></h:dgColumn>
 		<h:dgColumn field="inputDate" title="录入时间" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="scope"></h:dgColumn>
@@ -43,7 +45,7 @@ a.dgopt{
 		<h:dgToolBar url="plan-management.htm?update" icon="icon-edit" funname="myedit" title="编辑计划"></h:dgToolBar>
 		<h:dgColumn field="opt" title="操作"></h:dgColumn>
 		<h:dgConfOpt url="plan-management.htm?foraudit&id={id}" title="提交审核" message="确定提交该计划？计划提交后会等待审核，期间将不能编辑修改" exp="status#in#0"></h:dgConfOpt>
-		<h:dgOpenOpt url="dgdata.htm?open" title="查看原因" exp="status#in#3"></h:dgOpenOpt>
+<%-- 		<h:dgOpenOpt url="dgdata.htm?open" title="查看原因" exp="status#in#3"></h:dgOpenOpt> --%>
 		<h:dgFunOpt funname="myedit_1({id})" title="编辑计划" exp="status#in#0,3"></h:dgFunOpt>
 	</h:datagrid>
 </body>
@@ -122,6 +124,8 @@ function mydel(title, actionUrl, gname) {
 $(document).ready(function(){
 	$("input[name='planBeginDate_begin']").click(function(){WdatePicker();});
 	$("input[name='planBeginDate_end']").click(function(){WdatePicker();});
+	$("input[name='planEndDate_begin']").click(function(){WdatePicker();});
+	$("input[name='planEndDate_end']").click(function(){WdatePicker();});
 	$("input[name='inputDate_begin']").click(function(){WdatePicker();});
 	$("input[name='inputDate_end']").click(function(){WdatePicker();});
 });

@@ -20,4 +20,8 @@ public interface PlanService extends CommonService{
 	
 	public void auditAndRunPlan(Long planId, Boolean isPassed);
 
+	public abstract Map<PlanStep, List<PlanTask>> findAllTasksByPlanId(Long planId);
+
+	public abstract void planReview(Long id, String result);
+
 }

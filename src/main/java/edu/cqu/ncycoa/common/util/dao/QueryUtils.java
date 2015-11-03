@@ -88,7 +88,7 @@ public class QueryUtils {
 					} else if (StringUtils.isNotEmpty(beginValue)) {
 						builder.addRestriction(aliasName, ">=", beginValue);
 					} else if (StringUtils.isNotEmpty(endValue)) {
-						builder.addRestriction(aliasName, "<=", beginValue);
+						builder.addRestriction(aliasName, "<=", endValue);
 					}
 
 				} else if ("class java.util.Date".equals(type)) {
