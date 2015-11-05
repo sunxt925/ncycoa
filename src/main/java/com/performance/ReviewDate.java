@@ -1,6 +1,7 @@
 package com.performance;
 
 
+
 /**
  * @author Hui
  * 考核时间，目前period只支持月份
@@ -13,7 +14,7 @@ public class ReviewDate {
 	public ReviewDate(String year, String periodcode) throws DateParseException {
 		try{
 			this.year = Integer.parseInt(year);
-			this.periodtype = periodcode.charAt(0);
+			this.periodtype = periodcode.toUpperCase().charAt(0);
 			this.period = Integer.parseInt(periodcode.substring(1));
 		} catch (IndexOutOfBoundsException e){
 			throw new DateParseException();

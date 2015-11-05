@@ -22,16 +22,13 @@ a.dgopt{
 </style>
 </head>
 <body>
-	<h:datagrid actionUrl="plan-management.htm?dgdata_review" checkbox="false" fit="true" fitColumns="true" queryMode="group" name="plan_review_list">
+	<h:datagrid actionUrl="plan-management.htm?dgdata_user_review" checkbox="false" fit="true" fitColumns="true" queryMode="group" name="plan_review_list">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
-		<h:dgColumn field="planId" title="planId" hidden="true"></h:dgColumn>
-		<h:dgColumn field="name" title="计划名称" query="true"></h:dgColumn>
-		<h:dgColumn field="summary" title="概述"></h:dgColumn>
-		<h:dgColumn field="participants" title="参与人"></h:dgColumn>
-		<h:dgColumn field="planBeginDate" title="开始时间" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn>
-		<h:dgColumn field="planEndDate" title="结束时间" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn>
-		<h:dgToolBar icon="icon-search" onclick="myedit_1();" title="详细信息"></h:dgToolBar>
-		<h:dgToolBar icon="icon-search" onclick="myreview_1();" title="执行情况"></h:dgToolBar>
+		<h:dgColumn field="participantCode" title="人员编码"></h:dgColumn>
+		<h:dgColumn field="participantName" title="人员姓名"></h:dgColumn>
+		<h:dgColumn field="statistics" title="统计"></h:dgColumn>
+		<h:dgColumn field="overDeadTimeCounts" title="超时"></h:dgColumn>
+		<h:dgColumn field="noOverDeadTimeCounts" title="正常"></h:dgColumn>
 		<h:dgColumn title="操作" field="opt"></h:dgColumn>
 		<h:dgConfOpt url="plan-management.htm?review_post&id={id}&result=10" title="好" message="确定对该计划进行评价？评价后结果将不能修改"></h:dgConfOpt>
 		<h:dgConfOpt url="plan-management.htm?review_post&id={id}&result=0" title="中" message="确定对该计划进行评价？评价后结果将不能修改"></h:dgConfOpt>
@@ -73,15 +70,6 @@ function myreview_1() {
 	var url = "plan-management.htm?review&id=" + rows[0].planId;
 	openwindow("评审", url,"plan_review_list", 800, 600);
 }
-
-$(document).ready(function(){
-	$("input[name='planBeginDate_begin']").click(function(){WdatePicker();});
-	$("input[name='planBeginDate_end']").click(function(){WdatePicker();});
-	$("input[name='planEndDate_begin']").click(function(){WdatePicker();});
-	$("input[name='planEndDate_end']").click(function(){WdatePicker();});
-});
-	
-
 </script>
 <script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>
 </html>

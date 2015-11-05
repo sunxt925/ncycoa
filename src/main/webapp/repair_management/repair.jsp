@@ -110,14 +110,14 @@
 	<tr>
 		<td align="right"><label class="Validform_label"> 维修主要内容 </label></td>
 		<td class="value">
-		<input  class="inputxt" style="width:150px;" id="repairContent" name="repairContent"   value="${repairAudit.repairContent}" >
+		<input  class="inputxt" style="width:150px;" id="repairContent" name="repairContent"   value="${repairAudit.repairContent}" datatype="s2-200">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label"> 申请部门意见 </label></td>
 		<td class="value">
-		<input  class="inputxt" style="width:150px;" id="apporgOpinion" name="apporgOpinion"   value="${repairAudit.apporgOpinion}" >
+		<input  class="inputxt" style="width:150px;" id="apporgOpinion" name="apporgOpinion"   value="${repairAudit.apporgOpinion}" datatype="s2-100">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -131,7 +131,7 @@
 
 $("#btn_selectobject").click(function(){
 	
-	createwindow('选择部门','indexmanage/selectunit.jsp',500,500,returnobjValue );
+	createwindow('选择部门','indexmanage/selectunit.jsp',650,500,returnobjValue );
     });
 function returnobjValue(data){
 	var org = data.code;

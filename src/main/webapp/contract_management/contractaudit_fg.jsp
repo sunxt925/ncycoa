@@ -62,7 +62,7 @@ $(function() {
 					style="width:700px;height:300px;padding:10px;">
 					<table style="width:100%;border-spacing:1px;" class="formtable">
 	<tr>
-		<td align="right"><label class="Validform_label"> 合同编码 </label></td>
+		<td align="right"><label class="Validform_label"> 合同编码test </label></td>
 		<td class="value">
 		<label>${contract.code}</label>
 		<span class="Validform_checktip"></span>
@@ -101,35 +101,8 @@ $(function() {
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
+	
 	<tr>
-		<td align="right"><label class="Validform_label"> 合同对方名称 </label></td>
-		<td class="value">
-		<label>${contract.partyName}</label>
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label"> 合同对方住所 </label></td>
-		<td class="value">
-		<label>${contract.partyaddress}</label>
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label"> 合同对方类型 </label></td>
-		<td class="value">
-		<label>${contract.partyType}</label>
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label"> 合同对方资本 </label></td>
-		<td class="value">
-		<label>${contract.partyRegValue}</label>
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<%-- <tr>
 		<td align="right"><label class="Validform_label"> 甲方 </label></td>
 		<td class="value">
 		<label>${contract.partyA}</label>
@@ -144,7 +117,7 @@ $(function() {
 		<label>${contract.partyB}</label>
 		<span class="Validform_checktip"></span>
 		</td>
-	</tr> --%>
+	</tr>
 	
 	<tr>
 		<td align="right"><label class="Validform_label"> 合同金额 </label></td>
@@ -216,17 +189,30 @@ $(function() {
 					   <tr>
 					     <td><textarea name="comment" id="comment" style="width: 400px;height: 100px"></textarea></td>
 					   </tr>
+					    <tr>
+		                 <td align="left"><label class="Validform_label"> 承办部门分管领导 </label>
+		                                  <input class="inputxt" id="chengbanleadername" name="chengbanleadername"  datatype="s2-50">
+		                                  <input type="hidden" id="chengbanleader" name="chengbanleader">
+		                                  <a id="btn_selectobject1" href="#">选择</a>
+		                 </td>
+		                   
+	                   </tr>
+	                    <tr>
+		                 <td align="left"><label class="Validform_label"> 采购部门分管领导 </label>
+		                                  <input class="inputxt" id="caigouleadername" name="caigouleadername"  datatype="s2-50">
+		                                  <input type="hidden" id="caigouleader" name="caigouleader">
+		                                  
+		                                  <a id="btn_selectobject2" href="#">选择</a>
+		                 </td>
+		                    
+	                   </tr>
 					   <tr>
 					   <td>
+					  
 					   <input type="button"   value="批准"  onclick="sub('true')">
 					    <input type="button"   value="回退"  onclick="sub('false')">
-					  
-				<%-- 	<c:forEach items="${outcomelist }" var="item">
-					   
-	                   <input type="button"   value="${item }"  onclick="sub(this)">
-	                   
-	                 </c:forEach> --%>
-	                 </td>
+				
+	                    </td>
 	                   </tr>
 					</table>
 					<table style="width:600px;border-spacing:1px;">
@@ -285,5 +271,55 @@ function openoffice(path){
 		
 	
 }
+
+$("#btn_selectobject1").click(function(){
+	
+	createwindow('选择人员','indexmanage/selectstaff.jsp',500,500,returnobjValue1 );
+    });
+$("#btn_selectobject2").click(function(){
+	
+	createwindow('选择人员','indexmanage/selectstaff.jsp',500,500,returnobjValue2 );
+    });
+function returnobjValue1(data){
+
+	var array = data.code;
+	var staffcodes=array[0].staffcode;
+	var staffnames=array[0].staffname;
+	
+	$('#chengbanleader').val(staffcodes);
+	$('#chengbanleadername').val(staffnames);
+	
+}
+function returnobjValue2(data){
+
+	var array = data.code;
+	var staffcodes=array[0].staffcode;
+	var staffnames=array[0].staffname;
+	
+	$('#caigouleader').val(staffcodes);
+	$('#caigouleadername').val(staffnames);
+	
+}
+function createwindow(title, url, width, height,func) {
+	
+	$.dialog({
+			id:'CLHG1976D',
+			data:func,
+			content : 'url:' + url,
+			lock : true,
+			width : width,
+			height : height,
+			title : title,
+			zIndex :2000,
+			opacity : 0.3,
+			cache : false,
+			ok : function() {
+				$('#btn_ok', this.iframe.contentWindow.document).click();
+				return true;
+			},
+			cancelVal : '关闭',
+			cancel : true/* 为true等价于function(){} */
+		});
+}   
 </script>
 </body>

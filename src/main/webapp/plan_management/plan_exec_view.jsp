@@ -2,11 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="h" uri="/gem-tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <title>计划管理</title>
+<script type="text/javascript" src="jscomponent/jquery/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
 <style type="text/css">
 *{font-size:12px;font-family:微软雅黑,新宋体}
 div.node{
@@ -42,7 +45,33 @@ color:#b94a48;
 background-color:#f2dede;
 border-color:#eed3d7;
 }
+
+span.label{
+	display:inline-block;
+	width:60px;
+	text-align:right;
+}
 </style>
+
+<script type="text/javascript">
+$(function() {
+	$("span.participant.finished").click(function(){
+		var taskId = $("span", this).html();
+		$.dialog({
+			width:600,
+			height:450,
+			content: 'url:pending-task.htm?view&id='+taskId,
+			title: "任务明细",
+			zIndex: 3000,
+			lock : true,
+			opacity : 0.4,
+			cache:false, 
+		    cancelVal: '关闭',
+		    cancel: true /*为true等价于function(){}*/
+		});
+	});
+});
+</script>
 </head>
 
 <body style="overflow-x:hidden;">
@@ -71,12 +100,12 @@ border-color:#eed3d7;
 		<span class="participant">
 		</c:otherwise>
 	</c:choose>
-	
-	负责人：${participant.participantName}<br/>
-	完成时间：
+	<span style="display:none;">${participant.id}</span>
+	<span class="label">负责人：</span> ${participant.participantName}<br/>
+	<span class="label">完成时间：</span> 
 		<c:choose>
 		<c:when test="${participant.handleDate != null}">
-		${participant.handleDate}
+		<fmt:formatDate value="${participant.handleDate}" type="date" dateStyle="long"/>
 		</c:when>
 		<c:otherwise>
 		--

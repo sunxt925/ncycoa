@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -20,6 +22,7 @@ import org.activiti.engine.FormService;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.form.TaskFormData;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,19 +68,6 @@ public class PendingTaskController {
 		return "plan_management/plan_task_detail";
 	}
 	
-	@RequestMapping(params="handle")
-	public String handle(HttpServletRequest request, Model model) {
-		Long id = Long.parseLong(request.getParameter("id"));
-		Long taskId = Long.parseLong(request.getParameter("taskId"));
-		model.addAttribute("id", id);
-		model.addAttribute("taskId", taskId);
-		
-		Map<PlanStep, List<PlanTask>> tasks = pendingTaskService.findPreTasksByTaskId(taskId);
-		model.addAttribute("preTasks", tasks);
-		
-		return "plan_management/plan_step_audit";
-	}
-	
 	private File saveFileFromInputStream(InputStream stream, String path, String filename) throws IOException {
 		File file = new File(path + "/" + filename);
 		FileOutputStream fs = new FileOutputStream(file);
@@ -92,9 +82,66 @@ public class PendingTaskController {
 		return file;
 	}
 	
+	@RequestMapping(params="fupload")
+	@ResponseBody
+	public void handleFileUpload(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+		request.setCharacterEncoding("utf-8");
+		AjaxResultJson j = new AjaxResultJson();
+		String message;
+		
+		String filename = request.getParameter("filename");
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request;
+		Asset asset = new Asset();
+		try {
+			if( multipartRequest.getFileNames().hasNext() ) {
+				String originalName = multipartRequest.getFileNames().next();
+				MultipartFile file = multipartRequest.getFile(originalName);
+				filename = new String( Base64.decodeBase64(filename), "utf-8");
+				
+				String extName = filename.substring(filename.lastIndexOf("."), filename.length());
+				String path = multipartRequest.getSession().getServletContext().getRealPath("doc/plan_task");
+				String newFileName = UUID.randomUUID().toString();
+				
+				asset.setDescription("");
+				asset.setExtName(extName);
+				asset.setFriendlyName(filename);
+				asset.setRealName(path +"/"+ newFileName + extName);
+				asset.setId(newFileName);
+				
+				saveFileFromInputStream(file.getInputStream(), path, newFileName + extName);
+				pendingTaskService.addEntity(asset);
+			}
+		} catch (Exception e) {
+			message = new String(Base64.encodeBase64("文件上传失败".getBytes()), "utf-8");
+			j.setSuccess(false);
+			SystemUtils.jsonResponse(response, j);
+			return;
+		}
+		
+		message = new String(Base64.encodeBase64("文件上传成功".getBytes()), "utf-8");
+		j.setMsg(message);
+		j.setAttributes(new HashMap<String, Object>());
+		j.getAttributes().put("assetid", asset.getId());
+		SystemUtils.jsonResponse(response, j);
+	}
+	
+	@RequestMapping(params="handle")
+	public String handle(HttpServletRequest request, Model model) {
+		Long id = Long.parseLong(request.getParameter("id"));
+		Long taskId = Long.parseLong(request.getParameter("taskId"));
+		model.addAttribute("id", id);
+		model.addAttribute("taskId", taskId);
+		
+		Map<PlanStep, List<PlanTask>> tasks = pendingTaskService.findPreTasksByTaskId(taskId);
+		model.addAttribute("preTasks", tasks);
+		
+		return "plan_management/plan_step_handle";
+	}
+	
 	@RequestMapping(params="h_upload")
 	@ResponseBody
-	public void handleUpload(HttpServletRequest request, HttpServletResponse response) {
+	public void handleUpload(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+
 		AjaxResultJson j = new AjaxResultJson();
 		String message;
 		
@@ -106,26 +153,19 @@ public class PendingTaskController {
 			if(audit == 1) {
 				pendingTaskService.handleNotAdmission(id, taskId);
 			} else {
-				
 				String description = request.getParameter("description");
+				description = new String(Base64.decodeBase64(description.getBytes()), "utf-8");
+				String[] assetids; 
+				if(request.getParameter("assetids") != null && !request.getParameter("assetids").trim().equals("")) {
+					assetids = request.getParameter("assetids").split(":;;:");
+				} else {
+					assetids = new String[0];
+				}
+				
 				List<Asset> assets = new ArrayList<Asset>();
-				MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request;
-				String path = multipartRequest.getSession().getServletContext().getRealPath("doc/plan_task");
-				for(Map.Entry<String, MultipartFile> entry : multipartRequest.getFileMap().entrySet()){
-					MultipartFile file = entry.getValue();
-					String newFileName = UUID.randomUUID().toString();
-					String originalName = file.getOriginalFilename();
-					String extName = originalName.substring(originalName.lastIndexOf("."), originalName.length());
-					
-					Asset asset = new Asset();
-					asset.setDescription("");
-					asset.setExtName(extName);
-					asset.setFriendlyName(originalName);
-					asset.setRealName(path +"/"+ newFileName + extName);
-					asset.setId(newFileName);
+				for(int i= 0; i<assetids.length; i++){
+					Asset asset = pendingTaskService.findEntityById(assetids[i], Asset.class);
 					assets.add(asset);
-					
-					saveFileFromInputStream(file.getInputStream(), path, newFileName + extName);
 				}
 				pendingTaskService.handleTask(id, taskId, description, assets);
 			}

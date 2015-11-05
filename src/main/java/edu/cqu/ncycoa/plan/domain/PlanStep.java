@@ -1,5 +1,6 @@
 package edu.cqu.ncycoa.plan.domain;
 
+import java.util.Date;
 import java.util.Map;
 
 import javax.persistence.CollectionTable;
@@ -14,6 +15,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 @Entity
@@ -44,6 +47,17 @@ public class PlanStep implements Comparable<PlanStep>{
 	@Column(name="SUMMARY")
 	private String summary;
 	
+	@Temporal(TemporalType.DATE)
+	private Date ending;
+	
+	public Date getEnding() {
+		return ending;
+	}
+
+	public void setEnding(Date ending) {
+		this.ending = ending;
+	}
+
 	public String getSummary() {
 		return summary;
 	}

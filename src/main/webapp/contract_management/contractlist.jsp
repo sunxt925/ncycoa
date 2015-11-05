@@ -21,7 +21,7 @@
 		<h:dgColumn field="status" title="status" hidden="true"/>
 		<h:dgColumn field="code" title="合同编码" ></h:dgColumn>
 		<h:dgColumn field="name" title="合同名称"></h:dgColumn>
-		<h:dgColumn field="relevantDepartment" title="归口部门"  dictionary="base_org,orgcode,orgname"></h:dgColumn>
+		<h:dgColumn field="relevantDepartment" title="实施部门"  dictionary="base_org,orgcode,orgname"></h:dgColumn>
 		<h:dgColumn field="type" title="合同类别" query="true" replace="工程合同_0,采购合同_1,维修合同_2,其他合同_3"></h:dgColumn>
 		<h:dgColumn field="contactMethod" title="实施方式" query="true" replace="公开招标_0,邀请招标_1,竞争性谈判_2,询价_3,单一来源_4"></h:dgColumn>
 		<h:dgColumn field="partyA" title="甲方" ></h:dgColumn>
