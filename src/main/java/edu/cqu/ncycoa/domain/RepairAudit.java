@@ -79,6 +79,9 @@ public class RepairAudit {
 	@Column(name="PROCESS_INS_ID")
 	private String processInstanceId;//流程实例ID
 	
+
+	@Column(name="AUDITFILE_PATH")//审核表文件路径
+	private String audittable;
 	public Long getId() {
 		return id;
 	}
@@ -247,6 +250,14 @@ public class RepairAudit {
 
 	public void setProcessInstanceId(String processInstanceId) {
 		this.processInstanceId = processInstanceId;
+	}
+
+	public String getAudittable() {
+		return audittable;
+	}
+
+	public void setAudittable(String audittable) {
+		this.audittable = audittable;
 	}
 	
 	

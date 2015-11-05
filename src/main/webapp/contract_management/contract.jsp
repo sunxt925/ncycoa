@@ -101,7 +101,7 @@
 	</tr>
 	
 	<tr>
-		<td align="right"><label class="Validform_label"> 实施部门 </label></td>
+		<td align="right"><label class="Validform_label"> 承办部门 </label></td>
 		<td class="value">
 		
 		<input class="inputxt" disabled id="relevantDepartment_disp" name="relevantDepartment_disp" value="${relevantDepartment_disp}"></input>
@@ -112,7 +112,7 @@
 	</tr>
 	
 	<tr>
-		<td align="right"><label class="Validform_label"> 合同类别 </label></td>
+		<td align="right"><label class="Validform_label"> 合同类型 </label></td>
 		<td class="value">
 		<input class="inputxt" name="type" id="type" value="${type }" type="hidden">
 		<c:if test="${type == 0 || type == null}">
@@ -180,6 +180,34 @@
 		</span>
 		</td>
     </tr>
+    <td align="right"><label class="Validform_label"> 审批事项 </label></td>
+		<td class="value"><select id="auditctx" name="auditctx" >
+		<c:if test="${auditctx == null}">
+		  <option value="0">签订主合同</option>
+		  <option value="1">签订补充协议</option>
+		  <option value="2">签订变更协议</option>
+		</c:if>
+		<c:if test="${auditctx == 0}">
+		  <option value="0" selected="selected">签订主合同</option>
+		  <option value="1">签订补充协议</option>
+		  <option value="2">签订变更协议</option>
+		</c:if>
+		<c:if test="${auditctx == 1}">
+		  <option value="0">签订主合同</option>
+		  <option value="1"  selected="selected">签订补充协议</option>
+		  <option value="2">签订变更协议</option>
+		</c:if>
+		<c:if test="${auditctx == 2}">
+		  <option value="0">签订主合同</option>
+		  <option value="1">签订补充协议</option>
+		  <option value="2"  selected="selected">签订变更协议</option>
+		</c:if>
+		
+		</select>
+		
+		</span>
+		</td>
+    </tr>
     <tr>
 		<td align="right"><label class="Validform_label"> 合同内容 </label></td>
 		<td class="value"><input class="inputxt" id="content" name="content" value="${contract.content}">
@@ -187,6 +215,30 @@
 		</td>
 	</tr>
 	<tr>
+		<td align="right"><label class="Validform_label"> 合同对方名称 </label></td>
+		<td class="value"><input class="inputxt" id="partyName" name="partyName" value="${contract.partyName}" datatype="s2-50">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 合同对方住所 </label></td>
+		<td class="value"><input class="inputxt" id="partyaddress" name="partyaddress" value="${contract.partyaddress}" datatype="s2-50">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 合同对方类型 </label></td>
+		<td class="value"><input class="inputxt" id="partyType" name="partyType" value="${contract.partyType}" datatype="s2-50">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 合同对方资本 </label></td>
+		<td class="value"><input class="inputxt" id="partyRegValue" name="partyRegValue" value="${contract.partyRegValue}" datatype="s2-50">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<%-- <tr>
 		<td align="right"><label class="Validform_label"> 甲方 </label></td>
 		<td class="value"><input class="inputxt" id="partyA" name="partyA" value="${contract.partyA}">
 		<span class="Validform_checktip"></span>
@@ -198,11 +250,16 @@
 		<td class="value"><input class="inputxt" id="partyB" name="partyB" value="${contract.partyB}">
 		<span class="Validform_checktip"></span>
 		</td>
+	</tr> --%>
+	<tr>
+		<td align="right"><label class="Validform_label"> 预算资金 </label></td>
+		<td class="value"><input class="easyui-numberbox" id="budgetValue" name="budgetValue" value="${contract.budgetValue}" style="width: 151px" datatype="s2-50">
+		<span class="Validform_checktip"></span>
+		</td>
 	</tr>
-	
 	<tr>
 		<td align="right"><label class="Validform_label"> 合同金额 </label></td>
-		<td class="value"><input class="easyui-numberbox" id="contractValue" name="contractValue" value="${contract.contractValue}" style="width: 151px">
+		<td class="value"><input class="easyui-numberbox" id="contractValue" name="contractValue" value="${contract.contractValue}" style="width: 151px" datatype="s2-50">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
