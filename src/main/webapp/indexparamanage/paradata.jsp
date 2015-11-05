@@ -15,10 +15,10 @@
 </head>
 <body class="easyui-layout">
 <!-- 左 -->
-<div data-options="region:'west',border:false" style="width:223px;padding:0 3px">
+<div data-options="region:'west',border:false" style="width:230px;padding:0 3px">
 	<div style="margin:5px 0px;">
 		<label for="yearsel">年度: </label>
-		<input id='yearsel' class="easyui-combobox" style="width:180px;" data-options="data:<%=IndexDataHelper.getYearJson() %>,valueField:'value',textField:'text',onSelect:onYearChanged" />
+		<input id='yearsel' class="easyui-combobox" style="width:185px;" data-options="data:<%=IndexDataHelper.getYearJson() %>,valueField:'value',textField:'text',onSelect:onYearChanged" />
 		<script type="text/javascript">
 			function onYearChanged(record){
 				var indexcode = $('#indexcode').val();
@@ -33,15 +33,15 @@
 			}
 		</script>
 	</div>
-	<div style="margin-bottom:3px;">
+	<div style="margin-bottom:5px;">
 		<label for="indexname">体系: </label>
 	   	<input id="indexcode" name="indexcode" type="hidden"></input>
 		<input id="indexname" name="indexcode" type="text" style="width:120px;background-color:white;" readonly="readonly"></input>
 		<a id="indexsel" href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-search'">选择</a>
 	</div>
-	<div style="margin-bottom:3px;">
+	<div style="margin-bottom:8px;">
 		<label for="periodsel">周期: </label>
-		<input id="periodsel" class="easyui-combobox" style="width:180px;height:25px;" data-options="valueField:'periodcode',textField:'periodname',data:[],onSelect:onPeriodChanged"></input>
+		<input id="periodsel" class="easyui-combobox" style="width:185px;height:25px;" data-options="valueField:'periodcode',textField:'periodname',data:[],onSelect:onPeriodChanged"></input>
 		<script type="text/javascript">
 			function onPeriodChanged(record){
 				$('#datalog').datagrid('load',{
@@ -53,7 +53,7 @@
 		</script>
 	</div> 
 	
-   <table id="datalog" class="easyui-datagrid" style="width:210px;height:350px" data-options="url:'periodjson2.jsp',singleSelect:true,onClickRow:onClickRow">
+   <table id="datalog" class="easyui-datagrid" style="width:220px;height:350px" data-options="url:'periodjson2.jsp',singleSelect:true,onClickRow:onClickRow">
         <thead>
            <tr>
                <th data-options="field:'code',hidden:true"></th>

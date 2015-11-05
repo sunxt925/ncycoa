@@ -7,8 +7,7 @@
 	response.setHeader("Cache-Control", "no-cache");
 	response.setDateHeader("Expires", 0);
 	
-	if(request.getParameter("indexcode") == null)
-	{
+	if(request.getParameter("indexcode") == null) {
 		response.getWriter().write("[]");
 		response.getWriter().flush();
 		response.getWriter().close();

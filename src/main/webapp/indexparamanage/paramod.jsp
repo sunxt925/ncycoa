@@ -81,7 +81,7 @@ ReferPara ref=new ReferPara(paracode);
 				<td><span>缺省值：</span></td>
 				<td>
 					<%
-					out.print(cu.print("TBM_REFERPARA","DEFAULTVALUE",String.valueOf(ref.getDefaultvalue())));
+					out.print(cu.print("TBM_REFERPARA","DEFAULTVALUE", ref.getDefaultvalue() == null ? "" : String.valueOf(ref.getDefaultvalue()) ));
 					%>
 				</td>
 			</tr>
@@ -98,7 +98,7 @@ ReferPara ref=new ReferPara(paracode);
 				<td><span>使用标志：</span></td>
 				<td>
 					<%
-					out.print(cu.print("TBM_REFERPARA","USINGFLAG",String.valueOf(ref.getUsingflag())));
+					out.print(cu.print("TBM_REFERPARA","USINGFLAG", ref.getUsingflag() == null ? "" : String.valueOf(ref.getUsingflag())));
 					%>
 				</td>
 			</tr>

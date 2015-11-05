@@ -22,8 +22,6 @@ try{
 	String period = request.getParameter("periodcode");
 	String indexcode = request.getParameter("indexcode");
 	
-	System.out.println(year+":"+ period+":" + indexcode);
-	
 	ReviewDate date = new ReviewDate(year, period);
 	UserInfo user = (UserInfo) request.getSession().getAttribute("UserInfo");
 	Map<String, HashMap<String, String>> data = (Map<String, HashMap<String, String>>)request.getSession().getAttribute("paradata");

@@ -318,7 +318,11 @@ public class IndexDao
 					bizpara.setCode(r.getString("paracode"));
 					bizpara.setName(r.getString("paraname"));
 					bizpara.setPeriod(r.getString("paraperiod"));
-					bizpara.setDefaultValue(Integer.parseInt(r.getString("defaultvalue")));
+					if(r.getString("defaultvalue") == null || "".equals(r.getString("defaultvalue").trim())) {
+						bizpara.setDefaultValue(null);
+					} else {
+						bizpara.setDefaultValue(Integer.parseInt(r.getString("defaultvalue")));
+					}
 				}
 			}
 		} catch (Exception e) {

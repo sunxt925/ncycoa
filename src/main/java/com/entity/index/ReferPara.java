@@ -13,8 +13,8 @@ public class ReferPara {
 	private String paraperiod;
 	private String memo;
 	private String getparavaluefunc;
-	private int defaultvalue;
-	private int usingflag;
+	private Integer defaultvalue;
+	private Integer usingflag;
 	private int paraorder;
 	
 	public ReferPara(){
@@ -35,8 +35,16 @@ public class ReferPara {
 				paraperiod=r.getString("paraperiod");
 				memo=r.getString("memo");
 				getparavaluefunc=r.getString("getparavaluefunc");
-				defaultvalue=Integer.parseInt(r.getString("defaultvalue"));
-				usingflag=Integer.parseInt(r.getString("usingflag"));
+				if(r.getString("defaultvalue") == null || "".equals(r.getString("defaultvalue").trim())) {
+					defaultvalue = null;
+				} else {
+					defaultvalue=Integer.parseInt(r.getString("defaultvalue"));
+				}
+				if(r.getString("usingflag") == null || "".equals(r.getString("usingflag").trim())) {
+					usingflag = null;
+				} else {
+					usingflag=Integer.parseInt(r.getString("usingflag"));
+				}
 				paraorder=Integer.parseInt(r.getString("paraorder"));
 			}
 		} catch (Exception e) {
@@ -121,16 +129,16 @@ public class ReferPara {
 	public void setGetparavaluefunc(String getparavaluefunc) {
 		this.getparavaluefunc = getparavaluefunc;
 	}
-	public int getDefaultvalue() {
+	public Integer getDefaultvalue() {
 		return defaultvalue;
 	}
-	public void setDefaultvalue(int defaultvalue) {
+	public void setDefaultvalue(Integer defaultvalue) {
 		this.defaultvalue = defaultvalue;
 	}
-	public int getUsingflag() {
+	public Integer getUsingflag() {
 		return usingflag;
 	}
-	public void setUsingflag(int usingflag) {
+	public void setUsingflag(Integer usingflag) {
 		this.usingflag = usingflag;
 	}
 	public int getParaorder() {
