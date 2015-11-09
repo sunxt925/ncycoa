@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.db.DBObject;
+import com.db.Parameter;
 import com.performance.ParaDataHelper;
 
 public class PlanHelper {
@@ -64,6 +66,55 @@ public class PlanHelper {
 		
 		return preperiod;
 	}
+	
+	public static void insertTask(String staffcode){
+		try {
+			DBObject db=new DBObject();
+			String value = db.executeOneValue("select count(*) from tbm_admindpt where staffcode='" + staffcode + "'");
+			if("0".equals(value)){
+				String sql="insert into tbm_admindpt(staffcode) values(?)";
+				Parameter.SqlParameter[] paras = new Parameter.SqlParameter[]{new Parameter.String(staffcode)};
+				db.run(sql, paras);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void insertTask(String staffcode, String orgcode){
+		try {
+			DBObject db=new DBObject();
+			db.run("delete from tbm_admindpt where staffcode='" + staffcode + "' and (orgcode is null or orgcode='"+orgcode+"'");
+			
+			String sql="insert into tbm_admindpt(staffcode,orgcode) values(?,?,)";
+			Parameter.SqlParameter[] paras = new Parameter.SqlParameter[]{new Parameter.String(staffcode), new Parameter.String(orgcode)};
+			db.run(sql, paras);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void delTask(String staffcode){
+		try {
+			DBObject db=new DBObject();
+			db.run("delete from tbm_admindpt where staffcode='" + staffcode + "'");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void delTask(String staffcode, String orgcode){
+		try {
+			DBObject db=new DBObject();
+			db.run("delete from tbm_admindpt where staffcode='" + staffcode + "' and orgcode='" + orgcode + "'");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	
 	
 //	public static String getDataGrid(ReviewTask task, Map<String, HashMap<String, String>> data) throws ReviewException{
 //		if(task == ReviewTask.INVALID_TASK){
