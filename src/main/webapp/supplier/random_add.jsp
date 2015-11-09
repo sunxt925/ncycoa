@@ -56,8 +56,8 @@
 		obj = document.getElementsByName("supplier");
 		check_val = [];
 		var l=0;
-		for(k in obj){
-			if(obj[k].checked){
+		for(var k=0;k<obj.length;k++){
+			if(obj[k].checked==true){
 				check_val.push(obj[k].value);
 				l++;
 			}
@@ -141,7 +141,8 @@
 <table style="width:600px;border-spacing:1px;" class="formtable">
 <tr>
 		<td align="right"><label class="Validform_label"> 抽取部门</label></td>
-		<td class="value"><input class="inputxt" onchange="getdeparts()" style="width:150px;" id="depart" name="depart" value="${randomRecord.depart}">
+		<td class="value"><input class="inputxt" onchange="getdeparts()" style="width:150px;display:none" id="depart" name="depart" value="${randomRecord.depart}">
+		<input class="inputxt" style="width:150px;" id="apporgName" name="apporgName" value="${orgname}">
 		<a id="btn_selectorg" href="#" class="easyui-linkbutton"
 				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
@@ -196,6 +197,7 @@ function returnorgValue(data){
 		alert("请选择一个部门!");
 	}else{
 		$('#depart').val(org[0].orgcode);
+		$('#apporgName').val(org[0].orgname);
 		$('#depart').change();
 	}
 }

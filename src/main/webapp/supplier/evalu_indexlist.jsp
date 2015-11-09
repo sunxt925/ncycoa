@@ -5,11 +5,11 @@
 <html lang="zh-CN">
 <head>
 <meta charset="gb2312">
-<link rel="stylesheet" type="text/css" href="../jscomponent/easyui/themes/default/easyui.css">
-<link rel="stylesheet" type="text/css" href="../jscomponent/easyui/themes/icon.css">
-<script type="text/javascript" src="../jscomponent/jquery/jquery-1.8.0.min.js"></script>
-<script type="text/javascript" src="。。/jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
-<script type="text/javascript" src="../jscomponent/tools/datagrid.js"></script>
+<link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/icon.css">
+<script type="text/javascript" src="jscomponent/jquery/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
+<script type="text/javascript" src="jscomponent/tools/datagrid.js"></script>
 <style type="text/css">
 *{font-size:12px; font-family:微软雅黑,新宋体}
 </style>
@@ -27,10 +27,6 @@
 </body>
 
 <script type="text/javascript">
-	$(document).ready(function(){
-		$("input[name='exitTime_begin']").attr("class","easyui-datebox");
-		$("input[name='exitTime_end']").attr("class","easyui-datebox");
-	});
 	
 	function add(title, actionUrl, gname, width, height) {
 		gridname=gname;
@@ -60,5 +56,5 @@
 		createwindow(title, actionUrl, 600, 430);
 	}
 </script>
-<script type="text/javascript" src="../jscomponent/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>
 </html>
