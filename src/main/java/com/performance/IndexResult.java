@@ -98,7 +98,7 @@ public class IndexResult {
 				ScriptEngine se = new ScriptEngineManager().getEngineByName("JavaScript");
 				try {
 					Object eval = se.eval(func);
-					value = (Double) eval;
+					value = Double.parseDouble( eval.toString() );
 				} catch (Exception e) {
 					throw new ReviewException("计算指标项[ " + index.getIndexName() + " ]时异常，值计算公式:\n" + index.getValueFunc());
 				}
@@ -115,7 +115,8 @@ public class IndexResult {
 				try {
 					double eval = 0;
 					for (int i = 0; i < ps.length; i++) {
-						eval += (Double) (se.eval((StringUtils.isBlank(ps[i]) ? "0" : ps[i]) + "*" +  tmps[i]));
+						Object tmpEval = se.eval( (StringUtils.isBlank(ps[i]) ? "0" : ps[i]) + "*" +  tmps[i] );
+						eval += Double.parseDouble( tmpEval.toString() );
 					}
 					value = (Double) eval;
 				} catch (Exception e) {
@@ -140,7 +141,7 @@ public class IndexResult {
 				String func = index.getScoreFunc();
 				func = func.replaceAll("x", Double.toString(value));
 				Object eval = se.eval(func);
-				score = (Double) eval;
+				score = Double.parseDouble( eval.toString() );
 			} catch (Exception e) {
 				throw new ReviewException("计算指标项[ " + index.getIndexName() + " ]时异常，得分计算公式:\n" + index.getScoreFunc());
 			}
@@ -168,7 +169,7 @@ public class IndexResult {
 				try {
 					func = func.replaceAll("x", Double.toString(value));
 					Object eval = se.eval(func);
-					score = (Double) eval;
+					score = Double.parseDouble( eval.toString() );
 				} catch (Exception e) {
 					throw new ReviewException("计算指标项[ " + index.getIndexName() + " ]时异常，得分计算公式:\n" + index.getScoreFunc());
 				}

@@ -1,6 +1,6 @@
 package com.performance;
 
-public class IndexPara {
+public class IndexParameterDefinition {
 
 	private String indexcode;
 	private String paraid;
