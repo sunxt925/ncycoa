@@ -26,7 +26,6 @@
 		<h:dgColumn field="contactMethod" title="实施方式" query="true" replace="公开招标_0,邀请招标_1,竞争性谈判_2,询价_3,单一来源_4"></h:dgColumn>
 		<h:dgColumn field="partyA" title="甲方" ></h:dgColumn>
 		<h:dgColumn field="partyB" title="乙方" ></h:dgColumn>
-	
 		<h:dgColumn field="contractValue" title="合同金额" query="true"></h:dgColumn>
 		<h:dgColumn field="contractObject" title="合同标的" ></h:dgColumn>
 		<h:dgColumn field="signingDate" title="签订日期" dateFormatter="yyyy-MM-dd" query="true"></h:dgColumn>
@@ -35,15 +34,12 @@
 		<h:dgColumn field="renewal" title="续签" ></h:dgColumn>
 		<h:dgColumn field="contractFilePath" title="" style="display:none"></h:dgColumn>
 		<h:dgColumn field="audittable" title="" style="display:none"></h:dgColumn>
-			<h:dgColumn field="status" title="" style="display:none"></h:dgColumn>
+		<h:dgColumn field="status" title="" style="display:none"></h:dgColumn>
+		<h:dgColumn field="otherfile" title="" style="display:none"></h:dgColumn>
 		<h:dgColumn title="操作" field="opt"></h:dgColumn>
-		<h:dgFunOpt funname="commitcontract({id},{status})" title="提交合同"></h:dgFunOpt>
-		<h:dgFunOpt funname="producecontract({id},{status})" title="审批表生成"></h:dgFunOpt>
-		<h:dgFunOpt funname="downloadcontract({audittable})" title="审批表下载"></h:dgFunOpt>
-		
+		<h:dgFunOpt funname="downloadcontract({otherfile})" title="法律顾问意见下载"></h:dgFunOpt>
 		<h:dgToolBar url="contract-management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
 		<h:dgToolBar url="contract-management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
-		<h:dgToolBar url="contract-management.htm?update" icon="icon-add" funname="update" title="更新台账"></h:dgToolBar>
 	</h:datagrid>
 </body>
 
@@ -53,26 +49,9 @@
 		$("input[name='inputDate_begin']").attr("class","easyui-datebox");
 		$("input[name='inputDate_end']").attr("class","easyui-datebox");
 	});
-	function commitcontract(id,flag){
-		if(flag == "0"){
-			createwindow2('提交审批',"contract_management/chooseaudit.jsp?id="+id,300,400);
-			/* $.post("contract-management.htm?commit&id="+id,function(data,status){
-				var obj = eval('(' + data + ')');
-				$.messager.show({
-		              title:'提示',
-		              msg:obj.msg,
-		              showType:'show'
-		          });
-				setTimeout(function(){
-		        	  window.location.reload();
-		   	      },800);
-			}); */
-		}else{
-			
-			$.dialog.alert("合同已提交，不能重复提交!");
-			
-		}
-	}
+	
+
+  
 	function producecontract(id,flag){
 		
 			
@@ -92,7 +71,7 @@
 		if(audittable != "null" && audittable !=""){
 			window.location.href="fileupload/downweb.jsp?filename="+audittable;
 		}else{
-			$.dialog.alert("审批表不存在，请生成审批表!");
+			$.dialog.alert("不存在法律顾问意见表!");
 		}
     }
 	
@@ -126,11 +105,11 @@
 			   window.location.reload();
            });
 	}
-function createwindow2(title, url, width, height) {
+function createwindow2(title, url, width, height,func) {
 		
 		$.dialog({
 			id:'choose01',
-			data:returnValue,
+			data:func,
 			content : 'url:' + url,
 			lock : true,
 			width : width,

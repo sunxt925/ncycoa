@@ -23,7 +23,7 @@
 		<h:dgColumn field="handler" title="整改下达者" dictionary="base_staff,staffcode,staffname"></h:dgColumn>
 		<h:dgColumn field="clOrgcode" title="要求整改部门"  dictionary="base_org,orgcode,orgname"></h:dgColumn>
 		<h:dgColumn field="xdDate" title="下达日期" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="scope"></h:dgColumn>
-		<h:dgColumn field="fileName" title="附件"></h:dgColumn>
+		
 		<h:dgColumn field="memo" title="整改说明"></h:dgColumn>
 		<h:dgColumn field="flag" title="状态" replace="已反馈_1,未反馈_0" style="color:red_1,color:green_0"></h:dgColumn>
 		<h:dgToolBar url="reform_management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>

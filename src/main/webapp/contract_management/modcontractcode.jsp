@@ -28,29 +28,16 @@ request.setAttribute("request_path", base_path);
 *{font-size:12px; font-family:微软雅黑,新宋体}
 </style>
 
+<%
+String id = request.getParameter("id");
+%>
 </head>
 <body style="overflow-x:hidden">
-<label><span style="font-size:12px; font-family:微软雅黑,新宋体">合同类型:</span></label>
-<select id="type" name="type" >
- <option value="1">买卖合同</option>
-		  <option value="2">租赁合同</option>
-		  <option value="3">仓储合同</option>
-		  <option value="4">技术合同</option>
-		  <option value="5">建设施工(维修)合同</option>
-		  <option value="6">承揽合同</option>
-		  <option value="7">委托合同</option>
-		  <option value="8">赠与合同</option>
-		  <option value="9">运输合同</option>
-		  <option value="0">其他合同</option>
+<label><span style="font-size:12px; font-family:微软雅黑,新宋体">选择单位性质:</span></label>
+<select id="choosetype" name="type">
+    <option value="2">商业企业</option>
+    <option value="9">烟草专卖局</option>
 </select>
-<br>
-<br>
-<label><span style="font-size:12px; font-family:微软雅黑,新宋体">起始日期:</span></label>
-<input class="easyui-datebox" id="sDate" name="sDate">
-<br>
-<br>
-<label><span style="font-size:12px; font-family:微软雅黑,新宋体">终止日期:</span></label>
-<input class="easyui-datebox" id="eDate" name="eDate">
 <br>
 <br>
 
@@ -58,8 +45,15 @@ request.setAttribute("request_path", base_path);
 <script type="text/javascript">
 function ret(){
 	 var api = frameElement.api;
-     (api.data)({sDate:$('#sDate').datebox('getValue'),eDate:$('#eDate').datebox('getValue')});
-     window.close();
+	var type=$('#choosetype').val();
+	var id = "<%=id%>";
+	$.post("../contract-management.htm?modcontractcode&id="+id+"&type="+type,function(data,status){
+		
+		(api.data)({code:data.msg});
+	});  
+	
+	
 }
+
 </script>
 </body>

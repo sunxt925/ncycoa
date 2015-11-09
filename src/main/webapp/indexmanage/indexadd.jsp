@@ -298,6 +298,8 @@ ComponentUtil cu=new ComponentUtil();
 	    		if(document.getElementById("TBM_INDEXITEM.VALIDBEGINDATE").value!=""&&document.getElementById("TBM_INDEXITEM.VALIDENDDATE").value!=""&&document.getElementById("TBM_INDEXITEM.VALIDBEGINDATE").value<document.getElementById("TBM_INDEXITEM.VALIDENDDATE").value){
 	    			
 	    			 document.all("Submit").click();
+	    			
+	    			 
 	   	   	         (api.data)({code:"refresh"});
 	    		}else{
 	    			alert("日期字段为空或者有误");

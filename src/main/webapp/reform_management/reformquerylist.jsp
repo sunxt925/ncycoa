@@ -23,14 +23,17 @@
 		<h:dgColumn field="handler" title="整改下达者"  dictionary="base_staff,staffcode,staffname"></h:dgColumn>
 		<h:dgColumn field="clOrgcode" title="要求整改部门"  dictionary="base_org,orgcode,orgname" ></h:dgColumn>
 		<h:dgColumn field="xdDate" title="下达日期" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="scope"></h:dgColumn>
-		<h:dgColumn field="fileName" title="附件">
+		<h:dgColumn field="fileName" title=""  style="display:none">
+		
 		<h:dgOpenOpt url="fileupload/download.jsp?filename={fileName}" title="{fileName}"></h:dgOpenOpt>
 		</h:dgColumn>
+		<h:dgColumn field="reformFile" title="" style="display:none"></h:dgColumn>
 		<h:dgColumn field="memo" title="整改说明"></h:dgColumn>
 		<h:dgColumn field="flag" title="状态"></h:dgColumn>
 		<h:dgColumn title="操作" field="opt"></h:dgColumn>
 		  <h:dgFunOpt funname="reformback({id})" title="反馈结果"></h:dgFunOpt>
 		  <h:dgFunOpt funname="fileload({fileName})" title="附件下载"></h:dgFunOpt>
+		  <h:dgFunOpt funname="fileload({reformFile})" title="整改文书"></h:dgFunOpt>
 		 </h:datagrid>
 </body>
 <script type="text/javascript">
@@ -41,7 +44,8 @@ function fileload(fileName){
 	  createwindow("反馈结果","reformback_management.htm?add&reformid="+id,600,400);
   }
   function returnValue(data){
-	  alert(data.code);
+	//  alert("完成");
+	  window.location.reload();
   }
   function createwindow(title, url, width, height) {
 		
