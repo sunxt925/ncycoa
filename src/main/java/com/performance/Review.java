@@ -3,6 +3,7 @@ package com.performance;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -191,6 +192,14 @@ public class Review {
 				List<ReviewableObj> tmp = maps.get(key);
 				tmp = filter(tmp);
 				if(tmp.size() > 0){
+					
+					Collections.sort(tmp, new Comparator<ReviewableObj>() {
+						@Override
+						public int compare(ReviewableObj o1, ReviewableObj o2) {
+							return o1.getCode().compareTo(o2.getCode());
+						}
+					});
+					
 					ReviewTask task = new ReviewTask(user, type);
 					task.setReviewees(tmp);
 					task.setIndexArch(new Indexitem(key));
@@ -223,8 +232,6 @@ public class Review {
 		
 		return returnValue;
 	}
-	
-	
 	
 	/**
 	 * 获取考核任务列表，一个指标体系对应一个考核任务
@@ -283,6 +290,14 @@ public class Review {
 				List<ReviewableObj> tmp = maps.get(key);
 				tmp = filter(tmp);
 				if(tmp.size() > 0){
+					
+					Collections.sort(tmp, new Comparator<ReviewableObj>() {
+						@Override
+						public int compare(ReviewableObj o1, ReviewableObj o2) {
+							return o1.getCode().compareTo(o2.getCode());
+						}
+					});
+					
 					ReviewTask task = new ReviewTask(user, type);
 					task.setDate(date);
 					task.setReviewees(tmp);
@@ -371,6 +386,14 @@ public class Review {
 			
 			returnValue = filter(returnValue);
 			if(returnValue.size() > 0){
+				
+				Collections.sort(returnValue, new Comparator<ReviewableObj>() {
+					@Override
+					public int compare(ReviewableObj o1, ReviewableObj o2) {
+						return o1.getCode().compareTo(o2.getCode());
+					}
+				});
+				
 				returnTask = new ReviewTask(user, type);
 				returnTask.setDate(date);
 				returnTask.setReviewees(returnValue);
@@ -381,6 +404,7 @@ public class Review {
 		}
 		return returnTask;
 	}
+	
 	/**
 	 * 对该员工进行考核的考核任务，目前只支持一个员工对应一个指标体系
 	 * @param staffcode
@@ -426,6 +450,14 @@ public class Review {
 			}
 			
 			if(returnValue.size() > 0){
+				
+				Collections.sort(returnValue, new Comparator<ReviewableObj>() {
+					@Override
+					public int compare(ReviewableObj o1, ReviewableObj o2) {
+						return o1.getCode().compareTo(o2.getCode());
+					}
+				});
+				
 				returnTask = new ReviewTask(null, "staff");
 				returnTask.setDate(date);
 				returnTask.setReviewees(returnValue);
@@ -436,6 +468,7 @@ public class Review {
 		}
 		return returnTask;
 	}
+	
 	public ReviewTask getReviewTask(ReviewDate date, String archcode){
 		return getReviewTask(date, archcode, getTaskType(archcode));
 	}

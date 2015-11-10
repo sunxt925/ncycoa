@@ -203,7 +203,7 @@ public class IndexDataHelper {
 					inputstr.put(rs.getString("objectcode"), tmp);
 				}
 				String inputindexstr = rs.getString("inputindexstr");
-				if(inputindexstr == null){
+				if(StringUtils.isBlank(inputindexstr)){
 					inputindexstr = "";
 				}
 				tmp.put(rs.getString("indexcode"), Arrays.asList(inputindexstr.split(",")));
@@ -246,7 +246,8 @@ public class IndexDataHelper {
 		sb.append("<table id=\"index_tb\" class=\"easyui-datagrid\" data-options=\"fit:true,singleSelect:true,onClickRow:onClickRow,toolbar:'#tb'\">");
 		sb.append("<thead data-options=\"frozen:true\"><tr>");
 		sb.append("<th data-options=\"field:'pindexcode'\">上级指标</th>");
-		sb.append("<th data-options=\"field:'indexcode'\">采集指标</th>");
+		sb.append("<th data-options=\"field:'indexname'\">采集指标</th>");
+		sb.append("<th data-options=\"field:'indexcode',hidden:true\"></th>");
 		sb.append("<th data-options=\"field:'indextype'\">指标类别</th>");
 		sb.append("<th data-options=\"field:'scorefunc',width:200\">计分方法</th>");
 		sb.append("<th data-options=\"field:'para'\">参数</th>");
@@ -278,8 +279,10 @@ public class IndexDataHelper {
 					tip.delete(0, tip.indexOf(",", 1) + 1);
 					sb.append("<td>").append(tip.toString()).append("</td>");
 					sb.append("<td>").append(CodeDictionary.syscode_traslate("tbm_indexitem", "indexcode", "indexname", c.getIndexcode())).append("</td>");
+					sb.append("<td>").append(c.getIndexcode()).append("</td>");
 					sb.append("<td>").append(c.getIndextype()).append("</td>");
 				} else {
+					sb.append("<td>").append("</td>");
 					sb.append("<td>").append("</td>");
 					sb.append("<td>").append("</td>");
 					sb.append("<td>").append("</td>");
@@ -387,7 +390,8 @@ public class IndexDataHelper {
 					if(!isValued){
 						if (inputstr.get(obj.getCode()) != null) {
 							HashMap<String, List<String>> rowdt = inputstr.get(obj.getCode());
-							sb.append("<td>").append(rowdt.get(c.getIndexcode()).get(count)).append("</td>");
+							List<String> parasTmp = rowdt.get(c.getIndexcode());
+							sb.append("<td>").append(parasTmp.get(count)).append("</td>");
 						} else {
 							if(paravalue.get(obj.getCode()) == null || paravalue.get(obj.getCode()).get(c.getIndexcode()) == null){
 								sb.append("<td>").append("").append("</td>");
@@ -822,7 +826,7 @@ public class IndexDataHelper {
 					cellIndex = 6;
 					for (String code : objs.keySet()) {
 						JSONObject indexdata = obj.getJSONObject("obj_" + code);
-						String inputStr = indexdata.getString(item.getIndexName());
+						String inputStr = indexdata.getString(item.getIndexCode());
 						cell = row.createCell(cellIndex++);
 						Rtext = new HSSFRichTextString(inputStr.split(",")[0]);
 						cell.setCellValue(Rtext);
@@ -884,7 +888,7 @@ public class IndexDataHelper {
 					cellIndex = 6;
 					for (String code : objs.keySet()) {
 						JSONObject indexdata = obj.getJSONObject("obj_" + code);
-						String inputStr = indexdata.getString(item.getIndexName());
+						String inputStr = indexdata.getString(item.getIndexCode());
 						cell = rowtmp.createCell(cellIndex++);
 						Rtext = new HSSFRichTextString(inputStr.split(",")[rowCount-index]);
 						cell.setCellValue(Rtext);
