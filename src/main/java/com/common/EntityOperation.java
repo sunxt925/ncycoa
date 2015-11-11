@@ -1,10 +1,8 @@
 package com.common;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -325,7 +323,11 @@ public class EntityOperation {
   				
   				String column_code0 = entity+"."+column_code;
   			
-  				column_value = Format.NullToBlank(request.getParameter(column_code0));
+  				//column_value = Format.NullToBlank(request.getParameter(column_code0));
+  				column_value = request.getParameter(column_code0);
+  				if(column_value == null||column_value.equals("")){
+  					column_value = "";
+  				}
   				
   				is_primarykey = r.getString("is_primarykey"); 
   				

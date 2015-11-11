@@ -4,11 +4,12 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 String goodscode=Format.NullToBlank(request.getParameter("goodscode"));
-String styleIn=Format.NullToBlank(request.getParameter("styleIn"));
-String styleOut=Format.NullToBlank(request.getParameter("styleOut"));
+String styleIn="OUT";
+String styleOut="OUT";
 String department=Format.NullToBlank(request.getParameter("department"));
 String startdate=Format.NullToBlank(request.getParameter("startdate"));
 String enddate=Format.NullToBlank(request.getParameter("enddate"));
+String staffcode=Format.NullToBlank(request.getParameter("staffcode"));
 %>
 <HTML>
 <HEAD>
@@ -21,8 +22,17 @@ String enddate=Format.NullToBlank(request.getParameter("enddate"));
 	GoodsStoreInfo goodsStore=new GoodsStoreInfo();
 	int page_no=Integer.parseInt(Format.NullToZero(request.getParameter("page_no")));
 	int per_page=((UserInfo)request.getSession().getAttribute("UserInfo")).getPerpage_half();
-	DataTable dt=goodsStore.getStoreInfoSearch(page_no,per_page,styleIn,styleOut,goodscode,startdate,enddate,department);
-	DataTable dtcount=goodsStore.getAllNextGoodsStoreInfo(styleIn,styleOut,goodscode,startdate,enddate,department);
+	UserInfo u = null;
+	if(!staffcode.equals("")){
+		if(staffcode.equals("0")){
+			u=null;
+		}else{
+			u = new UserInfo();
+			u.setStaffcode(staffcode);
+		}
+	}
+	DataTable dt=goodsStore.getStoreInfoSearch(page_no,per_page,styleIn,styleOut,goodscode,startdate,enddate,department,u);
+	DataTable dtcount=goodsStore.getAllNextGoodsStoreInfo(styleIn,styleOut,goodscode,startdate,enddate,department,u);
 	int pagecount=0;
 	if(dtcount.getRowsCount()%per_page==0)
 	    pagecount=dtcount.getRowsCount()/per_page;
@@ -36,7 +46,7 @@ String enddate=Format.NullToBlank(request.getParameter("enddate"));
 	String orgname=og.getName();
 %>
 <script language="javascript" src="../js/public/select.js"></script>
-
+<script type="text/javascript" src="<%=path%>/jscomponent/jquery/jquery-1.8.0.min.js"></script>
 <script language="javascript">
 function F3()
 {
@@ -151,15 +161,15 @@ function dele(orgcode)
 			
 			//window.location.reload();
 }
+
 </script>
 <BODY class="mainbody" onLoad="this.focus()">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
-<form name="form1" id="form1" method="post" action="../servlet/PageHandler">
  <tr>
  <td colspan="3" valign="top" class="main_table_centerbg" align="left">
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
-          <td class="table_td_jb">当前各种物资库存情况：<%=res %></td>
+          <td class="table_td_jb">物资领用情况：<%=res %></td>
       </tr>
       
     </table>
@@ -168,7 +178,7 @@ function dele(orgcode)
     }else if (dt!=null && dt.getRowsCount()>0) {
 		TableUtil tableutil=new TableUtil();
 		tableutil.setDt(dt);
-		tableutil.setDisplayCol("goodscode,确认日期,isconfirm");
+		tableutil.setDisplayCol("goodscode,isconfirm");
 		tableutil.setRowCode("领用人", "@领用人@,base_staff,staffcode,staffname");
 		tableutil.setRowCode("领用部门", "@领用部门@,base_org,orgcode,orgname");
 		tableutil.setRowCode("是否确认", "@是否确认@,YESNO");
@@ -176,14 +186,18 @@ function dele(orgcode)
 	%>
       
       <table width="100%" border="0" cellpadding="3" cellspacing="0">
+     
         <tr>
           <!--<td width="50%">【<a href="#" onClick="F4()">删除</a>】【<a href="#" onClick="SelectAll('form1')">全选</a>】【<a href="#" onClick="ChangeSelect('form1')">反选</a>】【<a href="#" onClick="UnSelectAll('form1')">清空</a>】</td>
           -->
+         
+         
+         
           <td align="right">
           <%
-          String unitccmtemp="&goodscode="+goodscode+"&styleIn="+styleIn+"&styleOut="+styleOut+"&startdate="+startdate+"&enddate="+enddate+"&department="+department;
+          String unitccmtemp="&goodscode="+goodscode+"&styleIn="+styleIn+"&styleOut="+styleOut+"&startdate="+startdate+"&enddate="+enddate+"&department="+department+"&staffcode="+staffcode;
          
-      	out.print(PageUtil.DividePage(page_no,pagecount,"goodsStore_list.jsp",unitccmtemp));
+      	out.print(PageUtil.DividePage(page_no,pagecount,"goodsconfirmStore_list.jsp",unitccmtemp));
        %>
        </td>
        <input type="submit" name="Submit" value="提交" style="display:none">
@@ -199,7 +213,6 @@ function dele(orgcode)
       
 </td>
   </tr>
-</form>
 </table>
 </BODY>
 </HTML>

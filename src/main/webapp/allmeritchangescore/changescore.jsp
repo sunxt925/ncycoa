@@ -35,7 +35,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <%
 String recno=request.getParameter("recno");
-String staffcode=request.getParameter("staffcode");
+String flag = request.getParameter("flag");
+String objectcode=request.getParameter("objectcode");
+String obj="";
+if(flag.equals("s")){
+	obj = "staff";
+}else{
+	obj = "org";
+}
+
 %>
 <body>
     
@@ -45,7 +53,9 @@ String staffcode=request.getParameter("staffcode");
      <br>
      <br>
      <div >
-         <label for="name" style="font-size: 12px">加减分对象：<%=CodeDictionary.syscode_traslate("base_staff", "staffcode","staffname" , staffcode) %></label>
+    
+         <label for="name" style="font-size: 12px">加减分对象：<%=CodeDictionary.syscode_traslate("base_"+obj, obj+"code",obj+"name" , objectcode) %></label>
+    
      </div>
      <br>
      <br>
@@ -62,18 +72,23 @@ String staffcode=request.getParameter("staffcode");
  	   var score=$("#changescore").val();
  	   var recno="<%=recno%>";
  	   var path="<%=path%>";
- 	   var staffcode="<%=staffcode%>";
+ 	   var objectcode="<%=objectcode%>";
+ 	  var flag="<%=flag%>";
  	   $.post(path+"/allmeritchangescore/changescoredo.jsp",
 			    {
 			      recno:recno,
 			      changescore:score,
-			      staffcode:staffcode
+			      objectcode:objectcode,
+			      flag:flag
 			    },
 				 function(data,status){
-			    	if(data=="success")
+			    	if(data=="success"){
+			    		alert("加减分成功");
 			    		(api.data)({code:"refresh"});
-			    	else
+			    	}else{
 			    		alert("加减分失败");
+			    	}
+			    	
 			    }
 			    ); 
  	 

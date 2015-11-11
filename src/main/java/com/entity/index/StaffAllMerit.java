@@ -418,6 +418,8 @@ public String getMeritJson(String year,String period,String flag,String companyc
 			sbuilder.append("{");
 			if(flag.equals("c")){
 				sbuilder.append("\"company\":").append("\""+CodeDictionary.syscode_traslate("base_org", "orgcode", "orgname",staffAllMerit.getCompanycode())+"\"").append(",");
+				sbuilder.append("\"companycode\":").append("\""+staffAllMerit.getCompanycode()+"\"").append(",");
+				sbuilder.append("\"recno\":").append("\""+staffAllMerit.getRecno()+"\"").append(",");
 				
 			}
 			if(flag.equals("d")){
@@ -615,9 +617,16 @@ public String getAllmeritJson(String year,String staffname,String orgcode){
 		return "";
 	}
 }
-public boolean changescore(double changescore,String recno){
+public boolean changescore(double changescore,String recno,String flag){
 	 StaffAllMerit staffallmerit=new StaffAllMerit(recno);
-	 double staffmerit=changescore+staffallmerit.getStaffallmerit();
+	 double merit = changescore+staffallmerit.getStaffallmerit();
+	 double changes=0;
+	 if(staffallmerit.getChangevalue()!=0){
+		 changes = changescore+staffallmerit.getChangevalue();
+	 }else{
+		 changes = changescore;
+	 }
+	 
 	 Connection conn=null;
 	 PreparedStatement stmt = null;
 	try {
@@ -625,8 +634,8 @@ public boolean changescore(double changescore,String recno){
 		conn.setAutoCommit(false);
 		String sql="update tbm_staffallmerit  set changevalue=?,staffallmerit=? where recno=?";
 		stmt=conn.prepareStatement(sql);
-		stmt.setDouble(1, changescore);
-		stmt.setDouble(2, staffmerit);
+		stmt.setDouble(1, changes);
+		stmt.setDouble(2, merit);
 		stmt.setString(3, recno);
 		stmt.execute();
 		conn.commit();

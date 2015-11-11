@@ -285,10 +285,15 @@ public class AllMeritCollection {
 		}
 	}
 	
+	/**
+	 * 获取领导分管部门
+	 * @param staffcode
+	 * @return
+	 */
 	public static List<String> getAdminDept(String staffcode){
 		try {
 			DBObject db=new DBObject();
-			String sql="select orgcode from tbm_admindpt where staffcode='"+staffcode+"'";
+			String sql="select orgcode from tbm_admindpt where staffcode='"+staffcode+"' and adminmode='绩效'";
 			DataTable dt=db.runSelectQuery(sql);
 			List<String> orgList=new ArrayList<String>();
 			if(dt!=null&&dt.getRowsCount()>=1){
@@ -407,7 +412,7 @@ public class AllMeritCollection {
 							if(dt3!=null&&dt3.getRowsCount()==1){
 								orgcode=dt3.get(0).getString("orgcode");
 								if(orgcode.equals("NC.01")){
-									return "-1";
+									return "NC.01.00";
 								}
 								if(Integer.parseInt(dt3.get(0).getString("adminclass"))==flag){
 									return orgcode;

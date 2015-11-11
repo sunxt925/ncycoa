@@ -58,6 +58,8 @@ Goodsoutstoreitem goutstoreitem=new Goodsoutstoreitem();
 		if (dt!=null && dt.getRowsCount()>0) {
 		TableUtil tableutil=new TableUtil();
 		tableutil.setDt(dt);
+		tableutil.setRowCode("领用人", "@领用人@,base_staff,staffcode,staffname");
+		tableutil.setRowCode("领用部门", "@领用部门@,base_org,orgcode,orgname");
 	   out.print(tableutil.DrawTable());
 	%>
       <table width="100%" border="0" cellpadding="3" cellspacing="0">

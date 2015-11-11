@@ -43,14 +43,14 @@ String year=request.getParameter("year");
     data-options="fitColumns:true,singleSelect:true">
     <thead>
     <tr>
-    <th data-options="field:'year',width:80">年份</th>
-    <th data-options="field:'period',width:80">月份</th>
-    <th data-options="field:'objectnum',width:80">对象数</th>
-    <th data-options="field:'staffnum',width:80">员工对象数</th>
-    <th data-options="field:'departnum',width:80">部门对象数</th>
-    <th data-options="field:'companynum',width:80">公司对象数</th>
-     <th data-options="field:'state',width:80">状态</th>
-     <th data-options="field:'op',width:120">操作</th>
+    <th data-options="field:'year',width:25">年份</th>
+    <th data-options="field:'period',width:25">月份</th>
+    <th data-options="field:'objectnum',width:60">已汇总人数/员工总数</th>
+    <th data-options="field:'staffnum',width:90">已打分员工数/关联指标员工数</th>
+    <th data-options="field:'departnum',width:90">已打分部门数/关联指标部门数</th>
+    <th data-options="field:'companynum',width:90">已打分公司数/关联指标公司数</th>
+     <th data-options="field:'state',width:15">状态</th>
+     <th data-options="field:'op',width:70">操作</th>
     </tr>
     </thead>
     <tbody>
