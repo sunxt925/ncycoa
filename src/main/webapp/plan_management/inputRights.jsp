@@ -15,7 +15,7 @@
 <!-- 左 -->
 <div data-options="region:'center',border:false">
 	<table id="personTable" class="easyui-datagrid" title="选择分管领导"
-	 data-options="fit:true,fitColumns:true,rownumbers:true,singleSelect:true,url:'../performance/right_staff_json.jsp',toolbar:'#tbForPersonTable',onClickRow:onClickRow">
+	 data-options="fit:true,fitColumns:true,rownumbers:true,singleSelect:true,url:'right_staff_json.jsp',toolbar:'#tbForPersonTable',onClickRow:onClickRow">
 	<thead>
        <tr>
        	   <th data-options="field:'ck',checkbox:true"></th>
@@ -39,7 +39,7 @@
 </div>
 <!-- 中 -->
 <div data-options="region:'east',border:false,split:true" style="width:500px;overflow:hidden;">
-	<table id="orgTable" class="easyui-datagrid" title="选择机构" data-options="fit:true,rownumbers:true,singleSelect:true,url:'../performanceright_org_json.jsp',toolbar:'#tbForOrgTable'">
+	<table id="orgTable" class="easyui-datagrid" title="选择机构" data-options="fit:true,rownumbers:true,singleSelect:true,url:'right_org_json.jsp',toolbar:'#tbForOrgTable'">
 	<thead>
        <tr>
            <th data-options="field:'ck',checkbox:true"></th>

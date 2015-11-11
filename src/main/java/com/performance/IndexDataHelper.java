@@ -94,7 +94,7 @@ public class IndexDataHelper {
 	}
 	
 	public static Map<String, String> getObjName(List<String> objCodes, String objtype){
-		Map<String, String> objs = new HashMap<String, String>();
+		Map<String, String> objs = new TreeMap<String, String>();
 		if ("staff".equals(objtype)) {
 			for(String code : objCodes)
 				objs.put(code, new StaffInfo(code).getName());
