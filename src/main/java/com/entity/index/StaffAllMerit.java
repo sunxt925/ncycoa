@@ -113,10 +113,10 @@ public boolean insert(StaffAllMerit staffAllMerit){
 		return false;
 	}
 }
-public boolean delete(String year,String period){
+public boolean delete(String year,String period,String flag){
     try {
 	   DBObject db=new DBObject();
-	   String sql="delete from tbm_staffallmerit where year=? and period=?";
+	   String sql="delete from tbm_staffallmerit where year=? and period=? and "+flag;
 	   Parameter.SqlParameter[] pp=new Parameter.SqlParameter[]{
 		     new Parameter.String(year),
 		     new Parameter.String(period)
@@ -649,6 +649,40 @@ public boolean changescore(double changescore,String recno,String flag){
 		}
 		return false;
 	}
+}
+/**
+ * 获取机构汇总后得分
+ * @param companycode
+ * @param year
+ * @param period
+ * @param flag
+ * @return
+ */
+@SuppressWarnings("finally")
+public static Double getStaffMeritScore(String companycode,String year,String period,String flag) {
+	DBObject db=new DBObject();
+	
+	String sql="select staffallmerit from tbm_staffallmerit  where companycode=?  and year=? and period=? and  memo=? ";
+	Parameter.SqlParameter[] pp=new Parameter.SqlParameter[]{
+			new Parameter.String(companycode),
+		    new Parameter.String(year),
+		    new Parameter.String(period),
+		    new Parameter.String(flag)
+	};
+	double score=0;
+	try{
+		DataTable dt=db.runSelectQuery(sql, pp);
+		if(dt!=null&&dt.getRowsCount()==1){
+			score = Double.parseDouble(dt.get(0).getString("staffallmerit"));
+		    return score;
+		}else{
+			return null;
+		}
+	}catch(Exception e){
+		e.printStackTrace();
+		return null;
+	}
+	
 }
 public String getRecno() {
 	return recno;

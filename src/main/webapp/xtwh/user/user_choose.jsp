@@ -93,7 +93,7 @@ function F8()
          
           <td align="right">
           <%
-         String org = "orgcode="+orgcode;
+         String org = "unitccm="+orgcode;
       	out.print(PageUtil.DividePage(page_no,pagecount,"user_choose.jsp",org));
        %>
        </td>

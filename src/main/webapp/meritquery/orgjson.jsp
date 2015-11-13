@@ -2,7 +2,13 @@
 <%@page contentType="application/json;charset=gb2312" language="java"  errorPage="" %>
 <%
 	response.setContentType("application/json;charset=gb2312");
-	response.getWriter().write(new UnitDao().getorgJson(request.getParameter("orgccm")));
+    String orgccm="";
+    if(request.getParameter("orgccm").equals("NC.01")){
+    	orgccm = "NC00";
+    }else{
+    	orgccm = request.getParameter("orgccm");
+    }
+	response.getWriter().write(new UnitDao().getorgJson(orgccm));
 	response.getWriter().flush();
 	response.getWriter().close();
  %>

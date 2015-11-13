@@ -139,7 +139,7 @@ public class StaffAction extends ActionInterface{
 			String orgcode = request.getParameter("orgcode");
 			String orgclass = request.getParameter("orgclass");
 			String orgname = request.getParameter("orgname");
-			if (staff.Delete(staffcode,positioncode))
+			if (staff.Delete(staffcode,positioncode,orgcode))
 			{
 				res += "show('É¾³ý³É¹¦');";
 				res += "var rand=Math.floor(Math.random()*10000);";

@@ -158,7 +158,7 @@ String company=AllMeritCollection.getcompanyByobject(staff.getOrgcode());
         	 var start_mon=$("#start_month").val();
         	 var end_mon=$("#end_month").val();
         	 var url="";
-        	 url="meritquery/adminobjectmeritlist.jsp?objectclass="+objectclass+"&year="+year+"&start_month="+start_mon+"&end_month="+end_mon+"&objectcode="+data.code+"&companycode="+"<%=company%>";
+        	 url="<%=path%>"+"/meritquery/adminobjectmeritlist.jsp?objectclass="+objectclass+"&year="+year+"&start_month="+start_mon+"&end_month="+end_mon+"&objectcode="+data.code+"&companycode="+"<%=company%>";
         	  window.open(url,"objectmeritlist");
         }
     </script>

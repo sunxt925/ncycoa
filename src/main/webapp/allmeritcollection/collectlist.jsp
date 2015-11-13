@@ -50,7 +50,7 @@ String year=request.getParameter("year");
     <th data-options="field:'departnum',width:90">已打分部门数/关联指标部门数</th>
     <th data-options="field:'companynum',width:90">已打分公司数/关联指标公司数</th>
      <th data-options="field:'state',width:15">状态</th>
-     <th data-options="field:'op',width:70">操作</th>
+     <th data-options="field:'op',width:120">汇总操作</th>
     </tr>
     </thead>
     <tbody>
@@ -71,12 +71,22 @@ String year=request.getParameter("year");
 				        data-options="iconCls:'icon-reload',plain:true" 
 				        onclick="collect('<%=collectentity.getPeriod()%>',
 				                         '<%=collectentity.getCollectedobjectnum()%>',
-				                         '<%=collectentity.getNeedcollectobjectnum()%>')">汇总</a>
+				                         '<%=collectentity.getNeedcollectobjectnum()%>','staff')">个人</a>
+				     <a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-reload',plain:true" 
+				        onclick="collect('<%=collectentity.getPeriod()%>',
+				                         '<%=collectentity.getCollectedobjectnum()%>',
+				                         '<%=collectentity.getNeedcollectobjectnum()%>','company')">公司</a>
 				    <a href="#" class="easyui-linkbutton"
 				        data-options="iconCls:'icon-reload',plain:true" 
 				        onclick="recollect('<%=collectentity.getPeriod()%>',
 				                         '<%=collectentity.getCollectedobjectnum()%>',
-				                         '<%=collectentity.getNeedcollectobjectnum()%>')">重新汇总</a>
+				                         '<%=collectentity.getNeedcollectobjectnum()%>','staff')">个(重)/</a>
+				    <a href="#" class="easyui-linkbutton"
+				        data-options="iconCls:'icon-reload',plain:true" 
+				        onclick="recollect('<%=collectentity.getPeriod()%>',
+				                         '<%=collectentity.getCollectedobjectnum()%>',
+				                         '<%=collectentity.getNeedcollectobjectnum()%>','company')">公(重)</a>
 				                         </td>
 			</tr>
 			<%} %>
@@ -86,7 +96,7 @@ String year=request.getParameter("year");
     <input type="button" id="kkk" onClick="sAlert('测试弹出层并锁屏效果');" style="display:none"/>
     </div>
  <script type="text/javascript">
-      function collect(period,collectnum,neednum){
+      function collect(period,collectnum,neednum,flag){
     	  collectnum=collectnum/1;
     	  neednum=neednum/1;
     	  var path="<%=path%>";
@@ -100,11 +110,12 @@ String year=request.getParameter("year");
     	  }else{
     		  mm=mm+mon;
     	  }
+    	  
     	  if(period<=mm){
     		  if(collectnum<neednum&&collectnum==0)
         	  {
     			 progress();
-    			 $.post(path+"/allmeritcollection/collectiondo.jsp?op=collect",
+    			 $.post(path+"/allmeritcollection/collectiondo.jsp?op=collect&flag="+flag,
         			    {
         			      year:year,
         			      period:period
@@ -124,7 +135,7 @@ String year=request.getParameter("year");
     	  
     	  
       }
-      function recollect(period,collectnum,neednum){
+      function recollect(period,collectnum,neednum,flag){
     	  var path="<%=path%>";
     	  var year="<%=year%>";
     	  var myDate = new Date();
@@ -138,7 +149,7 @@ String year=request.getParameter("year");
     	  }
     	  if(period<=mm){
     		     progress();
-    			 $.post(path+"/allmeritcollection/collectiondo.jsp?op=recollect",
+    			 $.post(path+"/allmeritcollection/collectiondo.jsp?op=recollect&flag="+flag,
         			    {
         			      year:year,
         			      period:period

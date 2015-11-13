@@ -97,6 +97,7 @@ String url="unitjson.jsp";
             	 year="<%=year%>";
              }
              var mon=record.value;
+             $("#month").val(mon);
         	 var url="staffmeritlist.jsp?year="+year+"&month="+mon+"&company="+"&depart=";
              window.open(url,"meritlist");
         }
@@ -113,7 +114,7 @@ String url="unitjson.jsp";
      	               else
      	            	   company=company.id;
      	         	   url="staffmeritlist.jsp?year="+year+"&month="+month+"&company="+company+"&depart="+depart;
-     	            
+     	          
      				window.open(url,"meritlist");
      			}
      		});
