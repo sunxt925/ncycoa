@@ -91,9 +91,9 @@ function judge() {
 </script>
 </head>
 <body style="overflow-x:hidden">
-<form id="formobj" name="formobj" action="staff.htm?save_add"  method="post">
+<form id="formobj" name="formobj" action="staff.htm?save"  method="post">
 <input type="hidden" id="btn_sub" class="btn_sub" /> 
-<input id="id" name="id" type="hidden" value="${supplier.id}">
+<input id="id" name="id" type="hidden" value="${staff.idcard}">
 <table style="width:600px;border-spacing:1px;" class="formtable">
      <tr>
 		<td align="right"><label class="Validform_label"> Ô±¹¤´úÂë </label></td>

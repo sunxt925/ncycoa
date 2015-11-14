@@ -137,10 +137,11 @@ public class StaffController {
 	public void save(BaseStaff supplier, HttpServletRequest request, HttpServletResponse response) {
 		AjaxResultJson j = new AjaxResultJson();
 		String message;
-		
+		String id = request.getParameter("id");
 	
-		if (supplier.getIdcard() != null) {
-			System.out.println("here");
+	
+		if (id != null&&id!="") {
+			System.out.println(id);
 			message = "供应商更新成功";
 			BaseStaff t = systemService.findEntityById(supplier.getIdcard(), BaseStaff.class);
 			try {
