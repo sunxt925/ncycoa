@@ -195,7 +195,7 @@ public class Goodsoutstoreitem {
 			
 			String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||OUTNO||'\">' as 选择,OUTNO as 物资出库序号" +
 			",StoreEventNo as 事件流水号,GoodsName as 物资品名,GoodsDesc as 说明,GoodsStyle as 规格型号,avaliablenumber as 可用数量 ,GOODSNUMBER as 出库数量,MeasureUnit as 计量单位," +
-			"HANDLER as 经办人,to_char(OutDate,'yyyy-mm-dd') as 出库日期,USINGORGCODE as 领用部门,'<a href=\"#\" onclick=F3(\"'||OUTNO||','||avaliablenumber||'\") class=\"button4\">修 改</a><a href=\"#\" onClick=dele(\"'||OUTNO||'\") class=\"button4\">删除</a>' as 操作   from goodsout_store where StoreEventNo='"+goodscode+"'";
+			"HANDLER as 领用人,USINGORGCODE as 领用部门,to_char(OutDate,'yyyy-mm-dd') as 出库日期,'<a href=\"#\" onclick=F3(\"'||OUTNO||','||avaliablenumber||'\") class=\"button4\">修 改</a><a href=\"#\" onClick=dele(\"'||OUTNO||'\") class=\"button4\">删除</a>' as 操作   from goodsout_store where StoreEventNo='"+goodscode+"'";
 			//System.out.println(base_sql);
 			String sql_run = Format.getFySql(base_sql, pageno, perpage);
 			return db.runSelectQuery(sql_run);
@@ -213,7 +213,7 @@ public class Goodsoutstoreitem {
 			DBObject db = new DBObject();
 			
 
-			String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||OUTNO||'\">' as 选择,OUTNO as 物资出库序号,StoreEventNo as 事件流水号,GoodsName as 物资品名,GoodsDesc as 说明,GoodsStyle as 规格型号,GOODSNUMBER as 出库数量,MeasureUnit as 计量单位,HANDLER as 经办人,to_char(OutDate,'yyyy-mm-dd') as 出库日期,AuditOrgCode as 验收部门,AuditorCode as 操作人员,to_char(inputDate,'yyyy-mm-dd') as 录入日期,USINGORGCODE as 领用部门,Memo as 备注  from Com_outstoreitem where StoreEventNo='"+goodscode+"'";
+			String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||OUTNO||'\">' as 选择,OUTNO as 物资出库序号,StoreEventNo as 事件流水号,GoodsName as 物资品名,GoodsDesc as 说明,GoodsStyle as 规格型号,GOODSNUMBER as 出库数量,MeasureUnit as 计量单位,HANDLER as 领用人,USINGORGCODE as 领用部门,to_char(OutDate,'yyyy-mm-dd') as 出库日期,AuditOrgCode as 验收部门,AuditorCode as 操作人员,to_char(inputDate,'yyyy-mm-dd') as 录入日期,Memo as 备注  from Com_outstoreitem where StoreEventNo='"+goodscode+"'";
 			//System.out.println(base_sql);
 			String sql_run = Format.getFySql(base_sql, pageno, perpage);
 			return db.runSelectQuery(sql_run);

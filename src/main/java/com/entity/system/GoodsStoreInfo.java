@@ -236,93 +236,102 @@ public class GoodsStoreInfo {
 		}
 	}
 	public  DataTable getStoreInfoSearch(int pageno, int perpage,String styleIn,String styleOut,String goodscode,String startdate,String enddate,String department)
-	{//DataTable
-		try
-		{
-			DBObject db = new DBObject();
-			String[] goodscodes=goodscode.split(";");
-			String temp="";
-			String temping="like ";
-			for(int i=0;i<goodscodes.length-1;i++)
-			{
-				
-				temp+="'"+goodscodes[i]+"',";
-				temping+="'"+goodscodes[i]+"%' or goodscode like ";
-			}
-			temp+="'"+goodscodes[goodscodes.length-1]+"'";
-			temping+="'"+goodscodes[goodscodes.length-1]+"%'";
-			//System.out.println(temping);
-			String base_sql="";
-			String base_sql1="";
-			String base_sq2="";
-			Date now = new Date(); 
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//可以方便地修改日期格式 
-			String time = dateFormat.format( now ); 
-			if(temping.equals("like '%'"))
-			{
-				base_sql1 += "select Storeeventno 事件,goodsname 物资名称,auditorgcode 相关部门,auditorcode 操作人员,goodsnumber 数量,indate 日期 from com_instoreitem" +
-				" where 1=1 and Storeeventno like '"+styleIn+"%' ";
-				base_sq2+="union all select Storeeventno,goodsname,usingorgcode,handler,goodsnumber,outdate from com_outstoreitem " +
-				"where 1=1 and Storeeventno like '"+styleOut+"%' ";
-			}
-			else
-			{
-				/*base_sql1 += "select Storeeventno 事件,goodsname 物资名称,auditorgcode 相关部门,auditorcode 操作人员,goodsnumber 数量,indate 日期 from com_instoreitem" +
-				" where goodscode in ("+temp+") and Storeeventno like '"+styleIn+"%' ";
-				base_sq2+="union all select Storeeventno,goodsname,usingorgcode,handler,goodsnumber,outdate from com_outstoreitem " +
-				"where goodscode in ("+temp+") and Storeeventno like '"+styleOut+"%'  ";*/
-				base_sql1 += "select Storeeventno 事件,goodsname 物资名称,auditorgcode 相关部门,auditorcode 操作人员,goodsnumber 数量,indate 日期 from com_instoreitem" +
-				" where goodscode "+temping+" and Storeeventno like '"+styleIn+"%' ";
-				base_sq2+="union all select Storeeventno,goodsname,usingorgcode,handler,goodsnumber,outdate from com_outstoreitem " +
-				"where goodscode "+temping+" and Storeeventno like '"+styleOut+"%'  ";
-			}
-			if(startdate.equals(""))
-			{
-				base_sql1+="and indate >=to_date('1900-01-01','yyyy-MM-dd') ";
-				base_sq2+="and outdate >=to_date('1900-01-01','yyyy-MM-dd') ";
-			}
-			else
-			{
-				base_sql1+="and indate >=to_date('"+startdate+"','yyyy-MM-dd') ";
-				base_sq2+="and outdate >=to_date('"+startdate+"','yyyy-MM-dd') ";
-			}
-			if(enddate.equals(""))
-			{
-				base_sql1+="and indate <=to_date('"+time+"','yyyy-MM-dd') ";
-				base_sq2+="and outdate <=to_date('"+time+"','yyyy-MM-dd') ";
-			}
-			else
-			{
-				base_sql1+="and indate <=to_date('"+enddate+"','yyyy-MM-dd') ";
-				base_sq2+="and outdate <=to_date('"+enddate+"','yyyy-MM-dd') ";
-			}
-			if(department.equals(""))
-			{
-				base_sql1+="and 1=1  ";
-				base_sq2+="and 1=1  ";
-			}
-			else
-			{
-				base_sql1+="and auditorgcode like '"+enddate+"%' ";
-				base_sq2+="and usingorgcode like '"+enddate+"%' ";
-			}
-			
-			base_sql=base_sql1+base_sq2;
-			
-			//,'<a href=\"#\" onclick=F1(\"'||GoodsCode||','||GoodsName||','||AvailableNumber||'\") class=\"button4\">出库</a>' as 操作
-			/*base_sql = "select Storeeventno 事件,goodsname 物资名称,auditorgcode 相关部门,auditorcode 操作人员,goodsnumber 数量,indate 日期 from com_instoreitem" +
-					" where goodscode in ("+temp+") and Storeeventno like '"+styleIn+"%' and indate between '"+startdate+"' and '"+enddate+"' and auditorgcode='"+department+"' "  +
-					"union all select Storeeventno,goodsname,usingorgcode,handler,goodsnumber,outdate from com_outstoreitem " +
-					"where goodscode in ("+temp+") and Storeeventno like '"+styleOut+"%' and outdate between '"+startdate+"' and '"+enddate+"' and usingorgcode='"+department+"' ";*/
-			//System.out.println(base_sql);
-			String sql_run = Format.getFySql(base_sql, pageno, perpage);
-			return db.runSelectQuery(sql_run);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			return null;
-		}
+	{
+		return getStoreInfoSearch(pageno,perpage,styleIn,styleOut,goodscode,startdate,enddate,department,null);
+	}
+	public  DataTable getStoreInfoSearch(int pageno, int perpage,String styleIn,String styleOut,String goodscode,String startdate,String enddate,String department,UserInfo u)
+	{
+		//DataTable
+				try
+				{
+					DBObject db = new DBObject();
+					String[] goodscodes=goodscode.split(";");
+					String temp="";
+					String temping="like ";
+					for(int i=0;i<goodscodes.length-1;i++)
+					{
+						
+						temp+="'"+goodscodes[i]+"',";
+						temping+="'"+goodscodes[i]+"%' or goodscode like ";
+					}
+					temp+="'"+goodscodes[goodscodes.length-1]+"'";
+					temping+="'"+goodscodes[goodscodes.length-1]+"%'";
+					//System.out.println(temping);
+					String base_sql="";
+					String base_sql1="";
+					String base_sq2="";
+					Date now = new Date(); 
+					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//可以方便地修改日期格式 
+					String time = dateFormat.format( now ); 
+					if(temping.equals("like '%'"))
+					{
+						base_sql1 += "select Storeeventno 事件,goodscode,goodsname 物资名称,GoodsStyle as 规格型号,goodsnumber 数量,indate 领用日期,auditorgcode 领用部门,auditorcode 领用人 ,confirmdate 确认日期,isconfirm,isconfirm 是否确认 from com_instoreitem " +
+						" where 1=1 and Storeeventno like '"+styleIn+"%' ";
+						base_sq2+="union all select Storeeventno,goodscode,goodsname,GoodsStyle,goodsnumber,outdate,usingorgcode,handler,confirmdate,isconfirm,isconfirm 是否确认 from com_outstoreitem " +
+						"where 1=1 and Storeeventno like '"+styleOut+"%' ";
+					}
+					else
+					{
+						/*base_sql1 += "select Storeeventno 事件,goodsname 物资名称,auditorgcode 相关部门,auditorcode 操作人员,goodsnumber 数量,indate 日期 from com_instoreitem" +
+						" where goodscode in ("+temp+") and Storeeventno like '"+styleIn+"%' ";
+						base_sq2+="union all select Storeeventno,goodsname,usingorgcode,handler,goodsnumber,outdate from com_outstoreitem " +
+						"where goodscode in ("+temp+") and Storeeventno like '"+styleOut+"%'  ";*/
+						base_sql1 += "select Storeeventno 事件,goodscode,goodsname 物资名称,GoodsStyle as 规格型号,goodsnumber 数量,indate 领用日期,auditorgcode 领用部门,auditorcode 领用人,confirmdate 确认日期,isconfirm,isconfirm 是否确认 from com_instoreitem" +
+						" where goodscode "+temping+" and Storeeventno like '"+styleIn+"%'";
+						base_sq2+="union all select Storeeventno,goodscode,goodsname,GoodsStyle,goodsnumber,outdate,usingorgcode,handler,confirmdate,isconfirm,isconfirm 是否确认  from com_outstoreitem " +
+						"where goodscode "+temping+" and Storeeventno like '"+styleOut+"%'";
+					}
+					if(startdate.equals(""))
+					{
+						base_sql1+="and indate >=to_date('1900-01-01','yyyy-MM-dd') ";
+						base_sq2+="and outdate >=to_date('1900-01-01','yyyy-MM-dd') ";
+					}
+					else
+					{
+						base_sql1+="and indate >=to_date('"+startdate+"','yyyy-MM-dd') ";
+						base_sq2+="and outdate >=to_date('"+startdate+"','yyyy-MM-dd') ";
+					}
+					if(enddate.equals(""))
+					{
+						base_sql1+="and indate <=to_date('"+time+"','yyyy-MM-dd') ";
+						base_sq2+="and outdate <=to_date('"+time+"','yyyy-MM-dd') ";
+					}
+					else
+					{
+						base_sql1+="and indate <=to_date('"+enddate+"','yyyy-MM-dd') ";
+						base_sq2+="and outdate <=to_date('"+enddate+"','yyyy-MM-dd') ";
+					}
+					if(department.equals(""))
+					{
+						base_sql1+="and 1=1  ";
+						base_sq2+="and 1=1  ";
+					}
+					else
+					{
+						base_sql1+="and auditorgcode like '"+enddate+"%' ";
+						base_sq2+="and usingorgcode like '"+enddate+"%' ";
+					}
+					
+					String condition="1=1";
+					if(u!=null){
+						condition = "领用人='"+u.getStaffcode()+"'";
+					}
+					base_sql="select * from ("+base_sql1+base_sq2+"order by 领用日期 desc)"+"where "+condition;
+					
+					//,'<a href=\"#\" onclick=F1(\"'||GoodsCode||','||GoodsName||','||AvailableNumber||'\") class=\"button4\">出库</a>' as 操作
+					/*base_sql = "select Storeeventno 事件,goodsname 物资名称,auditorgcode 相关部门,auditorcode 操作人员,goodsnumber 数量,indate 日期 from com_instoreitem" +
+							" where goodscode in ("+temp+") and Storeeventno like '"+styleIn+"%' and indate between '"+startdate+"' and '"+enddate+"' and auditorgcode='"+department+"' "  +
+							"union all select Storeeventno,goodsname,usingorgcode,handler,goodsnumber,outdate from com_outstoreitem " +
+							"where goodscode in ("+temp+") and Storeeventno like '"+styleOut+"%' and outdate between '"+startdate+"' and '"+enddate+"' and usingorgcode='"+department+"' ";*/
+					//System.out.println(base_sql);
+					String sql_run = Format.getFySql(base_sql, pageno, perpage);
+					return db.runSelectQuery(sql_run);
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+					return null;
+				}
 	}
 	public DataTable getAllGoodsStoreInfo(String goodscode)
 	{
@@ -354,7 +363,12 @@ public class GoodsStoreInfo {
 			return null;
 		}
 	}
-	public DataTable getAllNextGoodsStoreInfo(String styleIn,String styleOut,String goodscode,String startdate,String enddate,String department)
+	public DataTable getAllNextGoodsStoreInfo(String styleIn,String styleOut,String goodscode,String startdate,String enddate,String department){
+		
+		return getAllNextGoodsStoreInfo(styleIn,styleOut,goodscode,startdate,enddate,department,null);
+	}
+	
+	public DataTable getAllNextGoodsStoreInfo(String styleIn,String styleOut,String goodscode,String startdate,String enddate,String department,UserInfo u)
 	{
 		try
 		{
@@ -379,9 +393,9 @@ public class GoodsStoreInfo {
 			String time = dateFormat.format( now ); 
 			if(temping.equals("like '%'"))
 			{
-				base_sql1 += "select Storeeventno 事件,goodsname 物资名称,auditorgcode 相关部门,auditorcode 操作人员,goodsnumber 数量,indate 日期 from com_instoreitem" +
+				base_sql1 += "select Storeeventno 事件,goodsname 物资名称,auditorgcode 相关部门,auditorcode 操作人员,goodsnumber 数量,indate 日期,isconfirm from com_instoreitem" +
 				" where 1=1 and Storeeventno like '"+styleIn+"%' ";
-				base_sq2+="union all select Storeeventno,goodsname,usingorgcode,handler,goodsnumber,outdate from com_outstoreitem " +
+				base_sq2+="union all select Storeeventno,goodsname,usingorgcode,handler,goodsnumber,outdate,isconfirm from com_outstoreitem " +
 				"where 1=1 and Storeeventno like '"+styleOut+"%' ";
 			}
 			else
@@ -390,9 +404,9 @@ public class GoodsStoreInfo {
 				" where goodscode in ("+temp+") and Storeeventno like '"+styleIn+"%' ";
 				base_sq2+="union all select Storeeventno,goodsname,usingorgcode,handler,goodsnumber,outdate from com_outstoreitem " +
 				"where goodscode in ("+temp+") and Storeeventno like '"+styleOut+"%'  ";*/
-				base_sql1 += "select Storeeventno 事件,goodsname 物资名称,auditorgcode 相关部门,auditorcode 操作人员,goodsnumber 数量,indate 日期 from com_instoreitem" +
+				base_sql1 += "select Storeeventno 事件,goodsname 物资名称,auditorgcode 相关部门,auditorcode 操作人员,goodsnumber 数量,indate 日期,isconfirm from com_instoreitem" +
 				" where goodscode "+temping+" and Storeeventno like '"+styleIn+"%' ";
-				base_sq2+="union all select Storeeventno,goodsname,usingorgcode,handler,goodsnumber,outdate from com_outstoreitem " +
+				base_sq2+="union all select Storeeventno,goodsname,usingorgcode,handler,goodsnumber,outdate,isconfirm from com_outstoreitem " +
 				"where goodscode "+temping+" and Storeeventno like '"+styleOut+"%'  ";
 			}
 			if(startdate.equals(""))
@@ -425,8 +439,12 @@ public class GoodsStoreInfo {
 				base_sql1+="and auditorgcode like '"+enddate+"%' ";
 				base_sq2+="and usingorgcode like '"+enddate+"%' ";
 			}
+			String condition="1=1";
+			if(u!=null){
+				condition = "操作人员='"+u.getStaffcode()+"'";
+			}
+			base_sql="select * from ("+base_sql1+base_sq2+")"+"where "+condition;
 			
-			base_sql=base_sql1+base_sq2;
 			//System.out.println("base_sql:   "+base_sql);
 			//,'<a href=\"#\" onclick=F1(\"'||GoodsCode||','||GoodsName||','||AvailableNumber||'\") class=\"button4\">出库</a>' as 操作
 			/*base_sql = "select Storeeventno 事件,goodsname 物资名称,auditorgcode 相关部门,auditorcode 操作人员,goodsnumber 数量,indate 日期 from com_instoreitem" +

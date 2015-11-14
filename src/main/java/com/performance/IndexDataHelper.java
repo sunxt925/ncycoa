@@ -94,7 +94,7 @@ public class IndexDataHelper {
 	}
 	
 	public static Map<String, String> getObjName(List<String> objCodes, String objtype){
-		Map<String, String> objs = new HashMap<String, String>();
+		Map<String, String> objs = new TreeMap<String, String>();
 		if ("staff".equals(objtype)) {
 			for(String code : objCodes)
 				objs.put(code, new StaffInfo(code).getName());
@@ -203,7 +203,7 @@ public class IndexDataHelper {
 					inputstr.put(rs.getString("objectcode"), tmp);
 				}
 				String inputindexstr = rs.getString("inputindexstr");
-				if(inputindexstr == null){
+				if(StringUtils.isBlank(inputindexstr)){
 					inputindexstr = "";
 				}
 				tmp.put(rs.getString("indexcode"), Arrays.asList(inputindexstr.split(",")));
@@ -215,7 +215,7 @@ public class IndexDataHelper {
 		}
 		
 		HashMap<String, HashMap<String, HashMap<String, String>>> paravalue = new HashMap<String, HashMap<String, HashMap<String, String>>>();
-		HashMap<String, HashMap<String, IndexPara>> paraname = new HashMap<String, HashMap<String, IndexPara>>();
+		HashMap<String, HashMap<String, IndexParameterDefinition>> paraname = new HashMap<String, HashMap<String, IndexParameterDefinition>>();
 		try {
 			String sql = "select * from tbm_indexitempara where indexcode like '" + task.getIndexArch().getIndexCode() + "%'";
 			DBObject db = new DBObject();
@@ -223,15 +223,15 @@ public class IndexDataHelper {
 			if (dt != null) {
 				for (int i = 0; i < dt.getRowsCount(); i++) {
 					DataRow r = dt.get(i);
-					IndexPara para = new IndexPara();
+					IndexParameterDefinition para = new IndexParameterDefinition();
 					para.setIndexcode(r.getString("indexcode"));
 					para.setParacode(r.getString("paracode"));
 					para.setParaid(r.getString("paraid"));
 					para.setParavaluemode(r.getString("paravaluemode"));
 					
-					HashMap<String, IndexPara> tmp = paraname.get(para.getIndexcode());
+					HashMap<String, IndexParameterDefinition> tmp = paraname.get(para.getIndexcode());
 					if(tmp == null){
-						tmp = new HashMap<String, IndexPara>();
+						tmp = new HashMap<String, IndexParameterDefinition>();
 						paraname.put(r.getString("indexcode"), tmp);
 					}
 					tmp.put(r.getString("paraid"), para);
@@ -246,7 +246,8 @@ public class IndexDataHelper {
 		sb.append("<table id=\"index_tb\" class=\"easyui-datagrid\" data-options=\"fit:true,singleSelect:true,onClickRow:onClickRow,toolbar:'#tb'\">");
 		sb.append("<thead data-options=\"frozen:true\"><tr>");
 		sb.append("<th data-options=\"field:'pindexcode'\">上级指标</th>");
-		sb.append("<th data-options=\"field:'indexcode'\">采集指标</th>");
+		sb.append("<th data-options=\"field:'indexname'\">采集指标</th>");
+		sb.append("<th data-options=\"field:'indexcode',hidden:true\"></th>");
 		sb.append("<th data-options=\"field:'indextype'\">指标类别</th>");
 		sb.append("<th data-options=\"field:'scorefunc',width:200\">计分方法</th>");
 		sb.append("<th data-options=\"field:'para'\">参数</th>");
@@ -278,8 +279,10 @@ public class IndexDataHelper {
 					tip.delete(0, tip.indexOf(",", 1) + 1);
 					sb.append("<td>").append(tip.toString()).append("</td>");
 					sb.append("<td>").append(CodeDictionary.syscode_traslate("tbm_indexitem", "indexcode", "indexname", c.getIndexcode())).append("</td>");
+					sb.append("<td>").append(c.getIndexcode()).append("</td>");
 					sb.append("<td>").append(c.getIndextype()).append("</td>");
 				} else {
+					sb.append("<td>").append("</td>");
 					sb.append("<td>").append("</td>");
 					sb.append("<td>").append("</td>");
 					sb.append("<td>").append("</td>");
@@ -287,7 +290,7 @@ public class IndexDataHelper {
 
 				sb.append("<td>").append(c.getScorcefunc()).append("</td>");
 				if(c.getIndextype().equals("计算函数型")){
-					IndexPara para = paraname.get(c.getIndexcode()).get(c.getPara());
+					IndexParameterDefinition para = paraname.get(c.getIndexcode()).get(c.getPara());
 					String name = paraname.get(c.getIndexcode()).get(c.getPara()).getParacode();
 					if("业务数据".equals(para.getParavaluemode())){
 						IndexBizPara bizpara = IndexDao.getIndexBizPara(para.getParacode());
@@ -387,12 +390,18 @@ public class IndexDataHelper {
 					if(!isValued){
 						if (inputstr.get(obj.getCode()) != null) {
 							HashMap<String, List<String>> rowdt = inputstr.get(obj.getCode());
-							sb.append("<td>").append(rowdt.get(c.getIndexcode()).get(count)).append("</td>");
+							List<String> parasTmp = rowdt.get(c.getIndexcode());
+							sb.append("<td>").append(parasTmp.get(count)).append("</td>");
 						} else {
 							if(paravalue.get(obj.getCode()) == null || paravalue.get(obj.getCode()).get(c.getIndexcode()) == null){
 								sb.append("<td>").append("").append("</td>");
 							}else{
-								sb.append("<td>").append(paravalue.get(obj.getCode()).get(c.getIndexcode()).get(c.getPara())).append("</td>");
+								String tmpValue = paravalue.get(obj.getCode()).get(c.getIndexcode()).get(c.getPara());
+								if(tmpValue == null || "".equals(tmpValue.trim()) ) {
+									sb.append("<td>").append("").append("</td>");
+								} else {
+									sb.append("<td>").append(tmpValue).append("</td>");
+								}
 							}
 						}
 					}
@@ -717,7 +726,7 @@ public class IndexDataHelper {
 			sheet.setColumnWidth(j, 256 * 6 * 2); // 6个字符 每个汉字2个字符宽度
 		}
 		
-		HashMap<String, HashMap<String, IndexPara>> paraname = new HashMap<String, HashMap<String, IndexPara>>();
+		HashMap<String, HashMap<String, IndexParameterDefinition>> paraname = new HashMap<String, HashMap<String, IndexParameterDefinition>>();
 		try {
 			String sql = "select * from tbm_indexitempara where indexcode like '" + arch.getIndexCode() + "%'";
 			DBObject db = new DBObject();
@@ -725,15 +734,15 @@ public class IndexDataHelper {
 			if (dt != null) {
 				for (int k = 0; k < dt.getRowsCount(); k++) {
 					DataRow r = dt.get(k);
-					IndexPara para = new IndexPara();
+					IndexParameterDefinition para = new IndexParameterDefinition();
 					para.setIndexcode(r.getString("indexcode"));
 					para.setParacode(r.getString("paracode"));
 					para.setParaid(r.getString("paraid"));
 					para.setParavaluemode(r.getString("paravaluemode"));
 					
-					HashMap<String, IndexPara> tmp = paraname.get(para.getIndexcode());
+					HashMap<String, IndexParameterDefinition> tmp = paraname.get(para.getIndexcode());
 					if(tmp == null){
-						tmp = new HashMap<String, IndexPara>();
+						tmp = new HashMap<String, IndexParameterDefinition>();
 						paraname.put(r.getString("indexcode"), tmp);
 					}
 					tmp.put(r.getString("paraid"), para);
@@ -795,7 +804,7 @@ public class IndexDataHelper {
 
 					String text  =  "";
 					if(c.getIndextype().equals("计算函数型")){
-						IndexPara para = paraname.get(c.getIndexcode()).get(c.getPara());
+						IndexParameterDefinition para = paraname.get(c.getIndexcode()).get(c.getPara());
 						text = paraname.get(c.getIndexcode()).get(c.getPara()).getParacode();
 						if("业务数据".equals(para.getParavaluemode())){
 							IndexBizPara bizpara = IndexDao.getIndexBizPara(para.getParacode());
@@ -817,7 +826,7 @@ public class IndexDataHelper {
 					cellIndex = 6;
 					for (String code : objs.keySet()) {
 						JSONObject indexdata = obj.getJSONObject("obj_" + code);
-						String inputStr = indexdata.getString(item.getIndexName());
+						String inputStr = indexdata.getString(item.getIndexCode());
 						cell = row.createCell(cellIndex++);
 						Rtext = new HSSFRichTextString(inputStr.split(",")[0]);
 						cell.setCellValue(Rtext);
@@ -859,7 +868,7 @@ public class IndexDataHelper {
 					
 					String text  =  "";
 					if(c.getIndextype().equals("计算函数型")){
-						IndexPara para = paraname.get(c.getIndexcode()).get(c.getPara());
+						IndexParameterDefinition para = paraname.get(c.getIndexcode()).get(c.getPara());
 						text = paraname.get(c.getIndexcode()).get(c.getPara()).getParacode();
 						if("业务数据".equals(para.getParavaluemode())){
 							IndexBizPara bizpara = IndexDao.getIndexBizPara(para.getParacode());
@@ -879,7 +888,7 @@ public class IndexDataHelper {
 					cellIndex = 6;
 					for (String code : objs.keySet()) {
 						JSONObject indexdata = obj.getJSONObject("obj_" + code);
-						String inputStr = indexdata.getString(item.getIndexName());
+						String inputStr = indexdata.getString(item.getIndexCode());
 						cell = rowtmp.createCell(cellIndex++);
 						Rtext = new HSSFRichTextString(inputStr.split(",")[rowCount-index]);
 						cell.setCellValue(Rtext);
@@ -888,10 +897,12 @@ public class IndexDataHelper {
 				}
 				rowCount++;
 			}
-			sheet.addMergedRegion(new CellRangeAddress(index, rowCount - 1, 0, 0));
-			sheet.addMergedRegion(new CellRangeAddress(index, rowCount - 1, 1, 1));
-			sheet.addMergedRegion(new CellRangeAddress(index, rowCount - 1, 2, 2));
-			sheet.addMergedRegion(new CellRangeAddress(index, rowCount - 1, 3, 3));
+			if(rowCount - 1 >= index) {
+				sheet.addMergedRegion(new CellRangeAddress(index, rowCount - 1, 0, 0));
+				sheet.addMergedRegion(new CellRangeAddress(index, rowCount - 1, 1, 1));
+				sheet.addMergedRegion(new CellRangeAddress(index, rowCount - 1, 2, 2));
+				sheet.addMergedRegion(new CellRangeAddress(index, rowCount - 1, 3, 3));
+			}
 			index = rowCount;
 		}
 		return workbook;

@@ -72,10 +72,8 @@ public class ContractManagementController {
 	
 	@RequestMapping(params="add")
 	public ModelAndView add(HttpServletRequest request) {
-		String type = request.getParameter("type");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("contract_management/contract");
-		mav.addObject("type",type);
 		return mav;
 	}
 
@@ -137,16 +135,12 @@ public class ContractManagementController {
 	@RequestMapping(params="update")
     public ModelAndView update(HttpServletRequest request, HttpServletResponse response){
 		String id = request.getParameter("id"); 
-		String type = request.getParameter("type"); 
 		ContractInfo contractInfo = systemService.findEntityById(Long.parseLong(id), ContractInfo.class);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("contract_management/contract");
 		mav.addObject("contract",contractInfo);
 		mav.addObject("relevantDepartment_disp",CodeDictionary.syscode_traslate("base_org", "orgcode", "orgname", contractInfo.getRelevantDepartment()));
-		if(null==type || type.equals("")){
-			type = contractInfo.getType();
-		}
-		mav.addObject("type",type);
+		
 		return mav;
 	}
 	
@@ -159,10 +153,6 @@ public class ContractManagementController {
 		String type=request.getParameter("type");
 		
 		ContractInfo contractInfo = systemService.findEntityById(Long.parseLong(id), ContractInfo.class);
-		
-		
-		
-		
 		
 		String processID = ContractInfo.class.getSimpleName();
 		String objId = processID + ":" + id;
@@ -195,40 +185,18 @@ public class ContractManagementController {
 		}
 		
 		//设置终审审核人员
+		
+		
         if(type.equals("0")){//固定流程
-        	if(contractInfo.getType().equals("0")){
-    			//企管、法规、审计、内管、财务、安管科
-    			//02,04,05,06,10,11
-    			List<String> auditorg = new ArrayList<String>();
-    			//auditorg.add("NC.01.02");
-    			auditorg.add("NC.01.05");
-    			auditorg.add("NC.01.06");
-    			//auditorg.add("NC.01.10");
-    			//auditorg.add("NC.01.11");
-    			auditorg.remove(userinfo.getOrgCode());
-    			paras.put("finallyauditGroup", UnitDao.getManyComanyAudit(auditorg));
-    		}else if(contractInfo.getType().equals("1")||contractInfo.getType().equals("3")){
-    			//企管、法规、审计、内管、财务部
-    			//02,04,05,06,11
-    			List<String> auditorg = new ArrayList<String>();
-    		//	auditorg.add("NC.01.02");
-    			auditorg.add("NC.01.05");
-    			auditorg.add("NC.01.06");
-    		//	auditorg.add("NC.01.11");
-    			auditorg.remove(userinfo.getOrgCode());
-    			paras.put("finallyauditGroup", UnitDao.getManyComanyAudit(auditorg));
-    		}else if(contractInfo.getType().equals("2")){
-    			//办公室、法规、财务、审计、企管、内管
-    			//01,02,04,05,06,11
-    			List<String> auditorg = new ArrayList<String>();
-    		//	auditorg.add("NC.01.01");
-    		//	auditorg.add("NC.01.02");
-    			auditorg.add("NC.01.05");
-    			auditorg.add("NC.01.06");
-    		//	auditorg.add("NC.01.11");
-    			auditorg.remove(userinfo.getOrgCode());
-    			paras.put("finallyauditGroup", UnitDao.getManyComanyAudit(auditorg));
-    		}
+
+    		List<String> auditorg = new ArrayList<String>();
+    		//auditorg.add("NC.01.02");
+    		auditorg.add("NC.01.05");
+    		auditorg.add("NC.01.06");
+    		//auditorg.add("NC.01.10");
+    		//auditorg.add("NC.01.11");
+    		auditorg.remove(userinfo.getOrgCode());
+    		paras.put("finallyauditGroup", UnitDao.getManyComanyAudit(auditorg));
 		}else{//自定义
 			String[] participants = request.getParameter("participants").split(",");
 			List<String> auditor = new ArrayList<String>();
@@ -246,9 +214,6 @@ public class ContractManagementController {
 		paras.put("director", UnitDao.getCityAudit());
 		
 		//1151130100140446,1151130100140040,1151130100140051,1151130100140070,1151130100140005
-		
-		
-
 		
 		processEngine.getRuntimeService().startProcessInstanceByKey(processID, objId, paras);
 		String processinstanceid = processEngine.getRuntimeService().
@@ -280,6 +245,87 @@ public class ContractManagementController {
 		j.setMsg(message);
 		SystemUtils.jsonResponse(response, j);
 	}
+	
+
+	@RequestMapping(params = "commitfile")
+	@ResponseBody
+	public void commitfile(HttpServletRequest request, HttpServletResponse response) {
+		AjaxResultJson j = new AjaxResultJson();
+		String message;
+		String id = request.getParameter("id");
+		String filename = request.getParameter("filename");
+		ContractInfo contractInfo = systemService.findEntityById(Long.parseLong(id), ContractInfo.class);
+		contractInfo.setOtherfile(filename);
+		systemService.saveEntity(contractInfo);
+		
+		message = "上传完成";
+		j.setMsg(message);
+		SystemUtils.jsonResponse(response, j);
+	}
+	@RequestMapping(params = "modcontractcode")
+	@ResponseBody
+	public void modcontractcode(HttpServletRequest request, HttpServletResponse response) {
+		AjaxResultJson j = new AjaxResultJson();
+		String message;
+		String id = request.getParameter("id");
+		String type = request.getParameter("type");
+		ContractInfo contractInfo = systemService.findEntityById(Long.parseLong(id), ContractInfo.class);
+		if(null != contractInfo.getCode() && !contractInfo.getCode().equals("")){
+			message = "已经执行修改，无法再次修改";
+		}else{
+			contractInfo.setCode(getContractcode(type));
+			systemService.saveEntity(contractInfo);
+			message = "修改完成";
+		}
+		j.setMsg(message);
+		SystemUtils.jsonResponse(response, j);
+	}
+	//生成合同编码
+	private String getContractcode(String type){
+		
+		StringBuilder sbBuilder  =new StringBuilder();
+		Calendar c_f = Calendar.getInstance();
+		c_f.setTime(new Date());
+		sbBuilder.append(c_f.get(Calendar.YEAR)+"");
+		sbBuilder.append("51");
+		sbBuilder.append("00");
+		sbBuilder.append("00");
+		sbBuilder.append(type);
+		
+		String sDate = c_f.get(Calendar.YEAR)+"-01-01";
+		String eDate = c_f.get(Calendar.YEAR)+"-12-31";
+		SimpleDateFormat DATE = new SimpleDateFormat("yyyy-MM-dd");
+		
+		//查询条件组装器
+		TypedQueryBuilder<ContractInfo> tqBuilder = new TypedQueryBuilder<ContractInfo>(ContractInfo.class,"e");
+		try {
+			if(null!=sDate && !sDate.equals("")){
+				tqBuilder.addRestriction(new TQRestriction("signingDate", ">=",DATE.parse(sDate)));
+			}
+			if(null!=eDate && !eDate.equals("")){
+			tqBuilder.addRestriction(new TQRestriction("signingDate", "<=",DATE.parse(eDate)));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+		List<ContractInfo> contractInfos = systemService.getQueryRes(tqBuilder);
+		
+		int count  = contractInfos.size();
+		String endnum="";
+		if(count<10){
+			endnum = "00"+count;
+		}else if(count<100){
+			endnum = "0"+count;
+		}else if(count<1000){
+			endnum = ""+count;
+		}
+		
+		sbBuilder.append(endnum);
+		return sbBuilder.toString();
+	}
+	
 	@RequestMapping(params="submitTask")
 	public ModelAndView submitTask(HttpServletRequest request, HttpServletResponse response) {
 		List<String> list = new ArrayList<String>();
@@ -461,14 +507,8 @@ public class ContractManagementController {
 				File f = new File(Util.getfileCfg().get("uploadfilepath")+tempfilename+".doc");
 				if (!f.getParentFile().exists())
 					f.getParentFile().mkdirs();
-
-				if(contractInfo.getType().equals("0")){
-					WordUtils.produceWord(Util.getfileCfg().get("uploadfilepath")+tempfilename+".doc", Util.getFilepath("wordtemplate/contractaudit_template.doc"), getCommentMap(contractInfo,comments));
-				}else if(contractInfo.getType().equals("1")||contractInfo.getType().equals("3")){
-					WordUtils.produceWord(Util.getfileCfg().get("uploadfilepath")+tempfilename+".doc", Util.getFilepath("wordtemplate/contractaudit_template.doc"), getCommentMap(contractInfo,comments));
-				}else if(contractInfo.getType().equals("2")){
-					WordUtils.produceWord(Util.getfileCfg().get("uploadfilepath")+tempfilename+".doc", Util.getFilepath("wordtemplate/contractaudit_template.doc"), getCommentMap(contractInfo,comments));
-				}
+				WordUtils.produceWord(Util.getfileCfg().get("uploadfilepath")+tempfilename+".doc", Util.getFilepath("wordtemplate/contractaudit_template.doc"), getCommentMap(contractInfo,comments));
+			
 				contractInfo.setAudittable(tempfilename+".doc");
 				systemService.saveEntity(contractInfo);
 			}
@@ -591,19 +631,28 @@ public class ContractManagementController {
 				map.put("d7", c_f.get(Calendar.DAY_OF_MONTH)+"");
 			}
 		}
-		
-	
 		return map;
 	}
 	
 	@RequestMapping(params="dgview")
 	public ModelAndView dgView(HttpServletRequest request) {
-		String type = request.getParameter("type");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("contract_management/contractlist");
-		mav.addObject("type",type);
 		return mav;
 	}
+	@RequestMapping(params="dgotherview")
+	public ModelAndView dgotherview(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("contract_management/othercontractlist");
+		return mav;
+	}
+	@RequestMapping(params="dgmodview")
+	public ModelAndView dgmodview(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("contract_management/modcontractcodelist");
+		return mav;
+	}
+	
 	@RequestMapping(params="dgallview")
 	public ModelAndView dgAllView(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
@@ -616,14 +665,10 @@ public class ContractManagementController {
 	public void dgData(ContractInfo contract, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
 		QueryDescriptor<ContractInfo> cq = new QueryDescriptor<ContractInfo>(ContractInfo.class, dg);
 		CommonService commonService = SystemUtils.getCommonService(request);
-		String type = request.getParameter("type");
 		//查询条件组装器
 		TypedQueryBuilder<ContractInfo> tqBuilder = QueryUtils.getTQBuilder(contract, request.getParameterMap());
 		if (StringUtils.isNotEmpty(dg.getSort())) {
 			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
-		}
-		if(null!=type&&!type.equals("")){
-			tqBuilder.addRestriction(new TQRestriction("type", "in",type));
 		}
 		tqBuilder.addOrder(new TQOrder("signingDate", false));
 		cq.setTqBuilder(tqBuilder);
@@ -690,6 +735,7 @@ public class ContractManagementController {
 	@ResponseBody
 	public void exportExcel(HttpServletRequest request, HttpServletResponse response) throws IOException, ParseException{
 		response.setCharacterEncoding("utf-8");  
+		String type = request.getParameter("type");
 		String sDate = request.getParameter("sDate");
 		String eDate = request.getParameter("eDate");
 		SimpleDateFormat DATE = new SimpleDateFormat("yyyy-MM-dd");
@@ -702,6 +748,7 @@ public class ContractManagementController {
 		if(null!=eDate && !eDate.equals("")){
 		tqBuilder.addRestriction(new TQRestriction("signingDate", "<=",DATE.parse(eDate)));
 		}
+		tqBuilder.addRestriction(new TQRestriction("type", "in",type));
 		List<ContractInfo> contractInfos = systemService.getQueryRes(tqBuilder);
 	    response.setContentType("multipart/form-data"); 
 	    response.setHeader("Content-Disposition", "attachment;fileName="+Util.getName()+".xls");  

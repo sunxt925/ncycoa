@@ -120,6 +120,10 @@ public class ContractInfo {
 	@Column(name="CAIGOULEADER")
 	private String caigouleader;//采购部门分管领导
 	
+	@Column(name="OTHERFILE")
+	private String otherfile;//其他文件
+	
+	
 	public String getContent() {
 		return content;
 	}
@@ -393,6 +397,14 @@ public class ContractInfo {
 
 	public void setPartyRegValue(String partyRegValue) {
 		this.partyRegValue = partyRegValue;
+	}
+
+	public String getOtherfile() {
+		return otherfile;
+	}
+
+	public void setOtherfile(String otherfile) {
+		this.otherfile = otherfile;
 	}
 
 	

@@ -86,12 +86,12 @@
 <input id="id" name="id" type="hidden" value="${contract.id}">
 
 <table style="width:100%;border-spacing:1px;" class="formtable">
-	<tr>
+	<%-- <tr>
 		<td align="right"><label class="Validform_label"> 合同编码 </label></td>
 		<td class="value"><input class="inputxt" id="code" name="code" value="${contract.code}" datatype="s2-20">
 		<span class="Validform_checktip"></span>
 		</td>
-	</tr>
+	</tr> --%>
 
 	<tr>
 		<td align="right"><label class="Validform_label"> 合同名称 </label></td>
@@ -114,25 +114,149 @@
 	<tr>
 		<td align="right"><label class="Validform_label"> 合同类型 </label></td>
 		<td class="value">
-		<input class="inputxt" name="type" id="type" value="${type }" type="hidden">
-		<c:if test="${type == 0 || type == null}">
-		<input class="inputxt" name="typename" id="typename" value="工程合同" readonly="readonly">
+		<select id="type" name="type" >
+		<c:if test="${type == null}">
+		  <option value="1">买卖合同</option>
+		  <option value="2">租赁合同</option>
+		  <option value="3">仓储合同</option>
+		  <option value="4">技术合同</option>
+		  <option value="5">建设施工(维修)合同</option>
+		  <option value="6">承揽合同</option>
+		  <option value="7">委托合同</option>
+		  <option value="8">赠与合同</option>
+		  <option value="9">运输合同</option>
+		  <option value="0">其他合同</option>
 		</c:if>
-		<c:if test="${type == 1 || type == null}">
-		<input class="inputxt" name="typename" id="typename" value="采购合同" readonly="readonly">
+		<c:if test="${type == 1}">
+		<option value="1" selected="selected">买卖合同</option>
+		  <option value="2">租赁合同</option>
+		  <option value="3">仓储合同</option>
+		  <option value="4">技术合同</option>
+		  <option value="5">建设施工(维修)合同</option>
+		  <option value="6">承揽合同</option>
+		  <option value="7">委托合同</option>
+		  <option value="8">赠与合同</option>
+		  <option value="9">运输合同</option>
+		  <option value="0">其他合同</option>
+	
 		</c:if>
-		<c:if test="${type == 2 || type == null}">
-		<input class="inputxt" name="typename" id="typename" value="维修合同" readonly="readonly">
+		<c:if test="${type == 2}">
+		  <option value="1">买卖合同</option>
+		  <option value="2" selected="selected">租赁合同</option>
+		  <option value="3">仓储合同</option>
+		  <option value="4">技术合同</option>
+		  <option value="5">建设施工(维修)合同</option>
+		  <option value="6">承揽合同</option>
+		  <option value="7">委托合同</option>
+		  <option value="8">赠与合同</option>
+		  <option value="9">运输合同</option>
+		  <option value="0">其他合同</option>
 		</c:if>
-		<c:if test="${type == 3 || type == null}">
-		<input class="inputxt" name="typename" id="typename" value="其他合同" readonly="readonly">
+		<c:if test="${type == 3}">
+		 	<option value="1">买卖合同</option>
+		  <option value="2">租赁合同</option>
+		  <option value="3"  selected="selected">仓储合同</option>
+		  <option value="4">技术合同</option>
+		  <option value="5">建设施工(维修)合同</option>
+		  <option value="6">承揽合同</option>
+		  <option value="7">委托合同</option>
+		  <option value="8">赠与合同</option>
+		  <option value="9">运输合同</option>
+		  <option value="0">其他合同</option>
 		</c:if>
+		<c:if test="${type == 4}">
+		  <option value="1">买卖合同</option>
+		  <option value="2">租赁合同</option>
+		  <option value="3">仓储合同</option>
+		  <option value="4" selected="selected">技术合同</option>
+		  <option value="5">建设施工(维修)合同</option>
+		  <option value="6">承揽合同</option>
+		  <option value="7">委托合同</option>
+		  <option value="8">赠与合同</option>
+		  <option value="9">运输合同</option>
+		  <option value="0">其他合同</option>
+		</c:if>
+		<c:if test="${type == 5}">
+		  <option value="1">买卖合同</option>
+		  <option value="2">租赁合同</option>
+		  <option value="3">仓储合同</option>
+		  <option value="4">技术合同</option>
+		  <option value="5" selected="selected">建设施工(维修)合同</option>
+		  <option value="6">承揽合同</option>
+		  <option value="7">委托合同</option>
+		  <option value="8">赠与合同</option>
+		  <option value="9">运输合同</option>
+		  <option value="0">其他合同</option>
+		</c:if>
+			<c:if test="${type == 6}">
+		  <option value="1">买卖合同</option>
+		  <option value="2">租赁合同</option>
+		  <option value="3">仓储合同</option>
+		  <option value="4">技术合同</option>
+		  <option value="5">建设施工(维修)合同</option>
+		  <option value="6" selected="selected">承揽合同</option>
+		  <option value="7">委托合同</option>
+		  <option value="8">赠与合同</option>
+		  <option value="9">运输合同</option>
+		  <option value="0">其他合同</option>
+		</c:if>
+			<c:if test="${type == 7}">
+		  <option value="1">买卖合同</option>
+		  <option value="2">租赁合同</option>
+		  <option value="3">仓储合同</option>
+		  <option value="4">技术合同</option>
+		  <option value="5">建设施工(维修)合同</option>
+		  <option value="6">承揽合同</option>
+		  <option value="7" selected="selected">委托合同</option>
+		  <option value="8">赠与合同</option>
+		  <option value="9">运输合同</option>
+		  <option value="0">其他合同</option>
+		</c:if>
+			<c:if test="${type == 8}">
+		  <option value="1">买卖合同</option>
+		  <option value="2">租赁合同</option>
+		  <option value="3">仓储合同</option>
+		  <option value="4">技术合同</option>
+		  <option value="5">建设施工(维修)合同</option>
+		  <option value="6">承揽合同</option>
+		  <option value="7">委托合同</option>
+		  <option value="8" selected="selected">赠与合同</option>
+		  <option value="9">运输合同</option>
+		  <option value="0">其他合同</option>
+		</c:if>
+			<c:if test="${type == 9}">
+		  <option value="1">买卖合同</option>
+		  <option value="2">租赁合同</option>
+		  <option value="3">仓储合同</option>
+		  <option value="4">技术合同</option>
+		  <option value="5">建设施工(维修)合同</option>
+		  <option value="6">承揽合同</option>
+		  <option value="7">委托合同</option>
+		  <option value="8">赠与合同</option>
+		  <option value="9" selected="selected">运输合同</option>
+		  <option value="0">其他合同</option>
+		</c:if>
+			<c:if test="${type == 0}">
+		  <option value="1">买卖合同</option>
+		  <option value="2">租赁合同</option>
+		  <option value="3">仓储合同</option>
+		  <option value="4">技术合同</option>
+		  <option value="5">建设施工(维修)合同</option>
+		  <option value="6">承揽合同</option>
+		  <option value="7">委托合同</option>
+		  <option value="8">赠与合同</option>
+		  <option value="9">运输合同</option>
+		  <option value="0" selected="selected">其他合同</option>
+		</c:if>
+			
+		</select>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
     <tr>
     <td align="right"><label class="Validform_label"> 实施方式 </label></td>
-		<td class="value"><select id="contactMethod" name="contactMethod" >
+		<td class="value">
+		<select id="contactMethod" name="contactMethod" >
 		<c:if test="${contactMethod == null}">
 		  <option value="0">公开招标</option>
 		  <option value="1">邀请招标</option>
@@ -311,13 +435,19 @@
 	</tr>
 	
 	<tr>
-		<td align="right"><label class="Validform_label"> 存储路径 </label></td>
+		<td align="right"><label class="Validform_label"> 上传合同 </label></td>
 		<td class="value"><input class="inputxt" id="contractFilePath" name="contractFilePath" value="${contract.contractFilePath}">
 		 <a id="btn_uploadfile" href="#"    class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">上传文件</a>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
-	
+	<tr>
+		<td align="right"><label class="Validform_label"> 上传法律顾问审核 </label></td>
+		<td class="value"><input class="inputxt" id="otherfile" name="otherfile" value="${contract.otherfile}">
+		 <a id="btn_uploadfile2" href="#"    class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">上传文件</a>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
 </table>
 
 </form>
@@ -325,9 +455,15 @@
 $("#btn_uploadfile").click(function(){
 	createwindow("文件上传","fileupload/fileupload.jsp",350,130,returnFile);
 	    });
-
+$("#btn_uploadfile2").click(function(){
+	createwindow("文件上传","fileupload/fileupload.jsp",350,130,returnFile2);
+	    });
 function returnFile(data){
 	$('#contractFilePath').val(data.code);
+   
+}
+function returnFile2(data){
+	$('#otherfile').val(data.code);
    
 }
 function createwindow(title, url, width, height,func) {

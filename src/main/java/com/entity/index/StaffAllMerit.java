@@ -113,10 +113,10 @@ public boolean insert(StaffAllMerit staffAllMerit){
 		return false;
 	}
 }
-public boolean delete(String year,String period){
+public boolean delete(String year,String period,String flag){
     try {
 	   DBObject db=new DBObject();
-	   String sql="delete from tbm_staffallmerit where year=? and period=?";
+	   String sql="delete from tbm_staffallmerit where year=? and period=? and "+flag;
 	   Parameter.SqlParameter[] pp=new Parameter.SqlParameter[]{
 		     new Parameter.String(year),
 		     new Parameter.String(period)
@@ -418,6 +418,8 @@ public String getMeritJson(String year,String period,String flag,String companyc
 			sbuilder.append("{");
 			if(flag.equals("c")){
 				sbuilder.append("\"company\":").append("\""+CodeDictionary.syscode_traslate("base_org", "orgcode", "orgname",staffAllMerit.getCompanycode())+"\"").append(",");
+				sbuilder.append("\"companycode\":").append("\""+staffAllMerit.getCompanycode()+"\"").append(",");
+				sbuilder.append("\"recno\":").append("\""+staffAllMerit.getRecno()+"\"").append(",");
 				
 			}
 			if(flag.equals("d")){
@@ -615,9 +617,16 @@ public String getAllmeritJson(String year,String staffname,String orgcode){
 		return "";
 	}
 }
-public boolean changescore(double changescore,String recno){
+public boolean changescore(double changescore,String recno,String flag){
 	 StaffAllMerit staffallmerit=new StaffAllMerit(recno);
-	 double staffmerit=changescore+staffallmerit.getStaffallmerit();
+	 double merit = changescore+staffallmerit.getStaffallmerit();
+	 double changes=0;
+	 if(staffallmerit.getChangevalue()!=0){
+		 changes = changescore+staffallmerit.getChangevalue();
+	 }else{
+		 changes = changescore;
+	 }
+	 
 	 Connection conn=null;
 	 PreparedStatement stmt = null;
 	try {
@@ -625,8 +634,8 @@ public boolean changescore(double changescore,String recno){
 		conn.setAutoCommit(false);
 		String sql="update tbm_staffallmerit  set changevalue=?,staffallmerit=? where recno=?";
 		stmt=conn.prepareStatement(sql);
-		stmt.setDouble(1, changescore);
-		stmt.setDouble(2, staffmerit);
+		stmt.setDouble(1, changes);
+		stmt.setDouble(2, merit);
 		stmt.setString(3, recno);
 		stmt.execute();
 		conn.commit();
@@ -640,6 +649,40 @@ public boolean changescore(double changescore,String recno){
 		}
 		return false;
 	}
+}
+/**
+ * 获取机构汇总后得分
+ * @param companycode
+ * @param year
+ * @param period
+ * @param flag
+ * @return
+ */
+@SuppressWarnings("finally")
+public static Double getStaffMeritScore(String companycode,String year,String period,String flag) {
+	DBObject db=new DBObject();
+	
+	String sql="select staffallmerit from tbm_staffallmerit  where companycode=?  and year=? and period=? and  memo=? ";
+	Parameter.SqlParameter[] pp=new Parameter.SqlParameter[]{
+			new Parameter.String(companycode),
+		    new Parameter.String(year),
+		    new Parameter.String(period),
+		    new Parameter.String(flag)
+	};
+	double score=0;
+	try{
+		DataTable dt=db.runSelectQuery(sql, pp);
+		if(dt!=null&&dt.getRowsCount()==1){
+			score = Double.parseDouble(dt.get(0).getString("staffallmerit"));
+		    return score;
+		}else{
+			return null;
+		}
+	}catch(Exception e){
+		e.printStackTrace();
+		return null;
+	}
+	
 }
 public String getRecno() {
 	return recno;

@@ -22,7 +22,7 @@
 		<h:dgColumn field="code" title="合同编码" ></h:dgColumn>
 		<h:dgColumn field="name" title="合同名称"></h:dgColumn>
 		<h:dgColumn field="relevantDepartment" title="实施部门"  dictionary="base_org,orgcode,orgname"></h:dgColumn>
-		<h:dgColumn field="type" title="合同类别" query="true" replace="工程合同_0,采购合同_1,维修合同_2,其他合同_3"></h:dgColumn>
+		<h:dgColumn field="type" title="合同类别" query="true"  replace="其他合同_0,买卖合同_1,租赁合同_2,仓储合同_3,技术合同_4,建设施工(维修)合同_5,承揽合同_6,委托合同_7,赠与合同_8,运输合同_9"></h:dgColumn>
 		<h:dgColumn field="contactMethod" title="实施方式" query="true" replace="公开招标_0,邀请招标_1,竞争性谈判_2,询价_3,单一来源_4"></h:dgColumn>
 		<h:dgColumn field="partyA" title="甲方" ></h:dgColumn>
 		<h:dgColumn field="partyB" title="乙方" ></h:dgColumn>
@@ -60,9 +60,7 @@
 		}
 	}
 	function producecontract(id,flag){
-		
-			
-			$.post("contract-management.htm?produceContract&id="+id,function(data,status){
+		$.post("contract-management.htm?produceContract&id="+id,function(data,status){
 				var obj = eval('(' + data + ')');
 				$.messager.show({
 		              title:'提示',
@@ -72,7 +70,7 @@
 				setTimeout(function(){
 		        	  window.location.reload();
 		   	      },800);
-			});
+		});
 	}
 	function downloadcontract(audittable){
 		if(audittable != "null" && audittable !=""){

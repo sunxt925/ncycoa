@@ -23,6 +23,9 @@
 		<h:dgColumn field="meetingEndDate" title="结束时段" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true"></h:dgColumn>
 		<h:dgColumn field="meetingRoom" title="开会地点"    dictionary="ncycoa_meetingroom,room_no,room_name"  ></h:dgColumn>
 		<h:dgColumn field="numAttendee" title="会议人数"></h:dgColumn>
+		<h:dgColumn field="eatType" title="就餐类型"  replace="午餐_0,晚餐_1"></h:dgColumn>
+		<h:dgColumn field="eatpnum" title="就餐人数"  ></h:dgColumn>
+		<h:dgColumn field="accommodationnum" title="住宿人数"  ></h:dgColumn>
 		<h:dgColumn field="meetingFlag" title="会议状态" replace="完成_11,取消_10,未处理_0" style="color:green_10,color:red_0,color:blue_11" query="true"></h:dgColumn>
 		
 		<h:dgColumn field="auditDate" title="审核日期"  dateFormatter="yyyy-MM-dd hh:mm:ss" ></h:dgColumn>

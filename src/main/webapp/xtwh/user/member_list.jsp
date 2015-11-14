@@ -119,6 +119,7 @@ function deleteuser(staffcode)
     if(confirm("是否确定删除员工号为："+staffcode+"的员工？"))
     {
     var newmemberurl='../../servlet/PageHandler?act=del&action_class=com.action.system.StaffAction&staffcode='+staffcode+'&positioncode='+'<%=positioncode%>'+'&positionname='+'<%=positionname%>'+'&orgcode='+'<%=orgcode%>'+'&orgname='+'<%=orgname%>'+'&orgclass='+'<%=orgclass%>';
+   
     window.open(newmemberurl,"_self");
     }
 }

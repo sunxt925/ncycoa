@@ -21,6 +21,7 @@
 		<h:dgColumn field="reformId" title="整改项目ID"  query="true"></h:dgColumn>
 		
 		<h:dgColumn field="fileName" title="附件" ></h:dgColumn>
+		<h:dgColumn field="reformFile" title="附件1"  style="display:none"></h:dgColumn>
 		<h:dgColumn field="memo" title="说明"  query="true" queryMode="scope"></h:dgColumn>
 		<h:dgColumn field="subDate" title="提交日期" dateFormatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="scope"></h:dgColumn>
 		<h:dgColumn field="subUser" title="提交者"   dictionary="base_staff,staffcode,staffname"></h:dgColumn>
@@ -30,6 +31,7 @@
 		
 		<h:dgColumn title="操作" field="opt"></h:dgColumn>
 		  <h:dgFunOpt funname="fileload({fileName})" title="附件下载"></h:dgFunOpt>
+		  <h:dgFunOpt funname="fileload({reformFile})" title="反馈文档下载"></h:dgFunOpt>
 	</h:datagrid>
 </body>
 <script type="text/javascript">

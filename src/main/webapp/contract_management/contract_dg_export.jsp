@@ -30,6 +30,21 @@ request.setAttribute("request_path", base_path);
 
 </head>
 <body style="overflow-x:hidden">
+<label><span style="font-size:12px; font-family:微软雅黑,新宋体">合同类型:</span></label>
+<select id="type" name="type" >
+ <option value="1">买卖合同</option>
+		  <option value="2">租赁合同</option>
+		  <option value="3">仓储合同</option>
+		  <option value="4">技术合同</option>
+		  <option value="5">建设施工(维修)合同</option>
+		  <option value="6">承揽合同</option>
+		  <option value="7">委托合同</option>
+		  <option value="8">赠与合同</option>
+		  <option value="9">运输合同</option>
+		  <option value="0">其他合同</option>
+</select>
+<br>
+<br>
 <label><span style="font-size:12px; font-family:微软雅黑,新宋体">起始日期:</span></label>
 <input class="easyui-datebox" id="sDate" name="sDate">
 <br>

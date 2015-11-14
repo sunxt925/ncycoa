@@ -145,7 +145,7 @@ url="unitjson.jsp?class="+userclass;
           	               else
           	            	   company=company.id;
           	         	   url="staffmeritlist.jsp?year="+year+"&month="+month+"&company="+company+"&depart="+depart;
-          	         	  
+          	         	
           	            }
           				window.open(url,"meritlist");
      					

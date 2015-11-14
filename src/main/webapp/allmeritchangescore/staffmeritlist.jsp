@@ -38,7 +38,7 @@ String dataurl="meritjson.jsp?year="+year+"&month="+month+"&company="+company+"&
    
    <div style="width: 100%">
    <a id="btn_add" href="#" class="easyui-linkbutton"
-				data-options="iconCls:'icon-add',plain:true">加分</a>
+				data-options="iconCls:'icon-add',plain:true">加减分</a>
     <table id="dg" class="easyui-datagrid" style="height:700px"
     data-options="url:'<%=dataurl %>',fitColumns:true,singleSelect:true,collapsible:true">
     <thead>
@@ -70,7 +70,7 @@ String dataurl="meritjson.jsp?year="+year+"&month="+month+"&company="+company+"&
 	 if(row==null){
 		 createalert("请选择加减分对象");
 	 }else{
-		 createwindow("直接加减分","allmeritchangescore/changescore.jsp?recno="+row.recno+"&staffcode="+row.staffcode+"&year="+"<%=year%>"+"&month="+"<%=month%>",300,400);
+		 createwindow("直接加减分","allmeritchangescore/changescore.jsp?flag=s&recno="+row.recno+"&objectcode="+row.staffcode+"&year="+"<%=year%>"+"&month="+"<%=month%>",300,400);
 	 }
 	    });
  function createwindow(title, url, width, height) {

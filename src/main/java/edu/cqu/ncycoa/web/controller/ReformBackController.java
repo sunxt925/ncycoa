@@ -1,5 +1,11 @@
 package edu.cqu.ncycoa.web.controller;
 
+import java.io.File;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,9 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.common.CodeDictionary;
 import com.common.Format;
+import com.common.Util;
+import com.common.WordUtils;
+import com.dao.system.UnitDao;
+import com.entity.index.AllMeritCollection;
 import com.entity.system.UserInfo;
-
 
 import edu.cqu.ncycoa.common.dto.AjaxResultJson;
 import edu.cqu.ncycoa.common.dto.DataGrid;
@@ -98,13 +108,96 @@ public class ReformBackController {
 			//更新整改记录状态
 			Reform reform= systemService.findEntityById(reformBack.getReformId(), Reform.class);
 			reform.setFlag("1");
+			
+			UserInfo userinfo = (UserInfo)request.getSession().getAttribute("UserInfo");
+			
+			
+			String companycode = AllMeritCollection.getcompanyByobject(userinfo.getOrgCode());
+			
+			//设置第二级审核人员
+			if(Integer.parseInt((companycode.split("\\.")[2])) >= 20){
+				//区县
+				reformBack.setZrStaff(UnitDao.getComanyAudit(companycode));
+			}else{
+				//市局
+				reformBack.setZrStaff(UnitDao.getCityComanyAudit(userinfo.getOrgCode()));
+			}
+			
 			systemService.saveEntity(reform);
+			
+			String tempfilename = Util.getName();
+			File f = new File(Util.getfileCfg().get("uploadfilepath")+tempfilename+".doc");
+			if (!f.getParentFile().exists())
+				f.getParentFile().mkdirs();
+			WordUtils.produceWord(Util.getfileCfg().get("uploadfilepath")+tempfilename+".doc", Util.getFilepath("wordtemplate/reformtemplate.doc"), getCommentMap(reformBack,reform));
+			reformBack.setReformFile(tempfilename);
+			
+			
 			systemService.addEntity(reformBack);
 			
 		}
 		
 		j.setMsg(message);
 		SystemUtils.jsonResponse(response, j);
+	}
+	public Map<String, String> getCommentMap(ReformBack reformback,Reform reform){
+		Map<String, String> map = new HashMap<String, String>();
+		Calendar c_f = Calendar.getInstance();
+		c_f.setTime(reform.getXdDate());
+		reform.getXdzgOrgcode();
+		reform.getClOrgcode();
+		map.put("zerenorg", CodeDictionary.syscode_traslate("base_org", "orgcode", "orgname",reform.getClOrgcode()));
+		map.put("jianchaorg", CodeDictionary.syscode_traslate("base_org", "orgcode", "orgname",reform.getXdzgOrgcode()));
+		map.put("content", reform.getMemo());
+	
+		map.put("y0", c_f.get(Calendar.YEAR)+"");
+		map.put("m0", (c_f.get(Calendar.MONTH)+1)+"");
+		map.put("d0", c_f.get(Calendar.DAY_OF_MONTH)+"");
+		map.put("reasonanalyer", reformback.getReasonAnalyer());
+		map.put("zerenorg1", CodeDictionary.syscode_traslate("base_org", "orgcode", "orgname",reform.getClOrgcode()));
+		Calendar c_f_1 = Calendar.getInstance();
+		c_f_1.setTime(new Date());
+		map.put("y1", c_f.get(Calendar.YEAR)+"");
+		map.put("m1", (c_f.get(Calendar.MONTH)+1)+"");
+		map.put("d1", c_f.get(Calendar.DAY_OF_MONTH)+"");
+		map.put("preventive_measure", reformback.getPreMeasure());
+		map.put("s_zd", CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname",reformback.getZdStaff()));
+		Calendar c_f_2 = Calendar.getInstance();
+		c_f_2.setTime(reformback.getZdDate());
+		map.put("y2", c_f.get(Calendar.YEAR)+"");
+		map.put("m2", (c_f.get(Calendar.MONTH)+1)+"");
+		map.put("d2", c_f.get(Calendar.DAY_OF_MONTH)+"");
+		map.put("s_pz", CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname",reformback.getPzStaff()));
+		Calendar c_f_3 = Calendar.getInstance();
+		c_f_3.setTime(reformback.getPzDateDate());
+		map.put("y3", c_f.get(Calendar.YEAR)+"");
+		map.put("m3", (c_f.get(Calendar.MONTH)+1)+"");
+		map.put("d3", c_f.get(Calendar.DAY_OF_MONTH)+"");
+		map.put("complete_res", reformback.getMemo());
+		
+		
+		
+		map.put("zerenstaff",  CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname",reformback.getZrStaff()));
+		Calendar c_f_4 = Calendar.getInstance();
+		c_f_4.setTime(new Date());
+		map.put("y4", c_f.get(Calendar.YEAR)+"");
+		map.put("m4", (c_f.get(Calendar.MONTH)+1)+"");
+		map.put("d4", c_f.get(Calendar.DAY_OF_MONTH)+"");
+		if(null!=reformback.getYanzheng()&&!reformback.getYanzheng().equals("")){
+			map.put("complete_yzres", reformback.getYanzheng());
+		}
+		if(null!=reformback.getYzStaff()&&!reformback.getYzStaff().equals("")){
+			map.put("yzstaff", CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname",reformback.getYzStaff()));
+		}
+		if(null!=reformback.getZrDateDate()){
+			Calendar c_f_5 = Calendar.getInstance();
+			c_f_5.setTime(reformback.getZrDateDate());
+			map.put("y5", c_f.get(Calendar.YEAR)+"");
+			map.put("m5", (c_f.get(Calendar.MONTH)+1)+"");
+			map.put("d5", c_f.get(Calendar.DAY_OF_MONTH)+"");
+		}
+	
+		return map;
 	}
 	
 	

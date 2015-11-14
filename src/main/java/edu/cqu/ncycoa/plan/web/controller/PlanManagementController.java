@@ -25,6 +25,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.db.DBObject;
+import com.db.DataTable;
+import com.db.Parameter;
+import com.entity.system.UserInfo;
+
 import edu.cqu.ncycoa.common.dto.AjaxResultJson;
 import edu.cqu.ncycoa.common.dto.DataGrid;
 import edu.cqu.ncycoa.common.dto.QueryDescriptor;
@@ -35,6 +40,7 @@ import edu.cqu.ncycoa.common.util.dao.TQOrder;
 import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
 import edu.cqu.ncycoa.plan.PlanStatus;
 import edu.cqu.ncycoa.plan.StepType;
+import edu.cqu.ncycoa.plan.domain.DptReview;
 import edu.cqu.ncycoa.plan.domain.Plan;
 import edu.cqu.ncycoa.plan.domain.PlanInstance;
 import edu.cqu.ncycoa.plan.domain.PlanStep;
@@ -139,7 +145,7 @@ public class PlanManagementController {
 		AjaxResultJson j = new AjaxResultJson();
 		
 		List<PlanStep> tasks = new ArrayList<PlanStep>();
-		if(plan.getStepType() == StepType.CUSTOM_FLOW){
+		if(plan.getStepType().intValue() == StepType.CUSTOM_FLOW.intValue()){
 			String[] taskid = request.getParameter("taskid").split(":;;:");
 			String[] taskorder = request.getParameter("taskorder").split(":;;:");
 			String[] taskparticipant = request.getParameter("taskparticipant").split(":;;:");
@@ -282,6 +288,33 @@ public class PlanManagementController {
 			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
 		}
 		tqBuilder.addRestriction("status", "=", PlanStatus.WAITTING_FOR_AUDIT);
+		
+		// 科长审本部门的岗位计划，办公室负责人（主任）审所有部门的
+		UserInfo user = (UserInfo) request.getSession().getAttribute("UserInfo");
+		try {
+			String sql = "select p.positionname from base_orgmember m join base_orgposition p USING(positioncode) where m.orgcode=? and m.staffcode=?";
+			Parameter.SqlParameter[] pp = new Parameter.SqlParameter[] { new Parameter.String(user.getOrgCode()), new Parameter.String(user.getStaffcode()) };
+			DBObject db = new DBObject();
+			DataTable dt = db.runSelectQuery(sql, pp);
+			List<String> tmps = new ArrayList<String>();
+			if (dt != null && dt.getRowsCount() > 0) {
+				for(int i=0; i<dt.getRowsCount(); i++){
+					tmps.add(dt.get(i).getString("positionname"));
+				}
+			}
+			
+			if(tmps.contains("科长")) {
+				tqBuilder.addRestriction("type", "=", (short)0);
+				tqBuilder.addRestriction("departId", "=", user.getOrgCode());
+			} else if(tmps.contains("主任")) {
+				tqBuilder.addRestriction("type", "=", (short)1);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
 		cq.setTqBuilder(tqBuilder);
 		commonService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dg);
@@ -542,6 +575,100 @@ public class PlanManagementController {
 		
 		//查询条件组装器
 		TypedQueryBuilder<UserReview> tqBuilder = QueryUtils.getTQBuilder(plan, request.getParameterMap());
+		if (StringUtils.isNotEmpty(dg.getSort())) {
+			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
+		}
+		cq.setTqBuilder(tqBuilder);
+		commonService.getDataGridReturn(cq, true);
+		TagUtil.datagrid(response, dg);
+	}
+	
+	
+	@RequestMapping(params="dpt_review")
+	public String dpt_review(HttpServletRequest request, Model model) {
+		return "plan_management/dpt_review_list";
+	}
+	
+	@RequestMapping(params="dpts")
+	public String dpt_review(String year, String month, HttpServletRequest request, Model model) {
+		planService.executeJPQL("delete from UserReview e");
+		int y = Integer.parseInt(year);
+		int m = Integer.parseInt(month.charAt(1) == '0' ? month.substring(2) : month.substring(1));
+		
+		Calendar low = Calendar.getInstance();
+		low.set(y, m - 1, 1);
+
+		Calendar up = Calendar.getInstance();
+		up.set(y, m, 1);
+		up.add(Calendar.DAY_OF_MONTH, -1);
+		
+		List<PlanTask> allTasks = new ArrayList<PlanTask>();
+		List<PlanInstance> planInstances = planService.readEntitiesByJPQL(
+				"select e from PlanInstance e where status in (?1) and planEndDate >= ?2 and planEndDate <= ?3",
+				PlanInstance.class,
+				Arrays.asList(new Short[]{PlanInstance.FINISHED}),
+				low.getTime(),
+				up.getTime());
+		
+		for(PlanInstance instance : planInstances) {
+			
+			
+			
+			
+			
+		}
+		
+		Map<String, List<PlanTask>> p2Task = new HashMap<String, List<PlanTask>>();
+		Map<String, String> p2Name = new HashMap<String, String>();
+		Map<String, Integer> p2Over = new HashMap<String, Integer>();
+		for(PlanTask task : allTasks) {
+			if(!p2Name.containsKey(task.getParticipantCode())) {
+				p2Name.put(task.getParticipantCode(), task.getParticipantName());
+			}
+			
+			if(!p2Task.containsKey(task.getParticipantCode())) {
+				p2Task.put(task.getParticipantCode(), new ArrayList<PlanTask>());
+			}
+			p2Task.get(task.getParticipantCode()).add(task);
+			
+			if(!p2Over.containsKey(task.getParticipantCode())) {
+				p2Over.put(task.getParticipantCode(), 0);
+			}
+			
+			if(task.getHandleDate().after(task.getStep().getEnding())) {
+				p2Over.put(task.getParticipantCode(), p2Over.get(task.getParticipantCode()) + 1);
+			}
+		}
+		
+		List<UserReview> usrReviews = new ArrayList<UserReview>();
+		for(String userid : p2Name.keySet()) {
+			UserReview userReview = new UserReview();
+			
+			userReview.setMonth((short)(m - 1));
+			userReview.setYear((short)y);
+			userReview.setParticipantCode(userid);
+			userReview.setParticipantName(p2Name.get(userid));
+			userReview.setStatistics(p2Task.get(userid).size() + "/" + allTasks.size() + "/" + planInstances.size());
+			userReview.setOverDeadTimeCounts(p2Over.get(userid));
+			userReview.setNoOverDeadTimeCounts(p2Task.get(userid).size() - p2Over.get(userid));
+			
+			planService.saveEntity(userReview);
+			usrReviews.add(userReview);
+		}
+		
+		return "plan_management/dpt_review_list";
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(params="dgdata_dpt_review")
+	@ResponseBody
+	public void dgdata_dpt_review(DptReview plan, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
+		QueryDescriptor<DptReview> cq = new QueryDescriptor<DptReview>(DptReview.class, dg);
+		CommonService commonService = SystemUtils.getCommonService(request);
+		
+		//查询条件组装器
+		TypedQueryBuilder<DptReview> tqBuilder = QueryUtils.getTQBuilder(plan, request.getParameterMap());
 		if (StringUtils.isNotEmpty(dg.getSort())) {
 			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
 		}

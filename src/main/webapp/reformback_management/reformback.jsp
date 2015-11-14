@@ -89,15 +89,90 @@
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
+	<input type="hidden" id="reformId" name="reformId" value="${reformid}">
+		
 	<tr>
-		<td align="right"><label class="Validform_label"> 整改项目ID </label></td>
+		<td align="right"><label class="Validform_label"> 原因分析 </label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="reformId" name="reformId" value="${reformid}" datatype="s2-10" readonly="readonly">
+		<input class="inputxt" style="width:150px;" id="reasonAnalyer" name="reasonAnalyer" datatype="s2-100">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 
+    <tr>
+		<td align="right"><label class="Validform_label"> 纠正/预防措施 </label></td>
+		<td class="value">
+		<input class="inputxt" style="width:150px;" id="preMeasure" name="preMeasure" datatype="s2-100">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	 <tr>
+		<td align="right"><label class="Validform_label"> 制定人 </label></td>
+		<td class="value">
+		<input type="hidden" id="zdStaff" name="zdStaff">
+		<input class="inputxt" style="width:150px;" id="zdStaffdip" name="zdStaffdip" datatype="s2-100">
+		<a id="btn_selectzd" href="#" class="easyui-linkbutton"
+				       data-options="iconCls:'icon-search',plain:true">选择</a>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 制定日期</label></td>
+		<td class="value">
+		<input class="easyui-datebox" style="width:150px;" id="zdDate" name="zdDate" >
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	 <tr>
+		<td align="right"><label class="Validform_label"> 批准人 </label></td>
+		<td class="value">
+		<input type="hidden" id="pzStaff" name="pzStaff">
+		<input class="inputxt" style="width:150px;" id="pzStaffdip" name="pzStaffdip" datatype="s2-100">
+		<a id="btn_selectpz" href="#" class="easyui-linkbutton"
+				       data-options="iconCls:'icon-search',plain:true">选择</a>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 批准日期</label></td>
+		<td class="value">
+		<input class="easyui-datebox" style="width:150px;" id="pzDateDate" name="pzDateDate">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
 	
+	
+	<tr>
+		<td align="right"><label class="Validform_label"> 完成情况 </label></td>
+		<td class="value">
+		<input class="inputxt" style="width:150px;" id="memo" name="memo" >
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 有效性验证情况</label></td>
+		<td class="value">
+		<input class="inputxt" style="width:150px;" id="yanzheng" name="yanzheng" >
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 验证人 </label></td>
+		<td class="value">
+		<input type="hidden" id="yzStaff" name="yzStaff">
+		<input class="inputxt" style="width:150px;" id="yzStaffdip" name="yzStaffdip" datatype="s2-100">
+		<a id="btn_selectyz" href="#" class="easyui-linkbutton"
+				       data-options="iconCls:'icon-search',plain:true">选择</a>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 验证日期</label></td>
+		<td class="value">
+		<input class="easyui-datebox" style="width:150px;" id="zrDateDate" name="zrDateDate">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
 	<tr>
 	<td align="right"><label class="Validform_label"> 附件 </label></td>
 		<td class="value">
@@ -106,13 +181,7 @@
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label"> 说明 </label></td>
-		<td class="value">
-		<input class="inputxt" style="width:150px;" id="memo" name="memo" >
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
+	
 </table>
 <input type="button" id="btn_ok" style="display: none" onclick="ret()">
 </form>
@@ -141,7 +210,7 @@ function createwindow(title, url, width, height,func) {
 			width : width,
 			height : height,
 			title : title,
-			zIndex :2000,
+			zIndex :3000,
 			opacity : 0.3,
 			cache : false,
 			ok : function() {
@@ -152,5 +221,47 @@ function createwindow(title, url, width, height,func) {
 			cancel : true/* 为true等价于function(){} */
 		});
 }
+function returnobjValue1(data){
+
+	var array = data.code;
+	var staffcodes=array[0].staffcode;
+	var staffnames=array[0].staffname;
+	
+	$('#zdStaff').val(staffcodes);
+	$('#zdStaffdip').val(staffnames);
+	
+}
+function returnobjValue2(data){
+
+	var array = data.code;
+	var staffcodes=array[0].staffcode;
+	var staffnames=array[0].staffname;
+	
+	$('#pzStaff').val(staffcodes);
+	$('#pzStaffdip').val(staffnames);
+	
+}
+function returnobjValue3(data){
+
+	var array = data.code;
+	var staffcodes=array[0].staffcode;
+	var staffnames=array[0].staffname;
+	
+	$('#yzStaff').val(staffcodes);
+	$('#yzStaffdip').val(staffnames);
+	
+}
+$("#btn_selectzd").click(function(){
+	
+	createwindow('选择人员','indexmanage/selectstaff.jsp',500,500,returnobjValue1 );
+    });
+$("#btn_selectpz").click(function(){
+	
+	createwindow('选择人员','indexmanage/selectstaff.jsp',500,500,returnobjValue2 );
+    });
+$("#btn_selectyz").click(function(){
+	
+	createwindow('选择人员','indexmanage/selectstaff.jsp',500,500,returnobjValue3 );
+    });   
 </script>
 </body>
