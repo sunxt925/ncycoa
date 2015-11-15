@@ -597,9 +597,9 @@ public String getAllmeritJson(String year,String staffname,String orgcode){
 			sBuilder.append("\"name\":").append("\""+CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname",allMeritGroupMember.getStaffCode())+"\"").append(",");
 			for(int i=0;i<staffAllMerits.size();i++){
 				if(i<9){
-					sBuilder.append("\"m0"+(i+1)+"\":").append("\""+staffAllMerits.get("M0"+(i+1))+"\"").append(",");
+					sBuilder.append("\"m0"+(i+1)+"\":").append("\"<a onclick=detial('"+allMeritGroupMember.getStaffCode()+"','"+(i+1)+"')>"+staffAllMerits.get("M0"+(i+1))+"</a>\"").append(",");
 				}else{
-					sBuilder.append("\"m"+(i+1)+"\":").append("\""+staffAllMerits.get("M"+(i+1))+"\"").append(",");
+					sBuilder.append("\"m"+(i+1)+"\":").append("\"<a onclick=detial('"+allMeritGroupMember.getStaffCode()+"','"+(i+1)+"')>"+staffAllMerits.get("M"+(i+1))+"</a>\"").append(",");
 				}
 				
 			}

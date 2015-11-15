@@ -1,25 +1,17 @@
 package edu.cqu.ncycoa.web.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.db.DBObject;
-import com.db.DataRow;
-import com.db.DataTable;
-import com.db.Parameter;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.entity.system.BaseStaff;
 import com.entity.system.Staff;
 
@@ -27,20 +19,12 @@ import edu.cqu.ncycoa.common.dto.AjaxResultJson;
 import edu.cqu.ncycoa.common.dto.DataGrid;
 import edu.cqu.ncycoa.common.dto.QueryDescriptor;
 import edu.cqu.ncycoa.common.service.CommonService;
-import edu.cqu.ncycoa.common.service.SupplierServiceImpl;
 import edu.cqu.ncycoa.common.service.SystemService;
 import edu.cqu.ncycoa.common.tag.TagUtil;
 import edu.cqu.ncycoa.common.util.dao.QueryUtils;
 import edu.cqu.ncycoa.common.util.dao.TQOrder;
-import edu.cqu.ncycoa.common.util.dao.TQRestriction;
 import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
-import edu.cqu.ncycoa.dao.SupplierDao;
-import edu.cqu.ncycoa.domain.EvaluDefine;
-import edu.cqu.ncycoa.domain.EvaluResult;
-import edu.cqu.ncycoa.domain.GoodsUsed;
 import edu.cqu.ncycoa.domain.Supplier;
-import edu.cqu.ncycoa.domain.SupplierExit;
-import edu.cqu.ncycoa.util.ConvertUtils;
 import edu.cqu.ncycoa.util.Globals;
 import edu.cqu.ncycoa.util.MyBeanUtils;
 import edu.cqu.ncycoa.util.SystemUtils;
@@ -203,5 +187,29 @@ public class StaffController {
 		TagUtil.datagrid(response, dg);
 	}
 	
-	//分类查询供应商列表。  dgview已经实现分类查询
+	@RequestMapping(params="addorgmember")
+	@ResponseBody
+	public void addorgmember(String obj,HttpServletRequest request, HttpServletResponse response){
+		AjaxResultJson j = new AjaxResultJson();
+		String message = "";
+		JSONArray json = new JSONArray();
+		JSONObject jsonObject = json.parseObject(obj);
+		Staff staff = new Staff();
+		staff.setStaffcode(jsonObject.get("staffcode").toString());
+		staff.setStaffname(jsonObject.get("staffname").toString());
+		staff.setOrgcode(jsonObject.get("orgcode").toString());
+		staff.setOrgname(jsonObject.get("orgname").toString());
+		staff.setPositioncode(jsonObject.get("positioncode").toString());
+		staff.setPositionname(jsonObject.get("positionname").toString());
+		staff.setGender(jsonObject.get("gender").toString());
+		staff.setIdcard(jsonObject.get("idcard").toString());
+		if(staff.Insert()){
+			message="1";
+		}else{
+			message="0";
+		}
+		j.setMsg(message);
+		SystemUtils.jsonResponse(response, j);
+		
+	}
 }

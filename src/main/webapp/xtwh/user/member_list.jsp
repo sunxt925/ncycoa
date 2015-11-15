@@ -61,8 +61,50 @@ else if(orgclass.equals("00080002"))
 
 
 <script language="javascript">
+function returnValue(data){
+	var d = data.code;
+	d.positioncode="<%=positioncode%>";
+	d.positionname="<%=positionname%>";
+	d.orgcode="<%=orgcode%>";
+	d.orgname="<%=orgname%>";
+	var url = "<%=path%>";
+	url = url+"/staff.htm?addorgmember&obj="+JSON.stringify(d);
+    $.post(url,function(_data,status){
+    	var _d = eval("["+_data+"]");
+    	
+		if(_d[0].msg=="1"){
+			window.location.reload();
+		}else{
+			alert("添加失败");
+		}
+	});  
+}
+function createwindow(title, url, width, height) {
+	
+	$.dialog({
+		id:'choose01',
+		data:returnValue,
+		content : 'url:' + url,
+		lock : true,
+		width : width,
+		height : height,
+		title : title,
+		opacity : 0.3,
+		cache : false,
+		ok : function() {
+			$('#btn_ok', this.iframe.contentWindow.document).click();
+			return false;
+		},
+		cancelVal : '关闭',
+		cancel : true/* 为true等价于function(){} */
+	});
+
+}
+
 function adduser()
-{ var url="xtwh/user/user_new.jsp?orgcode="+"<%=orgcode%>"+"&orgname="+"<%=orgname%>"+"&positioncode="+"<%=positioncode%>"+"&positionname="+"<%=positionname%>";
+{ 
+	var url="xtwh/staff/querystaff.jsp?orgcode="+"<%=orgcode%>"+"&orgname="+"<%=orgname%>"+"&positioncode="+"<%=positioncode%>"+"&positionname="+"<%=positionname%>";
+	//var url="xtwh/user/user_new.jsp?orgcode="+"<%=orgcode%>"+"&orgname="+"<%=orgname%>"+"&positioncode="+"<%=positioncode%>"+"&positionname="+"<%=positionname%>";
 			createwindow('新增用户（员工）',url,'700px','300px');
  //  window.showModalDialog("user_new.jsp?orgcode="+"<%=orgcode%>"+"&orgname="+"<%=orgname%>"+"&positioncode="+"<%=positioncode%>"+"&positionname="+"<%=positionname%>",window,"scroll=no;status=no;dialogWidth=700px;dialogHeight=400px;center=yes;help=no;");
  	//var rand=Math.floor(Math.random()*10000);
@@ -196,6 +238,7 @@ function F3()
 {
 	adduser();	
 }
+
 </script>
 <BODY class="mainbody" onLoad="this.focus()">
 <table width="100%" height="30" border="0" cellpadding="0" cellspacing="0">
@@ -253,5 +296,9 @@ function F3()
   </tr>
 </form>
 </table>
+<script type="text/javascript">
+
+
+</script>
 </BODY>
 </HTML>
