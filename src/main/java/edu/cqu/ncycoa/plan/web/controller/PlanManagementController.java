@@ -146,7 +146,7 @@ public class PlanManagementController {
 		AjaxResultJson j = new AjaxResultJson();
 		
 		List<PlanStep> tasks = new ArrayList<PlanStep>();
-		if(plan.getStepType() == StepType.CUSTOM_FLOW){
+		if(plan.getStepType().intValue() == StepType.CUSTOM_FLOW.intValue()){
 			String[] taskid = request.getParameter("taskid").split(":;;:");
 			String[] taskorder = request.getParameter("taskorder").split(":;;:");
 			String[] taskparticipant = request.getParameter("taskparticipant").split(":;;:");

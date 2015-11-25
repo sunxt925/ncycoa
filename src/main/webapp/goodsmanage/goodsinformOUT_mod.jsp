@@ -82,9 +82,12 @@ int goodsnumber=Integer.parseInt(gsi.getAvailableNumber())+Integer.parseInt(gisi
         </td>
       </tr>
       <tr>
-        <td width="20%"><div align="right">经办人：</div></td>
+        <td width="20%"><div align="right">领用人：</div></td>
         <td width="80%">
-        <%out.print(cu.print("COM_OUTSTOREITEM","HANDLER",gisi.getHANDLER())); %>
+          <input type="hidden" name="COM_OUTSTOREITEM.HANDLER" id="COM_OUTSTOREITEM.HANDLER" value="<%=gisi.getHANDLER()%>">
+        <input type="text" name="COM_OUTSTOREITEM.HANDLERNAME" id="COM_OUTSTOREITEM.HANDLERNAME" value="<%=CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname", gisi.getHANDLER())%>">
+        <%//out.print(cu.print("COM_OUTSTOREITEM","HANDLER",gisi.getHANDLER())); %>
+        <a id="btn_selectobject2" href="#">选择</a>
         </td>
       </tr>
       <!--<tr>
@@ -115,7 +118,11 @@ int goodsnumber=Integer.parseInt(gsi.getAvailableNumber())+Integer.parseInt(gisi
       --><tr>
         <td width="20%"><div align="right">领用部门：</div></td>
         <td width="80%">
-        <%out.print(cu.print("COM_OUTSTOREITEM","USINGORGCODE",gisi.getUSINGORGCODE())); %>
+        <input type="hidden" name="COM_OUTSTOREITEM.USINGORGCODE" id="COM_OUTSTOREITEM.USINGORGCODE"  value="<%=gisi.getUSINGORGCODE()%>">
+        <input type="text" name="COM_OUTSTOREITEM.USINGORGNAME" id="COM_OUTSTOREITEM.USINGORGNAME" value="<%=CodeDictionary.syscode_traslate("base_org", "orgcode", "orgname", gisi.getUSINGORGCODE())%>">
+        <%//out.print(cu.print("COM_OUTSTOREITEM","USINGORGCODE",gisi.getUSINGORGCODE())); %>
+        <a id="btn_selectobject" href="#" class="easyui-linkbutton"
+				       data-options="iconCls:'icon-search',plain:true">选择</a>
         </td>
       </tr>
       <tr>
@@ -193,6 +200,57 @@ function blured()
 	else
 		return true;
 	
+}
+
+$("#btn_selectobject2").click(function(){
+	
+	createwindow('选择部门','indexmanage/selectstaff.jsp',650,500,returnobjValue2 );
+    });
+$("#btn_selectobject").click(function(){
+	
+	createwindow('选择部门','indexmanage/selectunit.jsp',650,500,returnobjValue );
+    });
+function returnobjValue2(data){
+
+	var array = data.code;
+	var staffcodes=array[0].staffcode;
+	var staffnames=array[0].staffname;
+    document.getElementById("COM_OUTSTOREITEM.HANDLER").value=staffcodes;
+	document.getElementById("COM_OUTSTOREITEM.HANDLERNAME").value=staffnames;
+	
+}
+function returnobjValue(data){
+	var org = data.code;
+	if(org.length>1){
+		alert("最多只能选择一个部门");
+	}else{
+		document.getElementById("COM_OUTSTOREITEM.USINGORGCODE").value=org[0].orgcode;
+		document.getElementById("COM_OUTSTOREITEM.USINGORGNAME").value=org[0].orgname;
+		
+	}
+	
+	
+}
+function createwindow(title, url, width, height,func) {
+	
+	$.dialog({
+			id:'CLHG1976D',
+			data:func,
+			content : 'url:' + url,
+			lock : true,
+			width : width,
+			height : height,
+			title : title,
+			zIndex :2000,
+			opacity : 0.3,
+			cache : false,
+			ok : function() {
+				$('#btn_ok', this.iframe.contentWindow.document).click();
+				return true;
+			},
+			cancelVal : '关闭',
+			cancel : true/* 为true等价于function(){} */
+		});
 }
 </script>
 </BODY>

@@ -16,16 +16,17 @@
 </style>
 </head>
 <body>
-	<h:datagrid actionUrl="contract-management.htm?dgdata&type=${type }" fit="true" fitColumns="true" queryMode="group" name="contractlist">
+	<h:datagrid actionUrl="contract-management.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="contractlist">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
 		<h:dgColumn field="status" title="status" hidden="true"/>
 		<h:dgColumn field="code" title="合同编码" ></h:dgColumn>
 		<h:dgColumn field="name" title="合同名称"></h:dgColumn>
 		<h:dgColumn field="relevantDepartment" title="实施部门"  dictionary="base_org,orgcode,orgname"></h:dgColumn>
-		<h:dgColumn field="type" title="合同类别" query="true" replace="工程合同_0,采购合同_1,维修合同_2,其他合同_3"></h:dgColumn>
+		<h:dgColumn field="type" title="合同类别" query="true" replace="其他合同_0,买卖合同_1,租赁合同_2,仓储合同_3,技术合同_4,建设施工(维修)合同_5,承揽合同_6,委托合同_7,赠与合同_8,运输合同_9"></h:dgColumn>
 		<h:dgColumn field="contactMethod" title="实施方式" query="true" replace="公开招标_0,邀请招标_1,竞争性谈判_2,询价_3,单一来源_4"></h:dgColumn>
 		<h:dgColumn field="partyA" title="甲方" ></h:dgColumn>
 		<h:dgColumn field="partyB" title="乙方" ></h:dgColumn>
+	
 		<h:dgColumn field="contractValue" title="合同金额" query="true"></h:dgColumn>
 		<h:dgColumn field="contractObject" title="合同标的" ></h:dgColumn>
 		<h:dgColumn field="signingDate" title="签订日期" dateFormatter="yyyy-MM-dd" query="true"></h:dgColumn>
@@ -34,14 +35,15 @@
 		<h:dgColumn field="renewal" title="续签" ></h:dgColumn>
 		<h:dgColumn field="contractFilePath" title="" style="display:none"></h:dgColumn>
 		<h:dgColumn field="audittable" title="" style="display:none"></h:dgColumn>
-		<h:dgColumn field="status" title="" style="display:none"></h:dgColumn>
+			<h:dgColumn field="status" title="" style="display:none"></h:dgColumn>
 		<h:dgColumn title="操作" field="opt"></h:dgColumn>
 		<h:dgFunOpt funname="commitcontract({id},{status})" title="提交合同"></h:dgFunOpt>
 		<h:dgFunOpt funname="producecontract({id},{status})" title="审批表生成"></h:dgFunOpt>
 		<h:dgFunOpt funname="downloadcontract({audittable})" title="审批表下载"></h:dgFunOpt>
-		<h:dgToolBar url="contract-management.htm?add&type=${type }" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
+		
+		<h:dgToolBar url="contract-management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
 		<h:dgToolBar url="contract-management.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
-		<h:dgToolBar url="contract-management.htm?update&type=${type }" icon="icon-add" funname="update" title="更新台账"></h:dgToolBar>
+		<h:dgToolBar url="contract-management.htm?update" icon="icon-add" funname="update" title="更新台账"></h:dgToolBar>
 	</h:datagrid>
 </body>
 

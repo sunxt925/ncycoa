@@ -222,10 +222,18 @@ public class Staff {
 	 * @return
 	 */
 	public boolean Delete(String staffcode, String positioncode) {
+		return Delete(staffcode, positioncode,"");
+	}
+	public boolean Delete(String staffcode, String positioncode,String orgcode){
 		try {
 
 			DBObject db = new DBObject();
-			String sql = "delete from BASE_ORGMEMBER where staffcode=? and positioncode=?";
+			String sql="";
+			if(!orgcode.equals("")){
+				sql = "delete from BASE_ORGMEMBER where staffcode=? and positioncode=? and orgcode='"+orgcode+"'";
+			}else{
+				sql = "delete from BASE_ORGMEMBER where staffcode=? and positioncode=?";
+			}
 			Parameter.SqlParameter[] pp = new Parameter.SqlParameter[] { new Parameter.String(staffcode), new Parameter.String(positioncode)
 
 			};
@@ -240,7 +248,7 @@ public class Staff {
 			return false;
 		}
 	}
-
+	
 	public DataTable getAllOrgPostList(String staffcode) {
 		try {
 			DBObject db = new DBObject();
@@ -315,7 +323,13 @@ public class Staff {
 	public DataTable getAllMemberList(String positioncode,String orgcode) {
 		try {
 			DBObject db = new DBObject();
-			DataTable dt = db.runSelectQuery("select * from base_orgmember where  positioncode='" + positioncode + "' and orgcode='"+orgcode+"'");
+			String sql="";
+			if(positioncode==null||positioncode.equals("null")||positioncode.equals("")){
+				sql = "select * from base_orgmember where  orgcode='"+orgcode+"'";
+			}else{
+				sql = "select * from base_orgmember where  positioncode='" + positioncode + "' and orgcode='"+orgcode+"'";
+			}
+			DataTable dt = db.runSelectQuery(sql);
 			return dt;
 		} catch (Exception e) {
 			e.printStackTrace();

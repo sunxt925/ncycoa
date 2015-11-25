@@ -123,7 +123,7 @@
 	<tr>
 		<td align="right"><label class="Validform_label"> 整改说明 </label></td>
 		<td class="value">
-		<input class="inputxt" style="width:150px;" id="memo" name="memo" value="${reform.memo}">
+		<input class="inputxt" style="width:150px;" id="memo" name="memo" value="${reform.memo}" datatype="s2-100">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>

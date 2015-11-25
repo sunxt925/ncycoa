@@ -324,6 +324,12 @@ List<IndexitemPara> indexitemParas=Indexitem.getparainfo(indexcode);
 		   	    {
 		    		
 		    		if(document.getElementById("TBM_INDEXITEM.VALIDBEGINDATE").value!=""&&document.getElementById("TBM_INDEXITEM.VALIDENDDATE").value!=""&&document.getElementById("TBM_INDEXITEM.VALIDBEGINDATE").value<document.getElementById("TBM_INDEXITEM.VALIDENDDATE").value){
+		    			 if(isparent=="1"){
+		    				 document.getElementById("TBM_INDEXITEM.SCOREFUNC").value="x";
+		    				 document.getElementById("TBM_INDEXITEM.SCOREFUNCTYPE").value="一般函数型";
+		    				 document.getElementById("TBM_INDEXITEM.SCOREPERIOD").value="D00.M00";
+		    				document.getElementById("TBM_INDEXITEM.VALUECOMPUTINGTYPE").value="子项汇总型";
+		    			}
 		    			
 		    			 document.all("Submit").click();
 		   	   	         (api.data)({code:"refresh"});

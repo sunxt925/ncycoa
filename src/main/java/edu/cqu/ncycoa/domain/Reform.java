@@ -32,6 +32,9 @@ public class Reform implements Cloneable{
 	@Column(name="REFORM_XDDATE")
 	private Date xdDate;//下达日期
 	
+	@Column(name="REFORM_FILE")
+	private String reformFile;//整改文件
+	
 	@Column(name="REFORM_FILENAME")
 	private String fileName;
 	
@@ -116,6 +119,14 @@ public class Reform implements Cloneable{
 	public Object clone() throws CloneNotSupportedException {
 		// TODO Auto-generated method stub
 		return super.clone();
+	}
+
+	public String getReformFile() {
+		return reformFile;
+	}
+
+	public void setReformFile(String reformFile) {
+		this.reformFile = reformFile;
 	}
 	
 	

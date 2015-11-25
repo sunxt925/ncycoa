@@ -18,7 +18,12 @@ public class UnitDao {
 			StringBuilder sbBuilder=new StringBuilder();
 			DBObject db = new DBObject();
 			String sql = "";
-			sql = "select * from base_org where orgcode like '"+unitccm+"%' order by orgcode";
+			if(unitccm.equals("NC.01.00")){
+				sql = "select * from base_org where orgcode>='NC.01' and orgcode<'NC.01.14' order by orgcode";
+			}else{
+				sql = "select * from base_org where orgcode like '"+unitccm+"%' order by orgcode";
+			}
+			
 			
 			DataTable dt = null;
 			dt = db.runSelectQuery(sql);
@@ -92,7 +97,14 @@ public class UnitDao {
 	public String getorgJson(String orgcode){
 		try {
 			DBObject db=new DBObject();
-			String sql="select * from base_org where parentorgcode='"+orgcode+"' order by orgcode";
+			String sql="";
+		    if(orgcode.equals("NC00")){//特殊处理公司
+		    	sql="select * from base_org where parentorgcode='NC.01' and orgcode<'NC.01.20' order by orgcode";
+		    	
+		    }else{
+		    	sql="select * from base_org where parentorgcode='"+orgcode+"'  order by orgcode";
+		    }
+			
 			DataTable dt=db.runSelectQuery(sql);
 			StringBuilder sBuilder=new StringBuilder();
 			sBuilder.append("[");

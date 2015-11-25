@@ -63,6 +63,7 @@ function changetopunit(orgcode)
 {
 	var newlisturl='user_choose.jsp?unitccm='+orgcode+'&orgname='+'<%=orgname%>'+'&positioncode='+'<%=positioncode%>'+'&positionname='+'<%=positionname%>';
 	var newtreeurl='../../tree/unit_tree.jsp?unitccm='+orgcode+'&pageurl=../xtwh/user/user_choose.jsp&pagetarget=orgmember';
+
 	window.open(newlisturl,'orgmember');
 	window.open(newtreeurl,'unittree');
 	

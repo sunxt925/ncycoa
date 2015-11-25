@@ -64,4 +64,27 @@ String dataurl="allmeritjson.jsp?year="+year+"&staffname="+staffname+"&orgcode="
   </div>
 
 </body>
+<script type="text/javascript">
+function detial(staffcode,period){
+	var year="<%=year%>";
+	createwindow("明细","meritquery/meritdetaillist.jsp?staffcode="+staffcode+"&relateyear="+year+"&periodcode="+period,700,500);
+	
+}
+function createwindow(title, url, width, height) {
+	$.dialog({
+		content : 'url:' + url,
+		lock : true,
+		width : width,
+		height : height,
+		title : title,
+		opacity : 0.3,
+		cache : false,
+		ok : function() {
+			return true;
+		},
+		cancelVal : '关闭',
+		cancel : true/* 为true等价于function(){} */
+	});}
+</script>
+
 </html>
