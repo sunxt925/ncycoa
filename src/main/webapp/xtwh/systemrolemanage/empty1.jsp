@@ -110,7 +110,7 @@ document.all("form1").submit();
            <td width="51%">【<a href="#" onClick="SelectAll('form1')">全选1</a>】【<a href="#" onClick="ChangeSelect('form1')">反选</a>】【<a href="#" onClick="UnSelectAll('form1')">清空</a>】</td>
            <td width="49%" align="right"><%
           String unitccmtemp="";
-      	out.print(PageUtil.DividePage(page_no,pagecount,"systemrole_manage.jsp",unitccmtemp));
+      	out.print(PageUtil.DividePage(page_no,pagecount,"empty1.jsp",unitccmtemp));
        %>           </td>
          </tr>
          <tr>

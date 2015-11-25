@@ -1,5 +1,9 @@
 package com.entity.system;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import com.common.Format;
 import com.db.DBObject;
 import com.db.DataRow;
@@ -99,6 +103,21 @@ public class Goodsoutstoreitem {
 	public void setHANDLER(String hANDLER) {
 		HANDLER = hANDLER;
 	}
+	
+	
+	public String getIsconfirm() {
+		return isconfirm;
+	}
+	public void setIsconfirm(String isconfirm) {
+		this.isconfirm = isconfirm;
+	}
+	public Date getConfirmdate() {
+		return confirmdate;
+	}
+	public void setConfirmdate(Date confirmdate) {
+		this.confirmdate = confirmdate;
+	}
+
 	private String STOREEVENTNO="";
 	private String GOODSCODE="";
 	private String GOODSNAME="";
@@ -113,6 +132,8 @@ public class Goodsoutstoreitem {
 	private String USINGORGCODE="";
 	private String MEMO="";
 	private String HANDLER="";
+	private String isconfirm;
+	private Date confirmdate;
 	public Goodsoutstoreitem()
 	{
 		
@@ -151,6 +172,48 @@ public class Goodsoutstoreitem {
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public static List<Goodsoutstoreitem> getGoodsoutstoreitemsByOutNo(String storeeventNO){
+		List<Goodsoutstoreitem> goodsoutstoreitems = new ArrayList<Goodsoutstoreitem>();
+		try{
+			
+			DBObject db = new DBObject();
+			String sql="select * from Com_outstoreitem t where t.STOREEVENTNO=?";
+			Parameter.SqlParameter[] pp = new Parameter.SqlParameter[]
+			{ new Parameter.String(storeeventNO) };
+			DataTable dt = db.runSelectQuery(sql, pp);
+			if (dt != null && dt.getRowsCount() >= 1)
+			{
+				for(int i=0;i<dt.getRowsCount();i++){
+					DataRow r = dt.get(i);
+					Goodsoutstoreitem goodsoutstoreitem = new Goodsoutstoreitem();
+					goodsoutstoreitem.setOUTNO(r.getString("StoreEventNo"));
+					goodsoutstoreitem.setSTOREEVENTNO(r.getString("StoreEventNo"));
+					goodsoutstoreitem.setGOODSCODE(r.getString("Goodscode"));
+					goodsoutstoreitem.setGOODSNAME(r.getString("GoodsName"));
+					goodsoutstoreitem.setGOODSDESC(r.getString("GoodsDesc"));
+					goodsoutstoreitem.setGOODSSTYLE(r.getString("GoodsStyle"));
+					goodsoutstoreitem.setGOODSNUMBER(r.getString("GOODSNUMBER"));
+					goodsoutstoreitem.setMEASUREUNIT(r.getString("MeasureUnit"));
+					goodsoutstoreitem.setOUTDATE(r.getString("OUTDATE"));	
+					goodsoutstoreitem.setAUDITORGCODE(r.getString("AuditOrgCode"));
+					goodsoutstoreitem.setAUDITORCODE(r.getString("AuditorCode"));
+					goodsoutstoreitem.setINPUTDATE(r.getString("inputDate"));
+					goodsoutstoreitem.setUSINGORGCODE(r.getString("USINGORGCODE"));
+					goodsoutstoreitem.setMEMO(r.getString("Memo"));
+					goodsoutstoreitem.setHANDLER(r.getString("HANDLER"));
+					goodsoutstoreitem.setIsconfirm(r.getString("isconfirm"));
+					goodsoutstoreitem.setConfirmdate(Format.strToDate(r.getString("confirmdate")));
+					goodsoutstoreitems.add(goodsoutstoreitem);
+				}
+				
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return goodsoutstoreitems;
+		
 	}
 	/*public Goodsoutstoreitem(String PK,String str)
 	{
@@ -275,4 +338,5 @@ public class Goodsoutstoreitem {
 			return false;
 		}
 	}
+	
 }

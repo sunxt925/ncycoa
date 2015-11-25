@@ -165,6 +165,11 @@ function detail(eventid)
 {
 	createwindow('Ã÷Ï¸', "goodsmanage/goodsinformINdetail.jsp?StoreEventNo="+eventid,1000,550);
 }
+function exp_out(eventid)
+{
+	
+	window.location.href="exportdata.jsp?flag=in&storeEventNo="+eventid;
+}
 function dele(eventid)
 {
 var temp=eventid.split(",");
