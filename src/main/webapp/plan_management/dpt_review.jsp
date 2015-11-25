@@ -25,7 +25,7 @@
 		function onYearChanged(record){
 			var period = $('#periodsel').combobox('getValue');
 			if(period){
-				$("#userdg").attr('src','plan-management.htm?users&month=' + period +'&year=' + record.value);
+				$("#userdg").attr('src','plan-management.htm?dpts&month=' + period +'&year=' + record.value);
 			}
 		}
 		</script>
@@ -40,7 +40,7 @@
 		function onPeriodChanged(record){
 			var year = $('#yearsel').combobox('getValue');
 			if(year){
-				$("#userdg").attr('src','plan-management.htm?users&month=' + record.value + '&year=' + year);
+				$("#userdg").attr('src','plan-management.htm?dpts&month=' + record.value + '&year=' + year);
 			}
 		}
 		</script>
@@ -51,7 +51,7 @@
 </div>
 <!-- жа -->
 <div data-options="region:'center',border:false">
-<iframe id="userdg" frameborder="0" scrolling="no" style="width:100%;height:99.5%;border:0px none;"></iframe>
+<iframe id="dptdg" frameborder="0" scrolling="no" style="width:100%;height:99.5%;border:0px none;"></iframe>
 </div>
 <script type="text/javascript" src="jscomponent/jquery/jquery-1.8.0.min.js"></script>
 <script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>

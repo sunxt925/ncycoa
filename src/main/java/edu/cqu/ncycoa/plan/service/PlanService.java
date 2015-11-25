@@ -24,4 +24,6 @@ public interface PlanService extends CommonService{
 
 	public abstract void planReview(Long id, String result);
 
+	public abstract PlanInstance findPlanInstanceByTaskId(Long taskId);
+
 }
