@@ -110,6 +110,12 @@ public class PlanServiceImpl extends CommonServiceImpl implements PlanService {
 	}
 	
 	@Override
+	public PlanInstance findPlanInstanceByTaskId(Long taskId){
+		PlanTask task = commonDao.readEntityById(taskId, PlanTask.class);
+		return task.getPlanInstance();
+	}
+	
+	@Override
 	public Map<PlanStep, List<PlanTask>> findPlanTasks(PlanInstance planInstance){
 		List<PlanTask> tasks = commonDao.readEntitiesByProperty("planInstance", planInstance, PlanTask.class);
 		Map<PlanStep, List<PlanTask>> ret = new TreeMap<PlanStep, List<PlanTask>>();

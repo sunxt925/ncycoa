@@ -1,5 +1,6 @@
 package edu.cqu.ncycoa.plan.web.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -201,6 +202,7 @@ public class PlanManagementController {
 			message = "计划添加成功";
 			plan.setStatus(PlanStatus.EDIT);
 			plan.setInputUser(SystemUtils.getSessionUser().getStaffcode());
+			plan.setDepartId(SystemUtils.getSessionUser().getOrgCode());
 			plan.setInputDate(new Date());
 			plan.setSteps(tasks);
 			plan.setPlanEndDate(tasks.get(tasks.size() - 1).getEnding());
@@ -267,9 +269,6 @@ public class PlanManagementController {
 		}
 	}
 	
-	
-	
-	
 	@RequestMapping(params="dgview_audit")
 	public String dgViewAudit(HttpServletRequest request) {
 		return "plan_management/plan_audit_list";
@@ -289,6 +288,7 @@ public class PlanManagementController {
 		}
 		tqBuilder.addRestriction("status", "=", PlanStatus.WAITTING_FOR_AUDIT);
 		
+		boolean noperm = false;
 		// 科长审本部门的岗位计划，办公室负责人（主任）审所有部门的
 		UserInfo user = (UserInfo) request.getSession().getAttribute("UserInfo");
 		try {
@@ -303,21 +303,31 @@ public class PlanManagementController {
 				}
 			}
 			
-			if(tmps.contains("科长")) {
+			if(tmps.contains("科长") && !"副科长".equals(tmps)) {
 				tqBuilder.addRestriction("type", "=", (short)0);
 				tqBuilder.addRestriction("departId", "=", user.getOrgCode());
 			} else if(tmps.contains("主任")) {
 				tqBuilder.addRestriction("type", "=", (short)1);
+			} else {
+				noperm = true;
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		
-		cq.setTqBuilder(tqBuilder);
-		commonService.getDataGridReturn(cq, true);
-		TagUtil.datagrid(response, dg);
+		if(noperm) {
+			try {
+				response.getWriter().write("没有权限");
+				response.flushBuffer();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			cq.setTqBuilder(tqBuilder);
+			commonService.getDataGridReturn(cq, true);
+			TagUtil.datagrid(response, dg);
+		}
 	}
 	
 	@RequestMapping(params="audit")
@@ -402,7 +412,13 @@ public class PlanManagementController {
 	
 	@RequestMapping(params="exec_view")
 	public String exec_view(Long id, HttpServletRequest request, Model model) {
-		PlanInstance instance = planService.findPlanInstanceByPlanId(id);
+		
+		PlanInstance instance = null;
+		if(StringUtils.isNotEmpty(request.getParameter("type")) && "taskid".equals(request.getParameter("type")) ){
+			instance = planService.findPlanInstanceByTaskId(id);
+		} else {
+			instance = planService.findPlanInstanceByPlanId(id);
+		}
 		Map<PlanStep, List<PlanTask>> tasks = planService.findPlanTasks(instance);
 		model.addAttribute("taskList", tasks);
 		
@@ -591,7 +607,6 @@ public class PlanManagementController {
 	
 	@RequestMapping(params="dpts")
 	public String dpt_review(String year, String month, HttpServletRequest request, Model model) {
-		planService.executeJPQL("delete from UserReview e");
 		int y = Integer.parseInt(year);
 		int m = Integer.parseInt(month.charAt(1) == '0' ? month.substring(2) : month.substring(1));
 		
