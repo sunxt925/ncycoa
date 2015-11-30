@@ -22,17 +22,18 @@ a.dgopt{
 </style>
 </head>
 <body>
-	<h:datagrid actionUrl="plan-management.htm?dgdata_user_review" checkbox="false" fit="true" fitColumns="true" queryMode="group" name="plan_review_list">
+	<h:datagrid actionUrl="plan-management.htm?dgdata_user_review&y=${param.year}&m=${param.month}" checkbox="false" fit="true" fitColumns="true" queryMode="group" name="plan_review_list">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
 		<h:dgColumn field="participantCode" title="人员编码"></h:dgColumn>
 		<h:dgColumn field="participantName" title="人员姓名"></h:dgColumn>
 		<h:dgColumn field="statistics" title="统计"></h:dgColumn>
 		<h:dgColumn field="overDeadTimeCounts" title="超时"></h:dgColumn>
 		<h:dgColumn field="noOverDeadTimeCounts" title="正常"></h:dgColumn>
+		<h:dgColumn field="result" title="评价"></h:dgColumn>
 		<h:dgColumn title="操作" field="opt"></h:dgColumn>
-		<h:dgConfOpt url="plan-management.htm?review_post&id={id}&result=10" title="好" message="确定对该计划进行评价？评价后结果将不能修改"></h:dgConfOpt>
-		<h:dgConfOpt url="plan-management.htm?review_post&id={id}&result=0" title="中" message="确定对该计划进行评价？评价后结果将不能修改"></h:dgConfOpt>
-		<h:dgConfOpt url="plan-management.htm?review_post&id={id}&result=-10" title="差" message="确定对该计划进行评价？评价后结果将不能修改"></h:dgConfOpt>
+		<h:dgConfOpt url="plan-management.htm?review_post&id={id}&result=10" title="好" message="确定对该计划进行评价？评价后结果将不能修改" exp="result#empty#true"></h:dgConfOpt>
+		<h:dgConfOpt url="plan-management.htm?review_post&id={id}&result=0" title="中" message="确定对该计划进行评价？评价后结果将不能修改" exp="result#empty#true"></h:dgConfOpt>
+		<h:dgConfOpt url="plan-management.htm?review_post&id={id}&result=-10" title="差" message="确定对该计划进行评价？评价后结果将不能修改" exp="result#empty#true"></h:dgConfOpt>
 	</h:datagrid>
 </body>
 

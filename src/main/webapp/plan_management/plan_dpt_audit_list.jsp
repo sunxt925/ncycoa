@@ -22,7 +22,7 @@ a.dgopt{
 </style>
 </head>
 <body>
-	<h:datagrid actionUrl="plan-management.htm?dgdata_audit" checkbox="true" fit="true" fitColumns="true" queryMode="group" name="plan_audit_list">
+	<h:datagrid actionUrl="plan-management.htm?dgdata_dpt_audit" checkbox="true" fit="true" fitColumns="true" queryMode="group" name="plan_audit_list">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
 		<h:dgColumn field="name" title="计划名称" query="true"></h:dgColumn>
 		<h:dgColumn field="type" title="计划类型" replace="岗位计划_0,部门计划_1" query="true"></h:dgColumn>

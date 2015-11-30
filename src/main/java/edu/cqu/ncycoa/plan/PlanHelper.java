@@ -42,7 +42,7 @@ public class PlanHelper {
 		
 		StringBuilder sb = new StringBuilder();
 		Calendar now = Calendar.getInstance();
-		int month = now.get(Calendar.MONTH);
+		int month = now.get(Calendar.MONTH) - 1;
 		sb.append("[");
 		for (Integer tmp : maps.keySet()) {
 			sb.append("{value:'").append(maps.get(tmp)).append("',text:'");

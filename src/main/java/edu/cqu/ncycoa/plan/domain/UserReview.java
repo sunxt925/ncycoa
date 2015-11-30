@@ -28,6 +28,28 @@ public class UserReview {
 	@Column(name="PARTICIPANT_CODE")
 	private String participantCode;
 	
+	@Column(name="DEPART_ID")
+	private String departId;
+	
+	@Column(name="RESULT")
+	private String result;
+	
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
+	public String getDepartId() {
+		return departId;
+	}
+
+	public void setDepartId(String departId) {
+		this.departId = departId;
+	}
+
 	@Column
 	private String statistics;
 	

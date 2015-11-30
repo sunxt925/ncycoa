@@ -28,14 +28,15 @@ public class DptReview {
 	@Column(name="CODE")
 	private String orgCode;
 	
-	@Column
-	private String statistics;
-	
-	@Column
-	private Integer overDeadTimeCounts;
-	
-	@Column
-	private Integer noOverDeadTimeCounts;
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
+	private String result;
 
 	public Long getId() {
 		return id;
@@ -62,10 +63,6 @@ public class DptReview {
 	}
 
 
-	public String getStatistics() {
-		return statistics;
-	}
-
 	public String getOrgName() {
 		return orgName;
 	}
@@ -82,24 +79,4 @@ public class DptReview {
 		this.orgCode = orgCode;
 	}
 
-	public void setStatistics(String statistics) {
-		this.statistics = statistics;
-	}
-
-	public Integer getOverDeadTimeCounts() {
-		return overDeadTimeCounts;
-	}
-
-	public void setOverDeadTimeCounts(Integer overDeadTimeCounts) {
-		this.overDeadTimeCounts = overDeadTimeCounts;
-	}
-
-	public Integer getNoOverDeadTimeCounts() {
-		return noOverDeadTimeCounts;
-	}
-
-	public void setNoOverDeadTimeCounts(Integer noOverDeadTimeCounts) {
-		this.noOverDeadTimeCounts = noOverDeadTimeCounts;
-	}
-	
 }

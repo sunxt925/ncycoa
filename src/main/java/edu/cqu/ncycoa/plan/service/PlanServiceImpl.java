@@ -16,6 +16,7 @@ import edu.cqu.ncycoa.plan.domain.Plan;
 import edu.cqu.ncycoa.plan.domain.PlanInstance;
 import edu.cqu.ncycoa.plan.domain.PlanStep;
 import edu.cqu.ncycoa.plan.domain.PlanTask;
+import edu.cqu.ncycoa.plan.domain.UserReview;
 import edu.cqu.ncycoa.util.SystemUtils;
 
 @Service("planService")
@@ -131,9 +132,14 @@ public class PlanServiceImpl extends CommonServiceImpl implements PlanService {
 	
 	@Override
 	public void planReview(Long id, String result){
-		PlanInstance plan = commonDao.readEntityById(id, PlanInstance.class);
-		plan.setReview(result);
-		plan.setStatus(PlanInstance.REVIEWED);
+		UserReview user = commonDao.readEntityById(id, UserReview.class);
+		if("10".equals(result)){
+			user.setResult("ºÃ");
+		} else if("-10".equals(result)){
+			user.setResult("²î");
+		} else if("0".equals(result)) {
+			user.setResult("ÖÐ");
+		}
 	}
 	
 	@Override

@@ -57,5 +57,12 @@
 <script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="jscomponent/easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
+<script type="text/javascript">
+$(function(){
+	var period = $('#periodsel').combobox('getValue');
+	var year = $('#yearsel').combobox('getValue');
+	$("#dptdg").attr('src','plan-management.htm?dpts&month=' + period +'&year=' + year);
+});
+</script>
 </body>
 </html>
