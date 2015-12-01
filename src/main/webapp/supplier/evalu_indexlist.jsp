@@ -27,10 +27,6 @@
 </body>
 
 <script type="text/javascript">
-	$(document).ready(function(){
-		$("input[name='exitTime_begin']").attr("class","easyui-datebox");
-		$("input[name='exitTime_end']").attr("class","easyui-datebox");
-	});
 	
 	function add(title, actionUrl, gname, width, height) {
 		gridname=gname;

@@ -67,4 +67,11 @@ public class CommonDaoImpl extends AbstractBaseDaoImpl implements CommonDao {
 		return new DataGridReturn((int)allCounts, list);
 	}
 
+	/**
+	 * 返回查询集合
+	 */
+	public <T> List<T> getQueryRes(TypedQueryBuilder<T> tqBuilder){
+		TypedQuery<T> tq = tqBuilder.toQuery(em);
+		return tq.getResultList();
+	}
 }

@@ -1,5 +1,8 @@
 package com.entity.system;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.common.Format;
 import com.db.DBObject;
 import com.db.DataRow;
@@ -177,6 +180,45 @@ public class Goodsinstoreitem {
 			e.printStackTrace();
 		}
 	}
+	
+	public static List<Goodsinstoreitem> getGoodsinstoreitemsByInNo(String storeeventNO){
+		List<Goodsinstoreitem> goodsinstoreitems = new ArrayList<Goodsinstoreitem>();
+		try{
+			
+			DBObject db = new DBObject();
+			String sql="select * from Com_instoreitem t where t.STOREEVENTNO=?";
+			Parameter.SqlParameter[] pp = new Parameter.SqlParameter[]
+			{ new Parameter.String(storeeventNO) };
+			DataTable dt = db.runSelectQuery(sql, pp);
+			if (dt != null && dt.getRowsCount() >= 1)
+			{
+				for(int i=0;i<dt.getRowsCount();i++){
+					DataRow r = dt.get(i);
+					Goodsinstoreitem goodsinstoreitem = new Goodsinstoreitem();
+					goodsinstoreitem.setINNO(r.getString("inno"));
+					goodsinstoreitem.setSTOREEVENTNO(r.getString("StoreEventNo"));
+					goodsinstoreitem.setGOODSCODE(r.getString("Goodscode"));
+					goodsinstoreitem.setGOODSNAME(r.getString("GoodsName"));
+					goodsinstoreitem.setGOODSDESC(r.getString("GoodsDesc"));
+					goodsinstoreitem.setGOODSSTYLE(r.getString("GoodsStyle"));
+					goodsinstoreitem.setGOODSNUMBER(r.getString("GOODSNUMBER"));
+					goodsinstoreitem.setMEASUREUNIT(r.getString("MeasureUnit"));
+					goodsinstoreitem.setINDATE(r.getString("INDATE"));	
+					goodsinstoreitem.setAUDITORGCODE(r.getString("AuditOrgCode"));
+					goodsinstoreitem.setAUDITORCODE(r.getString("AuditorCode"));
+					goodsinstoreitem.setINPUTDATE(r.getString("inputDate"));
+					goodsinstoreitem.setMEMO(r.getString("Memo"));
+					goodsinstoreitems.add(goodsinstoreitem);
+				}
+				
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return goodsinstoreitems;
+		
+	}
+	
 	public DataTable getGoodsStoreItemList(int pageno, int perpage,String goodscode)
 	{
 		try

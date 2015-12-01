@@ -29,6 +29,7 @@ public class IndexItemAction extends ActionInterface{
 			res0 = eo.Add(request);
 			if(res0.equals("≤Â»Î≥…π¶")){
 				String indexcode=request.getParameter("TBM_INDEXITEM.INDEXCODE");
+				
 				String[] indexpara=request.getParameter("indexpara").split(",");
 				String[] indexparasrc=request.getParameter("indexparasrc").split(",");
 				

@@ -22,6 +22,19 @@
 *{font-size:12px; font-family:微软雅黑,新宋体}
 </style>
 <script type="text/javascript">
+function judge() {
+	$.ajax({
+        url: "supplier.htm?judge",
+        type: "post",
+        dataType: "json",
+        data:{"code":$("#code").val()},
+        success: function(result) {
+        	if(result.success==false)
+        		alert(result.msg);
+        },
+        error: function(result) {}
+    });
+}
 	function resetTrNum(tableId) {
 		$tbody = $("#" + tableId + "");
 		$tbody.find('>tr').each(function(i){
@@ -51,7 +64,7 @@
 				var win = frameElement.api.opener;
 				if (data.success == true) {
 					frameElement.api.close();
-					win.tip("hello");
+					win.tip(data.msg);
 					
 				} else {
 					if (data.responseText == ''|| data.responseText == undefined){
@@ -84,7 +97,8 @@
 <table style="width:600px;border-spacing:1px;" class="formtable">
      <tr>
 		<td align="right"><label class="Validform_label"> 供应商代码 </label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="code" name="code"  value="${supplier.code}" datatype="s2-10">
+		<td class="value"><input class="inputxt" onBlur="judge()" style="width:150px;" id="code" name="code"  value="${supplier.code}" datatype="s2-10">
+<!-- 		<label id="msg" >该机构代码已经存在或在禁入年限内</label> -->
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -125,7 +139,8 @@
  -->	
 	<tr>
 		<td align="right"><label class="Validform_label"> 归口管理部门</label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="manageDepart" name="manageDepart" value="${supplier.manageDepart}">
+		<td class="value"><input class="inputxt" style="width:150px;display:none" id="manageDepart" name="manageDepart" value="${supplier.manageDepart}">
+		<input class="inputxt" style="width:150px;" id="apporgName" name="apporgName" value="${orgname}">
 		<a id="btn_selectorg" href="#" class="easyui-linkbutton"
 				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
@@ -187,6 +202,12 @@
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 有效时间</label></td>
+		<td class="value"><input class="easyui-datebox" style="width:250px;" id="outputTime" name="outputTime" value="${supplier.outputTime}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
 </table>
 <div style="width: 690px; height: 1px;"></div>
 
@@ -199,14 +220,19 @@ $("#btn_selectorg").click(function(){
 function returnorgValue(data){
 	var org = data.code;
 	var codes="";
+	var names=""
 	if(org.length>1){
 		for(var i=0;i<org.length;i++){
 			codes+=org[i].orgcode;
 			codes+=",";
+			names+=org[i].orgname;
+			names+=",";
 		}
 		$('#manageDepart').val(codes);
+		$('#apporgName').val(names);
 	}else{
 		$('#manageDepart').val(org[0].orgcode);
+		$('#apporgName').val(org[0].orgname);
 	}
 }
 function createwindow(title, url, width, height,func) {

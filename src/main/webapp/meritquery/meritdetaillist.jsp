@@ -29,7 +29,15 @@
 		Review review = new Review(null);
 		ReviewTask task = review.getReviewTask(staffcode, date);
 		if(task != ReviewTask.INVALID_TASK){
-			out.write(IndexDataHelper.getResultsTreeGrid(task));
+			try{
+				out.write(IndexDataHelper.getResultsTreeGrid(task));
+				
+			}catch (Exception e){
+				out.write("得分明细不存在");
+			}
+			
+		}else{
+			out.write("可能不存在个人明细得分项");
 		}
 %>
 </body>

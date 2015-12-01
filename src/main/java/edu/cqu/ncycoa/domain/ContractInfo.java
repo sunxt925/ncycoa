@@ -39,8 +39,23 @@ public class ContractInfo {
 	@Column(name="PARTY_B")
 	private String partyB;   			// 合同乙方
 	
+	@Column(name="PARTY_NAME")
+	private String partyName;           //合同对方名称
+	
+	@Column(name="PARTY_ADDRESS")
+	private String partyaddress;        //合同对方住所
+	
+	@Column(name="PARTY_TYPE")
+	private String partyType;           //合同对方性质
+	
+	@Column(name="PARTY_REGVALUE")
+	private String partyRegValue;       //合同对方注册资本
+	
 	@Column(name="CONTRACT_OBJECT")
 	private String contractObject; 		// 合同标的
+	
+	@Column(name="BUDGET_VALUE")
+	private BigDecimal budgetValue;   // 预算资金
 	
 	@Column(name="CONTRACT_VALUE")
 	private BigDecimal contractValue;   // 合同金额
@@ -51,6 +66,9 @@ public class ContractInfo {
 	
 	@Column(name="IMPLEMET_STAGE")
 	private String implementationStage; // 合同执行情况
+	
+	@Column(name="IMPLEMET_FREE")
+	private BigDecimal implementationFree; // 合同执行金额
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name="FINISHING_DATE")
@@ -64,6 +82,9 @@ public class ContractInfo {
 	
 	@Column(name="CONTRACT_AUDITFILE_PATH")//审核表文件路径
 	private String audittable;
+	
+	@Column(name="CONTRACT_AUDITCTX")//审批事项
+	private String auditctx;
 	
 	@Column(name="CONTENT")
 	private String content;
@@ -89,6 +110,19 @@ public class ContractInfo {
 	
 	@Column(name="PROCESS_INS_ID")
 	private String processInstanceId;
+	
+	@Column(name="EFFECTIVEDATE")
+	private Date effectiveDate;   //有效期
+	
+	@Column(name="CHENGBANLEADER")
+	private String chengbanleader;//承办部门分管领导
+	
+	@Column(name="CAIGOULEADER")
+	private String caigouleader;//采购部门分管领导
+	
+	@Column(name="OTHERFILE")
+	private String otherfile;//其他文件
+	
 	
 	public String getContent() {
 		return content;
@@ -284,5 +318,95 @@ public class ContractInfo {
 	public void setAudittable(String audittable) {
 		this.audittable = audittable;
 	}
+
+	public BigDecimal getImplementationFree() {
+		return implementationFree;
+	}
+
+	public void setImplementationFree(BigDecimal implementationFree) {
+		this.implementationFree = implementationFree;
+	}
+
+	public Date getEffectiveDate() {
+		return effectiveDate;
+	}
+
+	public void setEffectiveDate(Date effectiveDate) {
+		this.effectiveDate = effectiveDate;
+	}
+
+	public String getAuditctx() {
+		return auditctx;
+	}
+
+	public void setAuditctx(String auditctx) {
+		this.auditctx = auditctx;
+	}
+
+	public String getChengbanleader() {
+		return chengbanleader;
+	}
+
+	public void setChengbanleader(String chengbanleader) {
+		this.chengbanleader = chengbanleader;
+	}
+
+	public String getCaigouleader() {
+		return caigouleader;
+	}
+
+	public void setCaigouleader(String caigouleader) {
+		this.caigouleader = caigouleader;
+	}
+
+	public BigDecimal getBudgetValue() {
+		return budgetValue;
+	}
+
+	public void setBudgetValue(BigDecimal budgetValue) {
+		this.budgetValue = budgetValue;
+	}
+
+	public String getPartyName() {
+		return partyName;
+	}
+
+	public void setPartyName(String partyName) {
+		this.partyName = partyName;
+	}
+
+	public String getPartyaddress() {
+		return partyaddress;
+	}
+
+	public void setPartyaddress(String partyaddress) {
+		this.partyaddress = partyaddress;
+	}
+
+	public String getPartyType() {
+		return partyType;
+	}
+
+	public void setPartyType(String partyType) {
+		this.partyType = partyType;
+	}
+
+	public String getPartyRegValue() {
+		return partyRegValue;
+	}
+
+	public void setPartyRegValue(String partyRegValue) {
+		this.partyRegValue = partyRegValue;
+	}
+
+	public String getOtherfile() {
+		return otherfile;
+	}
+
+	public void setOtherfile(String otherfile) {
+		this.otherfile = otherfile;
+	}
+
+	
 	
 }

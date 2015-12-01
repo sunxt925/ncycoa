@@ -12,6 +12,7 @@ import com.db.DataTable;
 import com.db.Parameter;
 import com.entity.index.IndexScoreDetial;
 import com.entity.index.Indexitem;
+import com.entity.system.Staff;
 
 public class MeritAnalysisDao {
 
@@ -34,6 +35,7 @@ public class MeritAnalysisDao {
 			sBuilder.append("<table class=\"easyui-datagrid\" data-options=\"fitColumns:true,singleSelect:true,collapsible:true\">");
 			sBuilder.append("<thead><tr>");
 		    sBuilder.append("<th data-options=\"field:'staffname',width:100\">姓名</th>");
+		    sBuilder.append("<th data-options=\"field:'orgname',width:100\">所属部门</th>");
 		    sBuilder.append("<th data-options=\"field:'scorevalue',width:100\">得分</th>");
 		    
 		    sBuilder.append("<th data-options=\"field:'standardscore',width:100\">标准分值</th>");
@@ -43,6 +45,8 @@ public class MeritAnalysisDao {
 		 	    for(IndexScoreDetial indexScoreDetial : indexScoreDetials){
 		 	    	sBuilder.append("<tr>");
 		 	    	sBuilder.append("<td>").append(CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname", indexScoreDetial.getObjectCode())).append("</td>");
+		 	    	sBuilder.append("<td>").append(CodeDictionary.syscode_traslate("base_org", "orgcode", "orgname", new Staff(indexScoreDetial.getObjectCode()).getOrgcode())).append("</td>");
+		 	    	
 		 	    	if(indexScoreDetial.getIndexitem().getStandardscore() > indexScoreDetial.getScorevalue()){
 		 	    		count++;
 		 	    		sBuilder.append("<td>").append("<span style=\"color:red\">"+indexScoreDetial.getScorevalue()+"</span>").append("</td>");
@@ -82,6 +86,7 @@ public class MeritAnalysisDao {
 			sBuilder.append("<table class=\"easyui-datagrid\" data-options=\"fitColumns:true,singleSelect:true,collapsible:true\">");
 			sBuilder.append("<thead><tr>");
 		    sBuilder.append("<th data-options=\"field:'staffname',width:100\">姓名</th>");
+		    sBuilder.append("<th data-options=\"field:'orgname',width:100\">所属部门</th>");
 		    sBuilder.append("<th data-options=\"field:'scorevalue',width:100\">得分</th>");
 		    
 		    sBuilder.append("<th data-options=\"field:'standardscore',width:100\">标准分值</th>");
@@ -91,6 +96,8 @@ public class MeritAnalysisDao {
 		 	    for(IndexScoreDetial indexScoreDetial : indexScoreDetials){
 		 	    	sBuilder.append("<tr>");
 		 	    	sBuilder.append("<td>").append(CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname", indexScoreDetial.getObjectCode())).append("</td>");
+		 	    	sBuilder.append("<td>").append(CodeDictionary.syscode_traslate("base_org", "orgcode", "orgname", new Staff(indexScoreDetial.getObjectCode()).getOrgcode())).append("</td>");
+		 	    	
 		 	    	if(indexScoreDetial.getIndexitem().getStandardscore() > getAverageScore(indexScoreDetials)){
 		 	    		sBuilder.append("<td>").append("<span style=\"color:red\">"+indexScoreDetial.getScorevalue()+"</span>").append("</td>");
 			 	    }else{

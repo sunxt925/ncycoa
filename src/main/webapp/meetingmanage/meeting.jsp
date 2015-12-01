@@ -101,14 +101,14 @@
 	<tr>
 		<td align="right"><label class="Validform_label"> 开始时段 </label></td>
 		<td class="value">
-		 <input name="meetingBeginDate" type="Wdate" class="input1" id="meetingBeginDate" onfocus="new WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="${meetingInfo.meetingBeginDate}" size="30"  maxlength="30">
+		 <input name="meetingBeginDate" type="text" class="Wdate" id="meetingBeginDate" onfocus="new WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="${meetingInfo.meetingBeginDate}" size="30"  maxlength="30" style="width: 150px">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label"> 结束时段 </label></td>
 		<td class="value">
-		<input name="meetingEndDate" type="Wdate" class="input1" id="meetingEndDate" onfocus="new WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="${meetingInfo.meetingEndDate}" size="30"  maxlength="30">
+		<input name="meetingEndDate" type="text" class="Wdate" id="meetingEndDate" onfocus="new WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="${meetingInfo.meetingEndDate}" size="30"  maxlength="30"  style="width: 150px">
 		
 		<span class="Validform_checktip"></span>
 		</td>
@@ -147,6 +147,39 @@
 		<input class="inputxt" style="width:150px;" id="applyOrgName" name="applyOrgName" value="${applyOrgName}">
 		<a id="btn_selectorg" href="#" class="easyui-linkbutton"
 				       data-options="iconCls:'icon-search',plain:true">选择</a>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+	 <td align="right"><label class="Validform_label"> 就餐时间</label></td>
+		<td class="value"><select id="eatType" name="eatType" >
+		<c:if test="${eatType == null}">
+		  <option value="0">午餐</option>
+		  <option value="1">晚餐</option>
+		</c:if>
+		<c:if test="${eatType == 0}">
+		  <option value="0" selected="selected">午餐</option>
+		  <option value="1">晚餐</option>
+		</c:if>
+		<c:if test="${eatType == 1}">
+		  <option value="0" >午餐</option>
+		  <option value="1" selected="selected">晚餐</option>
+		</c:if>
+		</select>
+		</span>
+		</td>
+    </tr>
+    <tr>
+		<td align="right"><label class="Validform_label"> 就餐人数 </label></td>
+		<td class="value">
+		<input class="easyui-numberbox" style="width:150px;" id="eatpnum" name="eatpnum" value="${meetingInfo.eatpnum}" datatype="s1-3">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 住宿人数 </label></td>
+		<td class="value">
+		<input class="easyui-numberbox" style="width:150px;" id="accommodationnum" name="accommodationnum" value="${meetingInfo.accommodationnum}" datatype="s1-3">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -214,7 +247,7 @@ function returnroomValue(data){
 }
 $("#btn_selectobject").click(function(){
 	
-	createwindow('选择人员','indexmanage/selectstaff.jsp',500,500,returnobjValue );
+	createwindow('选择人员','indexmanage/selectstaff.jsp',750,500,returnobjValue );
     });
     
  

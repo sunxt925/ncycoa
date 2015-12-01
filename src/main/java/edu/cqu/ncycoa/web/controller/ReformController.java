@@ -1,6 +1,10 @@
 package edu.cqu.ncycoa.web.controller;
 
+import java.io.File;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.common.CodeDictionary;
 import com.common.Format;
+import com.common.Util;
+import com.common.WordUtils;
 import com.dao.system.UnitDao;
 import com.entity.system.UserInfo;
 
@@ -85,7 +91,7 @@ public class ReformController {
 	
 	@RequestMapping(params = "save")
 	@ResponseBody
-	public void save(Reform reform, HttpServletRequest request, HttpServletResponse response) {
+	public void save(Reform reform, HttpServletRequest request, HttpServletResponse response) throws CloneNotSupportedException {
 		AjaxResultJson j = new AjaxResultJson();
 		String message;
 		if (reform.getId() != null) {
@@ -102,10 +108,21 @@ public class ReformController {
 			}
 		} else {
 			message = "整改任务下达成功";
-			reform.setHandler(((UserInfo)request.getSession().getAttribute("UserInfo")).getStaffcode());
-			reform.setXdDate(Format.strToDate(Format.getNowtime()));
-			reform.setFlag("0");
-			systemService.addEntity(reform);
+			String[] orgs = reform.getClOrgcode().split(",");
+			for(String org : orgs){
+				Reform reform_tmp = (Reform) reform.clone();
+				reform_tmp.setClOrgcode(org);
+				reform_tmp.setHandler(((UserInfo)request.getSession().getAttribute("UserInfo")).getStaffcode());
+				reform_tmp.setXdDate(Format.strToDate(Format.getNowtime()));
+				reform_tmp.setFlag("0");
+				String tempfilename = Util.getName();
+				File f = new File(Util.getfileCfg().get("uploadfilepath")+tempfilename+".doc");
+				if (!f.getParentFile().exists())
+					f.getParentFile().mkdirs();
+				WordUtils.produceWord(Util.getfileCfg().get("uploadfilepath")+tempfilename+".doc", Util.getFilepath("wordtemplate/reformtemplate.doc"), getCommentMap(reform_tmp));
+				reform_tmp.setReformFile(tempfilename);
+				systemService.addEntity(reform_tmp);
+			}
 			
 		}
 		
@@ -113,6 +130,39 @@ public class ReformController {
 		SystemUtils.jsonResponse(response, j);
 	}
 	
+	public Map<String, String> getCommentMap(Reform reform){
+		Map<String, String> map = new HashMap<String, String>();
+		Calendar c_f = Calendar.getInstance();
+		c_f.setTime(reform.getXdDate());
+		reform.getXdzgOrgcode();
+		reform.getClOrgcode();
+		map.put("zerenorg", CodeDictionary.syscode_traslate("base_org", "orgcode", "orgname",reform.getClOrgcode()));
+		map.put("jianchaorg", CodeDictionary.syscode_traslate("base_org", "orgcode", "orgname",reform.getXdzgOrgcode()));
+		map.put("content", reform.getMemo());
+		map.put("y0", c_f.get(Calendar.YEAR)+"");
+		map.put("m0", (c_f.get(Calendar.MONTH)+1)+"");
+		map.put("d0", c_f.get(Calendar.DAY_OF_MONTH)+"");
+		map.put("reasonanalyer", " ");
+		map.put("zerenorg1", " ");
+		map.put("y1", " ");
+		map.put("m1", " ");
+		map.put("d1", " ");
+		map.put("preventive_measure", " ");
+		map.put("s_zd", " ");
+		map.put("y2", " ");
+		map.put("m2", " ");
+		map.put("d2", " ");
+		map.put("s_pz", " ");
+		map.put("y3", " ");
+		map.put("m3", " ");
+		map.put("d3", " ");
+		map.put("complete_res", " ");
+		map.put("zerenstaff", " ");
+		map.put("y4", " ");
+		map.put("m4", " ");
+		map.put("d4", " ");
+		return map;
+	}
 	
 	@RequestMapping(params="dgview")
 	public String dgView(HttpServletRequest request) {

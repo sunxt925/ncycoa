@@ -24,11 +24,12 @@ a.dgopt{
 <body>
 	<h:datagrid actionUrl="pending-task.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="task_list">
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
+		<h:dgColumn field="ceilingEntityId" title="ceilingEntityId" hidden="true"></h:dgColumn>
 		<h:dgColumn field="formKey" title="formKey" hidden="true"></h:dgColumn>
 		<h:dgColumn field="content" width="300" sortable="false" title="任务描述"></h:dgColumn>
 		<h:dgColumn field="genDate" title="发布时间" dateFormatter="yyyy-MM-dd hh:mm:ss" sortable="false" query="true" queryMode="scope"></h:dgColumn>
 		<h:dgColumn title="操作" field="opt"></h:dgColumn>
-		<h:dgFunOpt title="处理任务" funname="handleTask({id},{formKey})" /> 
+		<h:dgFunOpt title="处理任务" funname="handleTask({id},{formKey},{ceilingEntityId})" /> 
 	</h:datagrid>
 </body>
 
@@ -39,11 +40,56 @@ a.dgopt{
 		$("input[name='genDate_end']").click(function(){WdatePicker();});
 	});
 	
-	function handleTask(id, formkey){
+	function handleTask(id, formkey, ceilingEntityId){
 		if(id == null || id == "" || id == "null"){
 			createwindow("处理任务", formkey);
 		} else {
-			createwindow("处理任务", formkey+"&id="+id);
+			
+			$.dialog({
+				content: 'url:' + formkey+"&id="+id,
+				lock : true,
+				width:800,
+				height:600,
+				title:"处理任务",
+				opacity : 0.3,
+				cache:false,
+			    ok: function(){
+			    	iframe = this.iframe.contentWindow;
+					if(!saveObj()){
+						return false;
+					}
+					return true;
+			    },
+			    cancelVal: '关闭',
+			    cancel: true,
+			    button: [{
+			                 name: '运行详情',
+			                 callback: function () {
+			                	 $.dialog({
+			                		content: 'url:plan-management.htm?exec_view&type=taskid&id=' + ceilingEntityId,
+			         				lock : true,
+			         				width:800,
+			         				height:600,
+			         				title:"处理任务",
+			         				opacity : 0.3,
+			         				cache:false,
+			         			    ok: function(){
+			         			    	iframe = this.iframe.contentWindow;
+			         					if(!saveObj()){
+			         						return false;
+			         					}
+			         					return true;
+			         			    },
+			         			    cancelVal: '关闭',
+			         			    cancel: true,
+			         			    lock: true, parent:this
+			         			 });
+			                     return false;
+			                 },
+			                 focus: true
+			             }]
+			});
+			
 		}	
 	}
 </script>

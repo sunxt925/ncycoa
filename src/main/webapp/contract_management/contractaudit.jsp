@@ -101,8 +101,35 @@ $(function() {
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
-	
 	<tr>
+		<td align="right"><label class="Validform_label"> 合同对方名称 </label></td>
+		<td class="value">
+		<label>${contract.partyName}</label>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 合同对方住所 </label></td>
+		<td class="value">
+		<label>${contract.partyaddress}</label>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 合同对方类型 </label></td>
+		<td class="value">
+		<label>${contract.partyType}</label>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 合同对方资本 </label></td>
+		<td class="value">
+		<label>${contract.partyRegValue}</label>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<%-- <tr>
 		<td align="right"><label class="Validform_label"> 甲方 </label></td>
 		<td class="value">
 		<label>${contract.partyA}</label>
@@ -117,7 +144,7 @@ $(function() {
 		<label>${contract.partyB}</label>
 		<span class="Validform_checktip"></span>
 		</td>
-	</tr>
+	</tr> --%>
 	
 	<tr>
 		<td align="right"><label class="Validform_label"> 合同金额 </label></td>
@@ -168,9 +195,9 @@ $(function() {
 	</tr>
 	
 	<tr>
-		<td align="right"><label class="Validform_label"> 下载附件 </label></td>
+		<td align="right"><label class="Validform_label"> 审核合同 </label></td>
 		<td class="value">
-		<a href="fileupload/downweb.jsp?filename=${contract.contractFilePath}">附件</a>
+		<a href="#" onclick="openoffice('${contract.contractFilePath}')">合同</a>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -233,6 +260,30 @@ function ret(){
 	 var api = frameElement.api;
 	 (api.data)({code:"refresh"});
 }
-
+function openoffice(path){
+	if(path==''||typeof(path)=='undefined'){
+		$.dialog.alert('合同文件不存在');
+	}else{
+		var url = "officeonline/officeopen.jsp?filename="+path;
+		$.dialog({
+			id:'CLLHG1976D',
+			content : 'url:' + url,
+			lock : true,
+			width : 1000,
+			height : 600,
+			title : '文档编辑',
+			zIndex :3000,
+			opacity : 0.3,
+			cache : false,
+			ok : function() {
+				return true;
+			},
+			cancelVal : '关闭',
+			cancel : true/* 为true等价于function(){} */
+		});
+	}
+		
+	
+}
 </script>
 </body>

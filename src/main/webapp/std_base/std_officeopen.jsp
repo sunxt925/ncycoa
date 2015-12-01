@@ -15,8 +15,22 @@
 	    poCtrl1.setOfficeToolbars(false);
 		//隐藏菜单栏
 		poCtrl1.setMenubar(false);
+		poCtrl1.addCustomToolButton("保存","Save()",1);
+		poCtrl1.addCustomToolButton("另存为PDF文件", "SaveAsPDF()", 1);
+		poCtrl1.addCustomToolButton("另存", "SaveElse()", 1);
+		poCtrl1.addCustomToolButton("插入印章","CustomToolBar_InsertSeal()",2);
+		poCtrl1.addCustomToolButton("领导圈阅","CustomToolBar_HandDraw()",3);
+		//
+		poCtrl1.addCustomToolButton("显示痕迹", "ShowRevisions", 5);
+	    poCtrl1.addCustomToolButton("隐藏痕迹", "HiddenRevisions", 5);
+		poCtrl1.addCustomToolButton("插入键盘批注", "StartRemark", 3);
+		
+		poCtrl1.addCustomToolButton("关闭", "ShutDown()", 1);
+		//设置保存页面
+		poCtrl1.setSaveFilePage("SaveFile.jsp");
 		//设置禁止拷贝
 		poCtrl1.setAllowCopy(false);
+		poCtrl1.setSaveFilePage(path+"office/Word/SaveFile.jsp");
 		poCtrl1.setCaption("南充烟草office平台");
 		//设置保存页面
 		String policypath=request.getParameter("policypath");

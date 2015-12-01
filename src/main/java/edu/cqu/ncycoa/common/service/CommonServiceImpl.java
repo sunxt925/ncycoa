@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.cqu.ncycoa.common.dto.DataGridReturn;
 import edu.cqu.ncycoa.common.dto.QueryDescriptor;
+import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
 import edu.cqu.ncycoa.dao.CommonDao;
 
 @Service("commonService")
@@ -121,4 +122,7 @@ public class CommonServiceImpl implements CommonService {
 		return commonDao.getDataGridReturn(cq, isOffset);
 	}
 	
+	public <T> List<T> getQueryRes(TypedQueryBuilder<T> tqBuilder){
+		return commonDao.getQueryRes(tqBuilder);
+	}
 }

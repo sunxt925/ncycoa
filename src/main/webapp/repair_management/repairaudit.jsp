@@ -98,6 +98,7 @@ $(function() {
 	</div>
 	</div>
 	<form  id="formobj" name="formobj"  action="repair_management.htm?exetask"  method="post">
+	<input  type="hidden" id="id" name="id" value="${repairAudit.id}">
 	<input  type="hidden" id="taskId" name="taskId" value="${taskId}">
 			<div style="width: 100%;padding: 20px">
 				<div id="p" class="easyui-panel" title="批注"
@@ -108,11 +109,8 @@ $(function() {
 					   </tr>
 					   <tr>
 					   <td>
-					<c:forEach items="${outcomelist }" var="item">
-					   
-	                   <input type="button"   value="${item }"  onclick="sub(this)">
-	                   
-	                 </c:forEach>
+				        <input type="button"   value="批准"  onclick="sub('true')">
+					    <input type="button"   value="回退"  onclick="sub('false')">
 	                 </td>
 	                   </tr>
 					</table>
@@ -138,7 +136,7 @@ $(function() {
 <script type="text/javascript">
 function sub(val){
 
-	$('#outcome').val($(val).val());
+	$('#outcome').val(val);
 	$('#formobj').submit();
 	ret();
 }

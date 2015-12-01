@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -20,6 +22,7 @@ import org.activiti.engine.FormService;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.form.TaskFormData;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +41,7 @@ import edu.cqu.ncycoa.common.util.dao.QueryUtils;
 import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
 import edu.cqu.ncycoa.plan.domain.Asset;
 import edu.cqu.ncycoa.plan.domain.PendingTask;
+import edu.cqu.ncycoa.plan.domain.PlanStep;
 import edu.cqu.ncycoa.plan.domain.PlanTask;
 import edu.cqu.ncycoa.plan.service.PendingTaskService;
 import edu.cqu.ncycoa.util.SystemUtils;
@@ -64,70 +68,6 @@ public class PendingTaskController {
 		return "plan_management/plan_task_detail";
 	}
 	
-	@RequestMapping(params="handle")
-	public String handle(HttpServletRequest request, Model model) {
-		Long id = Long.parseLong(request.getParameter("id"));
-		Long taskId = Long.parseLong(request.getParameter("taskId"));
-		String type = request.getParameter("type");
-		model.addAttribute("id", id);
-		model.addAttribute("taskId", taskId);
-		if("normal".equals(type)){
-			return "plan_management/plan_step_normal";
-		} else if("audit".equals(type)){
-			
-			List<PlanTask> tasks = pendingTaskService.findPreTasksByTaskId(taskId);
-			model.addAttribute("preTasks", tasks);
-			
-			return "plan_management/plan_step_audit";
-		} else {
-			return "plan_management/plan_step_upload";
-		}
-	}
-	
-	@RequestMapping(params="h_normal")
-	@ResponseBody
-	public void handleNormal(HttpServletRequest request, HttpServletResponse response) {
-		AjaxResultJson j = new AjaxResultJson();
-		String message;
-		try {
-			Long id = Long.parseLong(request.getParameter("id"));
-			Long taskId = Long.parseLong(request.getParameter("taskId"));
-			String description = request.getParameter("description");
-			pendingTaskService.handleTask(id, taskId, description, (short)0);
-		} catch (Exception e) {
-			message = "执行失败";
-			j.setSuccess(false);
-			SystemUtils.jsonResponse(response, j);
-			return;
-		}
-		
-		message = "执行成功";
-		j.setMsg(message);
-		SystemUtils.jsonResponse(response, j);
-	}
-	
-	@RequestMapping(params="h_audit")
-	@ResponseBody
-	public void handleAudit(HttpServletRequest request, HttpServletResponse response) {
-		AjaxResultJson j = new AjaxResultJson();
-		String message;
-		try {
-			Long id = Long.parseLong(request.getParameter("id"));
-			Long taskId = Long.parseLong(request.getParameter("taskId"));
-			int audit = Integer.parseInt(request.getParameter("audit"));
-			pendingTaskService.handleAuditTask(id, taskId, audit, (short)0);
-		} catch (Exception e) {
-			message = "执行失败";
-			j.setSuccess(false);
-			SystemUtils.jsonResponse(response, j);
-			return;
-		}
-		
-		message = "执行成功";
-		j.setMsg(message);
-		SystemUtils.jsonResponse(response, j);
-	}
-	
 	private File saveFileFromInputStream(InputStream stream, String path, String filename) throws IOException {
 		File file = new File(path + "/" + filename);
 		FileOutputStream fs = new FileOutputStream(file);
@@ -142,37 +82,94 @@ public class PendingTaskController {
 		return file;
 	}
 	
+	@RequestMapping(params="fupload")
+	@ResponseBody
+	public void handleFileUpload(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+		request.setCharacterEncoding("utf-8");
+		AjaxResultJson j = new AjaxResultJson();
+		String message;
+		
+		String filename = request.getParameter("filename");
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request;
+		Asset asset = new Asset();
+		try {
+			if( multipartRequest.getFileNames().hasNext() ) {
+				String originalName = multipartRequest.getFileNames().next();
+				MultipartFile file = multipartRequest.getFile(originalName);
+				filename = new String( Base64.decodeBase64(filename), "utf-8");
+				
+				String extName = filename.substring(filename.lastIndexOf("."), filename.length());
+				String path = multipartRequest.getSession().getServletContext().getRealPath("doc/plan_task");
+				String newFileName = UUID.randomUUID().toString();
+				
+				asset.setDescription("");
+				asset.setExtName(extName);
+				asset.setFriendlyName(filename);
+				asset.setRealName(path +"/"+ newFileName + extName);
+				asset.setId(newFileName);
+				
+				saveFileFromInputStream(file.getInputStream(), path, newFileName + extName);
+				pendingTaskService.addEntity(asset);
+			}
+		} catch (Exception e) {
+			message = new String(Base64.encodeBase64("文件上传失败".getBytes()), "utf-8");
+			j.setSuccess(false);
+			SystemUtils.jsonResponse(response, j);
+			return;
+		}
+		
+		message = new String(Base64.encodeBase64("文件上传成功".getBytes()), "utf-8");
+		j.setMsg(message);
+		j.setAttributes(new HashMap<String, Object>());
+		j.getAttributes().put("assetid", asset.getId());
+		SystemUtils.jsonResponse(response, j);
+	}
+	
+	@RequestMapping(params="handle")
+	public String handle(HttpServletRequest request, Model model) {
+		Long id = Long.parseLong(request.getParameter("id"));
+		Long taskId = Long.parseLong(request.getParameter("taskId"));
+		model.addAttribute("id", id);
+		model.addAttribute("taskId", taskId);
+		
+		Map<PlanStep, List<PlanTask>> tasks = pendingTaskService.findPreTasksByTaskId(taskId);
+		model.addAttribute("preTasks", tasks);
+		
+		return "plan_management/plan_step_handle";
+	}
+	
 	@RequestMapping(params="h_upload")
 	@ResponseBody
-	public void handleUpload(HttpServletRequest request, HttpServletResponse response) {
+	public void handleUpload(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+
 		AjaxResultJson j = new AjaxResultJson();
 		String message;
 		
 		try {
 			Long id = Long.parseLong(request.getParameter("id"));
 			Long taskId = Long.parseLong(request.getParameter("taskId"));
-			List<Asset> assets = new ArrayList<Asset>();
+			int audit = Integer.parseInt(request.getParameter("audit"));
 			
-			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request;
-			String path = multipartRequest.getSession().getServletContext().getRealPath("doc/plan_task");
-			for (Iterator<MultipartFile> it = multipartRequest.getFiles("files").iterator(); it.hasNext();) {
-				MultipartFile file = it.next();
-				String newFileName = UUID.randomUUID().toString();
-				String originalName = file.getOriginalFilename();
-				String extName = originalName.substring(originalName.lastIndexOf("."), originalName.length());
+			if(audit == 1) {
+				pendingTaskService.handleNotAdmission(id, taskId);
+			} else {
+				String description = request.getParameter("description");
+				description = new String(Base64.decodeBase64(description.getBytes()), "utf-8");
+				String[] assetids; 
+				if(request.getParameter("assetids") != null && !request.getParameter("assetids").trim().equals("")) {
+					assetids = request.getParameter("assetids").split(":;;:");
+				} else {
+					assetids = new String[0];
+				}
 				
-				Asset asset = new Asset();
-				asset.setDescription("");
-				asset.setExtName(extName);
-				asset.setFriendlyName(originalName);
-				asset.setRealName(path + newFileName + extName);
-				asset.setId(newFileName);
-				assets.add(asset);
-				
-				saveFileFromInputStream(file.getInputStream(), path, newFileName + extName);
+				List<Asset> assets = new ArrayList<Asset>();
+				for(int i= 0; i<assetids.length; i++){
+					Asset asset = pendingTaskService.findEntityById(assetids[i], Asset.class);
+					assets.add(asset);
+				}
+				pendingTaskService.handleTask(id, taskId, description, assets);
 			}
 			
-			pendingTaskService.handleUploadTask(id, taskId, assets, (short)0);
 		} catch (Exception e) {
 			message = "执行失败";
 			j.setSuccess(false);

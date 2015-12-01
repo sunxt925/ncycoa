@@ -1,5 +1,9 @@
 package com.entity.system;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import com.common.Format;
 import com.db.DBObject;
 import com.db.DataRow;
@@ -99,6 +103,21 @@ public class Goodsoutstoreitem {
 	public void setHANDLER(String hANDLER) {
 		HANDLER = hANDLER;
 	}
+	
+	
+	public String getIsconfirm() {
+		return isconfirm;
+	}
+	public void setIsconfirm(String isconfirm) {
+		this.isconfirm = isconfirm;
+	}
+	public Date getConfirmdate() {
+		return confirmdate;
+	}
+	public void setConfirmdate(Date confirmdate) {
+		this.confirmdate = confirmdate;
+	}
+
 	private String STOREEVENTNO="";
 	private String GOODSCODE="";
 	private String GOODSNAME="";
@@ -113,6 +132,8 @@ public class Goodsoutstoreitem {
 	private String USINGORGCODE="";
 	private String MEMO="";
 	private String HANDLER="";
+	private String isconfirm;
+	private Date confirmdate;
 	public Goodsoutstoreitem()
 	{
 		
@@ -151,6 +172,48 @@ public class Goodsoutstoreitem {
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public static List<Goodsoutstoreitem> getGoodsoutstoreitemsByOutNo(String storeeventNO){
+		List<Goodsoutstoreitem> goodsoutstoreitems = new ArrayList<Goodsoutstoreitem>();
+		try{
+			
+			DBObject db = new DBObject();
+			String sql="select * from Com_outstoreitem t where t.STOREEVENTNO=?";
+			Parameter.SqlParameter[] pp = new Parameter.SqlParameter[]
+			{ new Parameter.String(storeeventNO) };
+			DataTable dt = db.runSelectQuery(sql, pp);
+			if (dt != null && dt.getRowsCount() >= 1)
+			{
+				for(int i=0;i<dt.getRowsCount();i++){
+					DataRow r = dt.get(i);
+					Goodsoutstoreitem goodsoutstoreitem = new Goodsoutstoreitem();
+					goodsoutstoreitem.setOUTNO(r.getString("StoreEventNo"));
+					goodsoutstoreitem.setSTOREEVENTNO(r.getString("StoreEventNo"));
+					goodsoutstoreitem.setGOODSCODE(r.getString("Goodscode"));
+					goodsoutstoreitem.setGOODSNAME(r.getString("GoodsName"));
+					goodsoutstoreitem.setGOODSDESC(r.getString("GoodsDesc"));
+					goodsoutstoreitem.setGOODSSTYLE(r.getString("GoodsStyle"));
+					goodsoutstoreitem.setGOODSNUMBER(r.getString("GOODSNUMBER"));
+					goodsoutstoreitem.setMEASUREUNIT(r.getString("MeasureUnit"));
+					goodsoutstoreitem.setOUTDATE(r.getString("OUTDATE"));	
+					goodsoutstoreitem.setAUDITORGCODE(r.getString("AuditOrgCode"));
+					goodsoutstoreitem.setAUDITORCODE(r.getString("AuditorCode"));
+					goodsoutstoreitem.setINPUTDATE(r.getString("inputDate"));
+					goodsoutstoreitem.setUSINGORGCODE(r.getString("USINGORGCODE"));
+					goodsoutstoreitem.setMEMO(r.getString("Memo"));
+					goodsoutstoreitem.setHANDLER(r.getString("HANDLER"));
+					goodsoutstoreitem.setIsconfirm(r.getString("isconfirm"));
+					goodsoutstoreitem.setConfirmdate(Format.strToDate(r.getString("confirmdate")));
+					goodsoutstoreitems.add(goodsoutstoreitem);
+				}
+				
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return goodsoutstoreitems;
+		
 	}
 	/*public Goodsoutstoreitem(String PK,String str)
 	{
@@ -195,7 +258,7 @@ public class Goodsoutstoreitem {
 			
 			String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||OUTNO||'\">' as 选择,OUTNO as 物资出库序号" +
 			",StoreEventNo as 事件流水号,GoodsName as 物资品名,GoodsDesc as 说明,GoodsStyle as 规格型号,avaliablenumber as 可用数量 ,GOODSNUMBER as 出库数量,MeasureUnit as 计量单位," +
-			"HANDLER as 经办人,to_char(OutDate,'yyyy-mm-dd') as 出库日期,USINGORGCODE as 领用部门,'<a href=\"#\" onclick=F3(\"'||OUTNO||','||avaliablenumber||'\") class=\"button4\">修 改</a><a href=\"#\" onClick=dele(\"'||OUTNO||'\") class=\"button4\">删除</a>' as 操作   from goodsout_store where StoreEventNo='"+goodscode+"'";
+			"HANDLER as 领用人,USINGORGCODE as 领用部门,to_char(OutDate,'yyyy-mm-dd') as 出库日期,'<a href=\"#\" onclick=F3(\"'||OUTNO||','||avaliablenumber||'\") class=\"button4\">修 改</a><a href=\"#\" onClick=dele(\"'||OUTNO||'\") class=\"button4\">删除</a>' as 操作   from goodsout_store where StoreEventNo='"+goodscode+"'";
 			//System.out.println(base_sql);
 			String sql_run = Format.getFySql(base_sql, pageno, perpage);
 			return db.runSelectQuery(sql_run);
@@ -213,7 +276,7 @@ public class Goodsoutstoreitem {
 			DBObject db = new DBObject();
 			
 
-			String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||OUTNO||'\">' as 选择,OUTNO as 物资出库序号,StoreEventNo as 事件流水号,GoodsName as 物资品名,GoodsDesc as 说明,GoodsStyle as 规格型号,GOODSNUMBER as 出库数量,MeasureUnit as 计量单位,HANDLER as 经办人,to_char(OutDate,'yyyy-mm-dd') as 出库日期,AuditOrgCode as 验收部门,AuditorCode as 操作人员,to_char(inputDate,'yyyy-mm-dd') as 录入日期,USINGORGCODE as 领用部门,Memo as 备注  from Com_outstoreitem where StoreEventNo='"+goodscode+"'";
+			String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||OUTNO||'\">' as 选择,OUTNO as 物资出库序号,StoreEventNo as 事件流水号,GoodsName as 物资品名,GoodsDesc as 说明,GoodsStyle as 规格型号,GOODSNUMBER as 出库数量,MeasureUnit as 计量单位,HANDLER as 领用人,USINGORGCODE as 领用部门,to_char(OutDate,'yyyy-mm-dd') as 出库日期,AuditOrgCode as 验收部门,AuditorCode as 操作人员,to_char(inputDate,'yyyy-mm-dd') as 录入日期,Memo as 备注  from Com_outstoreitem where StoreEventNo='"+goodscode+"'";
 			//System.out.println(base_sql);
 			String sql_run = Format.getFySql(base_sql, pageno, perpage);
 			return db.runSelectQuery(sql_run);
@@ -275,4 +338,5 @@ public class Goodsoutstoreitem {
 			return false;
 		}
 	}
+	
 }

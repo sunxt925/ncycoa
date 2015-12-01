@@ -19,13 +19,13 @@
 		<h:dgColumn field="id" title="id" hidden="true"></h:dgColumn>
 		<h:dgColumn field="name" title="设备名称" query="true"></h:dgColumn>
 		<h:dgColumn field="type" title="设备类型" replace="电梯 _0,压力容器 _1,场内机动车 _2,机动车_3,消防设备_4,报警设备_5,巡逻设备_6,其他设备_7" query="true"></h:dgColumn>
-		<h:dgColumn field="maintenDepart" title="维保单位"></h:dgColumn>
-		<h:dgColumn field="checkCycle" title="检验周期（月）"></h:dgColumn>
-		<h:dgColumn field="checkDate" title="当前检测日期" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn>
-		<h:dgColumn field="checkStatus" title="当前检测情况"></h:dgColumn>
+<%-- 		<h:dgColumn field="maintenDepart" title="维保单位"></h:dgColumn> --%>
+<%-- 		<h:dgColumn field="checkCycle" title="检验周期（月）"></h:dgColumn> --%>
+<%-- 		<h:dgColumn field="checkDate" title="当前检测日期" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn> --%>
+<%-- 		<h:dgColumn field="checkStatus" title="当前检测情况"></h:dgColumn> --%>
      	<h:dgColumn field="nextCheckDate" title="下次检测日期" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn>
-		<h:dgToolBar url="specialequipment_management.htm?update_check" icon="icon-add" funname="myedit" title="添加检查日志"></h:dgToolBar>
-		<h:dgToolBar url="specialequipment_management.htm?sub" icon="icon-search" funname="myedit" title="查看检查记录"></h:dgToolBar>
+<%-- 		<h:dgToolBar url="specialequipment_management.htm?update_check" icon="icon-add" funname="myedit" title="添加检查日志"></h:dgToolBar> --%>
+<%-- 		<h:dgToolBar url="specialequipment_management.htm?sub" icon="icon-search" funname="myedit" title="查看检查记录"></h:dgToolBar> --%>
 	</h:datagrid>
 </body>
 

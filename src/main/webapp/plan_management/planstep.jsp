@@ -18,6 +18,7 @@
 <script type="text/javascript" src="jscomponent/tools/datagrid.js"></script>
 <script type="text/javascript" src="jscomponent/validform/js/Validform_v5.3.1_ncr_min.js"></script>
 <script type="text/javascript" src="jscomponent/validform/js/Validform_Datatype.js"></script>
+<script type="text/javascript" src="jscomponent/ckeditor/ckeditor.js"></script>
 <style type="text/css">
 *{font-size:12px; font-family:微软雅黑,新宋体}
 </style>
@@ -35,13 +36,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label"> 任务类型 </label></td>
-		<td class="value">
-		<select class="inputxt" id="type" name="type" style="width:206px;">
-			<option value="0">普通</option>
-			<option value="1">审核</option>
-			<option value="2">文件提交</option>
-		</select>
+		<td align="right"><label class="Validform_label"> 持续时间 </label></td>
+		<td class="value"><input class="inputxt" style="width:200px;" id="taskTimeConsuming" name="taskTimeConsuming">&nbsp;&nbsp;天
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -49,6 +45,7 @@
 		<td align="right"><label class="Validform_label"> 任务内容 </label></td>
 		<td class="value">
 		<textarea class="inputxt" id="content" name="content" style="overflow-x:hidden;width:400px;height:100px"></textarea>
+		<script type="text/javascript">CKEDITOR.replace('content');</script>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -62,20 +59,26 @@
  		var data = frameElement.api.data.data;
  		if(data){
  			$('#participantList').val(data.participant);
- 			$('participantList_id').val(data.participantValue);
- 			$('#type').val(data.typeValue);
- 			$('#content').val(data.content);
+ 			$('#participantList_id').val(data.participantValue);
+ 			$('#taskTimeConsuming').val(data.taskTimeConsuming);
+ 			CKEDITOR.instances.content.setData(data.content);
  		}
  	});
  
     function ret(){
      	var api = frameElement.api;
+     	var summary = CKEDITOR.instances.content.document.getBody().getText();
+     	if(summary.length > 20) {
+     		summary = summary.slice(0, 20);
+     		summary += '...';
+     	}
+     	var content = CKEDITOR.instances.content.getData();
      	var row = {
      			participant:$('#participantList').val(),
      			participantValue:$('#participantList_id').val(),	
-     			typeValue:$('#type').val(),
-				type:$('#type').find("option:selected").text(),
-				content:$('#content').val()
+     			taskTimeConsuming:$('#taskTimeConsuming').val(),
+				summary:summary,
+				content:content
      	};
      	if(api.data.data){
      		row.id = api.data.data.id;

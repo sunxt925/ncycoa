@@ -58,10 +58,10 @@ public class SystemUnitAction extends ActionInterface
 			og=new Org();
 			try{
 				DBObject  db=new DBObject();
-				String sql="select * from base_orgposition   where orgcode='"+para+"'";
+				String sql="select * from base_org  where orgcode='"+para+"'";
 				DataTable dt=db.runSelectQuery(sql);
 				if(dt!=null&&dt.getRowsCount()>=1){
-					String sql2="delete from base_orgposition   where orgcode='"+para+"'";
+					String sql2="delete from base_org   where orgcode='"+para+"'";
 					db.run(sql2);
 					if(og.Delete(para))
 					{

@@ -30,15 +30,103 @@ public class PlanInstance {
 	public final static Short FINISHED = 1;
 	
 	@Transient
-	public final static Short INTERCEPTED = 2;
+	public final static Short REVIEWED = 2;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="PLAN_INSTANCE_ID")
 	private Long id;
 	
+	@Column(name="PLAN_ID")
+	private Long planId;
+	
+	public Long getPlanId() {
+		return planId;
+	}
+
+	public void setPlanId(Long planId) {
+		this.planId = planId;
+	}
+
+	@Column(name="PLAN_NAME")
+	private String name;  	 	 // ¼Æ»®Ãû³Æ
+	
+	@Column(name="SUMMARY")
+	private String summary;
+	
+	@Column(name="PARTICIPANT_ID")
+	private String participantIds;
+	
+	public String getParticipantIds() {
+		return participantIds;
+	}
+
+	public void setParticipantIds(String participantIds) {
+		this.participantIds = participantIds;
+	}
+
+	@Column(name="PARTICIPANT_NAME")
+	private String participantNames;
+	
+	@Column(name="REVIEW")
+	private String review;
+	
+	public String getReview() {
+		return review;
+	}
+
+	public void setReview(String review) {
+		this.review = review;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+	public String getParticipantNames() {
+		return participantNames;
+	}
+
+	public void setParticipantNames(String participants) {
+		this.participantNames = participants;
+	}
+
+	@Temporal(TemporalType.DATE)
+	private Date planBeginDate;
+	
+	@Temporal(TemporalType.DATE)
+	private Date planEndDate;
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Date getPlanBeginDate() {
+		return planBeginDate;
+	}
+
+	public void setPlanBeginDate(Date planBeginDate) {
+		this.planBeginDate = planBeginDate;
+	}
+
+	public Date getPlanEndDate() {
+		return planEndDate;
+	}
+
+	public void setPlanEndDate(Date planEndDate) {
+		this.planEndDate = planEndDate;
+	}
+
 	@ManyToOne
-	@JoinColumn(name = "PLAN_ID")
+	@JoinColumn(name = "PLAN")
 	private Plan plan;
 	
 	@ManyToOne
@@ -52,8 +140,20 @@ public class PlanInstance {
 	@Column(name="EXEC_DATE")
 	private Date execDate;
 	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="END_DATE")
+	private Date endingDate;
+	
+	public Date getEndingDate() {
+		return endingDate;
+	}
+
+	public void setEndingDate(Date endingDate) {
+		this.endingDate = endingDate;
+	}
+
 	@Column(name="STATUS")
-	private Short status = (short)0;
+	private Short status;
 
 	public Long getId() {
 		return id;
@@ -101,6 +201,61 @@ public class PlanInstance {
 
 	public void setStatus(Short status) {
 		this.status = status;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((currentStep == null) ? 0 : currentStep.hashCode());
+		result = prime * result + ((execDate == null) ? 0 : execDate.hashCode());
+		result = prime * result + ((executor == null) ? 0 : executor.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((plan == null) ? 0 : plan.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PlanInstance other = (PlanInstance) obj;
+		if (currentStep == null) {
+			if (other.currentStep != null)
+				return false;
+		} else if (!currentStep.equals(other.currentStep))
+			return false;
+		if (execDate == null) {
+			if (other.execDate != null)
+				return false;
+		} else if (!execDate.equals(other.execDate))
+			return false;
+		if (executor == null) {
+			if (other.executor != null)
+				return false;
+		} else if (!executor.equals(other.executor))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (plan == null) {
+			if (other.plan != null)
+				return false;
+		} else if (!plan.equals(other.plan))
+			return false;
+		if (status == null) {
+			if (other.status != null)
+				return false;
+		} else if (!status.equals(other.status))
+			return false;
+		return true;
 	}
 	
 }

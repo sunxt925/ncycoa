@@ -1,9 +1,12 @@
 package edu.cqu.ncycoa.dao;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import org.springframework.web.servlet.tags.form.OptionTag;
 
+import com.common.CodeDictionary;
 import com.common.Format;
 import com.db.DBObject;
 import com.db.DataRow;
@@ -492,6 +495,21 @@ public class SupplierDao {
 		return t;
 	}
 	
+	//指标树的构建：
+	public static DataTable getIndexList(String para){
+		try {
+			DBObject db = new DBObject();
+			
+			String base_sql = "select t.* from NCYCOA_EVALU_DEFINE t where t.index_code='"+para+"'";
+
+			return db.runSelectQuery(base_sql);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	//下面方法给安全模块使用：
 	public static String getStaffNamesByCodes(String codes) {
 		String[] staffs=codes.split(",");
@@ -553,5 +571,118 @@ public class SupplierDao {
 		return result;
 	}
 
+	public static String getCodeByName(String name) {
+		String result="";
+		
+		try {
+			DBObject db = new DBObject();
+			String sql = "select supplier_code from NCYCOA_SUPPLIER where supplier_name='"+name+"'";
+
+			DataTable dt = db.runSelectQuery(sql);
+			if (dt != null&& dt.getRowsCount() >= 1) {
+				
+					DataRow r = dt.get(0);
+					result=r.getString("supplier_code");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public static boolean isBannedByCode(String code) {
+		try {
+			DBObject db = new DBObject();
+			String sql = "select fobbiden_time,exit_time+0 from NCYCOA_SUPPLIER_EXIT where SUPPLIER_CODE='"+code+"'";
+
+			DataTable dt = db.runSelectQuery(sql);
+			if (dt != null&& dt.getRowsCount() >= 1) {
+				
+					DataRow r = dt.get(0);
+					String fTime=r.getString("FOBBIDEN_TIME");
+					System.out.println(fTime+"禁入");
+					Date nextDate=(Date)r.get(1);
+					SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd"); 
+					   System.out.println("下次的日期："+df.format(nextDate));   
+					   Calendar cal = Calendar.getInstance();
+					   cal.setTime(nextDate);
+					   cal.add(Calendar.YEAR,Integer.valueOf(fTime));
+					   Date date=cal.getTime(); 
+					//nextDate.setTime((nextDate.getTime()+Integer.valueOf(fTime)*365*1000*60*60*24));
+					System.out.println("这次的日期："+df.format(date)); 
+					Date today=new Date();
+					long days=(date.getTime()-today.getTime())/(1000*60*60*24);
+					if(days>=0){
+						//还没到期
+						return true;
+					}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	//本部门所拥有供应商列表，可多选
+	public static String getRandomContent() {
+		String temp=getDepartName();
+		String[] departs=temp.substring(0, temp.length()-1).split(",");
+
+		String result="";
+		try {
+			DBObject db = new DBObject();
+			String sql = "select supplier_name from NCYCOA_SUPPLIER t where manage_depart LIKE '%"+departs[0]+"%'";
+			for(int j=1;j<departs.length;j++){
+				sql=sql+" or manage_depart LIKE '%"+departs[j]+"%'";
+			}
+			DataTable dt = db.runSelectQuery(sql);
+			if (dt != null&& dt.getRowsCount() >= 1) {
+				for (int i = 0; i < dt.getRowsCount(); i++)
+				{
+					DataRow r = dt.get(i);
+					result=result+"<label><input type='checkbox' name='supplier' value='"+r.getString("supplier_name")+"'/>";
+					try {
+						result=result+r.getString("supplier_name");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					result=result+"</label><br>";
+				}		
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	//根据传入部门代码获取供应商随机列表
+	public static String getRandomContentByCode(String code) {
+		String departs=CodeDictionary.syscode_traslate("base_org","orgcode", "orgname", code);
+
+		String result="";
+		try {
+			DBObject db = new DBObject();
+			String sql = "select supplier_name from NCYCOA_SUPPLIER t where manage_depart LIKE '%"+departs+"%'";
+			DataTable dt = db.runSelectQuery(sql);
+			if (dt != null&& dt.getRowsCount() >= 1) {
+				for (int i = 0; i < dt.getRowsCount(); i++)
+				{
+					DataRow r = dt.get(i);
+					result=result+"<label><input type='checkbox' name='supplier' value='"+r.getString("supplier_name")+"'/>";
+					try {
+						result=result+r.getString("supplier_name");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					result=result+"</label><br>";
+				}		
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 }

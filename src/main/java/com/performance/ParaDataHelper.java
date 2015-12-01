@@ -66,7 +66,8 @@ public class ParaDataHelper {
 		}
 		// 获得该指标体系下的所用“业务数据”类型的参数
 		String period = task.getDate().getPeriodCode();
-		String tmpPeriod = period.startsWith("M") ? "D00.M00" : (period.startsWith("H") ? "D00.H00" : (period.startsWith("Y") ? "D00.Y00": ""));
+		
+		String tmpPeriod = "D00."+task.getDate().getPeriodtype()+"00";
 		List<ReferPara> paras = getParasByIndexCode(task.getIndexArch().getIndexCode(), tmpPeriod);
 		
 		// 获得与该指标体系关联的所有考核对象
@@ -131,6 +132,12 @@ public class ParaDataHelper {
 		return data;
 	}
 
+	/**
+	 * 返回indexcode所指代的指标体系下所涉及到的所有参数的时间周期类型（半年、月度、季度等）
+	 * 
+	 * @param indexcode 指标体系编码
+	 * @return
+	 */
 	public static String getAllPeriodCode(String indexcode) {
 		List<String> periods = new ArrayList<String>();
 		try {
@@ -164,12 +171,14 @@ public class ParaDataHelper {
 				}
 				sb.append("},");
 			}
-			if (sb.length() > 1)
+			if (sb.length() > 1) {
 				sb.delete(sb.length() - 1, sb.length());
+			}
 			sb.append("]");
 
 			return sb.toString();
 		} catch (Exception e) {
+			e.printStackTrace();
 			return "";
 		}
 	}
@@ -286,9 +295,16 @@ public class ParaDataHelper {
 						para.setParaperiod(r2.getString("paraperiod"));
 						para.setMemo(r2.getString("memo"));
 						para.setGetparavaluefunc(r2.getString("getparavaluefunc"));
-						para.setDefaultvalue(Integer.parseInt(r2.getString("defaultvalue")));
-						para.setUsingflag(Integer.parseInt(r2.getString("usingflag")));
-
+						if(r2.getString("defaultvalue") == null || "".equals(r2.getString("defaultvalue").trim())) {
+							para.setDefaultvalue(null);
+						} else {
+							para.setDefaultvalue(Integer.parseInt(r2.getString("defaultvalue")));
+						}
+						if(r2.getString("usingflag") == null || "".equals(r2.getString("usingflag").trim())) {
+							para.setUsingflag(null);
+						} else {
+							para.setUsingflag(Integer.parseInt(r2.getString("usingflag")));
+						}
 						paras.add(para);
 				}
 			}

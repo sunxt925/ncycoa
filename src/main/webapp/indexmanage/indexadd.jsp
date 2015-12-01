@@ -298,6 +298,8 @@ ComponentUtil cu=new ComponentUtil();
 	    		if(document.getElementById("TBM_INDEXITEM.VALIDBEGINDATE").value!=""&&document.getElementById("TBM_INDEXITEM.VALIDENDDATE").value!=""&&document.getElementById("TBM_INDEXITEM.VALIDBEGINDATE").value<document.getElementById("TBM_INDEXITEM.VALIDENDDATE").value){
 	    			
 	    			 document.all("Submit").click();
+	    			
+	    			 
 	   	   	         (api.data)({code:"refresh"});
 	    		}else{
 	    			alert("日期字段为空或者有误");
@@ -317,19 +319,19 @@ ComponentUtil cu=new ComponentUtil();
 				    x=x/1+1;
 				
 				    if(x<=4){
-				    var paraname="P"+x;
-				    var parasource=paraname+"_src";
-				    var tr="<tr >"+
-				           "<td align='center'><span>"+paraname+":</span>"+
-				           "<input type=\"text\" width='100px' id=\""+paraname+"\"/>"+
-				           "<span>参数来源:</span>"+
-				           "<select id=\""+parasource+"\">"+"<%=parasource%>"+
-				           "</select>"+
-				           "</td>"+
-				           "<td><a href=\"javascript:Goto();\"  style=\"text-decoration: none\"  onclick='{deleteCurrentRow(this);}'>x</a></td>"+
-				           "</tr>"; 
-					$("#paratable").append(tr);
-				         document.getElementById("TBM_INDEXITEM.NUMPARA").value=x;
+					    var paraname="P"+x;
+					    var parasource=paraname+"_src";
+					    var tr="<tr >"+
+					           "<td align='center'><span>"+paraname+":</span>"+
+					           "<input type=\"text\" width='100px' id=\""+paraname+"\"/>"+
+					           "<span>参数来源:</span>"+
+					           "<select id=\""+parasource+"\">"+"<%=parasource%>"+
+					           "</select>"+
+					           "</td>"+
+					           "<td><a href=\"javascript:Goto();\"  style=\"text-decoration: none\"  onclick='{deleteCurrentRow(this);}'>x</a></td>"+
+					           "</tr>"; 
+						$("#paratable").append(tr);
+					    document.getElementById("TBM_INDEXITEM.NUMPARA").value=x;
 			         }else{
 			        	 alert("参数个数超多限制");
 			         }

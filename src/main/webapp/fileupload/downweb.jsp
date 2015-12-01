@@ -1,6 +1,7 @@
 <%@page import="com.common.FileUpload"%>
 <%@page import="java.io.*"%>
 <%@page import="java.util.Map"%>
+<%@page import="com.common.Util"%>
 <%@page import="org.apache.commons.fileupload.FileItem"%>
 <%@page contentType="application/json;charset=utf-8" language="java"  errorPage="" %>
 <%
@@ -8,7 +9,7 @@ response.setContentType("text/html;charset=utf-8");
 java.io.BufferedInputStream bis = null;     
 java.io.BufferedOutputStream bos = null;     
 String fileName = request.getParameter("filename");  
-String filePath = "D:/ftproot/temp/"+fileName; 
+String filePath = Util.getfileCfg().get("uploadfilepath")+fileName; 
 try {     
     long fileLength = new File(filePath).length();     
 

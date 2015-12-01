@@ -4,8 +4,15 @@
 <%
     String year=request.getParameter("year");
     String period=request.getParameter("period");
+    String flag=request.getParameter("flag");
     UserInfo u=(UserInfo)request.getSession().getAttribute("UserInfo");
-    boolean res=AllMeritCollection.meritCollect(year, period,u.getStaffcode(),request.getParameter("op"));
+    boolean res=true;
+    if(flag.equals("staff")){
+    	res = AllMeritCollection.meritCollect(year, period,u.getStaffcode(),request.getParameter("op"));
+    }else{
+    	res= AllMeritCollection.companyMeritCollect(year, period,u.getStaffcode(),request.getParameter("op"));
+    }
+    	
     if(res){
     	response.getWriter().write("»ã×Ü³É¹¦");
     }else{

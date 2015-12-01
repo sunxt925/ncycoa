@@ -9,7 +9,7 @@ import java.util.Map;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.entity.index.Indexitem;
@@ -61,9 +61,9 @@ public class IndexResult {
 			}
 		} else {
 			String p = null;
-			for (Object indexname : para.keySet()) {
-				if (index.getIndexName().equals(indexname)) {
-					p = para.getString(indexname.toString());
+			for (Object indexcode : para.keySet()) {
+				if (index.getIndexCode().equals(indexcode)) {
+					p = para.getString(indexcode.toString());
 					break;
 				}
 			}
@@ -93,12 +93,12 @@ public class IndexResult {
 					if(StringUtils.isBlank(ps[i - 1])){
 						throw new ReviewException("计算指标项[ " + index.getIndexName() + " ]时异常，参数"+ "p" + i + "不能为空");
 					}
-					func = func.replaceAll("p" + i, ps[i - 1]);
+					func = func.replaceAll("p" + i, "("+ps[i - 1]+")");
 				}
 				ScriptEngine se = new ScriptEngineManager().getEngineByName("JavaScript");
 				try {
 					Object eval = se.eval(func);
-					value = (Double) eval;
+					value = Double.parseDouble( eval.toString() );
 				} catch (Exception e) {
 					throw new ReviewException("计算指标项[ " + index.getIndexName() + " ]时异常，值计算公式:\n" + index.getValueFunc());
 				}
@@ -115,7 +115,8 @@ public class IndexResult {
 				try {
 					double eval = 0;
 					for (int i = 0; i < ps.length; i++) {
-						eval += (Double) (se.eval((StringUtils.isBlank(ps[i]) ? "0" : ps[i]) + "*" +  tmps[i]));
+						Object tmpEval = se.eval( (StringUtils.isBlank(ps[i]) ? "0" : ps[i]) + "*" +  tmps[i] );
+						eval += Double.parseDouble( tmpEval.toString() );
 					}
 					value = (Double) eval;
 				} catch (Exception e) {
@@ -138,9 +139,9 @@ public class IndexResult {
 			ScriptEngine se = new ScriptEngineManager().getEngineByName("JavaScript");
 			try {
 				String func = index.getScoreFunc();
-				func = func.replaceAll("x", Double.toString(value));
+				func = func.replaceAll("x", "("+Double.toString(value)+")");
 				Object eval = se.eval(func);
-				score = (Double) eval;
+				score = Double.parseDouble( eval.toString() );
 			} catch (Exception e) {
 				throw new ReviewException("计算指标项[ " + index.getIndexName() + " ]时异常，得分计算公式:\n" + index.getScoreFunc());
 			}
@@ -166,9 +167,9 @@ public class IndexResult {
 			}else{
 				ScriptEngine se = new ScriptEngineManager().getEngineByName("JavaScript");
 				try {
-					func = func.replaceAll("x", Double.toString(value));
+					func = func.replaceAll("x", "("+Double.toString(value)+")");
 					Object eval = se.eval(func);
-					score = (Double) eval;
+					score = Double.parseDouble( eval.toString() );
 				} catch (Exception e) {
 					throw new ReviewException("计算指标项[ " + index.getIndexName() + " ]时异常，得分计算公式:\n" + index.getScoreFunc());
 				}

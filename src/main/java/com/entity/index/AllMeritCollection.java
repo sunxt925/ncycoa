@@ -92,7 +92,7 @@ public class AllMeritCollection {
 		try {
 			Map<String,AllMeritGroupMember> allMeritGroupMembers=AllMeritGroupMember.getAllmember();
 			if(op.equals("recollect")){
-				new StaffAllMerit().delete(year, period);
+				new StaffAllMerit().delete(year, period,"memo!='company'");
 			}
 			int count=0;
 			Iterator iterator=allMeritGroupMembers.entrySet().iterator();
@@ -142,7 +142,7 @@ public class AllMeritCollection {
 			//记录日志
 			if(count!=0){
 				//汇总机构得分
-				if(collectCompanyMerit(year, period, "company")&&collectCompanyMerit(year, period, "depart"))
+				if(collectCompanyMerit(year, period, "depart"))
 				{
 					//虚拟部门综合绩效得分汇总
 					virtualDepartCollet(year, period);
@@ -160,6 +160,24 @@ public class AllMeritCollection {
 			return false;
 		}
 	}
+	/**
+	 * 公司绩效汇总
+	 * @param year
+	 * @param period
+	 * @param operator
+	 * @param op
+	 * @return
+	 */
+	public static boolean companyMeritCollect(String year,String period,String operator,String op){
+		if(op.equals("recollect")){
+			new StaffAllMerit().delete(year, period,"memo='company'");
+		}
+		if(collectCompanyMerit(year, period, "company")){
+			return writeCollectLog(10,year,period,operator);
+		}else{
+			return false;
+		}
+	}
     public static StaffAllMerit getStaffAllMerit(String dclass,AllMeritGroupMember allMeritGroupMember,String[] s3,String year,String period,String allmeritfunc,String flag){
 		
 		return getStaffAllMerit(dclass,allMeritGroupMember, s3, year, period, allmeritfunc, flag,"0");
@@ -168,7 +186,7 @@ public class AllMeritCollection {
 		try {
 			
 			    
-				String carchcode=IndexArchUser.getIndexarchcodeByobject(getOrg(allMeritGroupMember,"company"), flag);
+				//String carchcode=IndexArchUser.getIndexarchcodeByobject(getOrg(allMeritGroupMember,"company"), flag);
 				String darchcode="";
 				if(dclass.equals("D00")){
 					if(!getOrg(allMeritGroupMember,"depart").equals("-1"))//-1表示为虚拟部门
@@ -189,7 +207,8 @@ public class AllMeritCollection {
 				}
 				Double cscore=null;
 				if(cwight!=0){
-					cscore=IndexScore.getScorevalue(getOrg(allMeritGroupMember,"company"),carchcode, year, period);
+					cscore = StaffAllMerit.getStaffMeritScore(getOrg(allMeritGroupMember,"company"), year, period, "company");
+					//cscore=IndexScore.getScorevalue(getOrg(allMeritGroupMember,"company"),carchcode, year, period);
 				}else{
 					cscore=0.0;
 				}
@@ -285,10 +304,15 @@ public class AllMeritCollection {
 		}
 	}
 	
+	/**
+	 * 获取领导分管部门
+	 * @param staffcode
+	 * @return
+	 */
 	public static List<String> getAdminDept(String staffcode){
 		try {
 			DBObject db=new DBObject();
-			String sql="select orgcode from tbm_admindpt where staffcode='"+staffcode+"'";
+			String sql="select orgcode from tbm_admindpt where staffcode='"+staffcode+"' and adminmode='绩效'";
 			DataTable dt=db.runSelectQuery(sql);
 			List<String> orgList=new ArrayList<String>();
 			if(dt!=null&&dt.getRowsCount()>=1){
@@ -407,7 +431,7 @@ public class AllMeritCollection {
 							if(dt3!=null&&dt3.getRowsCount()==1){
 								orgcode=dt3.get(0).getString("orgcode");
 								if(orgcode.equals("NC.01")){
-									return "-1";
+									return "NC.01.00";
 								}
 								if(Integer.parseInt(dt3.get(0).getString("adminclass"))==flag){
 									return orgcode;

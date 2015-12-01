@@ -168,6 +168,10 @@ function dele(orgcode)
     }else if (dt!=null && dt.getRowsCount()>0) {
 		TableUtil tableutil=new TableUtil();
 		tableutil.setDt(dt);
+		tableutil.setDisplayCol("goodscode,确认日期,isconfirm");
+		tableutil.setRowCode("领用人", "@领用人@,base_staff,staffcode,staffname");
+		tableutil.setRowCode("领用部门", "@领用部门@,base_org,orgcode,orgname");
+		tableutil.setRowCode("是否确认", "@是否确认@,YESNO");
 	   out.print(tableutil.DrawTable());
 	%>
       

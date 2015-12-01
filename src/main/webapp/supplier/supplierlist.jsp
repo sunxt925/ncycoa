@@ -26,7 +26,7 @@
 		<h:dgColumn field="registMoney" title="注册资金" ></h:dgColumn>
 		<h:dgColumn field="agent" title="代理人" ></h:dgColumn>
 		<h:dgColumn field="inputTime" title="入库时间" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn>
-		<h:dgColumn field="outputTime" title="出库时间" dateFormatter="yyyy-MM-dd" hidden="true"></h:dgColumn>
+		<h:dgColumn field="outputTime" title="有效期" dateFormatter="yyyy-MM-dd"></h:dgColumn>
 		<h:dgToolBar url="supplier.htm?addi" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
 		<h:dgToolBar url="supplier.htm?del" icon="icon-remove" funname="del" title="删除"></h:dgToolBar>
 		<h:dgToolBar url="supplier.htm?update" icon="icon-reload" funname="myedit" title="更新"></h:dgToolBar>

@@ -118,4 +118,77 @@ public class PendingTask {
 		this.ceilingEntityId = ceilingEntityId;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((ceilingEntityId == null) ? 0 : ceilingEntityId.hashCode());
+		result = prime * result + ((content == null) ? 0 : content.hashCode());
+		result = prime * result + ((formKey == null) ? 0 : formKey.hashCode());
+		result = prime * result + ((genDate == null) ? 0 : genDate.hashCode());
+		result = prime * result + ((handleDate == null) ? 0 : handleDate.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((participant == null) ? 0 : participant.hashCode());
+		result = prime * result + ((participantValue == null) ? 0 : participantValue.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PendingTask other = (PendingTask) obj;
+		if (ceilingEntityId == null) {
+			if (other.ceilingEntityId != null)
+				return false;
+		} else if (!ceilingEntityId.equals(other.ceilingEntityId))
+			return false;
+		if (content == null) {
+			if (other.content != null)
+				return false;
+		} else if (!content.equals(other.content))
+			return false;
+		if (formKey == null) {
+			if (other.formKey != null)
+				return false;
+		} else if (!formKey.equals(other.formKey))
+			return false;
+		if (genDate == null) {
+			if (other.genDate != null)
+				return false;
+		} else if (!genDate.equals(other.genDate))
+			return false;
+		if (handleDate == null) {
+			if (other.handleDate != null)
+				return false;
+		} else if (!handleDate.equals(other.handleDate))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (participant == null) {
+			if (other.participant != null)
+				return false;
+		} else if (!participant.equals(other.participant))
+			return false;
+		if (participantValue == null) {
+			if (other.participantValue != null)
+				return false;
+		} else if (!participantValue.equals(other.participantValue))
+			return false;
+		if (status == null) {
+			if (other.status != null)
+				return false;
+		} else if (!status.equals(other.status))
+			return false;
+		return true;
+	}
+	
 }

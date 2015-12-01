@@ -24,9 +24,14 @@ public class SupplierExit {
 	@Column(name="SUPPLIER_ID")
 	private Long id;
 	
+	@Column(name="SUPPLIER_CODE")
+	private String code;   // 供货商编码
+	
 	@Column(name="SUPPLIER_NAME")
 	private String name;   // 供货商名称
 	
+	@Column(name="FOBBIDEN_TIME")
+	private Integer fobbidenTime;   // 禁入年限
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="EXIT_TIME")
@@ -74,6 +79,27 @@ public class SupplierExit {
 	public void setReason(Short reason) {
 		this.reason = reason;
 	}
+
+
+	public String getCode() {
+		return code;
+	}
+
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+
+	public Integer getFobbidenTime() {
+		return fobbidenTime;
+	}
+
+
+	public void setFobbidenTime(Integer fobbidenTime) {
+		this.fobbidenTime = fobbidenTime;
+	}
+	
 
 	
 }

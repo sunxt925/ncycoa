@@ -105,7 +105,12 @@ function F5()
 
 function detail(eventid)
 {
-	createwindow('Ã÷Ï¸', "goodsmanage/goodsinformOUTdetail.jsp?StoreEventNo="+eventid,1000,550)
+	createwindow('Ã÷Ï¸', "goodsmanage/goodsinformOUTdetail.jsp?StoreEventNo="+eventid,1000,550);
+}
+function exp_out(eventid)
+{
+	
+	window.location.href="exportdata.jsp?flag=out&storeEventNo="+eventid;
 }
 function dele(eventid)
 {

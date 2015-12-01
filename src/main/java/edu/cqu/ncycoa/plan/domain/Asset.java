@@ -3,6 +3,8 @@ package edu.cqu.ncycoa.plan.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -24,6 +26,18 @@ public class Asset {
 	
 	@Column(name="EXT_NAME")
 	private String extName;
+	
+	@ManyToOne
+	@JoinColumn(name = "TASK_ID")
+	private PlanTask task;
+
+	public PlanTask getTask() {
+		return task;
+	}
+
+	public void setTask(PlanTask task) {
+		this.task = task;
+	}
 
 	public String getId() {
 		return id;

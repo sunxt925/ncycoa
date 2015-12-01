@@ -5,7 +5,7 @@ public class IndexBizPara {
 	private String code;
 	private String name;
 	private String period;
-	private int defaultValue;
+	private Integer defaultValue;
 	
 	public String getCode() {
 		return code;
@@ -28,7 +28,8 @@ public class IndexBizPara {
 	public int getDefaultValue() {
 		return defaultValue;
 	}
-	public void setDefaultValue(int defaultValue) {
+	public void setDefaultValue(Integer defaultValue) {
 		this.defaultValue = defaultValue;
 	}
+	
 }
