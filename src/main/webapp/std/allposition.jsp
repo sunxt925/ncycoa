@@ -7,7 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
-<TITLE>四川省南充烟草公司</TITLE>
+<TITLE>南充烟草专卖局</TITLE>
 <link rel="stylesheet" type="text/css" href="<%=path%>/css/style.css">
 <link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/icon.css">
