@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import edu.cqu.ncycoa.common.service.CommonService;
+import edu.cqu.ncycoa.plan.domain.DptReview;
 import edu.cqu.ncycoa.plan.domain.PlanInstance;
 import edu.cqu.ncycoa.plan.domain.PlanStep;
 import edu.cqu.ncycoa.plan.domain.PlanTask;
@@ -22,8 +23,10 @@ public interface PlanService extends CommonService{
 
 	public abstract Map<PlanStep, List<PlanTask>> findAllTasksByPlanId(Long planId);
 
-	public abstract void planReview(Long id, String result);
+	public abstract void userReview(Long id, String result);
 
 	public abstract PlanInstance findPlanInstanceByTaskId(Long taskId);
+
+	public abstract void dptReview(Long id, String result);
 
 }
