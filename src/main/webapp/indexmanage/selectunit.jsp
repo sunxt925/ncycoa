@@ -44,7 +44,7 @@ String basePath = request.getScheme()+"://"+
 	  			      columns:[[
 	  			       {filed:'ck',checkbox:true},
 	  			      {field:'orgcode',title:'机构编码',width:100},
-	  			      {field:'orgname',title:'机构名称',width:100}
+	  			      {field:'orgname',title:'机构名称',width:250}
 	  			      ]]
 	  			      });
 	  			}
