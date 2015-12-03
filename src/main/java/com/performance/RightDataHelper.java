@@ -79,7 +79,7 @@ public class RightDataHelper {
 	public static void insertTask(String staffcode, String taskType, String orgcode){
 		try {
 			DBObject db=new DBObject();
-			db.run("delete from tbm_meritinputtaskperson where tasktype = '" + taskType + "' and staffcode='" + staffcode + "' and (orgcode is null or orgcode='"+orgcode+"'");
+			db.run("delete from tbm_meritinputtaskperson where tasktype = '" + taskType + "' and staffcode='" + staffcode + "' and (orgcode is null or orgcode='"+orgcode+"')");
 			
 			String sql="insert into tbm_meritinputtaskperson(staffcode,tasktype,orgcode,adminmode) values(?,?,?,0)";
 			Parameter.SqlParameter[] paras = new Parameter.SqlParameter[]{new Parameter.String(staffcode), new Parameter.String(taskType), new Parameter.String(orgcode)};
