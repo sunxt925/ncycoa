@@ -52,9 +52,10 @@ function changetopunit(unitccm)
 }
 </script>
 <BODY class="mainbody" onLoad="this.focus()">
-<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
 <form name="form1" id="form1" method="post" action="../servlet/PageHandler">
   
+
+<table width="100%" height="700px" border="0" cellpadding="0" cellspacing="0">
 
   <tr>
     <td colspan="3" valign="top" class="main_table_centerbg" align="center">
@@ -82,7 +83,8 @@ function changetopunit(unitccm)
     <td height="5" class="main_table_bottombg"></td>
     <td height="5" align="right" class="main_table_bottombg"><img src="../images/table_rb.jpg" width="10" height="5"></td>
   </tr>
-</form>
+
 </table>
+</form>
 </BODY>
 </HTML>

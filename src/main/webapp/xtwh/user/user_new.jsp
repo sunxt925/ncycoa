@@ -402,17 +402,7 @@ function myidcard()
   </tr>
 </form>
 
-<form name="form2" id="form2" method="post" action="../../servlet/PageHandler">
- <input name="orgcode" type="hidden" id="orgcode" value="<%=orgcode %>">
- <input name="orgname" type="hidden" id="orgname" value="<%=orgname %>">
- <input name="positioncode" type="hidden" id="positioncode" value="<%=positioncode %>">
- <input name="positionname" type="hidden" id="positionname" value="<%=positionname %>">
- <input name="idcard0" type="hidden" id="idcard0" >
- <input name="act" type="hidden" id="act" value="get"/>
- <input name="action_class" type="hidden" id="dao_class" value="com.action.system.StaffAction">
- <input type="submit" name="Submit0" value="Ìá½»" style="display:none">
-
-</form>
+ 
 </table>
 </BODY>
 </HTML>

@@ -129,7 +129,7 @@ else if(orgclass.equals("00080002"))
            <input type="reset" name="reset" value="ÖØÖÃ" style="display:none">
           <input name="action_class" type="hidden" id="action_class" value="com.action.system.StaffAction"></td>
       </tr>
-      
+      <input type="button" id="btn_ok" style="display: none" onclick="ret()">
    
     </table></td>
   </tr>
@@ -140,5 +140,12 @@ else if(orgclass.equals("00080002"))
   </tr>
 </form>
 </table>
+<script type="text/javascript">
+function ret(){
+	var api = frameElement.api;
+ 	document.all("Submit").click();
+ 	(api.data)({code:"refresh"});
+}
+</script>
 </BODY>
 </HTML>

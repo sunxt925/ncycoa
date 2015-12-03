@@ -24,7 +24,7 @@ if (unitccm.equals("")) unitccm="NC";
 <script language="javascript" src="<%=path%>/js/public/key.js"></script>
 <script type="text/javascript" src="<%=path%>/jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
 <BODY class="mainbody" onLoad="this.focus()">
-<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="100%" height="700px" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td width="3%" class="main_table_topbg" height="0"><img src="../images/table_lt.jpg" width="22" height="31"></td>
     <td width="94%" valign="middle" class="main_table_topbg" height="0"> </td>
@@ -33,7 +33,7 @@ if (unitccm.equals("")) unitccm="NC";
 
   <tr>
     <td colspan="3" valign="top" class="main_table_centerbg" align="center">
-    <table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
+    <table width="100%" height="700px" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td width="250" valign="top">
 		<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">

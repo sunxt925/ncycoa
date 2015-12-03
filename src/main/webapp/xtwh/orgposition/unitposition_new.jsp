@@ -38,7 +38,7 @@ function searchName()
 	var name=document.getElementById("search").value;
 	var rand=Math.floor(Math.random()*10000);
 	var reload=document.getElementById("reload");
-	reload.href="unitposition_new.jsp?sid="+rand+"&bm="+"<%=bm%>"+"&name="+name;
+	window.location.href="unitposition_new.jsp?sid="+rand+"&bm="+"<%=bm%>"+"&name="+name;
 	reload.click();
 	
 }
