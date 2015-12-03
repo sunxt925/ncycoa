@@ -484,6 +484,9 @@ public class IndexDataHelper {
 		Iterator<ReviewableObj> iter = objs.iterator();
 		while(iter.hasNext()){
 			ReviewableObj obj = iter.next();
+			if(scores.get(obj.getCode()) == null) {
+				continue;
+			}
 			sb.append(",").append("\"obj_").append(obj.getCode()).append("\":").append(scores.get(obj.getCode()).get(item.getIndexCode()));
 		}
 		sb.append(",\"children\":").append("[");
