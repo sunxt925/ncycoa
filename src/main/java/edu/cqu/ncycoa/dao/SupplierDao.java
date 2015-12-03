@@ -83,7 +83,7 @@ public class SupplierDao {
 		
 		try {
 			DBObject db = new DBObject();
-			String sql = "select * from BASE_ORGMEMBER where staffcode=?";
+			String sql = "select * from BASE_ORGMEMBER where staffcode=? and orgcode like 'NC.01%'";
 			Parameter.SqlParameter[] pp = new Parameter.SqlParameter[] { new Parameter.String(SystemUtils.getSessionUser().getStaffcode()) };
 
 			DataTable dt = db.runSelectQuery(sql, pp);
