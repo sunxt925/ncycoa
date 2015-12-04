@@ -129,7 +129,9 @@ public class PerformanceHandler extends HttpServlet implements Servlet{
 				count++;
 			}
 		}
-		sb.delete(sb.length() - 1, sb.length());
+		if(sb.length() > 0){
+			sb.delete(sb.length() - 1, sb.length());
+		}
 		
 		int status = 0;
 		String msg = "";
@@ -157,7 +159,8 @@ public class PerformanceHandler extends HttpServlet implements Servlet{
 			String indexcode = obj.getString("indexcode");
 			String periodcode = obj.getString("periodcode");
 			
-			conn.createStatement().execute("delete from tbm_indexscoredetail where indexcode like '"+ indexcode +"%' and scoreyear='" + relateyear + "' and scoreperiod='" + periodcode + "'");
+			conn.createStatement().execute("delete from tbm_indexscoredetail where indexcode like '"+ indexcode +"%' and scoreyear='" + relateyear + "' and scoreperiod='"
+						+ periodcode + "' and objectcode in (" + sb.toString() + ") and objecttype='" + objType +"'");
 			
 			ps.setString(1, eventno);
 			ps.setString(2, objType);
