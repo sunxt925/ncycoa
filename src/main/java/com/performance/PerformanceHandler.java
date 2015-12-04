@@ -125,7 +125,7 @@ public class PerformanceHandler extends HttpServlet implements Servlet{
 			if(objcode.toString().startsWith("obj_")){
 				ReviewEntity e = new ReviewEntity(objcode.toString().substring(4), objType, indexScore);
 				entities.add(e);
-				sb.append(e.getObjReviewed().toString()).append(",");
+				sb.append("'"+e.getObjReviewed().toString()+"'").append(",");
 				count++;
 			}
 		}
