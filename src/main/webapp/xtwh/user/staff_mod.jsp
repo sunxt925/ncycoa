@@ -252,7 +252,7 @@ function myidcard()
       <tr>
       <input type="submit" name="Submit" value="Ìá½»" style="display:none">
       </tr>
-  
+  <input type="button" id="btn_ok" style="display: none" onclick="ret()">
     </table></td>
   </tr>
   <tr>
@@ -262,5 +262,12 @@ function myidcard()
   </tr>
 </form>
 </table>
+<script type="text/javascript">
+function ret(){
+	var api = frameElement.api;
+ 	document.all("Submit").click();
+ 	(api.data)({code:"refresh"});
+}
+</script>
 </BODY>
 </HTML>

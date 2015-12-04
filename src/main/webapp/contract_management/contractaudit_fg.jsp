@@ -61,14 +61,7 @@ $(function() {
 				<div id="p" class="easyui-panel" title="合同表单"
 					style="width:700px;height:300px;padding:10px;">
 					<table style="width:100%;border-spacing:1px;" class="formtable">
-	<tr>
-		<td align="right"><label class="Validform_label"> 合同编码test </label></td>
-		<td class="value">
-		<label>${contract.code}</label>
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-
+	
 	<tr>
 		<td align="right"><label class="Validform_label"> 合同名称 </label></td>
 		<td class="value">

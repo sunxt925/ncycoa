@@ -62,22 +62,38 @@ else if(orgclass.equals("00080002"))
 
 <script language="javascript">
 function returnValue(data){
-	var d = data.code;
-	d.positioncode="<%=positioncode%>";
-	d.positionname="<%=positionname%>";
-	d.orgcode="<%=orgcode%>";
-	d.orgname="<%=orgname%>";
-	var url = "<%=path%>";
-	url = url+"/staff.htm?addorgmember&obj="+JSON.stringify(d);
-    $.post(url,function(_data,status){
-    	var _d = eval("["+_data+"]");
-    	
-		if(_d[0].msg=="1"){
-			window.location.reload();
-		}else{
-			alert("添加失败");
-		}
-	});  
+	 var d = data.code;
+	 if(d!="refresh"){
+		 d.positioncode="<%=positioncode%>";
+			d.positionname="<%=positionname%>";
+			d.orgcode="<%=orgcode%>";
+			d.orgname="<%=orgname%>";
+			var url = "<%=path%>";
+			url = url+"/staff.htm?addorgmember&obj="+JSON.stringify(d);
+		    $.post(url,function(_data,status){
+		    	var _d = eval("["+_data+"]");
+		    	
+				if(_d[0].msg=="1"){
+					window.location.reload();
+				}else{
+					alert("添加失败");
+				}
+			});   
+	 }else{
+		 setTimeout(function(){
+			 var positioncode="<%=positioncode%>";
+		     var positionname="<%=positionname%>";
+		     var orgcode="<%=orgcode%>";
+			 var orgname="<%=orgname%>";
+			 var orgclass="<%=orgclass%>";
+			 var para="positioncode="+positioncode+"&positionname="+positionname+"&orgcode="+orgcode+"&orgname="+orgname+"&orgclass="+orgclass;
+			 var rand=Math.floor(Math.random()*10000);
+			 window.location.href="member_list.jsp?random="+rand+"&"+para;
+		},200);
+	 }
+	
+	
+	
 }
 function createwindow(title, url, width, height) {
 	
@@ -249,7 +265,6 @@ function F3()
 <a href='#' onClick="positioninfo()" ><%=org %></a>
 <a href='#' onClick="modstaff()" >基本信息</a>
 <a href='#' onClick="chooseuser('<%=orgcode %>')" >选择员工</a>
-<a href='#' onClick="positioninfo()" ><%=org %></a>
 
 </td>
 </tr>
