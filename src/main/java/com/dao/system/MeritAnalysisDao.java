@@ -67,6 +67,9 @@ public class MeritAnalysisDao {
 		
 		return sBuilder.toString();
 	}
+    public String getCompareRes(String indexcode,String year,String month){
+    	return getCompareRes(indexcode,year,month,null);
+    }
 	/**
 	 * 构造比较结果
 	 * @param indexcode
@@ -74,9 +77,9 @@ public class MeritAnalysisDao {
 	 * @param month
 	 * @return
 	 */
-	public String getCompareRes(String indexcode,String year,String month){
+	public String getCompareRes(String indexcode,String year,String month,String[] obj){
 		
-		List<IndexScoreDetial> indexScoreDetials = getIndexscoreDetials(getCompareDb(indexcode, year, month));
+		List<IndexScoreDetial> indexScoreDetials = getIndexscoreDetials(getCompareDb(indexcode, year, month,obj));
 		StringBuilder sBuilder = new StringBuilder();
 		sBuilder.append("");
 		if(getCompareDb(indexcode, year, month).getRowsCount() == 0){
@@ -174,8 +177,26 @@ public class MeritAnalysisDao {
 		return sum / indexScoreDetials.size();
 	}
 	public DataTable getCompareDb(String indexcode,String year,String month){
+	 return getCompareDb(indexcode,year,month,null);	
+	}
+	public DataTable getCompareDb(String indexcode,String year,String month,String[] obj){
 		try {
-			String sql = "select * from tbm_indexscoredetail where indexcode=? and scoreyear=? and scoreperiod=? order by objectcode";
+			String sql="";
+			if(obj==null){
+				sql = "select * from tbm_indexscoredetail where indexcode=? and scoreyear=? and scoreperiod=? order by objectcode";
+			}else{
+				StringBuilder sbBuilder = new StringBuilder();
+				sbBuilder.append("");
+				
+				for(int i=0;i<obj.length;i++){
+					List<String> staffs = StaffDao.getstafflistByorg(obj[i]);
+					for(String s: staffs){
+						sbBuilder.append("'"+s+"'").append(",");
+					}
+				}
+				sbBuilder.delete(sbBuilder.length()-1, sbBuilder.length());
+				sql = "select * from tbm_indexscoredetail where indexcode=? and scoreyear=? and scoreperiod=? and objectcode in ("+sbBuilder.toString()+")  order by objectcode";
+			}
 			Parameter.SqlParameter[] pp = new  Parameter.SqlParameter[]{
 				new Parameter.String(indexcode),
 				new Parameter.String(year),
