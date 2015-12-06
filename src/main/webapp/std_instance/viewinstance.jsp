@@ -91,9 +91,11 @@ for (HistoricProcessInstance processInstance : historyService.createHistoricProc
 			    <td><%=staffname%></td>
 			    <td><%=sdf.format(processInstance.getStartTime())%></td>
 			    <td><%=endtime%></td>
-			    <td><a href="#" class="easyui-linkbutton"
+			    <td>
+			    <% if(endtime.equals("")){%><a href="#" class="easyui-linkbutton"
 				        data-options="iconCls:'icon-reload',plain:true" 
 				        onclick="view('<%= processInstance.getId()%>')">查看实例图</a>
+				        <%} %>
 				                         </td>
 			</tr>
 			<%}
@@ -124,9 +126,7 @@ for (HistoricProcessInstance processInstance : historyService.createHistoricProc
 			    <td><%=staffname%></td>
 			    <td><%=sdf.format(processInstance.getStartTime())%></td>
 			    <td><%=endtime%></td>
-			    <td><a href="#" class="easyui-linkbutton"
-				        data-options="iconCls:'icon-reload',plain:true" 
-				        onclick="view('<%= processInstance.getId()%>')">查看实例图</a>
+			    <td>
 				                         </td>
 			</tr>
 			<%}
