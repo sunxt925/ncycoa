@@ -539,16 +539,33 @@ public class PlanManagementController {
 		TagUtil.datagrid(response, dg);
 	}
 	
-	@RequestMapping(params="review_post")
+	@RequestMapping(params="user_review_post")
 	@ResponseBody
-	public void review_post(Long id, String result, HttpServletResponse response) {
+	public void user_review_post(Long id, String result, HttpServletResponse response) {
 		AjaxResultJson j = new AjaxResultJson();
 		String message;
 		
 		if(!"10".equals(result) && !"0".equals(result) && !"-10".equals(result)){
 			message = "参数不正确";
 		} else {
-			planService.planReview(id, result);
+			planService.userReview(id, result);
+			message = "评价结果已更新";
+		}
+		
+		j.setMsg(message);
+		SystemUtils.jsonResponse(response, j);
+	}
+	
+	@RequestMapping(params="dpt_review_post")
+	@ResponseBody
+	public void dpt_review_post(Long id, String result, HttpServletResponse response) {
+		AjaxResultJson j = new AjaxResultJson();
+		String message;
+		
+		if(!"10".equals(result) && !"0".equals(result) && !"-10".equals(result)){
+			message = "参数不正确";
+		} else {
+			planService.dptReview(id, result);
 			message = "评价结果已更新";
 		}
 		
@@ -631,9 +648,6 @@ public class PlanManagementController {
 			commonService.getDataGridReturn(cq, true);
 			TagUtil.datagrid(response, dg);
 		}
-		cq.setTqBuilder(tqBuilder);
-		commonService.getDataGridReturn(cq, true);
-		TagUtil.datagrid(response, dg);
 	}
 	
 	

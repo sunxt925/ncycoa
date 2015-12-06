@@ -176,7 +176,7 @@ public class PendingTaskServiceImpl extends CommonServiceImpl implements Pending
 			tmpReivew.setYear((short)now.get(Calendar.YEAR));
 			tmpReivew.setOrgCode(departId);
 			tmpReivew.setOrgName(depart.getName());
-			tmpReivew.setResult("");
+			tmpReivew.setResult(" ");
 			
 			commonDao.saveEntity(tmpReivew);
 		} else {
@@ -229,7 +229,7 @@ public class PendingTaskServiceImpl extends CommonServiceImpl implements Pending
 				tmpReivew.setParticipantCode(userid);
 				tmpReivew.setParticipantName(p2Name.get(userid));
 				tmpReivew.setDepartId(planInstance.getPlan().getDepartId());
-				tmpReivew.setResult("");
+				tmpReivew.setResult(" ");
 				tmpReivew.setStatistics(p2Over.get(userid)+ "/" + p2Task.get(userid).size());
 				tmpReivew.setOverDeadTimeCounts(p2Over.get(userid));
 				tmpReivew.setNoOverDeadTimeCounts(p2Task.get(userid).size() - p2Over.get(userid));

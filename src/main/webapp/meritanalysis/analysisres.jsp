@@ -40,7 +40,14 @@ String basePath = request.getScheme()+"://"+
  <body>
    <%
       if(request.getParameter("class").equals("compare")){
-    	  out.write(new MeritAnalysisDao().getCompareRes(indexcode, year, month));
+    	  String objs = request.getParameter("objs");
+    	  if(objs!=null&&!objs.equals("")){
+    		  String[] obj = objs.split(",");
+    		  out.write(new MeritAnalysisDao().getCompareRes(indexcode, year, month,obj));
+    	  }else{
+    		  out.write(new MeritAnalysisDao().getCompareRes(indexcode, year, month));
+    	  }
+    	  
       }else{
     	  out.write(new MeritAnalysisDao().getDeductRes(indexcode, year, month));
       }

@@ -49,11 +49,7 @@ function F8()
 <BODY class="mainbody" onLoad="document.all('staffcode').focus();">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
 <form name="form1" id="form1" method="post" action="../../servlet/PageHandler">
-  <tr>
-    <td width="3%" class="main_table_topbg" height="31"><img src="../../images/table_lt.jpg" width="22" height="31"></td>
-    <td width="94%" valign="middle" class="main_table_topbg" height="31">首页 &gt;&gt; 系统维护 &gt;&gt; 员工维护  &gt;&gt; 登陆信息</td>
-    <td width="3%" align="right" class="main_table_topbg" height="31"><img src="../../images/table_rt.jpg" width="22" height="31"></td>
-  </tr>
+  
       <tr>
     <td> <a id="F8" style="display:none" href="#" onClick="F8()">保存[F8]</a></td>
   </tr>
@@ -98,26 +94,30 @@ function F8()
 			</tr>
       
     
-      <tr>
        
           <input name="act" type="hidden" id="act" value="modify">
           <input name="staffcode" type="hidden" id="staffcode" value="<%=staffcode %>">
           
           <input type="reset" name="reset" value="重置" style="display:none">
           <input name="action_class" type="hidden" id="action_class" value="com.action.system.UserLoginAction"></td>
-      </tr>
       
-      <tr>
+       <input type="button" id="btn_ok" style="display: none" onclick="ret()">
       <input type="submit" name="Submit" value="提交" style="display:none" >
-      </tr>
     </table></td>
   </tr>
-  <tr>
+ <!--  <tr>
     <td height="5" class="main_table_bottombg"><img src="../../images/table_lb.jpg" width="10" height="5"></td>
     <td height="5" class="main_table_bottombg"></td>
     <td height="5" align="right" class="main_table_bottombg"><img src="../../images/table_rb.jpg" width="10" height="5"></td>
-  </tr>
+  </tr> -->
 </form>
 </table>
+<script type="text/javascript">
+function ret(){
+	var api = frameElement.api;
+ 	document.all("Submit").click();
+ 	(api.data)({code:"refresh"});
+}
+</script>
 </BODY>
 </HTML>

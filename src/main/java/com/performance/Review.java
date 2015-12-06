@@ -158,7 +158,7 @@ public class Review {
 	
 	public List<ReviewTask> getReviewTasks(String type){
 		try {
-			Map<String, List<ReviewableObj>> maps = new HashMap<String, List<ReviewableObj>>();
+			Map<String, List<ReviewableObj>> indexToObjMap = new HashMap<String, List<ReviewableObj>>();
 			DBObject db = new DBObject();
 			String sql = "select indexarchcode,objectcode,objecttype from tbm_indexarchuser where objecttype='" + type + "'";
 			DataTable dt = db.runSelectQuery(sql);
@@ -177,19 +177,19 @@ public class Review {
 					}
 					
 					List<ReviewableObj> tmp = null;
-					if(maps.containsKey(archcode)){
-						tmp = maps.get(archcode);
+					if(indexToObjMap.containsKey(archcode)){
+						tmp = indexToObjMap.get(archcode);
 					} else {
 						tmp = new ArrayList<ReviewableObj>();
-						maps.put(archcode, tmp);
+						indexToObjMap.put(archcode, tmp);
 					}
 					tmp.add(obj);
 				}
 			}
 			
 			List<ReviewTask> returnValue = new ArrayList<ReviewTask>();
-			for(String key : maps.keySet()){
-				List<ReviewableObj> tmp = maps.get(key);
+			for(String index : indexToObjMap.keySet()){
+				List<ReviewableObj> tmp = indexToObjMap.get(index);
 				tmp = filter(tmp);
 				if(tmp.size() > 0){
 					
@@ -202,7 +202,7 @@ public class Review {
 					
 					ReviewTask task = new ReviewTask(user, type);
 					task.setReviewees(tmp);
-					task.setIndexArch(new Indexitem(key));
+					task.setIndexArch(new Indexitem(index));
 					returnValue.add(task);
 				}
 			}
@@ -487,11 +487,11 @@ public class Review {
 	 * @return
 	 */
 	private List<ReviewableObj> filter(List<ReviewableObj> objs){
-		Map<String, ReviewableObj> oldValues = new HashMap<String, ReviewableObj>();
+		Map<String, ReviewableObj> codeToObjMap = new HashMap<String, ReviewableObj>();
 		Iterator<ReviewableObj> iter = objs.iterator();
 		while(iter.hasNext()){
 			ReviewableObj tmp = iter.next();
-			oldValues.put(tmp.getCode(), tmp);
+			codeToObjMap.put(tmp.getCode(), tmp);
 		}
 		
 		List<ReviewableObj> returnValue = new ArrayList<ReviewableObj>();
@@ -503,10 +503,13 @@ public class Review {
 				for (int i = 0; i < dt.getRowsCount(); i++) {
 					DataRow r = dt.get(i);
 					String orgcode = r.getString("orgcode");
+					if(orgcode == null || "".equals(orgcode.trim())) {
+						continue;
+					}
 					String tasktype = r.getString("tasktype");
 					if(tasktype.equals("company")){
-						if(oldValues.containsKey(orgcode)){
-							returnValue.add(oldValues.get(orgcode));
+						if(codeToObjMap.containsKey(orgcode)){
+							returnValue.add(codeToObjMap.get(orgcode));
 						}
 					} else if(tasktype.equals("depart")){
 						sql = "select orgcode from base_org where orgcode like '" + orgcode + "%'";
@@ -514,8 +517,8 @@ public class Review {
 						if(dt2 != null){
 							for(int j=0; j<dt2.getRowsCount(); j++){
 								String tmp = dt2.get(j).getString("orgcode");
-								if(oldValues.containsKey(tmp)){
-									returnValue.add(oldValues.get(tmp));
+								if(codeToObjMap.containsKey(tmp)){
+									returnValue.add(codeToObjMap.get(tmp));
 								}
 							}
 						}
@@ -525,8 +528,8 @@ public class Review {
 						if(dt2 != null){
 							for(int j=0; j<dt2.getRowsCount(); j++){
 								String tmp = dt2.get(j).getString("staffcode");
-								if(oldValues.containsKey(tmp)){
-									returnValue.add(oldValues.get(tmp));
+								if(codeToObjMap.containsKey(tmp)){
+									returnValue.add(codeToObjMap.get(tmp));
 								}
 							}
 						}

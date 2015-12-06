@@ -29,11 +29,11 @@ a.dgopt{
 		<h:dgColumn field="statistics" title="统计"></h:dgColumn>
 		<h:dgColumn field="overDeadTimeCounts" title="超时"></h:dgColumn>
 		<h:dgColumn field="noOverDeadTimeCounts" title="正常"></h:dgColumn>
-		<h:dgColumn field="result" title="评价"></h:dgColumn>
+		<h:dgColumn field="result" title="评价" style="color:#4d77cc_好,color:#ce3f38_中,color:#5eaf5e_差"></h:dgColumn>
 		<h:dgColumn title="操作" field="opt"></h:dgColumn>
-		<h:dgConfOpt url="plan-management.htm?review_post&id={id}&result=10" title="好" message="确定对该计划进行评价？评价后结果将不能修改" exp="result#empty#true"></h:dgConfOpt>
-		<h:dgConfOpt url="plan-management.htm?review_post&id={id}&result=0" title="中" message="确定对该计划进行评价？评价后结果将不能修改" exp="result#empty#true"></h:dgConfOpt>
-		<h:dgConfOpt url="plan-management.htm?review_post&id={id}&result=-10" title="差" message="确定对该计划进行评价？评价后结果将不能修改" exp="result#empty#true"></h:dgConfOpt>
+		<h:dgConfOpt url="plan-management.htm?user_review_post&id={id}&result=10" title="好" message="确定对该计划进行评价？评价后结果将不能修改" exp="result#empty#true"></h:dgConfOpt>
+		<h:dgConfOpt url="plan-management.htm?user_review_post&id={id}&result=0" title="中" message="确定对该计划进行评价？评价后结果将不能修改" exp="result#empty#true"></h:dgConfOpt>
+		<h:dgConfOpt url="plan-management.htm?user_review_post&id={id}&result=-10" title="差" message="确定对该计划进行评价？评价后结果将不能修改" exp="result#empty#true"></h:dgConfOpt>
 	</h:datagrid>
 </body>
 

@@ -73,7 +73,8 @@ String basePath = request.getScheme()+"://"+
             	  }%>
          
           </select>
-          
+          <a id="btn_searchobj" href="#" class="easyui-linkbutton"
+				data-options="iconCls:'icon-search',plain:true">对比分析</a>
     </div>
     
     <div data-options="region:'center',split:true" style="padding:5px;background:#fff;">
@@ -93,7 +94,10 @@ String basePath = request.getScheme()+"://"+
         	 $("#year").val(year);
         }
         $("#btn_search").click(function(){
-        	createwindow("选择指标","meritanalysis/selectindex.jsp",500,400);
+        	createwindow("选择指标","meritanalysis/selectindex.jsp",500,400,returnvalue);
+    	    });
+        $("#btn_searchobj").click(function(){
+        	createwindow("对比分析","meritanalysis/contrastanalysis.jsp",500,400,returnobjvalue);
     	    });
         function selectmonth(record){
             var year=$("#year").val();
@@ -119,9 +123,9 @@ String basePath = request.getScheme()+"://"+
             	window.open("analysisres.jsp?class=compare&indexcode="+indexcode+"&year="+year+"&month="+month,"analysisres");
             }
        }
-        function createwindow(title, url, width, height) {
+        function createwindow(title, url, width, height,fun) {
       	  $.dialog({
-      		  data:returnvalue,
+      		  data:fun,
       		  id:'LHG1976D',
       		  content : 'url:' + url,
       		  lock : true,
@@ -144,6 +148,34 @@ String basePath = request.getScheme()+"://"+
         	$('#index').val(data.indexname);
         	$('#standardscore').val(data.standardscore);
         	$('#indexcode').val(data.indexcode);
+        }
+        function returnobjvalue(data){
+        	var v = data.code;
+        	var objs = "";
+        	
+        	if(v.length!=0){
+        		for(var i=0;i<v.length;i++){
+        			objs+=v[i]+",";
+        		}
+        		if($("#indexcode").val()==""){
+                	alert("请选择指标项");
+                }
+                if($("#year").val()==""){
+                	alert("请选择年度");
+                }
+                if($("#month").val()==""){
+                	alert("请选择月度");
+                }
+                if($("#index").val()!=""&&$("#year").val()!=""&&$("#month").val()!=""){
+                	var indexcode=$("#indexcode").val();
+                	var year=$("#year").val();
+                	var month=$("#month").val();
+                	window.open("meritanalysis/analysisres.jsp?class=compare&indexcode="+indexcode+"&year="+year+"&month="+month+"&objs="+objs,"analysisres");
+                }
+        	}else{
+        		alert('没有选择对比对象');
+        	}
+            
         }
     </script>
 </html>

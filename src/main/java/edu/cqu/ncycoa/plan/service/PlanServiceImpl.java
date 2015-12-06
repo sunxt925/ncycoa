@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.cqu.ncycoa.common.service.CommonServiceImpl;
 import edu.cqu.ncycoa.plan.PlanStatus;
+import edu.cqu.ncycoa.plan.domain.DptReview;
 import edu.cqu.ncycoa.plan.domain.PendingTask;
 import edu.cqu.ncycoa.plan.domain.Plan;
 import edu.cqu.ncycoa.plan.domain.PlanInstance;
@@ -131,8 +132,20 @@ public class PlanServiceImpl extends CommonServiceImpl implements PlanService {
 	
 	
 	@Override
-	public void planReview(Long id, String result){
+	public void userReview(Long id, String result){
 		UserReview user = commonDao.readEntityById(id, UserReview.class);
+		if("10".equals(result)){
+			user.setResult("ºÃ");
+		} else if("-10".equals(result)){
+			user.setResult("²î");
+		} else if("0".equals(result)) {
+			user.setResult("ÖÐ");
+		}
+	}
+	
+	@Override
+	public void dptReview(Long id, String result){
+		DptReview user = commonDao.readEntityById(id, DptReview.class);
 		if("10".equals(result)){
 			user.setResult("ºÃ");
 		} else if("-10".equals(result)){

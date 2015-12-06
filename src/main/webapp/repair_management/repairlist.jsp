@@ -23,6 +23,7 @@
 		<h:dgColumn field="appDate" title="申请日期"  dateFormatter="yyyy-MM-dd hh:mm:ss" query="true"></h:dgColumn>
 		<h:dgColumn field="repairContent" title="维修主要内容" replace="无_null" ></h:dgColumn>
 		<h:dgColumn field="apporgOpinion" title="申请部门意见" replace="无_null" ></h:dgColumn>
+		<h:dgColumn field="audittable" title="" style="display:none" ></h:dgColumn>
 		<h:dgColumn field="auditFlag" title="审核状态" replace="未提交_0,已提交_1,审核完成_2" style="color:red_1,color:green_0,color:blue_2" ></h:dgColumn>
 		<h:dgToolBar url="repair_management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
 		<h:dgToolBar url="repair_management.htm?update" icon="icon-add" funname="edit" title="编辑"></h:dgToolBar>

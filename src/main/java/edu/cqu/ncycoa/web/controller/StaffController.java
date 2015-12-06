@@ -126,20 +126,28 @@ public class StaffController {
 	
 		if (id != null&&id!="") {
 			System.out.println(id);
-			message = "供应商更新成功";
+			message = "员工更新成功";
 			BaseStaff t = systemService.findEntityById(supplier.getIdcard(), BaseStaff.class);
 			try {
 				MyBeanUtils.copyBeanNotNull2Bean(supplier, t);
 				systemService.saveEntity(t);
 				systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 			} catch (Exception e) {
-				message = "供应商更新失败";
+				message = "员工更新失败";
 			}
 		} else {
 			System.out.println("this");
-			message = "供应商添加成功";
+			
+			
+			BaseStaff t = systemService.findEntityById(supplier.getIdcard(), BaseStaff.class);
+			if(t!=null){
+				message = "员工添加失败，人员已存在";
+			}else{
+				message = "员工添加成功";
+				systemService.addEntity(supplier);
+			}
 			//supplier.setInputTime(new Date());
-			systemService.addEntity(supplier);
+		
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		}
 		

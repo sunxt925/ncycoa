@@ -1,3 +1,4 @@
+<%@page import="com.common.Format"%>
 <%@page import="com.db.DataTable"%>
 <%@page import="com.entity.index.Indexitem"%>
 <%@ page language="java" import="java.util.*" pageEncoding="gb2312"%>
@@ -23,39 +24,67 @@ String basePath = request.getScheme()+"://"+
 <script type="text/javascript" src="<%=path%>/jscomponent/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=path%>/jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
 </head>
+
   <body class="easyui-layout">
     <div id="left" data-options="region:'west',split:true" style="width:250px;">
-    <ul id="tt" class="easyui-tree"   data-options="url:'unitjson.jsp?unitccm=NC.01',onClick:change">
-			</ul>
+     <div data-options="region:'west',split:true" style="width:200px;">
+        <ul id="tt" class="easyui-tree" data-options="url:'../meritquery/unitjson.jsp?class=d',onClick:change">
+        </ul>
+       
+    </div>
+   
 	</div>
-	<div id="center" data-options="region:'center'" style="padding:5px;background:#eee;">
-	     <table id="dg" class="easyui-datagrid" data-options="fitColumns:true,singleSelect:false">
-	    
-	</table>
+	<div id="center" data-options="region:'center',split:true" style="padding:5px;background:#eee;width:15px;">
+	 <button onclick="addobj()">》</button>
+	</div>
+	<div id="west" data-options="region:'east',split:true" style="padding:5px;background:#eee;width:200px;">
+	 <table id='objtb'>
+	 </table>
 	</div>
 	<input type="button" id="btn_ok" style="display: none" onclick="ret()">
 	<script type="text/javascript">
-	    function change(){
-	    	 $('#tt').tree({
-	  			onClick: function(node){
-	  				var u="orgjson.jsp?orgccm="+node.id;
-	  			    $('#dg').datagrid({
-	  			      url:u,
-	  			      columns:[[
-	  			       {filed:'ck',checkbox:true},
-	  			      {field:'orgcode',title:'机构编码',width:100},
-	  			      {field:'orgname',title:'机构名称',width:250}
-	  			      ]]
-	  			      });
-	  			}
-	  		});
-	    }
-	    function ret(){
-	    	var api = frameElement.api;
-	    	var row = $('#dg').datagrid('getSelections');
-	    	(api.data)({code:(row)});
-	    	
-	    }
+	var tmp=null;
+	var res=[];
+	 function ret(){
+		   var api = frameElement.api;
+	    	(api.data)({code:res});
+	   }
+
+ function change(){
+	 $('#tt').tree({
+		onClick: function(node){
+            tmp = node;
+		} 
+	 });
+ }
+	   
+ function addobj(){
+	 if(tmp!=null){
+		 var tr="<tr>"+
+		        "<td>"+tmp.text+"</td>"+
+		        "<td><a href=\"javascript:Goto();\" style=\"text-decoration: none\"  onclick=\"{deleteCurrentRow(this,'"+tmp.id+"');}\">x</a></td>"+
+		        "</tr>";
+		 $("#objtb").append(tr);  
+		 res.push(tmp.id);
+		 tmp=null;
+	 }else{
+		 alert('请选择单位');
+	 }
+ }
+ function Goto(){}
+ function deleteCurrentRow(obj,id){
+	   var tr=obj.parentNode.parentNode;
+	   var tbody=tr.parentNode;
+	   tbody.removeChild(tr);
+	   var restmp=[];
+	   for(var i=0;i<res.length;i++){
+		   if(res[i]!=id){
+			   restmp.push(res[i]);
+		   }
+	   }
+	   res=null;
+	   res = restmp;
+	   }
 	</script>
   </body>
 </html>
