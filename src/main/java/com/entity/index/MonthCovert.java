@@ -17,9 +17,9 @@ public class MonthCovert {
 		map.put("M07", "7");
 		map.put("M08", "8");
 		map.put("M09", "9");
-		map.put("M010", "10");
-		map.put("M011", "11");
-		map.put("M012", "12");
+		map.put("M10", "10");
+		map.put("M11", "11");
+		map.put("M12", "12");
 		
 	}
 	public static String getMonth(String mon){

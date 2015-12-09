@@ -82,6 +82,9 @@ public class RepairAudit {
 
 	@Column(name="AUDITFILE_PATH")//审核表文件路径
 	private String audittable;
+	
+	@Column(name="REPAIR_FILEPATH")//维修附件
+	private String repairFile;
 	public Long getId() {
 		return id;
 	}
@@ -259,9 +262,14 @@ public class RepairAudit {
 	public void setAudittable(String audittable) {
 		this.audittable = audittable;
 	}
+
+	public String getRepairFile() {
+		return repairFile;
+	}
+
+	public void setRepairFile(String repairFile) {
+		this.repairFile = repairFile;
+	}
 	
-	
-    
-    
     
 }

@@ -121,13 +121,23 @@
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
+	
+	<tr>
+		<td align="right"><label class="Validform_label"> 维修附件 </label></td>
+		<td class="value"><input class="inputxt" id="repairFile" name="repairFile" value="${contract.repairFile}">
+		 <a id="btn_uploadfile" href="#"    class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">上传文件</a>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
 
 	<input  type="hidden" id="projectType" name="projectType" value="${repairAudit.projectType}">
 	<input  type="hidden" id="auditFlag" name="auditFlag" value="${repairAudit.auditFlag}">
 </table>
 </form>
 <script type="text/javascript">
-
+$("#btn_uploadfile").click(function(){
+	createwindow("文件上传","fileupload/fileupload.jsp",350,130,returnFile);
+	    });
 
 $("#btn_selectobject").click(function(){
 	
@@ -141,8 +151,11 @@ function returnobjValue(data){
 		$('#apporgCode').val(org[0].orgcode);
 		$('#apporgName').val(org[0].orgname);
 	}
-	
-	
+
+}
+function returnFile(data){
+	$('#repairFile').val(data.code);
+   
 }
 function createwindow(title, url, width, height,func) {
 	

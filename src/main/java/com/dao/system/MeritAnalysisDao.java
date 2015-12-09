@@ -62,7 +62,13 @@ public class MeritAnalysisDao {
 		    }
 		   
 		    sBuilder.append("</table>");
-		    sBuilder.append("<span style=\"font-size: 13px\">指标项【"+indexScoreDetials.get(0).getIndexitem().getIndexName()+"】被扣分人数："+count+" 人</span>");
+		    if(indexScoreDetials != null){
+		        sBuilder.append("<span style=\"font-size: 13px\">指标项【"+indexScoreDetials.get(0).getIndexitem().getIndexName()+"】被扣分人数："+count+" 人</span>");
+				
+		    }else{
+		    	sBuilder.append("<span style=\"font-size: 13px\">无数据记录</span>");
+				
+		    }
 		}
 		
 		return sBuilder.toString();

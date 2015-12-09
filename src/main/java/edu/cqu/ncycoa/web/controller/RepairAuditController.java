@@ -379,7 +379,9 @@ public class RepairAuditController {
 		String outcome = request.getParameter("outcome"); 
 		
 		String comment = request.getParameter("comment");
-		  
+		if(comment==null||comment.equals("")){
+			comment="ЭЌвт";
+		}
 		RepairAudit repairAudit = systemService.findEntityById(Long.parseLong(id), RepairAudit.class);
 		
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
@@ -486,7 +488,7 @@ public class RepairAuditController {
 			accomment.add(activityComment);
 			
 		}
-		
+		mav.addObject("orgname",CodeDictionary.syscode_traslate("base_org", "orgcode", "orgname", repairAudit.getApporgCode()));
 		mav.addObject("repairAudit",repairAudit);
 		mav.addObject("outcomelist", list);
 		mav.addObject("taskId",taskId);

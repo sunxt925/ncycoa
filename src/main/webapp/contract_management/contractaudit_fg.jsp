@@ -180,11 +180,11 @@ $(function() {
 					style="width:700px;height:300px;padding:10px;">
 					<table style="border-spacing:1px;" >
 					   <tr>
-					     <td><textarea name="comment" id="comment" style="width: 400px;height: 100px"></textarea></td>
+					     <td><textarea name="comment" id="comment" style="width: 400px;height: 100px">同意</textarea></td>
 					   </tr>
 					    <tr>
 		                 <td align="left"><label class="Validform_label"> 承办部门分管领导 </label>
-		                                  <input class="inputxt" id="chengbanleadername" name="chengbanleadername"  datatype="s2-50">
+		                                  <input class="inputxt" id="chengbanleadername" name="chengbanleadername">
 		                                  <input type="hidden" id="chengbanleader" name="chengbanleader">
 		                                  <a id="btn_selectobject1" href="#">选择</a>
 		                 </td>
@@ -192,7 +192,7 @@ $(function() {
 	                   </tr>
 	                    <tr>
 		                 <td align="left"><label class="Validform_label"> 采购部门分管领导 </label>
-		                                  <input class="inputxt" id="caigouleadername" name="caigouleadername"  datatype="s2-50">
+		                                  <input class="inputxt" id="caigouleadername" name="caigouleadername" >
 		                                  <input type="hidden" id="caigouleader" name="caigouleader">
 		                                  
 		                                  <a id="btn_selectobject2" href="#">选择</a>
@@ -229,11 +229,23 @@ $(function() {
 </form>
 <script type="text/javascript">
 function sub(val){
-
+	if(val=="true"){
+		var chengbanleadername = $('#chengbanleadername').val();
+		var caigouleadername = $('#caigouleadername').val();
+		if(chengbanleadername==""){
+			alert('请选择分管领导');
+		}else{
+			$('#outcome').val(val);
+			$('#formobj').submit();
+			ret();
+		}
+	}else{
+		$('#outcome').val(val);
+		$('#formobj').submit();
+		ret();
+	}
 	
-	$('#outcome').val(val);
-	$('#formobj').submit();
-	ret();
+	
 }
 function ret(){
 	 var api = frameElement.api;

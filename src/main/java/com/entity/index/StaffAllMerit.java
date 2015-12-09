@@ -144,6 +144,9 @@ public List<StaffAllMerit> getAllMerit(String year,String period,String flag,Str
 			filtercodition="companycode='"+companycode+"'";
 		}
 		if(!companycode.equals("")&&!departcode.equals("")){
+			if(companycode.equals("NC.00")){
+				companycode="NC.01.00";
+			}
 			filtercodition="companycode='"+companycode+"'  and  departcode='"+departcode+"'";
 		}
 		if(companycode.equals("")&&!departcode.equals("")){
@@ -154,6 +157,7 @@ public List<StaffAllMerit> getAllMerit(String year,String period,String flag,Str
 			}
 			
 		}
+		
 		
 		String sql="select * from (select a.*,(select orgcode from base_orgmember where positioncode=a.positioncode and staffcode=a.staffcode) as stafforg from tbm_staffallmerit a) where   year=? and  "+p+"  and memo=? and "+filtercodition+" order by companycode,departcode,stafforg,positioncode,staffcode";
 		String memo="";
@@ -281,7 +285,7 @@ public String getIndividualMeritJson(String year,String period,String end_mon,St
 		if(end_mon.equals("")||end_mon==null||end_mon.equals("null")){
 			end_mon=period;
 		}
-		String sql="select * from (select a.*,(select orgcode from base_orgmember where positioncode=a.positioncode and staffcode=a.staffcode) as stafforg from tbm_staffallmerit a) where   year=? and  period>=? and period<=?  and memo=? and staffcode=?";
+		String sql="select * from (select a.*,(select orgcode from base_orgmember where positioncode=a.positioncode and staffcode=a.staffcode) as stafforg from tbm_staffallmerit a) where   year=? and  period>=? and period<=?  and memo=? and staffcode=? order by year,period";
 		Parameter.SqlParameter[] pp=new Parameter.SqlParameter[]{
 			new Parameter.String(year),
 			new Parameter.String(period),
@@ -364,7 +368,7 @@ public String getDepartMeritJson(String year,String period,String end_mon,String
 			end_mon=period;
 		}
 		String filtercodition="companycode='"+companycode+"'  and  departcode='"+departcode+"'";
-		String sql="select * from (select a.*,(select orgcode from base_orgmember where positioncode=a.positioncode and staffcode=a.staffcode) as stafforg from tbm_staffallmerit a) where   year=? and  period>=? and period<=?  and memo=? and "+filtercodition+" order by companycode,departcode,stafforg,positioncode,staffcode";
+		String sql="select * from (select a.*,(select orgcode from base_orgmember where positioncode=a.positioncode and staffcode=a.staffcode) as stafforg from tbm_staffallmerit a) where   year=? and  period>=? and period<=?  and memo=? and "+filtercodition+" order by companycode,departcode,stafforg,positioncode,staffcode,year,period";
 		Parameter.SqlParameter[] pp=new Parameter.SqlParameter[]{
 			new Parameter.String(year),
 			new Parameter.String(period),

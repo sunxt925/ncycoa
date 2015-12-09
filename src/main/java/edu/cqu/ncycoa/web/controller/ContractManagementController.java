@@ -418,21 +418,32 @@ public class ContractManagementController {
 		String chengbanleader = request.getParameter("chengbanleader");
 		String caigouleader = request.getParameter("caigouleader");
 		ContractInfo contractInfo = systemService.findEntityById(Long.parseLong(id), ContractInfo.class);
+		
+		
+		
 		if(chengbanleader!=null && !chengbanleader.equals("")){
-			paras.put("chengbanleader", chengbanleader);
+			List<String> auditleader = new ArrayList<String>();
+			auditleader.add(chengbanleader);
 			contractInfo.setChengbanleader(chengbanleader);
+			if(caigouleader!=null && !caigouleader.equals("")){
+		        	auditleader.add(caigouleader);
+		        	contractInfo.setCaigouleader(caigouleader);
+			}else{
+				contractInfo.setCaigouleader(chengbanleader);
+			}
+			
+			paras.put("fenguanauditGroup",auditleader);
 		}
-        if(caigouleader!=null && !caigouleader.equals("")){
-        	paras.put("caigouleader", caigouleader);
-        	contractInfo.setCaigouleader(caigouleader);
-		}
+       
         systemService.saveEntity(contractInfo);
 		
 		String taskId = request.getParameter("taskId");
 		String outcome = request.getParameter("outcome"); 
 		
 		String comment = request.getParameter("comment");
-		  
+		if(comment==null||comment.equals("")){
+			comment="同意";
+		}
 		TaskService taskService = processEngine.getTaskService();
 		
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
@@ -448,7 +459,8 @@ public class ContractManagementController {
 		
 		boolean flag = true;
 		List<ProcessInstance> processInstances = processEngine.getRuntimeService().createProcessInstanceQuery().list();
-
+		
+		//processEngine.getRuntimeService().deleteProcessInstance(pi,"f");
 		for(ProcessInstance processInstance : processInstances){
 			if(processInstance.getProcessInstanceId().equals(contractInfo.getProcessInstanceId())){
 				flag = false;
@@ -544,7 +556,19 @@ public class ContractManagementController {
 		map.put("y0", c.get(Calendar.YEAR)+"");
 		map.put("m0", (c.get(Calendar.MONTH)+1)+"");
 		map.put("d0", c.get(Calendar.DAY_OF_MONTH)+"");
-		map.put("contractType", contractInfo.getType());
+		Map<String, String> contractTypemaps = new HashMap<String, String>();
+		contractTypemaps.put("0", "其他合同");
+		contractTypemaps.put("1", "买卖合同");
+		contractTypemaps.put("2", "租赁合同");
+		contractTypemaps.put("3", "仓储合同");
+		contractTypemaps.put("4", "技术合同");
+		contractTypemaps.put("5", "建设施工(维修)合同");
+		contractTypemaps.put("6", "承揽合同");
+		contractTypemaps.put("7", "委托合同");
+		contractTypemaps.put("8", "赠与合同");
+		contractTypemaps.put("9", "运输合同");
+		
+		map.put("contractType", contractTypemaps.get(contractInfo.getType()));
 		map.put("projectname", Format.NullToBlank(contractInfo.getName()));
 		map.put("relevantDepartment", CodeDictionary.syscode_traslate("base_org", "orgcode", "orgname", Format.NullToBlank(contractInfo.getRelevantDepartment())));
 		if(null!=contractInfo.getContactMethod()&&!contractInfo.getContactMethod().equals("")){
@@ -555,7 +579,7 @@ public class ContractManagementController {
 		
 		map.put("budgetValue", contractInfo.getBudgetValue()+"");
 		map.put("contractValue", contractInfo.getContractValue()+"");
-		map.put("partyB", Format.NullToBlank(contractInfo.getPartyB()));
+	//	map.put("partyB", Format.NullToBlank(contractInfo.getPartyB()));
 		map.put("content", contractInfo.getContent());
 		map.put("auditctx", auditctx.get(contractInfo.getAuditctx()));
 	
