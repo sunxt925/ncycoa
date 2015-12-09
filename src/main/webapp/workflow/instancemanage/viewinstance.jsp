@@ -90,9 +90,11 @@ SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
 			    <td><%=staffname%></td>
 			    <td><%=sdf.format(processInstance.getStartTime())%></td>
 			    <td><%=endtime%></td>
-			    <td><a href="#" class="easyui-linkbutton"
+			    <td>
+			    <% if(endtime.equals("")){%><a href="#" class="easyui-linkbutton"
 				        data-options="iconCls:'icon-add',plain:true" 
 				        onclick="view('<%= processInstance.getId()%>')">查看实例图</a>
+				        <%} %>
 				                         </td>
 			</tr>
 			<%}
@@ -120,9 +122,7 @@ SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
 			    <td><%=staffname%></td>
 			    <td><%=sdf.format(processInstance.getStartTime())%></td>
 			    <td><%=endtime%></td>
-			    <td><a href="#" class="easyui-linkbutton"
-				        data-options="iconCls:'icon-add',plain:true" 
-				        onclick="view('<%= processInstance.getId()%>')">查看实例图</a>
+			    <td>
 				                         </td>
 			</tr>
 			<%}
