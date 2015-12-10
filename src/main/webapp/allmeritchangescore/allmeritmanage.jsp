@@ -113,8 +113,9 @@ String url="unitjson.jsp";
      	            		company="";
      	               else
      	            	   company=company.id;
+     	               
      	         	   url="staffmeritlist.jsp?year="+year+"&month="+month+"&company="+company+"&depart="+depart;
-     	          
+     	         	 alert(url);
      				window.open(url,"meritlist");
      			}
      		});

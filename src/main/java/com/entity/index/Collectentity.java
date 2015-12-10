@@ -5,12 +5,13 @@ private String year;
 private String period;
 private int needcollectobjectnum;
 private int collectedobjectnum;
-private int staffsumcount;
-private int staffneedcount;
-private int departsumcount;
-private int deparneedcount;
-private int companysumcount;
-private int companyneedcount;
+private int staffsumcount;//综合绩效以已汇总人数
+private int staffneedcount;//综合绩效构成关联人数（需要汇总人数）
+private int staffallcount;//员工总人数
+private int departsumcount;//部门已汇总数
+private int deparneedcount;//需要汇总部门数
+private int companysumcount;//公司已汇总数
+private int companyneedcount;//需要汇总公司数
 public String getYear() {
 	return year;
 }
@@ -71,5 +72,12 @@ public int getCompanyneedcount() {
 public void setCompanyneedcount(int companyneedcount) {
 	this.companyneedcount = companyneedcount;
 }
+public int getStaffallcount() {
+	return staffallcount;
+}
+public void setStaffallcount(int staffallcount) {
+	this.staffallcount = staffallcount;
+}
+
 
 }

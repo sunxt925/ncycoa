@@ -207,7 +207,7 @@ $(function() {
 					style="width:700px;height:300px;padding:10px;">
 					<table style="border-spacing:1px;" >
 					   <tr>
-					     <td><textarea name="comment" id="comment" style="width: 400px;height: 100px"></textarea></td>
+					     <td><textarea name="comment" id="comment" style="width: 400px;height: 100px">同意</textarea></td>
 					   </tr>
 					   <tr>
 					   <td>
@@ -275,8 +275,6 @@ function openoffice(path){
 			cancel : true/* 为true等价于function(){} */
 		});
 	}
-		
-	
 }
 </script>
 </body>

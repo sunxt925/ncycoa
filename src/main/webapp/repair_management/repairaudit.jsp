@@ -69,7 +69,7 @@ $(function() {
 	<tr>
 		<td align="right"><label class="Validform_label"> 申请单位 </label></td>
 		<td class="value">
-		<label>${repairAudit.apporgCode}</label>
+		<label>${orgname}</label>
 		</td>
 	</tr>
 	<tr>
@@ -92,7 +92,12 @@ $(function() {
 		<label>${repairAudit.apporgOpinion}</label>
 		</td>
 	</tr>
-	
+	<tr>
+		<td align="right"><label class="Validform_label"> 维修附件 </label></td>
+		<td class="value">
+		<a href="#" onclick="downloadfile('${repairAudit.repairFile}')">附件下载</a>
+		</td>
+	</tr>
 </table>
 	</div>
 	</div>
@@ -134,6 +139,9 @@ $(function() {
 <input id="btn_ok" type="hidden" onclick="ret()">
 </form>
 <script type="text/javascript">
+function downloadfile(filename){
+	window.location.href="fileupload/downweb.jsp?filename="+filename;
+}
 function sub(val){
 
 	$('#outcome').val(val);

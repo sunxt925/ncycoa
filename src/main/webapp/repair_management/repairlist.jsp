@@ -23,6 +23,7 @@
 		<h:dgColumn field="appDate" title="申请日期"  dateFormatter="yyyy-MM-dd hh:mm:ss" query="true"></h:dgColumn>
 		<h:dgColumn field="repairContent" title="维修主要内容" replace="无_null" ></h:dgColumn>
 		<h:dgColumn field="apporgOpinion" title="申请部门意见" replace="无_null" ></h:dgColumn>
+		<h:dgColumn field="repairFile" title="" style="display:none"></h:dgColumn>
 		<h:dgColumn field="audittable" title="" style="display:none" ></h:dgColumn>
 		<h:dgColumn field="auditFlag" title="审核状态" replace="未提交_0,已提交_1,审核完成_2" style="color:red_1,color:green_0,color:blue_2" ></h:dgColumn>
 		<h:dgToolBar url="repair_management.htm?add" icon="icon-add" funname="add" title="新增"></h:dgToolBar>
@@ -32,6 +33,7 @@
 		<h:dgFunOpt funname="apprepair({id},{auditFlag})" title="申请维修"></h:dgFunOpt>
 		<h:dgFunOpt funname="producecontract({id},{auditFlag})" title="审批表生成"></h:dgFunOpt>
 		<h:dgFunOpt funname="downloadcontract({audittable})" title="审批表下载"></h:dgFunOpt>  
+		<h:dgFunOpt funname="downloadfile({repairFile})" title="附件下载"></h:dgFunOpt>  
 	</h:datagrid>
 </body>
 
@@ -105,6 +107,13 @@ function downloadcontract(audittable){
 		window.location.href="fileupload/downweb.jsp?filename="+audittable;
 	}else{
 		$.dialog.alert("审批表不存在，请生成审批表!");
+	}
+}
+function downloadfile(filename){
+	if(filename != "null" && filename !=""){
+		window.location.href="fileupload/downweb.jsp?filename="+filename;
+	}else{
+		$.dialog.alert("附件不存在!");
 	}
 }
 </script>

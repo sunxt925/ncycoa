@@ -47,7 +47,7 @@ public class AllMeritCollection {
 	public static List<Collectentity> getCollectionList(String yearstr){
 		try {
 			DBObject db=new DBObject();
-			String sql="select count(staffcode) as staffnum from tbm_allmeritgroupmember";
+			String sql="select count(distinct staffcode) as staffnum from tbm_allmeritgroupmember";
 			DataTable dt=db.runSelectQuery(sql);
 			List<Collectentity> collectentities=new ArrayList<Collectentity>();
 			int staffnum=0;
@@ -68,11 +68,19 @@ public class AllMeritCollection {
 				if(dt2!=null&&dt2.getRowsCount()==1){
 					hascollectnum=Integer.parseInt(dt2.get(0).getString("staffnum"));//已经汇总的对象数
 				}
+				String sql3="select count(distinct staffcode) as staffnum from base_orgmember";
+				DataTable dt3=db.runSelectQuery(sql3);
+				int staffallnum = 0;
+				if(dt3!=null&&dt3.getRowsCount()==1){
+					staffallnum=Integer.parseInt(dt3.get(0).getString("staffnum"));//员工总人数
+				}
+				
 				Collectentity collectentity=new Collectentity();
 				collectentity.setYear(yearstr);
 				collectentity.setPeriod(period);
 				collectentity.setCollectedobjectnum(hascollectnum);
 				collectentity.setNeedcollectobjectnum(staffnum);
+				collectentity.setStaffallcount(staffallnum);
 				collectentity.setStaffneedcount(getObjectneedcount(yearstr, period, "staff", "0"));
 				collectentity.setStaffsumcount(getObjectsumcount("S"));
 				collectentity.setDeparneedcount(getObjectneedcount(yearstr, period, "depart", "0"));
@@ -99,6 +107,9 @@ public class AllMeritCollection {
 			while(iterator.hasNext()){
 				Map.Entry entry=(Map.Entry)iterator.next();
 				AllMeritGroupMember allMeritGroupMember=(AllMeritGroupMember)entry.getValue();	
+				if(allMeritGroupMember.getStaffCode().equals("1151130100140302")){
+					System.out.println("");
+				}
 				AllMeritGroup allMeritGroup=new AllMeritGroup(allMeritGroupMember.getGroupNo());
 				String allmeritfunc=allMeritGroup.getAllmeritfunc();
 				//解析综合绩效模板

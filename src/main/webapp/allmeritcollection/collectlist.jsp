@@ -45,8 +45,8 @@ String year=request.getParameter("year");
     <tr>
     <th data-options="field:'year',width:25">年份</th>
     <th data-options="field:'period',width:25">月份</th>
-    <th data-options="field:'objectnum',width:60">已汇总人数/员工总数</th>
-    <th data-options="field:'staffnum',width:90">已打分员工数/关联指标员工数</th>
+    <th data-options="field:'objectnum',width:60">已汇总人数/需汇总人数/员工总数</th>
+    <th data-options="field:'staffnum',width:90">已打分员工人次/关联指标员工人次</th>
     <th data-options="field:'departnum',width:90">已打分部门数/关联指标部门数</th>
     <th data-options="field:'companynum',width:90">已打分公司数/关联指标公司数</th>
      <th data-options="field:'state',width:15">状态</th>
@@ -58,7 +58,7 @@ String year=request.getParameter("year");
 			<tr>
 			    <td><%=collectentity.getYear() %></td>
 			    <td><%=collectentity.getPeriod() %></td>
-			    <td><%=collectentity.getCollectedobjectnum() %>/<%=collectentity.getNeedcollectobjectnum() %></td>
+			    <td><%=collectentity.getCollectedobjectnum() %>/<%=collectentity.getNeedcollectobjectnum() %>/<%=collectentity.getStaffallcount() %></td>
 			    <td><%=collectentity.getStaffneedcount() %>/<%=collectentity.getStaffsumcount() %></td>
 			    <td><%=collectentity.getDeparneedcount() %>/<%=collectentity.getDepartsumcount() %></td>
 			    <td><%=collectentity.getCompanyneedcount() %>/<%=collectentity.getCompanysumcount() %></td>

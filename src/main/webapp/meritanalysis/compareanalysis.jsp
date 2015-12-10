@@ -94,10 +94,12 @@ String basePath = request.getScheme()+"://"+
         	 $("#year").val(year);
         }
         $("#btn_search").click(function(){
-        	createwindow("选择指标","meritanalysis/selectindex.jsp",500,400,returnvalue);
+        	var path="<%=path%>";
+        	createwindow("选择指标",path+"/meritanalysis/selectindex.jsp",500,400,returnvalue);
     	    });
         $("#btn_searchobj").click(function(){
-        	createwindow("对比分析","meritanalysis/contrastanalysis.jsp",500,400,returnobjvalue);
+        	var path="<%=path%>";
+        	createwindow("对比分析",path+"/meritanalysis/contrastanalysis.jsp",500,400,returnobjvalue);
     	    });
         function selectmonth(record){
             var year=$("#year").val();
@@ -120,7 +122,8 @@ String basePath = request.getScheme()+"://"+
             	var indexcode=$("#indexcode").val();
             	var year=$("#year").val();
             	var month=$("#month").val();
-            	window.open("analysisres.jsp?class=compare&indexcode="+indexcode+"&year="+year+"&month="+month,"analysisres");
+            	var path="<%=path%>";
+            	window.open(path+"/meritanalysis/analysisres.jsp?class=compare&indexcode="+indexcode+"&year="+year+"&month="+month,"analysisres");
             }
        }
         function createwindow(title, url, width, height,fun) {
@@ -170,7 +173,8 @@ String basePath = request.getScheme()+"://"+
                 	var indexcode=$("#indexcode").val();
                 	var year=$("#year").val();
                 	var month=$("#month").val();
-                	window.open("meritanalysis/analysisres.jsp?class=compare&indexcode="+indexcode+"&year="+year+"&month="+month+"&objs="+objs,"analysisres");
+                	var path="<%=path%>";
+                	window.open(path+"/meritanalysis/analysisres.jsp?class=compare&indexcode="+indexcode+"&year="+year+"&month="+month+"&objs="+objs,"analysisres");
                 }
         	}else{
         		alert('没有选择对比对象');

@@ -1,5 +1,7 @@
 package com.entity.system;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.common.Format;
 import com.db.DBObject;
 import com.db.DataRow;
@@ -8,7 +10,7 @@ import com.db.ExecSql;
 import com.db.Parameter;
 import com.db.SqlHelper;
 
-public class Staff {
+public class Staff implements Comparable<Staff>{
 
 	private String staffcode;
 	private String staffname;
@@ -51,6 +53,10 @@ public class Staff {
 		}
 	}
 
+	public int compareTo(Staff o) {
+			return this.orgcode.compareTo(o.orgcode);
+		
+	}
 	public Staff(String staffcode, String positioncode) {
 		try {
 
