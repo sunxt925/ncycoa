@@ -54,7 +54,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			 String savename=classs+year+month+day+hour+minute+"."+ext;
 			smart.getFiles().getFile(0).saveAs(pathtemp+java.io.File.separator+savename);
 			System.out.println(pathtemp+java.io.File.separator+savename);
-			String policypath=Util.getfileCfg().get("uploadfilepath")+"policy"+"/"+savename;
+			String policypath="policy"+"/"+savename;
 			DocPolicy policy=new DocPolicy(date,policyname,policypath,type);
 			boolean flag=policy.insert();
 		

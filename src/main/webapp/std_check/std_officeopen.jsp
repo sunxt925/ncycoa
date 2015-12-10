@@ -2,6 +2,8 @@
 	import="java.util.*,com.zhuozhengsoft.pageoffice.*,com.zhuozhengsoft.pageoffice.wordwriter.*,java.awt.*,com.ftp.*,com.entity.ftp.*,java.io.*"
 	pageEncoding="GBK"%>
 	<%@page import="com.common.Util"%>
+	<%@page import="com.common.FileUpload"%>
+	<%@page import="com.common.Util"%>
 	<%@page import="com.zhuozhengsoft.pageoffice.PDFCtrl"%>
 <%@page import="com.zhuozhengsoft.pageoffice.ThemeType"%>
 <%@ taglib uri="http://java.pageoffice.cn" prefix="po"%>
@@ -13,7 +15,7 @@ String rootpath = request.getContextPath();
 	if(filename==null){
 		filename=request.getAttribute("filepath").toString();
 	}
-    String path = Util.getfileCfg().get("uploadfilepath").toString();
+    String path =  getServletContext().getRealPath("/");
     
 //******************************卓正PageOffice组件的使用*******************************
 	String contenttype=filename.substring(filename.lastIndexOf("."), filename.length());
@@ -29,7 +31,12 @@ String rootpath = request.getContextPath();
 		poCtrl1.setAllowCopy(true);
 		poCtrl1.setCaption("南充烟草office平台");
 		//设置保存页面
-    	String urls=path+filename;
+    	FileUpload fu=new FileUpload(); 
+    	String urls=path+"doc/"+filename;
+    	System.out.println(filename);
+		FileUpload.copyFile(Util.getfileCfg().get("uploadfilepath")+filename,urls);
+
+    	request.getSession().setAttribute("delpath",filename);//供删除临时文件夹使用.
   	//  System.out.println("ooooooooooo  "+frand_name);
     			if(contenttype.equals(".doc")||contenttype.equals(".docx")){
 	    			poCtrl1.webOpen(urls, OpenModeType.docNormalEdit, "张三");
@@ -68,6 +75,10 @@ String rootpath = request.getContextPath();
             			document.getElementById("PageOfficeCtrl1").SetEnableFileCommand(4, true); // 禁止另存
             			document.getElementById("PageOfficeCtrl1").SetEnableFileCommand(5, true); //禁止打印
             			document.getElementById("PageOfficeCtrl1").SetEnableFileCommand(6, true); // 禁止页面设置   
+         	 		   createXMLHttp();
+        	 		   xmlHttp.open("POST","../servlet/DeleteDocFile",false);
+        	 		   xmlHttp.onreadystatechange=CallBack;
+        	           xmlHttp.send(null);    
         }
 		
 

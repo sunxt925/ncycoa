@@ -1,5 +1,5 @@
 <%@page contentType="text/html;charset=UTF-8"%>
-
+<%@page import="com.common.Util"%>
 <%@page import="java.util.*,java.io.*,com.entity.std.DocPlan"%>
 
 
@@ -9,7 +9,7 @@
 	DocPlan plan=new DocPlan();
 	boolean flag=plan.deletebyID(Integer.parseInt(id));
 	String path = getServletContext().getRealPath("/");
-	File f=new File(planpath);
+	File f=new File(Util.getfileCfg().get("uploadfilepath")+planpath);
 	f.delete();
 	if(flag){
     	response.getWriter().write("删除成功");

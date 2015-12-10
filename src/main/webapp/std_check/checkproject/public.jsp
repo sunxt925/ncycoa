@@ -139,7 +139,14 @@ function F1()
 	<%} %>
 		<tr>
 		<td align="right" width="30%"><label class="Validform_label"> 相关委员会</label></td>
-		<td class="value"  width="70%"><input class="inputxt" style="width:200px;" id="CommitteeName" name="CommitteeName">
+		<td class="value"  width="70%">
+		        <select name="CommitteeName" onChange="fun(this.value)" id="CommitteeName" style="width:200px">
+             <option value="营销分技术委员会">营销分技术委员会</option>
+             <option value="专卖分技术委员会">专卖分技术委员会</option>
+             <option value="安全分技术委员会">安全分技术委员会</option>
+             <option value="物流分技术委员会">物流分技术委员会</option>
+             <option value="基础管理分技术委员会">基础管理分技术委员会</option>
+          </select>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>

@@ -56,7 +56,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			 String savename=plandate+"."+ext;
 			
 			smart.getFiles().getFile(0).saveAs(pathtemp+java.io.File.separator+savename);
-			String policypath=Util.getfileCfg().get("uploadfilepath")+"plan"+"/"+savename;
+			String policypath="plan"+"/"+savename;
 			DocPlan plan=new DocPlan(plandate,policyname,policypath,date);
 			boolean flag=false;
 			flag=plan.insert();

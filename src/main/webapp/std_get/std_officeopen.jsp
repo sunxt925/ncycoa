@@ -2,12 +2,13 @@
 	import="java.util.*,com.zhuozhengsoft.pageoffice.*,com.zhuozhengsoft.pageoffice.wordwriter.*,java.awt.*,com.ftp.*,com.entity.ftp.*,java.io.*"
 	pageEncoding="gb2312"%>
 	<%@page import="com.common.Util"%>
+	<%@page import="com.common.FileUpload"%>
 	<%@page import="com.zhuozhengsoft.pageoffice.PDFCtrl"%>
 <%@page import="com.zhuozhengsoft.pageoffice.ThemeType"%>
 <%@ taglib uri="http://java.pageoffice.cn" prefix="po"%>
 <%
     String filename=request.getParameter("filename");
-//     String path = getServletContext().getRealPath("/")+"doc";
+    String path = getServletContext().getRealPath("/");
     
 //******************************卓正PageOffice组件的使用*******************************
 	String contenttype=filename.substring(filename.lastIndexOf("."), filename.length());
@@ -23,7 +24,11 @@
 		poCtrl1.setAllowCopy(true);
 		poCtrl1.setCaption("南充烟草office平台");
 		//设置保存页面
-    	String urls=Util.getfileCfg().get("uploadfilepath")+"getstd/"+filename;
+		    	FileUpload fu=new FileUpload(); 
+    	String urls=path+"doc/getstd/"+filename;
+		FileUpload.copyFile(Util.getfileCfg().get("uploadfilepath")+"getstd/"+filename,urls);
+
+    	request.getSession().setAttribute("delpath","getstd/"+filename);//供删除临时文件夹使用.
   	//  System.out.println("ooooooooooo  "+frand_name);
     			if(contenttype.equals(".doc")||contenttype.equals(".docx")){
 	    			poCtrl1.webOpen(urls, OpenModeType.docNormalEdit, "张三");
