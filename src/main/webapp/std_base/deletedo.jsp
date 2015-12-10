@@ -9,7 +9,7 @@
 	DocPolicy policy=new DocPolicy();
 	boolean flag=policy.deletebyID(Integer.parseInt(id));
 	String path = getServletContext().getRealPath("/");
-	File f=new File(path+policypath);
+	File f=new File(policypath);
 	f.delete();
 	if(flag){
     	response.getWriter().write("删除成功");

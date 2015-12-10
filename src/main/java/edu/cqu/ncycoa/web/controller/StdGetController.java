@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.common.Util;
 import com.entity.system.Staff;
 import com.entity.system.UserInfo;
 
@@ -115,9 +116,7 @@ public class StdGetController{
 			if (filepath != null && !(filepath.equals(""))) {
 				String[] filepaths = getstd.getGstFilepath().split(";");
 				for (int m = 0; m < filepaths.length; m++) {
-					File deletefile = new File((request.getSession()
-							.getServletContext().getRealPath("doc")
-							+ "/getstd/" + filepaths[m]));
+					File deletefile = new File(Util.getfileCfg().get("uploadfilepath")+"getstd/" + filepaths[m]);
 					deletefile.delete();
 				}
 			}
@@ -143,8 +142,9 @@ public class StdGetController{
 			message = "数据不合法";
 			return;
 		}
-		String FileUrl = request.getSession().getServletContext()
-				.getRealPath("doc/getstd");
+//		String FileUrl = request.getSession().getServletContext()
+//				.getRealPath("doc/getstd");
+		String FileUrl = Util.getfileCfg().get("uploadfilepath")+"getstd";
 		GetStd getstd = systemService.findEntityById(ids[0], GetStd.class);
 		String filepath = getstd.getGstFilepath();
 		if (filepath != null && !(filepath.equals(""))) {
@@ -353,9 +353,13 @@ public class StdGetController{
 				// 改成自己的对象哦！
 				// Constant.UPLOAD_GOODIMG_URL 是一个配置文件路径
 				try {
-					String uploadFileUrl = multipartRequest.getSession()
-							.getServletContext()
-							.getRealPath("doc/getstd");
+//					String uploadFileUrl = multipartRequest.getSession()
+//							.getServletContext()
+//							.getRealPath("doc/getstd");
+					String uploadFileUrl = Util.getfileCfg().get("uploadfilepath")+"getstd";
+					File ff=new File(uploadFileUrl);
+					if (!ff.exists())
+						ff.mkdirs();
 					File _apkFile = saveFileFromInputStream(
 							imgFile.getInputStream(), uploadFileUrl, fileName);
 //					if (_apkFile.exists()) {

@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="gb2312"%>
 <%@ taglib prefix="h" uri="/gem-tags"%>
 
 <!DOCTYPE html>
@@ -7,48 +7,44 @@ String path = request.getContextPath();
 %>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<title>å—å……çƒŸè‰ä¸“å–å±€</title>
+<meta charset="gb2312">
+<title>ÄÏ³äÑÌ²İ×¨Âô¾Ö</title>
 <link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/icon.css">
 <script type="text/javascript" src="<%=path%>/jscomponent/jquery/jquery-1.8.0.min.js"></script>
 <script type="text/javascript" src="<%=path%>/jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
 <script type="text/javascript" src="<%=path%>/jscomponent/tools/datagrid.js"></script>
 <style type="text/css">
-*{font-size:12px; font-family:å¾®è½¯é›…é»‘,æ–°å®‹ä½“}
+*{font-size:12px; font-family:Î¢ÈíÑÅºÚ,ĞÂËÎÌå}
 </style>
 </head>
 
 <script type="text/javascript">
 function detailcanoperate(title,url, id,width,height) {
 	var rowsData = $('#'+id).datagrid('getSelections');
-//	if (rowData.id == '') {
-//		tip('é”Ÿæ–¤æ‹·é€‰é”Ÿæ–¤æ‹·æ¦­è¾¾æ‹·é”Ÿä¾¥ï¿½');
-//		return;
-//	}
 	
 	if (!rowsData || rowsData.length == 0) {
-		tip('è¯·é€‰æ‹©æŸ¥çœ‹é¡¹ç›®');
+		tip('ÇëÑ¡Ôñ²é¿´ÏîÄ¿');
 		return;
 	}
 	if (rowsData.length > 1) {
-		tip('è¯·é€‰æ‹©ä¸€æ¡è®°å½•å†æŸ¥çœ‹');
+		tip('ÇëÑ¡ÔñÒ»Ìõ¼ÇÂ¼ÔÙ²é¿´');
 		return;
 	}
     url += '&id='+rowsData[0].id;
-	window.open(url,"è¯„å®¡æ–¹æ¡ˆå†…å®¹");
+	window.open(url,"ÆÀÉó·½°¸ÄÚÈİ");
 }
 </script>
 <body>
 	<h:datagrid actionUrl="checkproject.htm?dgdata" fit="true" fitColumns="true" queryMode="group" name="stdgetlist">
 		<h:dgColumn field="id" title="id" hidden="true" align="center"  width="50"></h:dgColumn>
-		<h:dgColumn field="checkCode" title="æ–¹æ¡ˆç¼–å·" query="true" align="center"  width="80"></h:dgColumn>
-		<h:dgColumn field="checkName" title="æ–¹æ¡ˆåç§°" query="true" align="center"  width="80"></h:dgColumn>
-		<h:dgColumn field="staffName" title="å‘èµ·äºº" query="true" align="center"  width="80"></h:dgColumn>
-		<h:dgColumn field="startTime" title="å‘èµ·æ—¶é—´" query="true" align="center" dateFormatter="yyyy-MM-dd HH:mm:ss" width="80" queryMode="scope"></h:dgColumn>
-		<h:dgToolBar url="checkproject.htm?openoffice" icon="icon-reload" funname="detailcanoperate" title="æŸ¥çœ‹è¯„å®¡æ–¹æ¡ˆ"></h:dgToolBar>
-		<h:dgToolBar url="checkproject.htm?del" icon="icon-remove" funname="del" title="åˆ é™¤è¯„å®¡æ–¹æ¡ˆ"></h:dgToolBar>
-<%--  		<h:dgToolBar url="stdget.htm?add" icon="icon-add" funname="add" title="ä¸Šä¼ å¤šä¸ªæ–‡ä»¶ï¿½"></h:dgToolBar> --%>
+		<h:dgColumn field="checkCode" title="·½°¸±àºÅ" query="true" align="center"  width="80"></h:dgColumn>
+		<h:dgColumn field="checkName" title="·½°¸Ãû³Æ" query="true" align="center"  width="80"></h:dgColumn>
+		<h:dgColumn field="staffName" title="·¢ÆğÈË" query="true" align="center"  width="80"></h:dgColumn>
+		<h:dgColumn field="startTime" title="·¢ÆğÊ±¼ä" query="true" align="center" dateFormatter="yyyy-MM-dd HH:mm:ss" width="80" queryMode="scope"></h:dgColumn>
+		<h:dgToolBar url="checkproject.htm?openoffice" icon="icon-reload" funname="detailcanoperate" title="²é¿´ÆÀÉó·½°¸"></h:dgToolBar>
+		<h:dgToolBar url="checkproject.htm?del" icon="icon-remove" funname="del" title="É¾³ıÆÀÉó·½°¸"></h:dgToolBar>
+
 	</h:datagrid>
 </body>
 <script type="text/javascript">

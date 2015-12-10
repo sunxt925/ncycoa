@@ -1,6 +1,7 @@
 <%@ page language="java" import="com.db.DBObject,com.db.Parameter,java.util.*,java.io.*,com.entity.std.DocPolicy" pageEncoding="GBK"%>
 <%@page import="com.jspsmart.upload.SmartUpload"%>
 <%@page import="javax.swing.JPanel"%>
+<%@page import="com.common.Util"%>
 <%@page import="org.apache.commons.net.ftp.FTP"%>
 <%
 request.setCharacterEncoding("GBK");
@@ -16,8 +17,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		smart.upload();
 		String filename = smart.getFiles().getFile(0).getFileName();
 		String type=smart.getRequest().getParameter("type");
-
-		String pathtemp = getServletContext().getRealPath("/")+"doc\\policy";
+		 File ff=new File(Util.getfileCfg().get("uploadfilepath")+"policy");
+			if (!ff.exists())
+				ff.mkdirs();
+		String pathtemp = Util.getfileCfg().get("uploadfilepath")+"policy";
 		if(filename.equals("")||filename==null){
 			    String res=""; 
 			    res += "alert('上传失败,没有选择上传的文件');";
@@ -51,7 +54,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			 String savename=classs+year+month+day+hour+minute+"."+ext;
 			smart.getFiles().getFile(0).saveAs(pathtemp+java.io.File.separator+savename);
 			System.out.println(pathtemp+java.io.File.separator+savename);
-			String policypath="doc/policy"+"/"+savename;
+			String policypath=Util.getfileCfg().get("uploadfilepath")+"policy"+"/"+savename;
 			DocPolicy policy=new DocPolicy(date,policyname,policypath,type);
 			boolean flag=policy.insert();
 		

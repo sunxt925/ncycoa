@@ -19,7 +19,7 @@
 		poCtrl1.setAllowCopy(false);
 		poCtrl1.setCaption("南充烟草office平台");
 		//设置保存页面
-    	String urls=path+request.getParameter("policypath");
+    	String urls=request.getParameter("policypath");
   	//  System.out.println("ooooooooooo  "+frand_name);
 	    			poCtrl1.webOpen(urls, OpenModeType.docNormalEdit, "张三");
 		poCtrl1.setTagId("PageOfficeCtrl1"); //此行必须	

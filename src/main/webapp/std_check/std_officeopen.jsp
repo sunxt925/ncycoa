@@ -1,6 +1,7 @@
 <%@ page language="java"
 	import="java.util.*,com.zhuozhengsoft.pageoffice.*,com.zhuozhengsoft.pageoffice.wordwriter.*,java.awt.*,com.ftp.*,com.entity.ftp.*,java.io.*"
 	pageEncoding="GBK"%>
+	<%@page import="com.common.Util"%>
 	<%@page import="com.zhuozhengsoft.pageoffice.PDFCtrl"%>
 <%@page import="com.zhuozhengsoft.pageoffice.ThemeType"%>
 <%@ taglib uri="http://java.pageoffice.cn" prefix="po"%>
@@ -12,7 +13,7 @@ String rootpath = request.getContextPath();
 	if(filename==null){
 		filename=request.getAttribute("filepath").toString();
 	}
-    String path = getServletContext().getRealPath("/")+"doc";
+    String path = Util.getfileCfg().get("uploadfilepath").toString();
     
 //******************************卓正PageOffice组件的使用*******************************
 	String contenttype=filename.substring(filename.lastIndexOf("."), filename.length());

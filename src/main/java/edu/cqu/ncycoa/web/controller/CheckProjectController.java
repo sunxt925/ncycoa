@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.common.Util;
 import com.db.DBObject;
 import com.db.DataTable;
 import com.entity.system.StaffInfo;
@@ -139,9 +140,7 @@ public class CheckProjectController{
 			if (filepath != null && !(filepath.equals(""))) {
 				String[] filepaths = filepath.split(";");
 				for (int m = 0; m < filepaths.length; m++) {
-					File deletefile = new File((request.getSession()
-							.getServletContext().getRealPath("doc")
-							+ "/checkproject/" + filepaths[m]));
+					File deletefile = new File(Util.getfileCfg().get("uploadfilepath")+"checkproject/" + filepaths[m]);
 					deletefile.delete();
 				}
 			}
@@ -176,9 +175,8 @@ public class CheckProjectController{
 			if (reportpath != null && !(reportpath.equals(""))) {
 				String[] reportpaths = reportpath.split(";");
 				for (int m = 0; m < reportpaths.length; m++) {
-					File deletefile = new File((request.getSession()
-							.getServletContext().getRealPath("doc")
-							+ "/checkproject/" + reportpaths[m]));
+					File deletefile = new File(Util.getfileCfg().get("uploadfilepath")
+							+ "checkproject/" + reportpaths[m]);
 					deletefile.delete();
 				}
 			}
@@ -205,7 +203,7 @@ public class CheckProjectController{
 		CheckProject checkproject=systemService.findEntityById(ids[0], CheckProject.class);
 		String filename=checkproject.getFilePath();
 		String[] filenames=filename.split(";");
-		String filepath="\\checkproject\\"+filenames[0];
+		String filepath="checkproject/"+filenames[0];
 		request.setAttribute("filepath", filepath);
 		return "std_check/std_officeopen";
 	}
@@ -225,7 +223,7 @@ public class CheckProjectController{
 		CheckReport checkreport=systemService.findEntityById(ids[0], CheckReport.class);
 		String filename=checkreport.getReportPath();
 		String[] filenames=filename.split(";");
-		String filepath="\\checkproject\\"+filenames[0];
+		String filepath="checkproject/"+filenames[0];
 		request.setAttribute("filepath", filepath);
 		return "std_check/std_officeopen";
 	}
@@ -269,9 +267,13 @@ public class CheckProjectController{
 				// 改成自己的对象哦！
 				// Constant.UPLOAD_GOODIMG_URL 是一个配置文件路径
 				try {
-					String uploadFileUrl = multipartRequest.getSession()
-							.getServletContext()
-							.getRealPath("doc/checkproject");
+//					String uploadFileUrl = multipartRequest.getSession()
+//							.getServletContext()
+//							.getRealPath("doc/checkproject");
+					String uploadFileUrl = Util.getfileCfg().get("uploadfilepath")+"checkproject";
+					File ff=new File(uploadFileUrl);
+					if (!ff.exists())
+						ff.mkdirs();
 					File _apkFile = saveFileFromInputStream(
 							imgFile.getInputStream(), uploadFileUrl, fileName);
 					if (_apkFile.exists()) {
@@ -339,9 +341,13 @@ public class CheckProjectController{
 				// 改成自己的对象哦！
 				// Constant.UPLOAD_GOODIMG_URL 是一个配置文件路径
 				try {
-					String uploadFileUrl = multipartRequest.getSession()
-							.getServletContext()
-							.getRealPath("doc/checkproject");
+//					String uploadFileUrl = multipartRequest.getSession()
+//							.getServletContext()
+//							.getRealPath("doc/checkproject");
+					String uploadFileUrl = Util.getfileCfg().get("uploadfilepath")+"checkproject";
+					File ff=new File(uploadFileUrl);
+					if (!ff.exists())
+						ff.mkdirs();
 					File _apkFile = saveFileFromInputStream(
 							imgFile.getInputStream(), uploadFileUrl, fileName);
 					if (_apkFile.exists()) {
@@ -399,9 +405,13 @@ public class CheckProjectController{
 				// 改成自己的对象哦！
 				// Constant.UPLOAD_GOODIMG_URL 是一个配置文件路径
 				try {
-					String uploadFileUrl = multipartRequest.getSession()
-							.getServletContext()
-							.getRealPath("doc/checkproject");
+//					String uploadFileUrl = multipartRequest.getSession()
+//							.getServletContext()
+//							.getRealPath("doc/checkproject");
+					String uploadFileUrl = Util.getfileCfg().get("uploadfilepath")+"checkproject";
+					File ff=new File(uploadFileUrl);
+					if (!ff.exists())
+						ff.mkdirs();
 					File _apkFile = saveFileFromInputStream(
 							imgFile.getInputStream(), uploadFileUrl, fileName);
 					if (_apkFile.exists()) {
@@ -460,9 +470,7 @@ public class CheckProjectController{
 			if (filepath != null){
 				String[] filenames=filepath.toString().split(";");
 				for (int m = 0; m < filenames.length; m++) {
-				File deletefile = new File((request.getSession()
-						.getServletContext().getRealPath("doc")
-						+ "/checkproject/" + filenames[m]));
+				File deletefile = new File(Util.getfileCfg().get("uploadfilepath")+ "checkproject/" + filenames[m]);
 				deletefile.delete();
 				}
 				
@@ -536,9 +544,7 @@ public class CheckProjectController{
 			if(!(report.equals(""))){
 				String[] reports=report.split(";");
 				for(int m=0;m<reports.length;m++){
-					File deleteroport=new File((request.getSession()
-							.getServletContext().getRealPath("doc")
-							+ "/checkproject/" + reports[m]));
+					File deleteroport=new File(Util.getfileCfg().get("uploadfilepath")+ "checkproject/" + reports[m]);
 					deleteroport.delete();
 				}
 			}

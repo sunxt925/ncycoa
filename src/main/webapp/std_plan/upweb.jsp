@@ -1,6 +1,7 @@
 <%@ page language="java" import="com.db.DBObject,com.db.Parameter,java.util.*,java.io.*,com.entity.std.DocPlan" pageEncoding="GBK"%>
 <%@page import="com.jspsmart.upload.SmartUpload"%>
 <%@page import="javax.swing.JPanel"%>
+<%@page import="com.common.Util"%>
 <%@page import="org.apache.commons.net.ftp.FTP"%>
 <%
 request.setCharacterEncoding("GBK");
@@ -18,7 +19,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		String plandate=smart.getRequest().getParameter("plandate");
 		String plantype=smart.getRequest().getParameter("plantype");
 
-		String pathtemp = getServletContext().getRealPath("/")+"doc\\plan";
+		String pathtemp = Util.getfileCfg().get("uploadfilepath")+"plan";
+		 File ff=new File(Util.getfileCfg().get("uploadfilepath")+"plan");
+			if (!ff.exists())
+				ff.mkdirs();
 		if(filename.equals("")||filename==null){
 			    String res=""; 
 			    res += "alert('上传失败,没有选择上传的文件');";
@@ -50,8 +54,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					policyname="规划";
 				}
 			 String savename=plandate+"."+ext;
+			
 			smart.getFiles().getFile(0).saveAs(pathtemp+java.io.File.separator+savename);
-			String policypath="doc/plan"+"/"+savename;
+			String policypath=Util.getfileCfg().get("uploadfilepath")+"plan"+"/"+savename;
 			DocPlan plan=new DocPlan(plandate,policyname,policypath,date);
 			boolean flag=false;
 			flag=plan.insert();

@@ -34,7 +34,7 @@
 		poCtrl1.setCaption("南充烟草office平台");
 		//设置保存页面
 		String policypath=request.getParameter("policypath");
-    	String urls=path+policypath;
+    	String urls=policypath;
 		String type=policypath.substring(policypath.length()-4,policypath.length());
 			if(type.equals(".doc")||type.equals("docx")){
     			poCtrl1.webOpen(urls, OpenModeType.docNormalEdit, "张三");
