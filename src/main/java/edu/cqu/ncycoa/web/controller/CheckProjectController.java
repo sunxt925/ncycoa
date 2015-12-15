@@ -57,6 +57,8 @@ import edu.cqu.ncycoa.domain.CheckReport;
 import edu.cqu.ncycoa.util.ConvertUtils;
 import edu.cqu.ncycoa.util.Globals;
 import edu.cqu.ncycoa.util.SystemUtils;
+import edu.cqu.ncycoa.common.service.WebServiceImpl;
+import edu.cqu.ncycoa.common.service.GetPhoneByinstanceService;
 
 @Controller
 @RequestMapping("/checkproject")
@@ -66,6 +68,11 @@ public class CheckProjectController{
 	SystemService systemService;
 	@Resource(name="processEngine")
 	ProcessEngine processEngine;
+	@Resource(name="GetPhoneByinstanceService")
+	GetPhoneByinstanceService GetPhoneByinstanceService;
+	
+	@Resource(name="WebServiceImpl")
+	WebServiceImpl WebServiceImpl;
 	
 	private int approvenum=0;//管委会审核的人数
 	
@@ -298,7 +305,12 @@ public class CheckProjectController{
 		map.put("staffName", staffName);
 		map.put("startdate", startTime);
 		map.put("status", status);
+		String instanceid=GetPhoneByinstanceService.getInstanceidByTaskId(taskid);
 		taskService.complete(taskid,map);//执行  有参
+		String phones=GetPhoneByinstanceService.getPhoneByInstanceid(instanceid);
+		System.out.println("phones::"+phones);
+		if(phones!=null)
+			WebServiceImpl.SendMessage(phones, "您有新的待处理管理评审任务！（南充烟草公司标准化管理系统）");
 		String message;
 		message = "提交成功";
 		systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
@@ -364,7 +376,12 @@ public class CheckProjectController{
 		}
 		Map map = new HashMap();
 		map.put("reportpath", reportpath);
+		String instanceid=GetPhoneByinstanceService.getInstanceidByTaskId(taskid);
 		taskService.complete(taskid,map);//执行  有参
+		String phones=GetPhoneByinstanceService.getPhoneByInstanceid(instanceid);
+		System.out.println("phones::"+phones);
+		if(phones!=null)
+			WebServiceImpl.SendMessage(phones, "您有新的待处理管理评审任务！（南充烟草公司标准化管理系统）");
 		String message;
 		message = "提交成功";
 		systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
@@ -428,7 +445,12 @@ public class CheckProjectController{
 		}
 		Map map = new HashMap();
 		map.put("allreportpath", reportpath);
+		String instanceid=GetPhoneByinstanceService.getInstanceidByTaskId(taskid);
 		taskService.complete(taskid,map);//执行  有参
+		String phones=GetPhoneByinstanceService.getPhoneByInstanceid(instanceid);
+		System.out.println("phones::"+phones);
+		if(phones!=null)
+			WebServiceImpl.SendMessage(phones, "您有新的待处理管理评审任务！（南充烟草公司标准化管理系统）");
 		String message;
 		message = "提交成功";
 		systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
@@ -509,7 +531,12 @@ public class CheckProjectController{
 			}
 			approvenum=approvenum-1;
 		}
+		String instanceid=GetPhoneByinstanceService.getInstanceidByTaskId(taskid);
 		taskService.complete(taskid,map);//执行  有参
+		String phones=GetPhoneByinstanceService.getPhoneByInstanceid(instanceid);
+		System.out.println("phones::"+phones);
+		if(phones!=null)
+			WebServiceImpl.SendMessage(phones, "您有新的待处理管理评审任务！（南充烟草公司标准化管理系统）");
 		return "std_check/havedo";
 	}
 	
@@ -549,7 +576,12 @@ public class CheckProjectController{
 				}
 			}
 		}
+		String instanceid=GetPhoneByinstanceService.getInstanceidByTaskId(taskid);
 		taskService.complete(taskid,map);//执行  有参
+		String phones=GetPhoneByinstanceService.getPhoneByInstanceid(instanceid);
+		System.out.println("phones::"+phones);
+		if(phones!=null)
+			WebServiceImpl.SendMessage(phones, "您有新的待处理管理评审任务！（南充烟草公司标准化管理系统）");
 		return "std_check/havedo";
 	}
 	
