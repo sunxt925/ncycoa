@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,12 +18,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.common.CodeDictionary;
 import com.common.Format;
+import com.dao.system.StaffDao;
 
 import edu.cqu.ncycoa.common.dto.AjaxResultJson;
 import edu.cqu.ncycoa.common.dto.DataGrid;
 import edu.cqu.ncycoa.common.dto.QueryDescriptor;
 import edu.cqu.ncycoa.common.service.CommonService;
 import edu.cqu.ncycoa.common.service.MeetingService;
+import edu.cqu.ncycoa.common.service.WebServiceImpl;
 import edu.cqu.ncycoa.common.tag.TagUtil;
 import edu.cqu.ncycoa.common.util.dao.QueryUtils;
 import edu.cqu.ncycoa.common.util.dao.TQOrder;
@@ -43,6 +44,9 @@ public class MeetingController {
 
 	@Resource(name="meetingService")
 	MeetingService meetingService;
+	
+	@Resource(name="WebServiceImpl")
+	WebServiceImpl webService;
 	@RequestMapping(params="add")
 	public String add(HttpServletRequest request) {
 		return "meetingmanage/meeting";
@@ -277,8 +281,50 @@ public class MeetingController {
 			map.put(s, CodeDictionary.syscode_traslate("base_staff", "staffcode", "staffname",s));
 		}
 		mov.setViewName("meetingmanage/memberlist");
+		mov.addObject("id", id);
 		mov.addObject("maps", map);
 		return mov;
+	}
+	
+	@RequestMapping(params="sendMsg")
+	@ResponseBody
+	public void sendMsg(HttpServletRequest request, HttpServletResponse response){
+		AjaxResultJson j = new AjaxResultJson();
+		String message="";
+		String staffs = request.getParameter("obj");
+		String id = request.getParameter("id");
+		MeetingInfo meetingInfo = meetingService.findEntityById(Long.parseLong(id), MeetingInfo.class);
+		StringBuilder msgCtn = new StringBuilder();
+		msgCtn.append("【开会通知】：");
+		msgCtn.append("请您于").append(meetingInfo.getMeetingBeginDate()).append("在")
+		      .append(CodeDictionary.syscode_traslate("ncycoa_meetingroom", "room_no", "room_name", meetingInfo.getMeetingRoom()))
+		      .append("准时参加会议");
+		      
+		if(staffs!=null&&!staffs.equals("")){
+			String[] objs = staffs.split(",");
+			List<String> phonesList = StaffDao.getPhonesByStaffcode(Arrays.asList(objs));
+			if(phonesList!=null&&phonesList.size()>0){
+				StringBuilder sBuilder = new StringBuilder();
+				
+				for(String phone : phonesList){
+					sBuilder.append(phone).append(",");
+				}
+				sBuilder.delete(sBuilder.length()-1, sBuilder.length());
+				if(webService.SendMessage(sBuilder.toString(), msgCtn.toString())!=null){
+					message = "发送成功";
+				}else{
+					message = "发送失败";
+				}
+			}else{
+				message = "发送失败";
+			}
+			
+			
+		}else{
+			message = "发送失败";
+		}
+		j.setMsg(message);
+		SystemUtils.jsonResponse(response, j);
 	}
 	
 }

@@ -39,6 +39,7 @@ import com.common.CodeDictionary;
 import com.common.Format;
 import com.common.Util;
 import com.common.WordUtils;
+import com.dao.system.StaffDao;
 import com.dao.system.UnitDao;
 import com.entity.system.UserInfo;
 
@@ -47,6 +48,7 @@ import edu.cqu.ncycoa.common.dto.DataGrid;
 import edu.cqu.ncycoa.common.dto.QueryDescriptor;
 import edu.cqu.ncycoa.common.service.CommonService;
 import edu.cqu.ncycoa.common.service.SystemService;
+import edu.cqu.ncycoa.common.service.WebServiceImpl;
 import edu.cqu.ncycoa.common.tag.TagUtil;
 import edu.cqu.ncycoa.common.util.dao.QueryUtils;
 import edu.cqu.ncycoa.common.util.dao.TQOrder;
@@ -82,6 +84,9 @@ public class RepairAuditController {
 	
 	@Resource(name="processEngine")
 	ProcessEngine processEngine;
+	
+	@Resource(name="WebServiceImpl")
+	WebServiceImpl webService;
 	
 	@RequestMapping(params="add")
 	public String add(HttpServletRequest request) {
@@ -328,6 +333,23 @@ public class RepairAuditController {
 			paras.put("ysorgcode", UnitDao.getCityComanyAudit("NC.01.05"));
 			paras.put("company", companyaudit);
 			paras.put("objId", objId);
+			List<String> staffsList = new ArrayList<String>();
+			staffsList.add(orgaudit);
+			List<String> phonesList = StaffDao.getPhonesByStaffcode(staffsList);
+			StringBuilder msgCtn = new StringBuilder();
+			msgCtn.append("【审核通知】：");
+			msgCtn.append("您有需要审核的任务，请及时登录标准化系统进行审核。");
+			if(phonesList!=null&&phonesList.size()>0){
+				StringBuilder sBuilder = new StringBuilder();
+				
+				for(String phone : phonesList){
+					sBuilder.append(phone).append(",");
+				}
+				sBuilder.delete(sBuilder.length()-1, sBuilder.length());
+				webService.SendMessage(sBuilder.toString(), msgCtn.toString());
+				
+			}
+			
 			//runtimeService.startProcessInstanceByKey(processID, objId, paras);
 			
 			processEngine.getRuntimeService().startProcessInstanceByKey(processID, objId, paras);
@@ -394,7 +416,25 @@ public class RepairAuditController {
 		paras.put("outcome", outcome);
 		
 		taskService.complete(taskId,paras);
-		
+		List<Task> tasks = taskService.createTaskQuery().processInstanceId(pi).list();
+		List<String> staffsList = new ArrayList<String>();
+		for(Task t:tasks){
+			staffsList.add(t.getAssignee());
+		}
+		List<String> phonesList = StaffDao.getPhonesByStaffcode(staffsList);
+		StringBuilder msgCtn = new StringBuilder();
+		msgCtn.append("【审核通知】：");
+		msgCtn.append("您有需要审核的任务，请及时登录标准化系统进行审核。");
+		if(phonesList!=null&&phonesList.size()>0){
+			StringBuilder sBuilder = new StringBuilder();
+			
+			for(String phone : phonesList){
+				sBuilder.append(phone).append(",");
+			}
+			sBuilder.delete(sBuilder.length()-1, sBuilder.length());
+			webService.SendMessage(sBuilder.toString(), msgCtn.toString());
+			
+		}
 		boolean flag = true;
 		List<ProcessInstance> processInstances = processEngine.getRuntimeService().createProcessInstanceQuery().list();
 

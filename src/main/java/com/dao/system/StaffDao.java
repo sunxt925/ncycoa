@@ -139,4 +139,32 @@ public class StaffDao {
 		
 	    
 	}
+	public static List<String> getPhonesByStaffcode(List<String> staffcodes){
+		List<String> phonesList = new ArrayList<String>();
+		try {
+			StringBuilder sbBuilder = new StringBuilder();
+			sbBuilder.append("");
+			for(String staffcode : staffcodes){
+				sbBuilder.append("'"+staffcode+"'").append(",");
+			}
+			sbBuilder.delete(sbBuilder.length()-1, sbBuilder.length());
+			String sql = "select * from base_staff where  staffcode in ("+sbBuilder.toString()+")";
+		    DBObject dbObject = new DBObject();
+		    DataTable dt = dbObject.runSelectQuery(sql);
+		    if(dt!=null&&dt.getRowsCount()>=0){
+		    	DataRow row=null;
+		    	for(int i=0;i<dt.getRowsCount();i++){
+		    		row = dt.get(i);
+		    		String phone = row.getString("mobilephone");
+		    		if(phone!=null&&!phone.equals("")){
+		    			phonesList.add(phone);
+		    		}
+		    		
+		    	}
+		    }
+		   
+		} catch (Exception e) {
+		}
+		return phonesList;
+	}
 }

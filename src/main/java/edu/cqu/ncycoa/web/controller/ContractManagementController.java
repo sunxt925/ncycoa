@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -36,6 +37,7 @@ import com.common.CodeDictionary;
 import com.common.Format;
 import com.common.Util;
 import com.common.WordUtils;
+import com.dao.system.StaffDao;
 import com.dao.system.UnitDao;
 import com.entity.index.AllMeritCollection;
 import com.entity.system.UserInfo;
@@ -45,6 +47,7 @@ import edu.cqu.ncycoa.common.dto.DataGrid;
 import edu.cqu.ncycoa.common.dto.QueryDescriptor;
 import edu.cqu.ncycoa.common.service.CommonService;
 import edu.cqu.ncycoa.common.service.SystemService;
+import edu.cqu.ncycoa.common.service.WebServiceImpl;
 import edu.cqu.ncycoa.common.tag.TagUtil;
 import edu.cqu.ncycoa.common.util.dao.QueryUtils;
 import edu.cqu.ncycoa.common.util.dao.TQOrder;
@@ -69,6 +72,9 @@ public class ContractManagementController {
 	
 	@Resource(name="processEngine")
 	ProcessEngine processEngine;
+	
+	@Resource(name="WebServiceImpl")
+	WebServiceImpl webService;
 	
 	@RequestMapping(params="add")
 	public ModelAndView add(HttpServletRequest request) {
@@ -162,17 +168,35 @@ public class ContractManagementController {
 		paras.put("inputUser", userinfo.getStaffcode());
 		
 		String companycode = AllMeritCollection.getcompanyByobject(userinfo.getOrgCode());
+		List<String> staffsList = new ArrayList<String>();
 		
 		//设置第二级审核人员
 		if(Integer.parseInt((companycode.split("\\.")[2])) >= 20){
 			//区县
-			paras.put("chief", UnitDao.getComanyAudit(companycode));
+			String staffcode = UnitDao.getComanyAudit(companycode);
+			paras.put("chief", staffcode);
+			staffsList.add(staffcode);
 		}else{
 			//市局
-			paras.put("chief", UnitDao.getCityComanyAudit(userinfo.getOrgCode()));
+			String staffcode = UnitDao.getCityComanyAudit(userinfo.getOrgCode());
+			paras.put("chief", staffcode);
+			staffsList.add(staffcode);
 		}
 		
-		
+		List<String> phonesList = StaffDao.getPhonesByStaffcode(staffsList);
+		StringBuilder msgCtn = new StringBuilder();
+		msgCtn.append("【审核通知】：");
+		msgCtn.append("您有需要审核的任务，请及时登录标准化系统进行审核。");
+		if(phonesList!=null&&phonesList.size()>0){
+			StringBuilder sBuilder = new StringBuilder();
+			
+			for(String phone : phonesList){
+				sBuilder.append(phone).append(",");
+			}
+			sBuilder.delete(sBuilder.length()-1, sBuilder.length());
+			webService.SendMessage(sBuilder.toString(), msgCtn.toString());
+			
+		}
 		//当没有填写实施部门时，默认设置实施部门
 		if(null==contractInfo.getRelevantDepartment()||contractInfo.getRelevantDepartment().equals("")){
 			if(Integer.parseInt((companycode.split("\\.")[2])) >= 20){
@@ -456,7 +480,25 @@ public class ContractManagementController {
 		paras.put("outcome", outcome);
 		
 		taskService.complete(taskId,paras);
-		
+		List<Task> tasks = taskService.createTaskQuery().processInstanceId(pi).list();
+		List<String> staffsList = new ArrayList<String>();
+		for(Task t:tasks){
+			staffsList.add(t.getAssignee());
+		}
+		List<String> phonesList = StaffDao.getPhonesByStaffcode(staffsList);
+		StringBuilder msgCtn = new StringBuilder();
+		msgCtn.append("【审核通知】：");
+		msgCtn.append("您有需要审核的任务，请及时登录标准化系统进行审核。");
+		if(phonesList!=null&&phonesList.size()>0){
+			StringBuilder sBuilder = new StringBuilder();
+			
+			for(String phone : phonesList){
+				sBuilder.append(phone).append(",");
+			}
+			sBuilder.delete(sBuilder.length()-1, sBuilder.length());
+			webService.SendMessage(sBuilder.toString(), msgCtn.toString());
+			
+		}
 		boolean flag = true;
 		List<ProcessInstance> processInstances = processEngine.getRuntimeService().createProcessInstanceQuery().list();
 		

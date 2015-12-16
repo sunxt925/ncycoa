@@ -27,8 +27,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>  
      <div style="width: 100%">
+      <a id="btn_sendMsg"
+				href="#" class="easyui-linkbutton"
+				data-options="iconCls:'icon-undo',plain:true">短信通知</a>
     <table id="dg" class="easyui-datagrid" style="height:"
-    data-options="fitColumns:true,singleSelect:true,collapsible:true">
+    data-options="fitColumns:true,singleSelect:false,collapsible:true">
     <thead>
     <tr>
         <th data-options="field:'staffcode',width:100">员工编码</th>
@@ -44,5 +47,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </tbody>
     </table>
     </div>
+    
 </body>
+<script type="text/javascript">
+$("#btn_sendMsg").click(function(){
+	var staffs = "${maps}";
+	var ids = "${id}";
+	staffs = staffs.substring(1,staffs.length-1);
+	var objs = staffs.split(",");
+	staffs = "";
+	for(var i=0;i<objs.length;i++){
+		staffs += objs[i].split("=")[0]+",";
+	}
+	$.post('meeting_management.htm?sendMsg',
+		  {obj:staffs,id:ids},
+		  function(data){
+		  alert(data);
+	});
+});
+</script>
 </html>
