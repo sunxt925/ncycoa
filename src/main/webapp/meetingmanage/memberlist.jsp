@@ -62,7 +62,8 @@ $("#btn_sendMsg").click(function(){
 	$.post('meeting_management.htm?sendMsg',
 		  {obj:staffs,id:ids},
 		  function(data){
-		  alert(data);
+			  var j = JSON.parse(data);
+		  alert(j.msg);
 	});
 });
 </script>
