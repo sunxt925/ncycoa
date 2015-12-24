@@ -18,6 +18,7 @@ public class WebServiceImpl {
     private static final String servicecode = "106573190009"; 
     private static final String account = "ncycgs"; 
     private static final String password = "ncycgs"; 
+    
 	public static String SendMessage(String phone,String content) {  
         try {  
             Service service = new Service();  

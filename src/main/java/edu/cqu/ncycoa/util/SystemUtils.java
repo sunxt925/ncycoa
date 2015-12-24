@@ -18,6 +18,7 @@ import com.entity.system.UserInfo;
 import edu.cqu.ncycoa.common.dto.AjaxResultJson;
 import edu.cqu.ncycoa.common.service.CommonService;
 import edu.cqu.ncycoa.common.service.SystemService;
+import edu.cqu.ncycoa.common.service.WebServiceImpl;
 
 public class SystemUtils {
 	
@@ -25,6 +26,7 @@ public class SystemUtils {
 	
 	public final static String SESSION_USER = "UserInfo";
 	public final static boolean BUTTON_AUTHORITY_CHECK = false;
+	
 	
 	public static UserInfo getSessionUser() {
 		return (UserInfo)getSession().getAttribute(SESSION_USER);
@@ -100,6 +102,11 @@ public class SystemUtils {
 		return WebApplicationContextUtils.getWebApplicationContext(context).getBean("systemService", SystemService.class);
 	}
 	
+	public static WebServiceImpl getWebService() {
+		return WebApplicationContextUtils
+				.getWebApplicationContext(getRequest().getSession().getServletContext())
+				.getBean("commonService", WebServiceImpl.class);
+	}
 	
 	
 }
