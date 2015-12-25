@@ -105,7 +105,7 @@ public class SystemUtils {
 	public static WebServiceImpl getWebService() {
 		return WebApplicationContextUtils
 				.getWebApplicationContext(getRequest().getSession().getServletContext())
-				.getBean("commonService", WebServiceImpl.class);
+				.getBean("WebServiceImpl", WebServiceImpl.class);
 	}
 	
 	
