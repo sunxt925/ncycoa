@@ -7,8 +7,7 @@ import com.db.DataRow;
 import com.db.DataTable;
 
 public class TargetService {
-	private int count=0;
-
+private int count=0;
 	public static String getNextArchCode(){
 		String result = null;
 			
@@ -46,13 +45,12 @@ public class TargetService {
 		
 		try
 		{
-			
 			StringBuilder sbBuilder=new StringBuilder();
 			DBObject db = new DBObject();
 			String sql = "";
 			sql = "select * from tbm_objindex where index_code like '" + indexccm
 					+ "%' order by index_code";
-			
+			System.out.println(sql);
 			DataTable dt = null;
 			dt = db.runSelectQuery(sql);
 			sbBuilder.append("[");
@@ -79,6 +77,7 @@ public class TargetService {
 
 			}
 			sbBuilder.append("]");
+			System.out.println(sbBuilder.toString());
 			return sbBuilder.toString();
 		}
 		catch (Exception e)
@@ -90,19 +89,22 @@ public class TargetService {
 	
 	public   String getChild(DataTable dt,String pccm){
 		try {
+			
 			StringBuilder sbBuilder=new StringBuilder();
 		
 			if (dt != null && dt.getRowsCount() > 0)
 			{
-				
 				for (int i = count; i < dt.getRowsCount(); i++)
 				{
 					
-					if(dt.get(i).getString("parent£ßindex£ßcode").equals(pccm)){
+					System.out.println(dt.get(i).getString("PARENT_INDEX_CODE"));
+					System.out.println(pccm);
+					if(dt.get(i).getString("PARENT_INDEX_CODE").equals(pccm)){
+						System.out.println("this");
 						count++;
 						DataRow r = dt.get(i);
-						String ccm = r.getString("index_code");
-						String index_name = r.getString("index£ßname");
+						String ccm = r.getString("INDEX_CODE");
+						String index_name = r.getString("INDEX_NAME");
 						sbBuilder.append("{");
 						sbBuilder.append("\"id\":").append("\""+ccm+"\"").append(",");
 						sbBuilder.append("\"text\":").append("\""+index_name+"\"").append(",");
@@ -118,8 +120,10 @@ public class TargetService {
 				
 
 			}
+			System.out.println("child:"+sbBuilder.toString());
 			return sbBuilder.toString();
 		} catch (Exception e) {
+			System.out.println("catchle");
 			return "";
 		}
 	}
