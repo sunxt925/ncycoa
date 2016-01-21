@@ -91,7 +91,7 @@
 <!-- 		</td> -->
 <!-- 	</tr> -->
 	<tr>
-		<td align="right" width="70px"><label class="Validform_label">指标名称${pcode}123</label></td>
+		<td align="right" width="70px"><label class="Validform_label">指标名称</label></td>
 		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="indexName" name="indexName" value="${item.indexName}">
 		<span class="Validform_checktip"></span>
 		</td>
