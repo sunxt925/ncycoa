@@ -79,10 +79,10 @@
 </script>
 </head>
 <body style="overflow-x:hidden">
-<form id="formobj" name="formobj" action="objindexitem.htm?save_arch"  method="post" >
+<form id="formobj" name="formobj" action="objindexitem.htm?save_item"  method="post" >
 <input type="hidden" id="btn_sub" class="btn_sub"/> 
 <input style="display:none" type="submit" id="btn_ok" class="btn_sub"/> 
-<%--  <input id="id" name="id" type="hidden" value="${item.id}">  --%>
+<input id="parentIndexCode" name="parentIndexCode" type="hidden" value="${pcode}">
 <table style="width:720px;border-spacing:1px;" class="formtable">
 <!--     <tr> -->
 <!-- 		<td align="right" width="70px"><label class="Validform_label">编码名称</label></td> -->
@@ -91,7 +91,7 @@
 <!-- 		</td> -->
 <!-- 	</tr> -->
 	<tr>
-		<td align="right" width="70px"><label class="Validform_label">名称</label></td>
+		<td align="right" width="70px"><label class="Validform_label">指标名称${pcode}123</label></td>
 		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="indexName" name="indexName" value="${item.indexName}">
 		<span class="Validform_checktip"></span>
 		</td>
@@ -103,26 +103,14 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="right" width="70px"><label class="Validform_label">最小分值</label></td>
-		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="scoreSumLow" name="scoreSumLow" value="${item.scoreSumLow}">
+		<td align="right" width="70px"><label class="Validform_label">计算公式</label></td>
+		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="valueFunc" name="valueFunc" value="${item.valueFunc}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right" width="70px"><label class="Validform_label">最大分值</label></td>
-		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="scoreSumMax" name="scoreSumMax" value="${item.scoreSumMax}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label"> 开始时间</label></td>
-		<td class="value"><input class="easyui-datebox" style="width:250px;" id="validBeginDate" name="validBeginDate" value="${item.validBeginDate}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label"> 结束时间</label></td>
-		<td class="value"><input class="easyui-datebox" style="width:250px;" id="validEndDate" name="validEndDate" value="${item.validEndDate}">
+		<td align="right" width="70px"><label class="Validform_label">标准分值</label></td>
+		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="standardscore" name="standardscore" value="${item.standardscore}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -147,9 +135,9 @@ function createwindow(title, url, width, height,func) {
 			cache : false,
 			ok : function() {
 				$('#btn_ok', this.iframe.contentWindow.document).click();
-				return false;
+				return true;
 			},
-			cancelVal : '关闭',
+			cancelVal : '关闭2',
 			cancel : true/* 为true等价于function(){} */
 		});
 }

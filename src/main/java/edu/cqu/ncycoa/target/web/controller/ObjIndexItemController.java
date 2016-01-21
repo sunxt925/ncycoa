@@ -29,6 +29,7 @@ import edu.cqu.ncycoa.dao.SupplierDao;
 import edu.cqu.ncycoa.domain.Notice;
 import edu.cqu.ncycoa.safety.domain.CheckPlan;
 import edu.cqu.ncycoa.target.domain.ObjIndexItem;
+import edu.cqu.ncycoa.target.service.TargetService;
 import edu.cqu.ncycoa.util.ConvertUtils;
 import edu.cqu.ncycoa.util.Globals;
 import edu.cqu.ncycoa.util.MyBeanUtils;
@@ -52,6 +53,15 @@ public class ObjIndexItemController {
 		return mav;
 	}
 	
+	@RequestMapping(params="indexitemmanage_c") //之后要改 只返回最新版本的根节点
+	public ModelAndView indexrootlist_c(HttpServletRequest request, HttpServletResponse response) {
+		List<ObjIndexItem> items = systemService.findEntitiesByProperty("ParentIndexCode", "-1", ObjIndexItem.class);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("targetmanage/indexitemmanage");
+		mav.addObject("items",items);
+		return mav;
+	}
+	
 	@RequestMapping(params="indexrootlist_d")
 	public ModelAndView indexrootList_d(HttpServletRequest request, HttpServletResponse response){
 		//String id = request.getParameter("id"); 
@@ -63,7 +73,7 @@ public class ObjIndexItemController {
 		return mav;
 	}
 	
-	@RequestMapping(params="indexrootlist_s")
+	@RequestMapping(params="indexrootlist_s") //之后要改 分公司，部门，个人
 	public ModelAndView indexrootList_s(HttpServletRequest request, HttpServletResponse response){
 		//String id = request.getParameter("id"); 
 		List<ObjIndexItem> items = systemService.findEntitiesByProperty("ParentIndexCode", "-1", ObjIndexItem.class);
@@ -73,9 +83,32 @@ public class ObjIndexItemController {
 		mav.addObject("items",items);
 		return mav;
 	}
+	
+	@RequestMapping(params="indexlist_c")  //查看最新版本的指标树
+	public ModelAndView indexlist_c(HttpServletRequest request, HttpServletResponse response){
+		String ccm = request.getParameter("ccm"); 
+		List<ObjIndexItem> items = systemService.findEntitiesByProperty("ParentIndexCode", ccm, ObjIndexItem.class);
+		ModelAndView mav = new ModelAndView();
+		//items筛选出公司类体系
+		mav.setViewName("targetmanage/indexlist");
+		mav.addObject("items",items);
+		mav.addObject("pcode",ccm);
+		return mav;
+	}
+	
 	@RequestMapping(params="add_arch")
-	public String add(HttpServletRequest request) {
+	public String add_arch(HttpServletRequest request) {
 		return "targetmanage/indexarchadd";
+	}
+	
+	@RequestMapping(params="add_item")
+	public ModelAndView add_item(HttpServletRequest request, HttpServletResponse response) {
+		String ccm = request.getParameter("ccm"); 
+		ModelAndView mav = new ModelAndView();
+		//items筛选出公司类体系
+		mav.setViewName("targetmanage/indexadd");
+		mav.addObject("pcode",ccm);
+		return mav;
 	}
 	//删除单个体系
 	@RequestMapping(params="del_arch")
@@ -129,16 +162,7 @@ public class ObjIndexItemController {
 		//mav.addObject("orgname",CodeDictionary.syscode_traslate("base_org","orgcode", "orgname", notice.getDepart()));
 		return mav;
 	}
-	
-	@RequestMapping(params="seeContent")
-    public ModelAndView seeContent(HttpServletRequest request, HttpServletResponse response){
-		String id = request.getParameter("id"); 
-		Notice notice = systemService.findEntityById(Long.parseLong(id), Notice.class);
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("notice/seenotice");
-		mav.addObject("notice",notice);
-		return mav;
-	}
+
 	
 	@RequestMapping(params = "save_arch")
 	@ResponseBody
@@ -154,6 +178,7 @@ public class ObjIndexItemController {
 				item.setIsParent("1");
 				item.setParentIndexCode("-1");
 				item.setVersion("V01");
+				item.setIndexCode(TargetService.getNextArchCode()+"."+item.getVersion());
 				item.setScoreDefault(0);
 				item.setStandardscore(0);
 				systemService.addEntity(item);
@@ -173,6 +198,8 @@ public class ObjIndexItemController {
 			}
 			} else {
 			message = "添加成功";
+			item.setVersion("V01");
+			item.setIndexCode(TargetService.getNextArchCode()+"."+item.getVersion());
 			item.setEnabled(1);
 			item.setIsParent("1");
 			item.setParentIndexCode("-1");
@@ -184,19 +211,60 @@ public class ObjIndexItemController {
 		SystemUtils.jsonResponse(response, j);
 	}
 	
+	@RequestMapping(params = "save_item")
+	@ResponseBody
+	public void save_item(ObjIndexItem item, HttpServletRequest request, HttpServletResponse response) {
+		String pcode = item.getParentIndexCode(); 
+		AjaxResultJson j = new AjaxResultJson();
+		String message;
+		if (item.getIndexCode() != null) {
+			message = "更新成功";
+			ObjIndexItem t = systemService.findEntityById(item.getIndexCode(), ObjIndexItem.class);
+			if(t==null){
+				System.out.println(pcode);
+				message = "添加成功";
+				item.setEnabled(1);
+				item.setIsParent("0");
+				//item.setParentIndexCode(pcode);
+				//item.setVersion(pcode.substring(pcode.lastIndexOf('V'), pcode.lastIndexOf('V')+2));
+				item.setIndexCode(TargetService.getNextIndexCode(pcode));
+				item.setScoreDefault(0);
+				item.setStandardscore(0);
+				systemService.addEntity(item);
+			}else{
+			try {
+				item.setEnabled(1);
+				item.setIsParent("0");
+				item.setParentIndexCode("-1");
+				MyBeanUtils.copyBeanNotNull2Bean(item, t);
+				
+				systemService.saveEntity(t);
+				
+			} catch (Exception e) {
+				message = "更新失败";
+				systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
+			}
+			}
+			} else {
+			message = "添加成功";
+			item.setVersion("V01");
+			item.setIndexCode(TargetService.getNextArchCode()+"."+item.getVersion());
+			item.setEnabled(1);
+			item.setIsParent("1");
+			item.setParentIndexCode("-1");
+			item.setScoreDefault(0);
+			item.setStandardscore(0);
+			systemService.addEntity(item);
+		}
+		j.setMsg(message);
+		SystemUtils.jsonResponse(response, j);
+	}
 	
 	@RequestMapping(params="dgview_add")
 	public String dgViewA(HttpServletRequest request) {	
 		return "notice/mynoticelist";
 	}
-	@RequestMapping(params="dgview_see")
-	public String dgViewS(HttpServletRequest request) {	
-		return "notice/allnoticelist";
-	}
-	@RequestMapping(params="dgview_del")
-	public String dgViewD(HttpServletRequest request) {	
-		return "notice/adminnoticelist";
-	}
+
 	
 	
 	@SuppressWarnings("unchecked")
@@ -218,21 +286,4 @@ public class ObjIndexItemController {
 		TagUtil.datagrid(response, dg);
 	}
 	
-	@SuppressWarnings("unchecked")
-	@RequestMapping(params="dgdata_all")
-	@ResponseBody
-	public void dgDataS(Notice notice, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
-		QueryDescriptor<Notice> cq = new QueryDescriptor<Notice>(Notice.class, dg);
-		
-		CommonService commonService = SystemUtils.getCommonService(request);
-		//查询条件组装器
-		TypedQueryBuilder<Notice> tqBuilder = QueryUtils.getTQBuilder(notice, request.getParameterMap());
-		
-		if (StringUtils.isNotEmpty(dg.getSort())) {
-			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
-		}
-		cq.setTqBuilder(tqBuilder);
-		commonService.getDataGridReturn(cq, true);
-		TagUtil.datagrid(response, dg);
-	}
 }
