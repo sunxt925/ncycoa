@@ -149,46 +149,22 @@ int per_page = u.getPerpage_full();
     {
     	var actionUrl="./objindexitem.htm?del_arch&id="+para;
     	var rows = null;
-    	alert("dsdsd");
-    	createdialog('删除确认 ', '确定删除该记录吗 ?', actionUrl);
-    	
+    	 $.dialog.confirm('删除',function(){
+    		 
+    		 $.get(actionUrl,function(data){
+    			 var d = $.parseJSON(data);
+     			if (d.success) {
+     				var msg = d.msg;
+     				
+     			}
+     			window.setTimeout(function(){
+            		window.location.reload();
+            	},100);
+    		 });
+			   
+     });
     }
-    function createdialog(title, content, url) {
-    	alert("dsdsd");
-    	$.dialog.confirm(
-    		content, 
-    		function(){
-    			doSubmit(url, "删除");
-    			rowid = '';
-    			
-    		}, 
-    		function(){
-    		
-    		}
-    	).zindex();	
-    }
-    function doSubmit(url, gname) {
-    	gridname=gname;
-    	$.ajax({
-    		async : false,
-    		cache : false,
-    		type : 'POST',
-    		url : url,// 请求的action路径
-    		error : function() {// 请求失败处理函数
-    			 $(this).dialog('close');  
-    		},
-    		success : function(data) {
-    			var d = $.parseJSON(data);
-    			if (d.success) {
-    				var msg = d.msg;
-    				tip(msg);
-    			
-    				reloadTable(gname);
-    				
-    			}
-    		}
-    	});
-    }
+   
     function modify(para){
     	//alert("11");
     	var u="./objindexitem.htm?update_arch&id="+para;

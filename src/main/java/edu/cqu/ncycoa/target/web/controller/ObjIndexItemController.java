@@ -50,6 +50,7 @@ public class ObjIndexItemController {
 		//items筛选出公司类体系
 		mav.setViewName("targetmanage/indexrootlist");
 		mav.addObject("items",items);
+		mav.addObject("classT","C");
 		return mav;
 	}
 	
@@ -70,6 +71,7 @@ public class ObjIndexItemController {
 		//items筛选出公司类体系
 		mav.setViewName("targetmanage/indexrootlist");
 		mav.addObject("items",items);
+		mav.addObject("classT","D");
 		return mav;
 	}
 	
@@ -97,8 +99,11 @@ public class ObjIndexItemController {
 	}
 	
 	@RequestMapping(params="add_arch")
-	public String add_arch(HttpServletRequest request) {
-		return "targetmanage/indexarchadd";
+	public ModelAndView add_arch(HttpServletRequest request,HttpServletResponse response) {
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("targetmanage/indexarchadd");
+		mav.addObject("classT",request.getParameter("class"));
+		return mav;
 	}
 	
 	@RequestMapping(params="add_item")
@@ -167,6 +172,7 @@ public class ObjIndexItemController {
 	@RequestMapping(params = "save_arch")
 	@ResponseBody
 	public void save(ObjIndexItem item, HttpServletRequest request, HttpServletResponse response) {
+		String classT=request.getParameter("class");
 		AjaxResultJson j = new AjaxResultJson();
 		String message;
 		if (item.getIndexCode() != null) {
@@ -178,7 +184,7 @@ public class ObjIndexItemController {
 				item.setIsParent("1");
 				item.setParentIndexCode("-1");
 				item.setVersion("V01");
-				item.setIndexCode(TargetService.getNextArchCode()+"."+item.getVersion());
+				item.setIndexCode(TargetService.getNextArchCode(classT)+"."+item.getVersion());
 				item.setScoreDefault(0);
 				item.setStandardscore(0);
 				systemService.addEntity(item);
@@ -199,7 +205,7 @@ public class ObjIndexItemController {
 			} else {
 			message = "添加成功";
 			item.setVersion("V01");
-			item.setIndexCode(TargetService.getNextArchCode()+"."+item.getVersion());
+			item.setIndexCode(TargetService.getNextArchCode(classT)+"."+item.getVersion());
 			item.setEnabled(1);
 			item.setIsParent("1");
 			item.setParentIndexCode("-1");
@@ -247,8 +253,8 @@ public class ObjIndexItemController {
 			}
 			} else {
 			message = "添加成功";
-			item.setVersion("V01");
-			item.setIndexCode(TargetService.getNextArchCode()+"."+item.getVersion());
+			//item.setVersion("V01");
+			item.setIndexCode(TargetService.getNextIndexCode(pcode));
 			item.setEnabled(1);
 			item.setIsParent("1");
 			item.setParentIndexCode("-1");

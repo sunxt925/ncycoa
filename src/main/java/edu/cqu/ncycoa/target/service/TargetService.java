@@ -1,19 +1,22 @@
 package edu.cqu.ncycoa.target.service;
 
 import java.text.DecimalFormat;
+import java.util.List;
 
 import com.db.DBObject;
 import com.db.DataRow;
 import com.db.DataTable;
 
+import edu.cqu.ncycoa.target.domain.ObjIndexItem;
+
 public class TargetService {
 private int count=0;
-	public static String getNextArchCode(){
+	public static String getNextArchCode(String classT){
 		String result = null;
 			
 			try {
 				DBObject db = new DBObject();
-				String sql = "select INDEX_CODE from TBM_OBJINDEX order by index_code desc";
+				String sql = "select INDEX_CODE from TBM_OBJINDEX where index_code like '"+classT+"%' order by index_code desc";
 				//Parameter.SqlParameter[] pp = new Parameter.SqlParameter[] { new Parameter.String(SystemUtils.getSessionUser().getStaffcode()) };
 
 				DataTable dt = db.runSelectQuery(sql);
@@ -22,7 +25,7 @@ private int count=0;
 						DataRow r = dt.get(0);
 						result=r.getString("index_code");
 				}else{
-					result="C01";
+					result=classT+"01";
 					return result;
 				}
 			} catch (Exception e) {
@@ -155,6 +158,33 @@ private int count=0;
 		String temp2 = df.format(Integer.parseInt(s)+1);
 		result=pcode+"."+temp2;
 		System.out.println(result);
+		return result;
+	}
+
+	public static List<ObjIndexItem> getArchByClass(String string) {
+		List<ObjIndexItem> result = null;
+		
+		try {
+			DBObject db = new DBObject();
+			String sql = "select INDEX_CODE from TBM_OBJINDEX where ParentIndexCode='-1' and index_code like '"+string+"%'";
+			//Parameter.SqlParameter[] pp = new Parameter.SqlParameter[] { new Parameter.String(SystemUtils.getSessionUser().getStaffcode()) };
+
+			DataTable dt = db.runSelectQuery(sql);
+			if (dt != null&& dt.getRowsCount() >= 1) {
+				for (int i = 0; i < dt.getRowsCount(); i++)
+				{
+					DataRow r = dt.get(i);
+					try {
+						result.add(r.getString("index_code"));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}	
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return result;
 	}
 }

@@ -55,7 +55,7 @@ int per_page = u.getPerpage_full();
     <a id="btn_del" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
     <a id="btn_ref" href="#"    class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true">刷新</a>
     </div>
-	<table width="100%" style="border-collapse:collapse;border:1px solid #464242;border-top:1px solid #ECE9D8;border-left:1px solid #ECE9D8;border-right:1px solid #ECE9D8;border-bottom:1px solid #ECE9D8;" border="1" cellpadding="5" cellspacing="0" class="table_list">
+	<table class="rootlisttab" width="100%" style="border-collapse:collapse;border:1px solid #464242;border-top:1px solid #ECE9D8;border-left:1px solid #ECE9D8;border-right:1px solid #ECE9D8;border-bottom:1px solid #ECE9D8;" border="1" cellpadding="5" cellspacing="0" class="table_list">
 	<tr height='22' bgcolor='D0E9ED' style="border-color: #ece9d8"><td nowrap  align='center' style="border-color: #ece9d8;font-size:12px;"><input type='checkbox' name='allitems' id='allitems' onclick='allitems_click()'></td>
 	<td nowrap  align='center' style="border-color: #ece9d8;font-size:12px;">编码名称</td>
 	<td nowrap  align='center' style="border-color: #ece9d8;font-size:12px;">版本号</td>
@@ -71,7 +71,7 @@ int per_page = u.getPerpage_full();
 	<c:forEach items="${items}" var="item">
             <tr>
             <td><input type="checkbox" id="items" name="items" value="${item.indexCode}"></td>
-					<td>${item.indexCode}</td>
+					<td >${item.indexCode}</td>
 					<td>${item.version}</td>
 					<td>${item.indexName}</td>
 					<td>${item.indexDesc}</td>
@@ -138,8 +138,10 @@ int per_page = u.getPerpage_full();
     	window.location.reload();
     	    });
     $("#btn_save").click(function(){
-    	var index_class="c";
-    	var u="./objindexitem.htm?add_arch"
+    	//var index_class="c";
+    	alert("12");
+    	var u="./objindexitem.htm?add_arch&class=${classT}";
+    	alert(u);
     	//var u="targetmanage/indexarchadd.jsp?index_class="+index_class+"&pIndexcode=-1";
     	createwindow("新增",u,800,650);
     	    });

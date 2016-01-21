@@ -79,7 +79,7 @@
 </script>
 </head>
 <body style="overflow-x:hidden">
-<form id="formobj" name="formobj" action="objindexitem.htm?save_arch"  method="post" >
+<form id="formobj" name="formobj" action="objindexitem.htm?save_arch&class=${classT}"  method="post" >
 <input type="hidden" id="btn_sub" class="btn_sub"/> 
 <input style="display:none" type="button" id="btn_ok" onclick="ret()"/> 
 
