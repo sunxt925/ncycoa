@@ -41,7 +41,7 @@
 		});
 	}
 	
-	$(function() {
+	/* $(function() {
 		$("#formobj").Validform({
 			tiptype : 1,
 			btnSubmit : "#btn_sub",
@@ -63,25 +63,26 @@
 				}
 				win.reloadTable();
 			}
-		});
-		
-		$('#addBtn').bind('click', function(){   
-	 		 var tr =  $("#add_participant_table_template tr").clone();
+		});	 */
+		/*  $('#addBtn').bind('click', function(){ 
+			
+	 	 	 var tr =  $("#add_participant_table_template tr").clone();
 		 	 $("#add_participant_table").append(tr);
 		 	 resetTrNum('add_participant_table');
-	    });  
+		 	
+	    });   
 		$('#delBtn').bind('click', function(){   
 	       $("#add_participant_table").find("input:checked").parent().parent().remove();   
 	        resetTrNum('add_participant_table');
-	    });
-	});
-	
+	    }); */
+	/* });
+	 */
 </script>
 </head>
 <body style="overflow-x:hidden">
 <form id="formobj" name="formobj" action="objindexitem.htm?save_item"  method="post" >
 <input type="hidden" id="btn_sub" class="btn_sub"/> 
-<input style="display:none" type="submit" id="btn_ok" class="btn_sub"/> 
+ <input style="display:none" type="button" id="btn_ok" class="btn_sub" onclick="ret()"/>
 <input id="parentIndexCode" name="parentIndexCode" type="hidden" value="${pcode}">
 <table style="width:720px;border-spacing:1px;" class="formtable">
 <!--     <tr> -->
@@ -114,32 +115,18 @@
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
+	
 </table>
 <div style="width: 690px; height: 1px;"></div>
 
 </form>
 
 <script type="text/javascript">
-
-function createwindow(title, url, width, height,func) {
-	$.dialog({
-			id:'CLHG1976D',
-			data:func,
-			content : 'url:' + url,
-			lock : true,
-			width : width,
-			height : height,
-			title : title,
-			zIndex :2000,
-			opacity : 0.3,
-			cache : false,
-			ok : function() {
-				$('#btn_ok', this.iframe.contentWindow.document).click();
-				return true;
-			},
-			cancelVal : '关闭2',
-			cancel : true/* 为true等价于function(){} */
-		});
+function ret(){
+	alert("das");
+	var api = frameElement.api;
+	
+	 (api.data)({code:"refresh"});
 }
 </script>
 <table style="display: none">

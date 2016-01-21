@@ -98,13 +98,11 @@ int per_page = u.getPerpage_full();
 	<script type="text/javascript">
 
     function returnValue(data){
-            var f=data.code;
-            if(f=="refresh"){
-            	window.setTimeout(function(){
-            		window.location.reload();
-            	},1000);
-            	
-            }
+    	if(data.code=='refresh'){
+    		window.setTimeout(function(){
+        		window.location.reload();
+        	},200);
+    	}
     }
    
     function createwindow(title, url, width, height) {
@@ -141,23 +139,33 @@ int per_page = u.getPerpage_full();
     $("#btn_del").click(function(){
     	//批量删除
     	    });
+    function ret(){
+    	var api = frameElement.api;
+    	
+    	 (api.data)({code:"refresh"});
+    	
+    }
     function del(para)
     {
     	var actionUrl="./objindexitem.htm?del_arch&id="+para;
     	var rows = null;
+    	alert("dsdsd");
     	createdialog('删除确认 ', '确定删除该记录吗 ?', actionUrl);
+    	
     }
     function createdialog(title, content, url) {
+    	alert("dsdsd");
     	$.dialog.confirm(
     		content, 
     		function(){
     			doSubmit(url, "删除");
     			rowid = '';
+    			
     		}, 
     		function(){
     		
     		}
-    	);	
+    	).zindex();	
     }
     function doSubmit(url, gname) {
     	gridname=gname;
@@ -167,13 +175,16 @@ int per_page = u.getPerpage_full();
     		type : 'POST',
     		url : url,// 请求的action路径
     		error : function() {// 请求失败处理函数
+    			 $(this).dialog('close');  
     		},
     		success : function(data) {
     			var d = $.parseJSON(data);
     			if (d.success) {
     				var msg = d.msg;
     				tip(msg);
+    			
     				reloadTable(gname);
+    				
     			}
     		}
     	});

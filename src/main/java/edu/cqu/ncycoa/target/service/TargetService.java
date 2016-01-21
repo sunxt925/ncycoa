@@ -22,6 +22,9 @@ public class TargetService {
 					
 						DataRow r = dt.get(0);
 						result=r.getString("index_code");
+				}else{
+					result="C01";
+					return result;
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

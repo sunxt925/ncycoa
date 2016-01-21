@@ -81,7 +81,8 @@
 <body style="overflow-x:hidden">
 <form id="formobj" name="formobj" action="objindexitem.htm?save_arch"  method="post" >
 <input type="hidden" id="btn_sub" class="btn_sub"/> 
-<input style="display:none" type="submit" id="btn_ok" class="btn_sub"/> 
+<input style="display:none" type="button" id="btn_ok" onclick="ret()"/> 
+
 <%--  <input id="id" name="id" type="hidden" value="${item.id}">  --%>
 <table style="width:720px;border-spacing:1px;" class="formtable">
 <!--     <tr> -->
@@ -126,13 +127,19 @@
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
+	
 </table>
 <div style="width: 690px; height: 1px;"></div>
-
+<input type="submit" id="sub"  style="display:none">
 </form>
 
 <script type="text/javascript">
-
+function ret(){
+	var api = frameElement.api;
+	
+	 (api.data)({code:"refresh"});
+	 $('#sub').click();
+}
 function createwindow(title, url, width, height,func) {
 	$.dialog({
 			id:'CLHG1976D',

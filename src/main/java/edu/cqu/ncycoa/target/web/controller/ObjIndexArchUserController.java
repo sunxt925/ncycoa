@@ -133,40 +133,7 @@ public class ObjIndexArchUserController {
 	}
 	
 	
-	@SuppressWarnings("unchecked")
-	@RequestMapping(params="dgdata_add")
-	@ResponseBody
-	public void dgDataA(Notice notice, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
-		QueryDescriptor<Notice> cq = new QueryDescriptor<Notice>(Notice.class, dg);
-		
-		CommonService commonService = SystemUtils.getCommonService(request);
-		//查询条件组装器
-		TypedQueryBuilder<Notice> tqBuilder = QueryUtils.getTQBuilder(notice, request.getParameterMap());
-		tqBuilder.addRestriction(new TQRestriction( "depart", "in", Arrays.asList(SupplierDao.getOneDepartCode())));
-
-		if (StringUtils.isNotEmpty(dg.getSort())) {
-			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
-		}
-		cq.setTqBuilder(tqBuilder);
-		commonService.getDataGridReturn(cq, true);
-		TagUtil.datagrid(response, dg);
-	}
 	
-	@SuppressWarnings("unchecked")
-	@RequestMapping(params="dgdata_all")
-	@ResponseBody
-	public void dgDataS(Notice notice, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
-		QueryDescriptor<Notice> cq = new QueryDescriptor<Notice>(Notice.class, dg);
-		
-		CommonService commonService = SystemUtils.getCommonService(request);
-		//查询条件组装器
-		TypedQueryBuilder<Notice> tqBuilder = QueryUtils.getTQBuilder(notice, request.getParameterMap());
-		
-		if (StringUtils.isNotEmpty(dg.getSort())) {
-			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
-		}
-		cq.setTqBuilder(tqBuilder);
-		commonService.getDataGridReturn(cq, true);
-		TagUtil.datagrid(response, dg);
-	}
+	
+	
 }
