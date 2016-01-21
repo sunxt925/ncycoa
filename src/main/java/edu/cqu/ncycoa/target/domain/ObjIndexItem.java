@@ -29,22 +29,22 @@ public class ObjIndexItem implements Comparable<ObjIndexItem>{
 	private String IndexDesc = "";
 	@Column(name="ARCH_CODE")
 	private String ArchCode = "";
-	@Column(name="ISPARENT")
+	@Column(name="ISPARENT")  //体系为1，指标为0
 	private String IsParent = "";
-	@Column(name="PARENT_INDEX_CODE")
+	@Column(name="PARENT_INDEX_CODE")  //体系为-1，指标为S01.V01
 	private String ParentIndexCode = "";
-	@Column(name="VALUE_FUNC")
+	@Column(name="VALUE_FUNC") //计算函数
 	private String ValueFunc = "";
-	@Column(name="VALUE_UNIT")
-	private String ValueUnit = "";
-	@Column(name="SCORE_FUNC")
+	@Column(name="VALUE_UNIT") //单位
+	private String ValueUnit = ""; 
+	@Column(name="SCORE_FUNC") //得分函数
 	private String ScoreFunc = "";
-	@Column(name="SCORE_PERIOD")
+	@Column(name="SCORE_PERIOD")  //周期？
 	private String ScorePeriod = "";
 	@Column(name="SCORE_DEFAULT")
-	private double ScoreDefault;
+	private double ScoreDefault;  //默认得分
 	@Column(name="SCORE_SUMLOW")
-	private double ScoreSumLow;
+	private double ScoreSumLow;  
 	@Column(name="SCORE_SUMMAX")
 	private double ScoreSumMax;
 	@Column(name="UPPER_SUMWEIGHT")
@@ -56,7 +56,7 @@ public class ObjIndexItem implements Comparable<ObjIndexItem>{
 	@Column(name="VALID_ENDDATE")
 	private Date ValidEndDate;
 	@Column(name="ENABLED")
-	private int Enabled;
+	private int Enabled; //?????
 	@Column(name="INDEX_ORDER")
 	private String indexorder;
 	@Column(name="MEMO")
@@ -278,5 +278,24 @@ public class ObjIndexItem implements Comparable<ObjIndexItem>{
 		Memo = memo;
 	}
 
-	
+
+	public String getVersion() {
+		return version;
+	}
+
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
+
+	public String getObjIndexNo() {
+		return objIndexNo;
+	}
+
+
+	public void setObjIndexNo(String objIndexNo) {
+		this.objIndexNo = objIndexNo;
+	}
+
 }

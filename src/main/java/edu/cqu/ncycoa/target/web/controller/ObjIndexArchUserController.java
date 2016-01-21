@@ -33,8 +33,8 @@ import edu.cqu.ncycoa.util.MyBeanUtils;
 import edu.cqu.ncycoa.util.SystemUtils;
 
 @Controller
-@RequestMapping("/target")
-public class TargetController {
+@RequestMapping("/objindexarchuser")
+public class ObjIndexArchUserController {
 	@Resource(name="systemService")
 	SystemService systemService;
 	
