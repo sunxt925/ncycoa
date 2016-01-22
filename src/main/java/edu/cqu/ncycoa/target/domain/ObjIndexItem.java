@@ -29,6 +29,10 @@ public class ObjIndexItem implements Comparable<ObjIndexItem>{
 	private String IndexDesc = "";
 	@Column(name="ARCH_CODE")
 	private String ArchCode = "";
+	//是否为最新版本
+	@Column(name="ISLAST")  //是为1，不是为0
+	private String IsLast = "";
+	
 	@Column(name="ISPARENT")  //体系为1，指标为0
 	private String IsParent = "";
 	@Column(name="PARENT_INDEX_CODE")  //体系为-1，指标为S01.V01
@@ -296,6 +300,16 @@ public class ObjIndexItem implements Comparable<ObjIndexItem>{
 
 	public void setObjIndexNo(String objIndexNo) {
 		this.objIndexNo = objIndexNo;
+	}
+
+
+	public String getIsLast() {
+		return IsLast;
+	}
+
+
+	public void setIsLast(String isLast) {
+		IsLast = isLast;
 	}
 
 }

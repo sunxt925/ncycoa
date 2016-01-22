@@ -277,7 +277,7 @@ public class DocOrgPost {
 			DBObject db = new DBObject();
 
 			//String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||std_org_post.recid||'\">' as 选择,std_org_post.positioncode as 岗位编码 , base_position.positionname 岗位名称,'<a href=\"#\" onClick=dele(\"'||std_org_post.recid||'\") class=\"button4\">删除</a>' as 操作  from base_position FULL JOIN std_org_post on base_position.positioncode=std_org_post.positioncode  where std_org_post.doccode = '" + doccode + "' and std_org_post.orgcode = '" + orgcode + "'";
-			String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||std_org_post.recid||'\">' as 选择,base_org.orgcode as 机构编码, base_org.orgname as 机构名称 ,std_org_post.positioncode as 岗位编码 , base_position.positionname as 岗位名称,'<a href=\"#\" onClick=dele(\"'||std_org_post.recid||'\") class=\"button4\">删除</a>' as 操作  from base_org,base_position, std_org_post where base_position.positioncode=std_org_post.positioncode and base_org.orgcode=std_org_post.orgcode and  std_org_post.doccode = '" + doccode +  "' order by std_org_post.positioncode";
+			String base_sql = "select '<input type=\"checkbox\" id=\"items\" name=\"items\" value=\"'||std_org_post.recid||'\">' as 选择,base_org.orgcode as 机构编码, base_org.orgname as 机构名称 ,std_org_post.positioncode as 岗位编码 , base_position.positionname as 岗位名称  from base_org,base_position, std_org_post where base_position.positioncode=std_org_post.positioncode and base_org.orgcode=std_org_post.orgcode and  std_org_post.doccode = '" + doccode +  "' order by std_org_post.positioncode";
 
 			String sql_run = Format.getFySql(base_sql, pageno, perpage);
 			return db.runSelectQuery(sql_run);

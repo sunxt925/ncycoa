@@ -170,6 +170,7 @@ private int count=0;
 		}
 	}
 
+	//获取下一个indexcode
 	public static String getNextIndexCode(String pcode) {
 		String result = null;
 		
@@ -198,6 +199,12 @@ private int count=0;
 		result=pcode+"."+temp2;
 		System.out.println(result);
 		return result;
+	}
+	
+
+	//新增version
+	public static void addVersionById(String id) {
+		
 	}
 
 	public static List<ObjIndexItem> getArchByClass(String string) {
@@ -260,7 +267,8 @@ private int count=0;
 					DataRow r = dt.get(i);
 					sBuilder.append("{");
 					sBuilder.append("\"indexcode\":").append("\"" + r.getString("index_code") + "\"").append(",");
-					sBuilder.append("\"indexname\":").append("\"" + r.getString("index_name") + "\"");
+					//sBuilder.append("\"indexname\":").append("\"" + r.getString("index_name") + "\"");
+					sBuilder.append("\"indexname\":").append("\"" + r.getString("index_name")+"__"+r.getString("index_code").substring(4,7) + "\"");
 					sBuilder.append("},");
 				}
 				sBuilder.delete(sBuilder.length() - 1, sBuilder.length());
@@ -273,5 +281,15 @@ private int count=0;
 			return "";
 		}
 	}
+
+	public static String getNextVersionCode(String id) {
+		String result=id;
+		String s=result.substring(5, 7);
+		DecimalFormat df = new DecimalFormat("00"); 
+		String temp2 = df.format(Integer.parseInt(s)+1);
+		result=result.substring(0,5)+temp2;
+		return result;
+	}
+
 
 }

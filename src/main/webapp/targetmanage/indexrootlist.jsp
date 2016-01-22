@@ -73,7 +73,7 @@ int per_page = u.getPerpage_full();
 	<c:forEach items="${items}" var="item">
             <tr>
             <td ><input type="checkbox" id="items" name="items" value="${item.indexCode}"></td>
-					<td >${item.indexCode}</td>
+					<td >${item.indexCode.substring(0,3)}</td>
 					<td>${item.version}</td>
 					<td>${item.indexName}</td>
 					<td>${item.indexDesc}</td>
@@ -81,8 +81,11 @@ int per_page = u.getPerpage_full();
 					<td>${item.scoreSumMax}</td>
 					<td>${item.validBeginDate.toString().substring(0,10)}</td>
 					<td>${item.validEndDate.toString().substring(0,10)}</td>
-					<td><a  href="#"  onclick="modify('${item.indexCode}')" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
-	<a  href="#"  onclick="del('${item.indexCode}')" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a></td>
+					<td>
+					<a  href="#"  onclick="modify('${item.indexCode}')" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
+					<a  href="#"  onclick="del('${item.indexCode}')" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+					<a  href="#"  onclick="addversion('${item.indexCode}')" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">增加版本号</a>
+					</td>
 				</tr>
     </c:forEach>
 	</table>
@@ -141,9 +144,7 @@ int per_page = u.getPerpage_full();
     	    });
     $("#btn_save").click(function(){
     	//var index_class="c";
-    	alert("12");
     	var u="./objindexitem.htm?add_arch&class=${classT}";
-    	alert(u);
     	//var u="targetmanage/indexarchadd.jsp?index_class="+index_class+"&pIndexcode=-1";
     	createwindow("新增",u,800,650);
     	    });
@@ -175,6 +176,24 @@ int per_page = u.getPerpage_full();
     	var u="./objindexitem.htm?update_arch&id="+para;
     	createwindow("修改",u,800,650);
     }
+    function addversion(para){
+    	
+    	var u="./objindexitem.htm?versionAdd&id="+para;
+    	$.dialog.confirm('确认更新版本号？',function(){
+   		 
+   		 $.get(u,function(data){
+   			 var d = $.parseJSON(data);
+    			if (d.success) {
+    				var msg = d.msg;
+    				
+    			}
+    			window.setTimeout(function(){
+           		window.location.reload();
+           	},100);
+   		 });
+			   
+    });
+    	}
     function createalert(content){
     	$.dialog({
     	    content: content,
