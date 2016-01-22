@@ -24,6 +24,7 @@ String basePath = request.getScheme()+"://"+
 <meta http-equiv="expires" content="0">    
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
+<link rel="stylesheet" type="text/css" href="<%=path%>/css/target.css">
 <link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/icon.css">
 <script type="text/javascript" src="<%=path%>/jscomponent/jquery/jquery-1.8.0.min.js"></script>
@@ -55,22 +56,23 @@ int per_page = u.getPerpage_full();
     <a id="btn_del" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
     <a id="btn_ref" href="#"    class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true">刷新</a>
     </div>
-	<table class="rootlisttab" width="100%" style="border-collapse:collapse;border:1px solid #464242;border-top:1px solid #ECE9D8;border-left:1px solid #ECE9D8;border-right:1px solid #ECE9D8;border-bottom:1px solid #ECE9D8;" border="1" cellpadding="5" cellspacing="0" class="table_list">
-	<tr height='22' bgcolor='D0E9ED' style="border-color: #ece9d8"><td nowrap  align='center' style="border-color: #ece9d8;font-size:12px;"><input type='checkbox' name='allitems' id='allitems' onclick='allitems_click()'></td>
-	<td nowrap  align='center' style="border-color: #ece9d8;font-size:12px;">编码名称</td>
-	<td nowrap  align='center' style="border-color: #ece9d8;font-size:12px;">版本号</td>
-	<td nowrap  align='center' style="border-color: #ece9d8;font-size:12px;">体系名称</td>
-	<td nowrap  align='center' style="border-color: #ece9d8;font-size:12px;">指标描述</td>
-	<td nowrap  align='center' style="border-color: #ece9d8;font-size:12px;">最小分值</td>
-	<td nowrap  align='center' style="border-color: #ece9d8;font-size:12px;">最大分值</td>
-	<td nowrap  align='center' style="border-color: #ece9d8;font-size:12px;">开始时间</td>
-	<td nowrap  align='center' style="border-color: #ece9d8;font-size:12px;">结束时间</td>
-	<td nowrap  align='center' style="border-color: #ece9d8;font-size:12px;">操作</td>
+	<table class="rootlisttab" width="100%" style="" border="1" cellpadding="5" cellspacing="0" class="table_list">
+	<tr class="title_table" height='22' bgcolor='D0E9ED' >
+	<td nowrap  align='center' ><input type='checkbox' name='allitems' id='allitems' onclick='allitems_click()'></td>
+	<td nowrap >编码名称</td>
+	<td nowrap >版本号</td>
+	<td nowrap >体系名称</td>
+	<td nowrap >指标描述</td>
+	<td nowrap >最小分值</td>
+	<td nowrap >最大分值</td>
+	<td nowrap >开始时间</td>
+	<td nowrap >结束时间</td>
+	<td nowrap >操作</td>
 	</tr>
 	
 	<c:forEach items="${items}" var="item">
             <tr>
-            <td><input type="checkbox" id="items" name="items" value="${item.indexCode}"></td>
+            <td ><input type="checkbox" id="items" name="items" value="${item.indexCode}"></td>
 					<td >${item.indexCode}</td>
 					<td>${item.version}</td>
 					<td>${item.indexName}</td>
