@@ -1,15 +1,54 @@
 package edu.cqu.ncycoa.target.service;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import com.db.DBObject;
 import com.db.DataRow;
 import com.db.DataTable;
 
+import edu.cqu.ncycoa.common.util.dao.QueryUtils;
+import edu.cqu.ncycoa.common.util.dao.TQRestriction;
+import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
+import edu.cqu.ncycoa.dao.AbstractBaseDaoImpl;
+import edu.cqu.ncycoa.safety.domain.Accident;
 import edu.cqu.ncycoa.target.domain.ObjIndexItem;
 
-public class TargetService {
+public class TargetService extends AbstractBaseDaoImpl{
+	
+	@PersistenceContext(unitName = "ncycoaPU")
+	protected EntityManager em;
+
+	@Resource(name = "jdbcTemplate")
+	private JdbcTemplate jdbcTemplate;
+
+	@Resource(name = "namedParameterJdbcTemplate")
+	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+	@Override
+	protected EntityManager getEntityManager() {
+		return em;
+	}
+
+	@Override
+	protected JdbcTemplate getJdbcTemplate() {
+		return jdbcTemplate;
+	}
+
+	@Override
+	protected NamedParameterJdbcTemplate getNamedParameterJdbcTemplate() {
+		return namedParameterJdbcTemplate;
+	}
 private int count=0;
 	public static String getNextArchCode(String classT){
 		String result = null;
@@ -162,20 +201,32 @@ private int count=0;
 	}
 
 	public static List<ObjIndexItem> getArchByClass(String string) {
-		List<ObjIndexItem> result = null;
+		List<ObjIndexItem> result = new ArrayList<ObjIndexItem>();
 		
 		try {
 			DBObject db = new DBObject();
-			String sql = "select INDEX_CODE from TBM_OBJINDEX where ParentIndexCode='-1' and index_code like '"+string+"%'";
+			String sql = "select * from TBM_OBJINDEX where PARENT_INDEX_CODE='-1' and index_code like '"+string+"%'";
 			//Parameter.SqlParameter[] pp = new Parameter.SqlParameter[] { new Parameter.String(SystemUtils.getSessionUser().getStaffcode()) };
 
 			DataTable dt = db.runSelectQuery(sql);
 			if (dt != null&& dt.getRowsCount() >= 1) {
 				for (int i = 0; i < dt.getRowsCount(); i++)
 				{
+					ObjIndexItem item=new ObjIndexItem();
 					DataRow r = dt.get(i);
 					try {
-						result.add(r.getString("index_code"));
+						item.setIndexCode(r.getString("index_code"));
+						item.setIndexName(r.getString("INDEX_NAME"));
+						item.setIndexDesc(r.getString("index_desc"));
+						item.setVersion(r.getString("version"));
+						item.setScoreSumLow(Double.parseDouble(r.getString("SCORE_SUMLOW")));
+						item.setScoreSumMax(Double.parseDouble(r.getString("SCORE_SUMMAX")));
+//						item.setValidBeginDate(new Date(r.getString("VALID_BEGINDATE")));
+						System.out.println(r.getString("VALID_BEGINDATE"));
+//						item.setValidEndDate(new Date(r.getString("VALID_ENDDATE")));
+						item.setIsParent(r.getString("ISPARENT"));
+						item.setParentIndexCode(r.getString("PARENT_INDEX_CODE"));
+						result.add(item);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -187,4 +238,13 @@ private int count=0;
 		}
 		return result;
 	}
+	public List<ObjIndexItem> getArchEntidies(String string){
+		TypedQueryBuilder<ObjIndexItem> tqBuilder=new TypedQueryBuilder<ObjIndexItem>(ObjIndexItem.class, "e");
+		tqBuilder.addRestriction(new TQRestriction("index_code", "like", string+"%"));
+		tqBuilder.addRestriction(new TQRestriction("PARENT_INDEX_CODE", "=", "-1"));
+		TypedQuery<ObjIndexItem> query = tqBuilder.toQuery(em);
+		return query.getResultList();
+	}
+
+
 }
