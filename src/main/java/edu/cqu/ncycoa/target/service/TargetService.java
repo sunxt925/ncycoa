@@ -222,7 +222,7 @@ private int count=0;
 						item.setScoreSumLow(Double.parseDouble(r.getString("SCORE_SUMLOW")));
 						item.setScoreSumMax(Double.parseDouble(r.getString("SCORE_SUMMAX")));
 //						item.setValidBeginDate(new Date(r.getString("VALID_BEGINDATE")));
-						System.out.println(r.getString("VALID_BEGINDATE"));
+						//System.out.println(r.getString("VALID_BEGINDATE"));
 //						item.setValidEndDate(new Date(r.getString("VALID_ENDDATE")));
 						item.setIsParent(r.getString("ISPARENT"));
 						item.setParentIndexCode(r.getString("PARENT_INDEX_CODE"));
