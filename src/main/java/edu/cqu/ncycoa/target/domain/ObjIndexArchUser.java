@@ -12,14 +12,17 @@ import javax.persistence.Table;
 @Table(name="TBM_ObjIndexArchUser")
 public class ObjIndexArchUser {
 	@Id
-	//@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="ARCHUSER_ID")
+	private Long id; 
+	
 	@Column(name="INDEXARCH_CODE")
 	private String IndexArchCode;//	指标分类编码
 	@Column(name="UNIINDEX_CODE")
 	private String UniIndexCode;//	指标统一编码
-	@Column(name="OBJECT_CODE")
+	@Column(name="OBJECT_CODE")  //对象编码
 	private String objectcode;
-	@Column(name="OBJECT_TYPE")
+	@Column(name="OBJECT_TYPE")  //单位
 	private String objecttype;
 	@Column(name="STAFFORG")
 	private String stafforg;
@@ -31,4 +34,66 @@ public class ObjIndexArchUser {
 	private Date endDate;
 	@Column(name="MEMO")
 	private String memo;//备注
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getIndexArchCode() {
+		return IndexArchCode;
+	}
+	public void setIndexArchCode(String indexArchCode) {
+		IndexArchCode = indexArchCode;
+	}
+	public String getUniIndexCode() {
+		return UniIndexCode;
+	}
+	public void setUniIndexCode(String uniIndexCode) {
+		UniIndexCode = uniIndexCode;
+	}
+	public String getObjectcode() {
+		return objectcode;
+	}
+	public void setObjectcode(String objectcode) {
+		this.objectcode = objectcode;
+	}
+	public String getObjecttype() {
+		return objecttype;
+	}
+	public void setObjecttype(String objecttype) {
+		this.objecttype = objecttype;
+	}
+	public String getStafforg() {
+		return stafforg;
+	}
+	public void setStafforg(String stafforg) {
+		this.stafforg = stafforg;
+	}
+	public int getMultiindexorder() {
+		return multiindexorder;
+	}
+	public void setMultiindexorder(int multiindexorder) {
+		this.multiindexorder = multiindexorder;
+	}
+	public Date getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+	public Date getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+	public String getMemo() {
+		return memo;
+	}
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
+	
+	
 }

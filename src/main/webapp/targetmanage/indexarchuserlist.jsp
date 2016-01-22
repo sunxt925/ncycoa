@@ -23,8 +23,9 @@ String basePath = request.getScheme()+"://"+
 <script type="text/javascript" src="<%=path%>/jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
 </head>
 <%
-String indexclass=request.getParameter("class");
-String ul="indexjson.jsp?indexclass="+indexclass;
+String indexclass=(String)request.getAttribute("classT");
+String ul="targetmanage/indexjson.jsp?indexclass="+indexclass;
+System.out.println(ul);
 %>
 <body  class="easyui-layout">
    
@@ -46,7 +47,7 @@ String ul="indexjson.jsp?indexclass="+indexclass;
      $('#dg').datagrid({
     	 onClickRow: function(){
     		 var row = $('#dg').datagrid('getSelected');
-    		 var u="indexdefuserlist.jsp?indexarchcode="+row.indexcode+"&indexclass="+"<%=indexclass%>";
+    		 var u="objindexarchuser.htm?itemlist&indexarchcode="+row.indexcode+"&indexclass="+"<%=indexclass%>";
     		 window.open(u,"indexdeflist");
 		 }
 		

@@ -46,8 +46,8 @@ public class ObjIndexItemController {
 	public ModelAndView indexrootList_c(HttpServletRequest request, HttpServletResponse response){
 		//String id = request.getParameter("id"); 
 		//List<ObjIndexItem> items = systemService.findEntitiesByProperty("ParentIndexCode", "-1", ObjIndexItem.class);
-		//List<ObjIndexItem> items =TargetService.getArchByClass("C");
-		List<ObjIndexItem> items =new TargetService().getArchEntidies(new String("C"));
+		List<ObjIndexItem> items =TargetService.getArchByClass("C");
+		//List<ObjIndexItem> items =new TargetService().getArchEntidies(new String("C"));
 		ModelAndView mav = new ModelAndView();
 		//items筛选出公司类体系
 		mav.setViewName("targetmanage/indexrootlist");
@@ -69,8 +69,8 @@ public class ObjIndexItemController {
 	public ModelAndView indexrootList_d(HttpServletRequest request, HttpServletResponse response){
 		//String id = request.getParameter("id"); 
 		//List<ObjIndexItem> items = systemService.findEntitiesByProperty("ParentIndexCode", "-1", ObjIndexItem.class);
-		//List<ObjIndexItem> items =TargetService.getArchByClass("D");
-		List<ObjIndexItem> items =new TargetService().getArchEntidies("D");
+		List<ObjIndexItem> items =TargetService.getArchByClass("D");
+		//List<ObjIndexItem> items =new TargetService().getArchEntidies("D");
 		ModelAndView mav = new ModelAndView();
 		//items筛选出公司类体系
 		mav.setViewName("targetmanage/indexrootlist");

@@ -245,6 +245,33 @@ private int count=0;
 		TypedQuery<ObjIndexItem> query = tqBuilder.toQuery(em);
 		return query.getResultList();
 	}
+//指标对象关联的列表json获取
+	public String getindexjsonBytype(String index_class) {
+		//System.out.println("123");
+		try {
+			DBObject db = new DBObject();
 
+			String sql = "select * from tbm_objindex where length(index_code)=7 and index_code like '" + index_class + "%'";
+			DataTable dt = db.runSelectQuery(sql);
+			StringBuilder sBuilder = new StringBuilder();
+			sBuilder.append("[");
+			if (dt != null && dt.getRowsCount() >= 0) {
+				for (int i = 0; i < dt.getRowsCount(); i++) {
+					DataRow r = dt.get(i);
+					sBuilder.append("{");
+					sBuilder.append("\"indexcode\":").append("\"" + r.getString("index_code") + "\"").append(",");
+					sBuilder.append("\"indexname\":").append("\"" + r.getString("index_name") + "\"");
+					sBuilder.append("},");
+				}
+				sBuilder.delete(sBuilder.length() - 1, sBuilder.length());
+
+			}
+			sBuilder.append("]");
+			//System.out.println(sBuilder.toString());
+			return sBuilder.toString();
+		} catch (Exception e) {
+			return "";
+		}
+	}
 
 }
