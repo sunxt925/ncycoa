@@ -27,8 +27,10 @@ String basePath = request.getScheme()+"://"+
 <link rel="stylesheet" type="text/css" href="<%=path%>/css/target.css">
 <link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="<%=path%>/jscomponent/easyui/demo.css">
 <script type="text/javascript" src="<%=path%>/jscomponent/jquery/jquery-1.8.0.min.js"></script>
 <script type="text/javascript" src="<%=path%>/jscomponent/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="<%=path%>/jscomponent/pagination/page.js"></script>  
 <script type="text/javascript" src="<%=path%>/jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
 <script type="text/javascript" src="<%=path%>/js/public/select.js"></script>
 </head>
@@ -49,6 +51,7 @@ int per_page = u.getPerpage_full();
 //if(pagecount==0)
 //	pagecount=1;
  %> 
+ 
 <body>
 <form name="form1" id="form1" method="post"action="../servlet/PageHandler">
     <div id="p" style="width: 95%;padding: 10px">
@@ -56,6 +59,7 @@ int per_page = u.getPerpage_full();
     <a id="btn_del" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
     <a id="btn_ref" href="#"    class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true">刷新</a>
     </div>
+    <div class="page" id="page">
 	<table class="rootlisttab" width="100%" style="" border="1" cellpadding="5" cellspacing="0" class="table_list">
 	<tr class="title_table" height='22' bgcolor='D0E9ED' >
 	<td nowrap  align='center' ><input type='checkbox' name='allitems' id='allitems' onclick='allitems_click()'></td>
@@ -63,10 +67,6 @@ int per_page = u.getPerpage_full();
 	<td nowrap >版本号</td>
 	<td nowrap >体系名称</td>
 	<td nowrap >指标描述</td>
-	<td nowrap >最小分值</td>
-	<td nowrap >最大分值</td>
-	<td nowrap >开始时间</td>
-	<td nowrap >结束时间</td>
 	<td nowrap >操作</td>
 	</tr>
 	
@@ -77,10 +77,6 @@ int per_page = u.getPerpage_full();
 					<td>${item.version}</td>
 					<td>${item.indexName}</td>
 					<td>${item.indexDesc}</td>
-					<td>${item.scoreSumLow}</td>
-					<td>${item.scoreSumMax}</td>
-					<td>${item.validBeginDate.toString().substring(0,10)}</td>
-					<td>${item.validEndDate.toString().substring(0,10)}</td>
 					<td>
 					<a  href="#"  onclick="modify('${item.indexCode}')" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
 					<a  href="#"  onclick="del('${item.indexCode}')" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
@@ -89,7 +85,11 @@ int per_page = u.getPerpage_full();
 				</tr>
     </c:forEach>
 	</table>
-	
+	</div>
+	<div style="margin:20px 0;"></div>
+<!-- 	<div class="easyui-panel"> -->
+<!-- 		<div class="easyui-pagination" data-options="total:114"></div> -->
+<!-- 	</div> -->
 	<div align="right">
 	${items.size()}
 		<%
@@ -105,6 +105,13 @@ int per_page = u.getPerpage_full();
 	<input name="act" type="hidden" id="act" value="del">
 	<input name="action_class" type="hidden" id="action_class" value="com.action.index.IndexItemAction">
 	</form>
+<script type="text/javascript">  
+$(document).ready(  
+  function (){  
+    jQuery.page("page",5);  
+  }  
+);  
+</script>  
 	<script type="text/javascript">
 
     function returnValue(data){
@@ -149,6 +156,29 @@ int per_page = u.getPerpage_full();
     	createwindow("新增",u,800,650);
     	    });
     $("#btn_del").click(function(){
+    	var spCodesTemp = "";
+        $("input:checkbox[name='items']:checked").each(function(i){
+         if(0==i){
+          spCodesTemp = $(this).val();
+         }else{
+          spCodesTemp += (","+$(this).val());
+         }
+        });
+        
+    	var actionUrl="./objindexitem.htm?del_arch&id="+spCodesTemp;
+    	$.dialog.confirm('删除',function(){
+   		 $.get(actionUrl,function(data){
+   			 var d = $.parseJSON(data);
+    			if (d.success) {
+    				var msg = d.msg;
+    				
+    			}
+    			window.setTimeout(function(){
+           		window.location.reload();
+           	},100);
+   		 });
+			   
+    });
     	//批量删除
     	    });
     function del(para)

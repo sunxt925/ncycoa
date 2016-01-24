@@ -137,8 +137,14 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="right" width="70px"><label class="Validform_label">标准分值</label></td>
-		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="standardscore" name="standardscore" value="${item.standardscore}">
+		<td align="right"><label class="Validform_label">计分周期</label></td>
+		<td class="value">
+		<select class="inputxt" id="scorePeriod" name="scorePeriod" style="width:156px;">
+			<option value="月度">月度</option>
+			<option value="季度">季度</option>
+			<option value="半年">半年</option>
+			<option value="年度">年度</option>
+		</select>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>

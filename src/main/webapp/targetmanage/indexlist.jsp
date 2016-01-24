@@ -53,16 +53,17 @@ int per_page = u.getPerpage_full();
     <div id="p" style="width: 95%;padding: 10px">
     <a id="btn_save" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新增</a>
     <a id="btn_del" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
-    <a id="btn_ref" href="#"    class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true">刷新</a>
+    <a id="btn_ref" href="#"  class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true">刷新</a>
     </div>
 	<table width="100%" style="border-collapse:collapse;border:1px solid #464242;border-top:1px solid #ECE9D8;border-left:1px solid #ECE9D8;border-right:1px solid #ECE9D8;border-bottom:1px solid #ECE9D8;" border="1" cellpadding="5" cellspacing="0" class="table_list">
 	<tr height='22' bgcolor='D0E9ED' style="border-color: #ece9d8">
-	<td nowrap  align='center' style="border-color: #ece9d8;font-size:12px;"><input type='checkbox' name='allitems' id='allitems' onclick='allitems_click()'></td>
+	<td nowrap  align='center' style="border-color: #ece9d8;font-size:12px;">
+	<input type='checkbox' name='allitems' id='allitems' onclick='allitems_click()'></td>
 	<td nowrap  align='center' style="border-color: #ece9d8;font-size:12px;">指标编码</td>
 	<td nowrap  align='center' style="border-color: #ece9d8;font-size:12px;">指标名称</td>
 	<td nowrap  align='center' style="border-color: #ece9d8;font-size:12px;">指标描述</td>
 	<td nowrap  align='center' style="border-color: #ece9d8;font-size:12px;">计算公式</td>
-	<td nowrap  align='center' style="border-color: #ece9d8;font-size:12px;">标准分值</td>
+	<td nowrap  align='center' style="border-color: #ece9d8;font-size:12px;">计分周期</td>
 	<td nowrap  align='center' style="border-color: #ece9d8;font-size:12px;">操作</td>
 	</tr>
 	
@@ -73,7 +74,7 @@ int per_page = u.getPerpage_full();
 					<td>${item.indexName}</td>
 					<td>${item.indexDesc}</td>
 					<td>${item.valueFunc}</td>
-					<td>${item.standardscore}</td>
+					<td>${item.scorePeriod}</td>
 					<td><a  href="#"  onclick="modify('${item.indexCode}')" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
 	<a  href="#"  onclick="del('${item.indexCode}')" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a></td>
 				</tr>
@@ -137,6 +138,29 @@ int per_page = u.getPerpage_full();
     	createwindow("新增",u,800,650);
     	    });
     $("#btn_del").click(function(){
+    	var spCodesTemp = "";
+        $("input:checkbox[name='items']:checked").each(function(i){
+         if(0==i){
+          spCodesTemp = $(this).val();
+         }else{
+          spCodesTemp += (","+$(this).val());
+         }
+        });
+        
+    	var actionUrl="./objindexitem.htm?del&id="+spCodesTemp;
+    	$.dialog.confirm('删除',function(){
+   		 $.get(actionUrl,function(data){
+   			 var d = $.parseJSON(data);
+    			if (d.success) {
+    				var msg = d.msg;
+    				
+    			}
+    			window.setTimeout(function(){
+           		window.location.reload();
+           	},100);
+   		 });
+			   
+    });
     	//批量删除
     	    });
     function ret(){
@@ -167,7 +191,7 @@ int per_page = u.getPerpage_full();
    
     function modify(para){
     	//alert("11");
-    	var u="./objindexitem.htm?update_arch&id="+para;
+    	var u="./objindexitem.htm?update_item&id="+para;
     	createwindow("修改",u,800,650);
     }
     function createalert(content){

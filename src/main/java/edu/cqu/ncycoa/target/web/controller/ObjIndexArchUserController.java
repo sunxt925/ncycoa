@@ -100,7 +100,7 @@ public class ObjIndexArchUserController {
 		//items筛选出公司类体系
 		mav.setViewName("targetmanage/addarchuser");
 		//mav.addObject("items",items);
-		request.setAttribute("classT", classT);
+		request.setAttribute("indexclass", classT);
 		mav.addObject("classT",classT);
 		mav.addObject("objecttype",type);
 		mav.addObject("archcode",archcode);
@@ -110,7 +110,6 @@ public class ObjIndexArchUserController {
 	@RequestMapping(params="del")
 	@ResponseBody
 	public void del(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("123");
 		AjaxResultJson j = new AjaxResultJson();
 		String message;
 		String id = request.getParameter("id");

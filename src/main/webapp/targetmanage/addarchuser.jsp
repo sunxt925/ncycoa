@@ -196,7 +196,7 @@ function returnobjValues(data){
 	
 	//$('#objectcode').val(staffs);
 	//$('#apporgName').val(names);
-	$('#apporgName').val(array[0].staffname);
+	$('#uniIndexCode').val(array[0].staffname);
 	$('#objectcode').val(array[0].staffcode);
 	
 }

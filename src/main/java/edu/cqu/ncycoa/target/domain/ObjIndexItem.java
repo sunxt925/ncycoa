@@ -39,36 +39,47 @@ public class ObjIndexItem implements Comparable<ObjIndexItem>{
 	private String ParentIndexCode = "";
 	@Column(name="VALUE_FUNC") //计算函数
 	private String ValueFunc = "";
-	@Column(name="VALUE_UNIT") //单位
+	@Column(name="VALUE_UNIT") //单位 没用
 	private String ValueUnit = ""; 
-	@Column(name="SCORE_FUNC") //得分函数
+	@Column(name="SCORE_FUNC") //得分函数 没用
 	private String ScoreFunc = "";
-	@Column(name="SCORE_PERIOD")  //周期？
+	@Column(name="SCORE_PERIOD")  //周期、类别：月度，半年，季度，年度
 	private String ScorePeriod = "";
+	  //默认得分 没用
 	@Column(name="SCORE_DEFAULT")
-	private double ScoreDefault;  //默认得分
+	private double ScoreDefault;
+	  //最小分 没用
 	@Column(name="SCORE_SUMLOW")
 	private double ScoreSumLow;  
+	  //最大分 没用
 	@Column(name="SCORE_SUMMAX")
 	private double ScoreSumMax;
+	  //权重 没用
 	@Column(name="UPPER_SUMWEIGHT")
 	private double UpperSumWeight;
+	  //标准分 没用
 	@Column(name="STANDARD_SCORE")
 	private double standardscore;
+	  //开始时间 没用
 	@Column(name="VALID_BEGINDATE")
 	private Date ValidBeginDate;
+	  //结束时间 没用
 	@Column(name="VALID_ENDDATE")
 	private Date ValidEndDate;
+	//指标是否可用 没用
 	@Column(name="ENABLED")
 	private int Enabled; //?????
+	//指标排序 没用
 	@Column(name="INDEX_ORDER")
 	private String indexorder;
+	//备注
 	@Column(name="MEMO")
 	private String Memo = "";
+	
 	@Column(name="VERSION")
 	private String version; //版本号
 	@Column(name="OBJ_INDEXNO")
-	private String objIndexNo;  //流水号 ：体系code+version S01.V01
+	private String objIndexNo;  //流水号 ：体系code+version S01.V01 之后可能用于存单独S01
 
 	
 //	public ObjIndexItem parent;

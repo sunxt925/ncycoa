@@ -28,6 +28,7 @@ import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
 import edu.cqu.ncycoa.dao.SupplierDao;
 import edu.cqu.ncycoa.domain.Notice;
 import edu.cqu.ncycoa.safety.domain.CheckPlan;
+import edu.cqu.ncycoa.target.domain.ObjIndexArchUser;
 import edu.cqu.ncycoa.target.domain.ObjIndexItem;
 import edu.cqu.ncycoa.target.service.TargetService;
 import edu.cqu.ncycoa.util.ConvertUtils;
@@ -41,7 +42,7 @@ public class ObjIndexItemController {
 	@Resource(name="systemService")
 	SystemService systemService;
 	
-	//indexrootlist_c
+	//indexrootlist_c  显示指标体系表
 	@RequestMapping(params="indexrootlist_c")
 	public ModelAndView indexrootList_c(HttpServletRequest request, HttpServletResponse response){
 		//String id = request.getParameter("id"); 
@@ -58,6 +59,37 @@ public class ObjIndexItemController {
 		return mav;
 	}
 	
+	@RequestMapping(params="indexrootlist_d")
+	public ModelAndView indexrootList_d(HttpServletRequest request, HttpServletResponse response){
+		//String id = request.getParameter("id"); 
+		//List<ObjIndexItem> items = systemService.findEntitiesByProperty("ParentIndexCode", "-1", ObjIndexItem.class);
+		//List<ObjIndexItem> items =TargetService.getArchByClass("D");
+		//List<ObjIndexItem> items =new TargetService().getArchEntidies("D");
+		String jpql="FROM ObjIndexItem as o where o.ParentIndexCode='-1' and o.IndexCode LIKE 'D%'";
+		List<ObjIndexItem> items = systemService.readEntitiesByJPQL(jpql, ObjIndexItem.class);
+		ModelAndView mav = new ModelAndView();
+		//items筛选出公司类体系
+		mav.setViewName("targetmanage/indexrootlist");
+		mav.addObject("items",items);
+		mav.addObject("classT","D");
+		return mav;
+	}
+	
+	@RequestMapping(params="indexrootlist_s") //之后要改 分公司，部门，个人
+	public ModelAndView indexrootList_s(HttpServletRequest request, HttpServletResponse response){
+		//String id = request.getParameter("id"); 
+		//List<ObjIndexItem> items = systemService.findEntitiesByProperty("ParentIndexCode", "-1", ObjIndexItem.class);
+		String jpql="FROM ObjIndexItem as o where o.ParentIndexCode='-1' and o.IndexCode LIKE 'S%'";
+		List<ObjIndexItem> items = systemService.readEntitiesByJPQL(jpql, ObjIndexItem.class);
+		ModelAndView mav = new ModelAndView();
+		//items筛选出公司类体系
+		mav.setViewName("targetmanage/indexrootlist");
+		mav.addObject("items",items);
+		mav.addObject("classT","S");
+		return mav;
+	}
+	
+	//显示指标项的根列表
 	@RequestMapping(params="indexitemmanage_c") //之后要改 只返回最新版本的根节点,筛选出公司的
 	public ModelAndView indexrootlist_c(HttpServletRequest request, HttpServletResponse response) {
 		//List<ObjIndexItem> items = systemService.findEntitiesByProperty("ParentIndexCode", "-1", ObjIndexItem.class);
@@ -91,39 +123,14 @@ public class ObjIndexItemController {
 		return mav;
 	}
 	
-	@RequestMapping(params="indexrootlist_d")
-	public ModelAndView indexrootList_d(HttpServletRequest request, HttpServletResponse response){
-		//String id = request.getParameter("id"); 
-		//List<ObjIndexItem> items = systemService.findEntitiesByProperty("ParentIndexCode", "-1", ObjIndexItem.class);
-		//List<ObjIndexItem> items =TargetService.getArchByClass("D");
-		//List<ObjIndexItem> items =new TargetService().getArchEntidies("D");
-		String jpql="FROM ObjIndexItem as o where o.ParentIndexCode='-1' and o.IndexCode LIKE 'D%'";
-		List<ObjIndexItem> items = systemService.readEntitiesByJPQL(jpql, ObjIndexItem.class);
-		ModelAndView mav = new ModelAndView();
-		//items筛选出公司类体系
-		mav.setViewName("targetmanage/indexrootlist");
-		mav.addObject("items",items);
-		mav.addObject("classT","D");
-		return mav;
-	}
-	
-	@RequestMapping(params="indexrootlist_s") //之后要改 分公司，部门，个人
-	public ModelAndView indexrootList_s(HttpServletRequest request, HttpServletResponse response){
-		//String id = request.getParameter("id"); 
-		//List<ObjIndexItem> items = systemService.findEntitiesByProperty("ParentIndexCode", "-1", ObjIndexItem.class);
-		String jpql="FROM ObjIndexItem as o where o.ParentIndexCode='-1' and o.IndexCode LIKE 'S%'";
-		List<ObjIndexItem> items = systemService.readEntitiesByJPQL(jpql, ObjIndexItem.class);
-		ModelAndView mav = new ModelAndView();
-		//items筛选出公司类体系
-		mav.setViewName("targetmanage/indexrootlist");
-		mav.addObject("items",items);
-		return mav;
-	}
 	
 	@RequestMapping(params="indexlist_c")  //查看最新版本的指标树
 	public ModelAndView indexlist_c(HttpServletRequest request, HttpServletResponse response){
 		String ccm = request.getParameter("ccm"); 
-		List<ObjIndexItem> items = systemService.findEntitiesByProperty("ParentIndexCode", ccm, ObjIndexItem.class);
+		//List<ObjIndexItem> items = systemService.findEntitiesByProperty("ParentIndexCode", ccm, ObjIndexItem.class);
+		String jpql="FROM ObjIndexItem as o where o.ParentIndexCode='"+ccm+"' and o.IsLast='1'";
+		System.out.println(jpql);
+		List<ObjIndexItem> items = systemService.readEntitiesByJPQL(jpql, ObjIndexItem.class);
 		ModelAndView mav = new ModelAndView();
 		//items筛选出公司类体系
 		mav.setViewName("targetmanage/indexlist");
@@ -159,7 +166,53 @@ public class ObjIndexItemController {
 		if(StringUtils.isEmpty(id)) {
 			return;
 		}
-		systemService.removeEntityById(id, ObjIndexItem.class);
+		String[] ids;
+		try {
+			ids = id.split(",");
+		} catch (Exception e) {
+			
+			message = "数据不合法";
+			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
+			j.setSuccess(false);
+			SystemUtils.jsonResponse(response, j);
+			return;
+		}
+		
+		systemService.removeEntities(ids, ObjIndexItem.class);
+		//删除此体系下的所有指标项
+		String jpql="FROM ObjIndexItem as o where o.IndexCode LIKE '"+id+"%'";
+		List<ObjIndexItem> items = systemService.readEntitiesByJPQL(jpql, ObjIndexItem.class);
+		for(ObjIndexItem i:items){
+			systemService.removeEntityById(i.getIndexCode(), ObjIndexItem.class);
+		}
+		message = "删除成功";
+		j.setMsg(message);
+		SystemUtils.jsonResponse(response, j);
+	}
+	
+	@RequestMapping(params="del")
+	@ResponseBody
+	public void del(HttpServletRequest request, HttpServletResponse response) {
+		
+		AjaxResultJson j = new AjaxResultJson();
+		String message;
+		String id = request.getParameter("id");
+		if(StringUtils.isEmpty(id)) {
+			return;
+		}
+		String[] ids;
+		try {
+			ids = id.split(",");
+		} catch (Exception e) {
+			
+			message = "数据不合法";
+			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
+			j.setSuccess(false);
+			SystemUtils.jsonResponse(response, j);
+			return;
+		}
+		
+		systemService.removeEntities(ids, ObjIndexItem.class);
 		message = "删除成功";
 		j.setMsg(message);
 		SystemUtils.jsonResponse(response, j);
@@ -172,6 +225,17 @@ public class ObjIndexItemController {
 		ObjIndexItem item = systemService.findEntityById(id, ObjIndexItem.class);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("targetmanage/indexarchadd");
+		mav.addObject("item",item);
+		//mav.addObject("orgname",CodeDictionary.syscode_traslate("base_org","orgcode", "orgname", notice.getDepart()));
+		return mav;
+	}
+	
+	@RequestMapping(params="update_item")
+    public ModelAndView update_i(HttpServletRequest request, HttpServletResponse response){
+		String id = request.getParameter("id"); 
+		ObjIndexItem item = systemService.findEntityById(id, ObjIndexItem.class);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("targetmanage/indexadd");
 		mav.addObject("item",item);
 		//mav.addObject("orgname",CodeDictionary.syscode_traslate("base_org","orgcode", "orgname", notice.getDepart()));
 		return mav;
@@ -199,6 +263,9 @@ public class ObjIndexItemController {
 			MyBeanUtils.copyBeanNotNull2Bean(i, t);
 			t.setIndexCode(nextcode);
 			t.setVersion(verString);
+			if(i.getIndexCode().length()>7){
+				t.setParentIndexCode(nextcode.substring(0,nextcode.length()-4));
+			}
 			i.setIsLast("0");
 			systemService.saveEntity(t);
 		}
@@ -225,8 +292,6 @@ public class ObjIndexItemController {
 				item.setParentIndexCode("-1");
 				item.setVersion("V01");
 				item.setIndexCode(TargetService.getNextArchCode(classT)+"."+item.getVersion());
-				item.setScoreDefault(0);
-				item.setStandardscore(0);
 				systemService.addEntity(item);
 			}else{
 			try {
@@ -250,8 +315,6 @@ public class ObjIndexItemController {
 			item.setIsLast("1");
 			item.setIsParent("1");
 			item.setParentIndexCode("-1");
-			item.setScoreDefault(0);
-			item.setStandardscore(0);
 			systemService.addEntity(item);
 		}
 		j.setMsg(message);
@@ -276,8 +339,6 @@ public class ObjIndexItemController {
 				//item.setParentIndexCode(pcode);
 				//item.setVersion(pcode.substring(pcode.lastIndexOf('V'), pcode.lastIndexOf('V')+2));
 				item.setIndexCode(TargetService.getNextIndexCode(pcode));
-				item.setScoreDefault(0);
-				item.setStandardscore(0);
 				systemService.addEntity(item);
 			}else{
 			try {
@@ -299,40 +360,12 @@ public class ObjIndexItemController {
 			item.setIndexCode(TargetService.getNextIndexCode(pcode));
 			item.setEnabled(1);
 			item.setIsLast("1");
-			item.setIsParent("1");
+			item.setIsParent("0");
 			item.setParentIndexCode("-1");
-			item.setScoreDefault(0);
-			item.setStandardscore(0);
 			systemService.addEntity(item);
 		}
 		j.setMsg(message);
 		SystemUtils.jsonResponse(response, j);
-	}
-	
-	@RequestMapping(params="dgview_add")
-	public String dgViewA(HttpServletRequest request) {	
-		return "notice/mynoticelist";
-	}
-
-	
-	
-	@SuppressWarnings("unchecked")
-	@RequestMapping(params="dgdata_add")
-	@ResponseBody
-	public void dgDataA(Notice notice, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
-		QueryDescriptor<Notice> cq = new QueryDescriptor<Notice>(Notice.class, dg);
-		
-		CommonService commonService = SystemUtils.getCommonService(request);
-		//查询条件组装器
-		TypedQueryBuilder<Notice> tqBuilder = QueryUtils.getTQBuilder(notice, request.getParameterMap());
-		tqBuilder.addRestriction(new TQRestriction( "depart", "in", Arrays.asList(SupplierDao.getOneDepartCode())));
-
-		if (StringUtils.isNotEmpty(dg.getSort())) {
-			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
-		}
-		cq.setTqBuilder(tqBuilder);
-		commonService.getDataGridReturn(cq, true);
-		TagUtil.datagrid(response, dg);
 	}
 	
 }

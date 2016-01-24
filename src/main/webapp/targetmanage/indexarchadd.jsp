@@ -85,12 +85,6 @@
 
 <%--  <input id="id" name="id" type="hidden" value="${item.id}">  --%>
 <table style="width:720px;border-spacing:1px;" class="formtable">
-<!--     <tr> -->
-<!-- 		<td align="right" width="70px"><label class="Validform_label">编码名称</label></td> -->
-<%-- 		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="indexCode" name="indexCode"  value="${item.indexCode}"> --%>
-<!-- 		<span class="Validform_checktip"></span> -->
-<!-- 		</td> -->
-<!-- 	</tr> -->
 	<tr>
 		<td align="right" width="70px"><label class="Validform_label">名称</label></td>
 		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="indexName" name="indexName" value="${item.indexName}">
@@ -103,30 +97,30 @@
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
-	<tr>
-		<td align="right" width="70px"><label class="Validform_label">最小分值</label></td>
-		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="scoreSumLow" name="scoreSumLow" value="${item.scoreSumLow}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right" width="70px"><label class="Validform_label">最大分值</label></td>
-		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="scoreSumMax" name="scoreSumMax" value="${item.scoreSumMax}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label"> 开始时间</label></td>
-		<td class="value"><input class="easyui-datebox" style="width:250px;" id="validBeginDate" name="validBeginDate" value="${item.validBeginDate}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="Validform_label"> 结束时间</label></td>
-		<td class="value"><input class="easyui-datebox" style="width:250px;" id="validEndDate" name="validEndDate" value="${item.validEndDate}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
+<!-- 	<tr> -->
+<!-- 		<td align="right" width="70px"><label class="Validform_label">最小分值</label></td> -->
+<%-- 		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="scoreSumLow" name="scoreSumLow" value="${item.scoreSumLow}"> --%>
+<!-- 		<span class="Validform_checktip"></span> -->
+<!-- 		</td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td align="right" width="70px"><label class="Validform_label">最大分值</label></td> -->
+<%-- 		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="scoreSumMax" name="scoreSumMax" value="${item.scoreSumMax}"> --%>
+<!-- 		<span class="Validform_checktip"></span> -->
+<!-- 		</td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td align="right"><label class="Validform_label"> 开始时间</label></td> -->
+<%-- 		<td class="value"><input class="easyui-datebox" style="width:250px;" id="validBeginDate" name="validBeginDate" value="${item.validBeginDate}"> --%>
+<!-- 		<span class="Validform_checktip"></span> -->
+<!-- 		</td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td align="right"><label class="Validform_label"> 结束时间</label></td> -->
+<%-- 		<td class="value"><input class="easyui-datebox" style="width:250px;" id="validEndDate" name="validEndDate" value="${item.validEndDate}"> --%>
+<!-- 		<span class="Validform_checktip"></span> -->
+<!-- 		</td> -->
+<!-- 	</tr> -->
 	
 </table>
 <div style="width: 690px; height: 1px;"></div>
