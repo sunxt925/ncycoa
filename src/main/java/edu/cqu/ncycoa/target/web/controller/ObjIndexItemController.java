@@ -1,6 +1,5 @@
 package edu.cqu.ncycoa.target.web.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -13,25 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.common.CodeDictionary;
-
 import edu.cqu.ncycoa.common.dto.AjaxResultJson;
-import edu.cqu.ncycoa.common.dto.DataGrid;
-import edu.cqu.ncycoa.common.dto.QueryDescriptor;
-import edu.cqu.ncycoa.common.service.CommonService;
 import edu.cqu.ncycoa.common.service.SystemService;
-import edu.cqu.ncycoa.common.tag.TagUtil;
-import edu.cqu.ncycoa.common.util.dao.QueryUtils;
-import edu.cqu.ncycoa.common.util.dao.TQOrder;
-import edu.cqu.ncycoa.common.util.dao.TQRestriction;
-import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
-import edu.cqu.ncycoa.dao.SupplierDao;
-import edu.cqu.ncycoa.domain.Notice;
-import edu.cqu.ncycoa.safety.domain.CheckPlan;
-import edu.cqu.ncycoa.target.domain.ObjIndexArchUser;
 import edu.cqu.ncycoa.target.domain.ObjIndexItem;
 import edu.cqu.ncycoa.target.service.TargetService;
-import edu.cqu.ncycoa.util.ConvertUtils;
 import edu.cqu.ncycoa.util.Globals;
 import edu.cqu.ncycoa.util.MyBeanUtils;
 import edu.cqu.ncycoa.util.SystemUtils;
@@ -177,9 +161,17 @@ public class ObjIndexItemController {
 			SystemUtils.jsonResponse(response, j);
 			return;
 		}
-		
+		for(int i=0;i<ids.length;i++){
+			ObjIndexItem oii=systemService.findEntityById(ids[i], ObjIndexItem.class);
+			if(oii.getIsLast().equals("1")){
+				TargetService.setOldOnetoNewest(TargetService.getLastVersionCode(oii.getIndexCode()));
+			}
+		}
 		systemService.removeEntities(ids, ObjIndexItem.class);
+		
+		
 		//删除此体系下的所有指标项
+		
 		String jpql="FROM ObjIndexItem as o where o.IndexCode LIKE '"+id+"%'";
 		List<ObjIndexItem> items = systemService.readEntitiesByJPQL(jpql, ObjIndexItem.class);
 		for(ObjIndexItem i:items){

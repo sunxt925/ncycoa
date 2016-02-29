@@ -1,5 +1,12 @@
 package edu.cqu.ncycoa.web.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.Arrays;
 
 import javax.annotation.Resource;
@@ -9,7 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.common.CodeDictionary;
@@ -38,9 +47,188 @@ public class NoticeController {
 	@Resource(name="systemService")
 	SystemService systemService;
 	
+	private File upload;
+	private String uploadContentType;
+	private String uploadFileName;
+	
+	public File getUpload() {
+		return upload;
+	}
+
+	public void setUpload(File upload) {
+		this.upload = upload;
+	}
+
+	public String getUploadContentType() {
+		return uploadContentType;
+	}
+
+	public void setUploadContentType(String uploadContentType) {
+		this.uploadContentType = uploadContentType;
+	}
+
+	public String getUploadFileName() {
+		return uploadFileName;
+	}
+
+	public void setUploadFileName(String uploadFileName) {
+		this.uploadFileName = uploadFileName;
+	}
+	
 	@RequestMapping(params="add")
 	public String add(HttpServletRequest request) {
 		return "notice/addnotice";
+	}
+	
+	@RequestMapping(params="get")
+	public String get(@RequestParam("upload") MultipartFile upload0,HttpServletRequest request, HttpServletResponse response) throws Exception {		
+		System.out.println(upload0.getContentType());
+		uploadContentType=upload0.getContentType();
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out = response.getWriter();
+
+		// CKEditor提交的很重要的一个参数
+		String callback = request.getParameter("CKEditorFuncNum");
+
+		String expandedName = ""; // 文件扩展名
+		if (uploadContentType.equals("image/pjpeg") || uploadContentType.equals("image/jpeg")) {
+			// IE6上传jpg图片的headimageContentType是image/pjpeg，而IE9以及火狐上传的jpg图片是image/jpeg
+			expandedName = ".jpg";
+		} else if (uploadContentType.equals("image/png") || uploadContentType.equals("image/x-png")) {
+			// IE6上传的png图片的headimageContentType是"image/x-png"
+			expandedName = ".png";
+		} else if (uploadContentType.equals("image/gif")) {
+			expandedName = ".gif";
+		} else if (uploadContentType.equals("image/bmp")) {
+			expandedName = ".bmp";
+		} else {
+			out.println("<script type=\"text/javascript\">");
+			out.println("window.parent.CKEDITOR.tools.callFunction(" + callback
+					+ ",'','文件格式不正确（必须为.jpg/.gif/.bmp/.png文件）');");
+			out.println("</script>");
+			return null;
+		}
+
+		if (upload0.getSize() > 600 * 1024) {
+			out.println("<script type=\"text/javascript\">");
+			out.println("window.parent.CKEDITOR.tools.callFunction(" + callback
+					+ ",''," + "'文件大小不得大于600k');");
+			out.println("</script>");
+			return null;
+		}
+		String uploadPath = request.getRealPath("/upload/notice");
+		System.out.println(uploadPath);
+		String fileName = java.util.UUID.randomUUID().toString(); // 采用UUID的方式命名保证不会重复
+		fileName += expandedName;
+		upload0.transferTo( new java.io.File( uploadPath+"\\"+fileName ) );
+/*
+		InputStream is = new FileInputStream(upload);
+		//String uploadPath = ServletActionContext.getServletContext().getRealPath("/");
+		String uploadPath = request.getServletPath();//("/img/postImg")
+//		HttpServletRequest request = ServletActionContext.getRequest(); 
+//		String uploadPath =request.getContextPath(); 
+		uploadPath+="/img/postImg";
+		System.out.println(uploadPath);
+		String fileName = java.util.UUID.randomUUID().toString(); // 采用UUID的方式命名保证不会重复
+		fileName += expandedName;
+		File toFile = new File(uploadPath, fileName);
+		OutputStream os = new FileOutputStream(toFile);
+		
+		// 文件复制到指定位置
+		byte[] buffer = new byte[1024];
+		int length = 0;
+		while ((length = is.read(buffer)) > 0) {
+			os.write(buffer, 0, length);
+		}
+		is.close();
+		os.close();
+*/
+		// 返回“图像”选项卡并显示图片
+		out.println("<script type=\"text/javascript\">");
+		out.println("window.parent.CKEDITOR.tools.callFunction(" + callback
+				+ ",'" + "/ncycoa/upload/notice/"+ fileName + "','')"); // 相对路径用于显示图片
+		out.println("</script>");
+		return null;
+	}
+	@RequestMapping(params="getfile")
+	public String getfile(@RequestParam("upload") MultipartFile upload0,HttpServletRequest request, HttpServletResponse response) throws Exception {	
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out = response.getWriter();
+//		System.out.println("hou:"+upload0.getOriginalFilename().substring(upload0.getOriginalFilename().lastIndexOf(".")));
+		uploadContentType=upload0.getContentType();
+
+		// CKEditor提交的很重要的一个参数
+		String callback = request.getParameter("CKEditorFuncNum");
+		System.out.println(uploadContentType);
+		String expandedName = upload0.getOriginalFilename().substring(upload0.getOriginalFilename().lastIndexOf("."));
+	/*
+		if (uploadContentType.equals("application/msword")) {
+			expandedName = ".doc";
+		} else if (uploadContentType.equals("application/vnd.ms-excel")) {
+			expandedName = ".xls";
+		} else if (uploadContentType.equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")) {
+			expandedName = ".xlsx";
+		} else if (uploadContentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")) {
+			expandedName = ".docx";
+		} else if (uploadContentType.equals("application/octet-stream")) {
+			expandedName = ".zip";
+		} else if (uploadContentType.equals("text/plain")) {
+			expandedName = ".txt";
+		} else if (uploadContentType.equals("application/pdf")) {
+			expandedName = ".pdf";
+		}else {
+			out.println("<script type=\"text/javascript\">");
+			out.println("window.parent.CKEDITOR.tools.callFunction(" + callback
+					+ ",'','不支持的附件格式');");
+			out.println("</script>");
+			return null;
+		}
+		*/
+//		upload.getAbsolutePath().substring(upload.getAbsolutePath().lastIndexOf(".")); // 文件扩展名
+//		System.out.println(expandedName);
+
+		if (upload0.getSize() > 50 * 1024*1024) {
+			out.println("<script type=\"text/javascript\">");
+			out.println("window.parent.CKEDITOR.tools.callFunction(" + callback
+					+ ",''," + "'文件大小不得大于50M');");
+			out.println("</script>");
+			return null;
+		}
+		String uploadPath = request.getRealPath("/upload/notice");
+		System.out.println(uploadPath);
+		String fileName = java.util.UUID.randomUUID().toString(); // 采用UUID的方式命名保证不会重复
+		fileName += expandedName;
+		upload0.transferTo( new java.io.File( uploadPath+"\\"+fileName ) );
+/*
+		InputStream is = new FileInputStream(upload);
+		//String uploadPath = ServletActionContext.getServletContext().getRealPath("/");
+		String uploadPath = request.getRealPath("/img/postImg");
+//		HttpServletRequest request = ServletActionContext.getRequest(); 
+//		String uploadPath =request.getContextPath(); 
+//		uploadPath+="/img/postImg";
+		System.out.println(uploadPath);
+		//String fileName = java.util.UUID.randomUUID().toString(); // 采用UUID的方式命名保证不会重复
+		String fileName=uploadFileName;
+		//fileName += expandedName;
+		File toFile = new File(uploadPath, fileName);
+		OutputStream os = new FileOutputStream(toFile);
+		
+		// 文件复制到指定位置
+		byte[] buffer = new byte[1024];
+		int length = 0;
+		while ((length = is.read(buffer)) > 0) {
+			os.write(buffer, 0, length);
+		}
+		is.close();
+		os.close();
+*/
+		// 返回“图像”选项卡并显示图片
+		System.out.println(fileName);
+		out.println("<script type=\"text/javascript\">");
+		out.println("window.parent.CKEDITOR.tools.callFunction(" + callback
+				+ ",'" + "/ncycoa/upload/notice/"+ fileName + "','')"); // 相对路径用于显示图片
+		out.println("</script>");
+		return null;
 	}
 	
 	@RequestMapping(params="del")

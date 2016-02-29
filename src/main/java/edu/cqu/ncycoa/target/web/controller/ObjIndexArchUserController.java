@@ -159,7 +159,7 @@ public class ObjIndexArchUserController {
 	@RequestMapping(params = "save")
 	@ResponseBody
 	public void save(ObjIndexArchUser notice, HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("here");
+		
 		AjaxResultJson j = new AjaxResultJson();
 		String message;
 		if (notice.getId() != null) {
@@ -175,8 +175,20 @@ public class ObjIndexArchUserController {
 				systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 			}
 		} else {
+			if(notice.getObjectcode().contains(",")){
+				String[] objcodes=notice.getObjectcode().split(",");
+				String[] objnames=notice.getUniIndexCode().split(",");
+				System.out.println(objcodes.length);
+				for(int i=0;i<objcodes.length;i++){
+					ObjIndexArchUser t=new ObjIndexArchUser();
+					MyBeanUtils.copyBeanNotNull2Bean(notice, t);
+					t.setObjectcode(objcodes[i]);
+					t.setUniIndexCode(objnames[i]);
+					systemService.addEntity(t);
+				}
+			}
 			message = "Ìí¼Ó³É¹¦";
-			systemService.addEntity(notice);
+			
 			
 		}
 		

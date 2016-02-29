@@ -97,14 +97,14 @@ function judge() {
 <table style="width:600px;border-spacing:1px;" class="formtable">
      <tr>
 		<td align="right"><label class="Validform_label"> 供应商代码 </label></td>
-		<td class="value"><input class="inputxt" onBlur="judge()" style="width:150px;" id="code" name="code"  value="${supplier.code}" datatype="s2-10">
+		<td class="value"><input class="inputxt" onBlur="judge()" style="width:150px;" id="code" name="code"  value="${supplier.code}" >
 <!-- 		<label id="msg" >该机构代码已经存在或在禁入年限内</label> -->
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label"> 供应商名称 </label></td>
-		<td class="value"><input class="inputxt" style="width:150px;" id="name" name="name" value="${supplier.name}" datatype="s2-10">
+		<td class="value"><input class="inputxt" style="width:150px;" id="name" name="name" value="${supplier.name}" >
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>

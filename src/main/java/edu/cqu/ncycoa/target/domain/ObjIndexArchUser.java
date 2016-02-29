@@ -15,7 +15,7 @@ public class ObjIndexArchUser {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="ARCHUSER_ID")
 	private Long id; 
-	
+
 	@Column(name="INDEXARCH_CODE")
 	private String IndexArchCode;//	指标分类编码
 	@Column(name="UNIINDEX_CODE")
@@ -34,6 +34,13 @@ public class ObjIndexArchUser {
 	private Date endDate;
 	@Column(name="MEMO")
 	private String memo;//备注
+
+	//开始时间
+	@Column(name="VALID_BEGINDATE")
+	private Date ValidBeginDate;
+	//结束时间
+	@Column(name="VALID_ENDDATE")
+	private Date ValidEndDate;
 	public Long getId() {
 		return id;
 	}
@@ -94,6 +101,18 @@ public class ObjIndexArchUser {
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
-	
-	
+	public Date getValidBeginDate() {
+		return ValidBeginDate;
+	}
+	public void setValidBeginDate(Date validBeginDate) {
+		ValidBeginDate = validBeginDate;
+	}
+	public Date getValidEndDate() {
+		return ValidEndDate;
+	}
+	public void setValidEndDate(Date validEndDate) {
+		ValidEndDate = validEndDate;
+	}
+
+
 }

@@ -290,6 +290,51 @@ private int count=0;
 		result=result.substring(0,5)+temp2;
 		return result;
 	}
+	public static String getLastVersionCode(String id) {
+		String result=id;
+		String s=result.substring(5, 7);
+		DecimalFormat df = new DecimalFormat("00"); 
+		String temp2 = df.format(Integer.parseInt(s)-1);
+		result=result.substring(0,5)+temp2;
+		System.out.println("lastVersion:"+result);
+		return result;
+	}
+
+	//获取下一个indexcode
+		public static int getMaxIsLast(String code) {
+			int result = 0;
+			
+			try {
+				DBObject db = new DBObject();
+				String sql = "select max(ISLAST) from TBM_OBJINDEX where INDEX_CODE="+code;
+
+				DataTable dt = db.runSelectQuery(sql);
+				if (dt != null&& dt.getRowsCount() >= 1) {
+					
+						DataRow r = dt.get(0);
+						result=Integer.parseInt(r.getString(0));
+						System.out.println(result);
+				}else{
+					return result;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return result;
+		}
+
+		public static void setOldOnetoNewest(String code) {
 
 
+			try {
+				DBObject db = new DBObject();
+				String sql = "update TBM_OBJINDEX SET ISLAST='1' where INDEX_CODE like '"+code+"%'";
+
+				db.run(sql);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
 }

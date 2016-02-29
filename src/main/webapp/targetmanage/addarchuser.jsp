@@ -119,6 +119,18 @@ String indexclass=(String)request.getAttribute("indexclass");
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
+		<tr>
+		<td align="right"><label class="Validform_label"> 开始时间</label></td>
+		<td class="value"><input class="easyui-datebox" style="width:250px;" id="validBeginDate" name="validBeginDate" value="${item.validBeginDate}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 结束时间</label></td>
+		<td class="value"><input class="easyui-datebox" style="width:250px;" id="validEndDate" name="validEndDate" value="${item.validEndDate}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label">备注</label></td>
 		<td class="value"><input class="inputxt" style="width:160px;" id="memo" name="memo" value="${item.memo}">
