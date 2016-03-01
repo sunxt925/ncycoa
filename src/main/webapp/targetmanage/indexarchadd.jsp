@@ -92,12 +92,24 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="right" width="70px"><label class="Validform_label">指标描述</label></td>
+		<td align="right" width="70px"><label class="Validform_label">体系描述</label></td>
 		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="indexDesc" name="indexDesc" value="${item.indexDesc}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
-
+	<tr>
+		<td align="right"><label class="Validform_label">公开标志</label></td>
+		<td class="value">
+		<input type="radio" name="publicFlag" value="1"/>公开	
+        <input type="radio" name="publicFlag" value="0"/>私有
+		</td>
+	</tr>
+	<tr>
+		<td align="right" width="70px"><label class="Validform_label">所属机构</label></td>
+		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="belongOrgcode" name="belongOrgcode" value="${item.belongOrgcode}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
 	
 </table>
 <div style="width: 690px; height: 1px;"></div>

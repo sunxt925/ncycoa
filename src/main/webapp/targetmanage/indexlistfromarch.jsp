@@ -249,7 +249,7 @@ int per_page = u.getPerpage_full();
     	    });
     $("#btn_save").click(function(){
     	var index_class="c";
-    	var u="./objindexitem.htm?add_item&ccm=${pcode}";
+    	var u="./objindexitem.htm?add_item&ccm=${pcode}&classT=${classT}";
     	//var u="targetmanage/indexarchadd.jsp?index_class="+index_class+"&pIndexcode=-1";
     	createwindow("ÐÂÔö",u,800,650);
     	    });

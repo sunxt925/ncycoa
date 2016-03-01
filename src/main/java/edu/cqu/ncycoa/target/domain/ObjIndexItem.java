@@ -98,7 +98,7 @@ public class ObjIndexItem implements Comparable<ObjIndexItem>{
 	@Column(name="ALARMFLAG")  //1 报警 0 不报警
 	private String alarmFlag = "";  
 	
-	@Column(name="EXAMFLAG")  //1 报警 0 不报警
+	@Column(name="EXAMFLAG")  //1 考核 0 不考核
 	private String examFlag = ""; 
 	
 	@Column(name="EXAMTIME")  //M01表示每年1月为考核时段

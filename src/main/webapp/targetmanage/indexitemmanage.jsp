@@ -88,7 +88,7 @@ String basePath = request.getScheme()+"://"+
      function change(){
     	 $('#tt').tree({
  			onClick: function(node){
- 				var url="objindexitem.htm?indexlist_c&ccm="+node.id+"&name="+node.text;
+ 				var url="objindexitem.htm?indexlist_c&classT=${classT}&ccm="+node.id+"&name="+node.text;
  				var url1='indexlist.jsp?indexccm='+node.id+'&indexname='+node.text;
  				 window.open(url,"indexlist");
  				//$('#center').panel({

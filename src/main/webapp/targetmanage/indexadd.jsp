@@ -106,86 +106,53 @@
 	 
 </script>
 </head>
-<body style="overflow-x:hidden" onload="init()">
-<form id="formobj" name="formobj" action="objindexitem.htm?save_item"  method="post" >
+<body style="overflow-x:hidden" >
+<form id="formobj" name="formobj" action="objindexitem.htm?save_itemdef"  method="post" >
 <input type="hidden" id="btn_sub" class="btn_sub"/> 
 <input style="display:none" type="button" id="btn_ok" onclick="ret()"/> 
-<input id="parentIndexCode" name="parentIndexCode" type="hidden" value="${pcode}">
 <table style="width:720px;border-spacing:1px;" class="formtable">
-<!--     <tr> -->
-<!-- 		<td align="right" width="70px"><label class="Validform_label">编码名称</label></td> -->
-<%-- 		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="indexCode" name="indexCode"  value="${item.indexCode}"> --%>
-<!-- 		<span class="Validform_checktip"></span> -->
-<!-- 		</td> -->
-<!-- 	</tr> -->
+     <tr> 
+ 		<td align="right" width="70px"><label class="validform_label">编码名称</label></td> 
+		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="stdIndexCode" name="stdIndexCode"  value="${item.stdIndexCode}">
+ 		<span class="validform_checktip"></span> 
+ 		</td> 
+	</tr> 
 	<tr>
 		<td align="right" width="70px"><label class="Validform_label">指标名称</label></td>
-		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="indexName" name="indexName" value="${item.indexName}">
+		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="stdItemName" name="stdItemName" value="${item.stdItemName}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right" width="70px"><label class="Validform_label">指标描述</label></td>
-		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="indexDesc" name="indexDesc" value="${item.indexDesc}">
+		<td align="right" width="70px"><label class="Validform_label">所属系统</label></td>
+		<td class="value" width="700px">
+		<select id="appSystem" name="appSystem">
+		<option value="目标系统" selected="selected">目标系统</option>
+		<option value="绩效系统">绩效系统</option>
+		</select>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right" width="70px"><label class="Validform_label">计算公式</label></td>
-		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="valueFunc" name="valueFunc" value="${item.valueFunc}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-<%-- 	<c:if test="${item.isImportant==1}"> --%>
-<!-- 	<tr> -->
-<!-- 		<td align="right"><label class="Validform_label">重点指标</label></td> -->
-<!-- 		<td class="value"> -->
-<!-- 		<select class="inputxt" id="isImportant" name="isImportant" style="width:156px;"> -->
-<!-- 			<option value="1"  selected="selected">是</option> -->
-<!-- 			<option value="0">否</option> -->
-<!-- 		</select> -->
-<!-- 		<span class="Validform_checktip"></span> -->
-<!-- 		</td> -->
-<!-- 	</tr> -->
-<!-- 	<tr> -->
-<!-- 		<td align="right" width="70px"><label class="Validform_label">警戒线</label></td> -->
-<%-- 		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="minline" name="minline" value="${item.minline}"> --%>
-<!-- 		<span class="Validform_checktip"></span> -->
-<!-- 		</td> -->
-<!-- 	</tr> -->
-<%-- 	</c:if> --%>
-	<c:if test="${item.isImportant==0}">
-	<tr>
-		<td align="right"><label class="Validform_label">重点指标</label></td>
+		<td align="right"><label class="Validform_label">私有标志</label></td>
 		<td class="value">
-		<input type="radio" name="isImportant" value="1" />是
-        <input type="radio" name="isImportant" value="0" checked="checked"/>否
+		<input type="radio" name="publicFlag" value="1" />公开
+        <input type="radio" name="publicFlag" value="0" checked="checked"/>私有
 		</td>
 	</tr>
-	</c:if>
-	<c:if test="${item.isImportant==1}">
 	<tr>
-		<td align="right"><label class="Validform_label">重点指标</label></td>
-		<td class="value">
-		<input type="radio" name="isImportant" value="1" checked="checked"/>是
-        <input type="radio" name="isImportant" value="0" />否
-		</td>
-	</tr>
-	</c:if>
-	<tr id="line">
-		<td align="right" width="70px"><label class="Validform_label">警戒线</label></td>
-		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="minline" name="minline" value="${item.minline}">
+		<td align="right" width="70px"><label class="Validform_label">所属机构</label></td>
+		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="belongOrgcode" name="belongOrgcode" value="${item.belongOrgcode}">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="Validform_label">计分周期</label></td>
-		<td class="value">
-		<select class="inputxt" id="scorePeriod" name="scorePeriod" style="width:156px;">
-			<option value="月度">月度</option>
-			<option value="季度">季度</option>
-			<option value="半年">半年</option>
-			<option value="年度">年度</option>
+		<td align="right" width="70px"><label class="Validform_label">类别</label></td>
+		<td class="value" width="700px">
+		<select id="memo" name="memo">
+		<option value="C" selected="selected">公司</option>
+		<option value="D">部门</option>
+		<option value="S">个人</option>
 		</select>
 		<span class="Validform_checktip"></span>
 		</td>
@@ -196,29 +163,7 @@
 <input type="submit" id="sub"  style="display:none">
 </form>
 
-<script type="text/javascript">
-function init(){
-	var p1=$("input[name='isImportant']:checked").val();
-    if(p1=="0"){
-   	 //$("tr[id='tr1']").attr("hidden","true");
-   	 //$("tr[id='tr1']").attr("style","display:none");
-   	 $("tr[id='line']").attr("style","display:none");
-    }else if(p1=="1"){
-   	 
-   	 $("tr[id='line']").attr("style","");
-    }
-}
-$("input[name='isImportant']").change(function(){
-	   var p1=$("input[name='isImportant']:checked").val();
-	   
-	     if(p1=="0"){
-	    	 $("tr[id='line']").attr("style","display:none");
-	     }else if(p1=="1"){
-	    	 
-	    	 $("tr[id='line']").attr("style","");
-	     }
-});
-</script>
+
 <table style="display: none">
 	<tbody id="add_participant_table_template">
 		<tr>

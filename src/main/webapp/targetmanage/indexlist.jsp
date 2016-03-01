@@ -169,22 +169,22 @@ int per_page = u.getPerpage_full();
 	<input type='checkbox' name='allitems' id='allitems' onclick='allitems_click()'></td>
 	<td nowrap >指标编码</td>
 	<td nowrap >指标名称</td>
-	<td nowrap >指标描述</td>
-	<td nowrap >计算公式</td>
-	<td nowrap >计分周期</td>
+	<td nowrap >所属业务系统</td>
+	<td nowrap >归属机构</td>
+	<td nowrap >类别</td>
 	<td nowrap >操作</td>
 	</tr>
 	
 	<c:forEach items="${items}" var="item">
             <tr>
-            <td><input type="checkbox" id="items" name="items" value="${item.indexCode}"></td>
-					<td>${item.indexCode}</td>
-					<td>${item.indexName}</td>
-					<td>${item.indexDesc}</td>
-					<td>${item.valueFunc}</td>
-					<td>${item.scorePeriod}</td>
-					<td><a  href="#"  onclick="modify('${item.indexCode}')" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
-	<a  href="#"  onclick="del('${item.indexCode}')" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a></td>
+            <td><input type="checkbox" id="items" name="items" value="${item.stdIndexCode}"></td>
+					<td>${item.stdIndexCode}</td>
+					<td>${item.stdItemName}</td>
+					<td>${item.appSystem}</td>
+					<td>${item.belongOrgcode}</td>
+					<td>${item.memo}</td>
+					<td><a  href="#"  onclick="modify('${item.stdIndexCode}')" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
+	<a  href="#"  onclick="del('${item.stdIndexCode}')" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a></td>
 				</tr>
     </c:forEach>
 	</table>
@@ -249,7 +249,7 @@ int per_page = u.getPerpage_full();
     	    });
     $("#btn_save").click(function(){
     	var index_class="c";
-    	var u="./objindexitem.htm?add_item&ccm=${pcode}";
+    	var u="./objindexitem.htm?add_itemdef";
     	//var u="targetmanage/indexarchadd.jsp?index_class="+index_class+"&pIndexcode=-1";
     	createwindow("新增",u,800,650);
     	    });
