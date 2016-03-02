@@ -32,6 +32,9 @@ public class ObjIndexItem implements Comparable<ObjIndexItem>{
 	//是否为最新版本
 	@Column(name="ISLAST")  //是为1，不是为0
 	private String IsLast = "";
+	//是否重要指标
+	@Column(name="ISIMPORTANT")  //是为1，不是为0
+	private String IsImportant = "";
 	
 	@Column(name="ISPARENT")  //体系为1，指标为0
 	private String IsParent = "";
@@ -75,6 +78,9 @@ public class ObjIndexItem implements Comparable<ObjIndexItem>{
 	//备注
 	@Column(name="MEMO")
 	private String Memo = "";
+	
+	@Column(name="MINLINE")
+	private String minline = "";
 	
 	@Column(name="VERSION")
 	private String version; //版本号
@@ -322,5 +328,26 @@ public class ObjIndexItem implements Comparable<ObjIndexItem>{
 	public void setIsLast(String isLast) {
 		IsLast = isLast;
 	}
+
+
+	public String getIsImportant() {
+		return IsImportant;
+	}
+
+
+	public void setIsImportant(String isImportant) {
+		IsImportant = isImportant;
+	}
+
+
+	public String getMinline() {
+		return minline;
+	}
+
+
+	public void setMinline(String minline) {
+		this.minline = minline;
+	}
+	
 
 }

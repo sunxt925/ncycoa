@@ -38,21 +38,15 @@ String basePath = request.getScheme()+"://"+
 		<a id="indexsel" href="#" class="easyui-linkbutton l-btn l-btn-plain" data-options="plain:true,iconCls:'icon-search'" >
 		 <span >选择</span></a>
 		 
-	 <label for="objname">对象选择: </label>
+	 <label for="indexname">对象选择: </label>
 	   	<input id="objectcode" name="objectcode" type="hidden" value="${objectcode}">
 		<input id="objname" name="objname" type="text" style="width:150px;background-color:white;" readonly="readonly">
 		<a id="objsel" href="#" class="easyui-linkbutton l-btn l-btn-plain" data-options="plain:true,iconCls:'icon-search'" >
 		 <span >选择</span></a>
-	<label >季度选择: </label>
-	 <select class="inputxt" id="season" name="season" style="width:156px;">
-		<option value="Q01">一季度</option>
-		<option value="Q02">二季度</option>
-		<option value="Q03">三季度</option>
-		<option value="Q04">四季度</option>
-		</select>
+		 
 <!--        <span> 年度选择：</span><input id="startyear" name="startyear" class="easyui-textbox"> -->
 <!--        <input id="endyear" name="endyear" class="easyui-textbox"> -->
-       <input type="button" onclick="getShow()" value="查看"> 
+        <input type="button" onclick="getShow()" value="查看"> 
     </div>
     
     <div data-options="region:'center',split:true" style="padding:5px;background:#fff;">
@@ -84,8 +78,7 @@ String basePath = request.getScheme()+"://"+
         	var start=$("#startyear").val();
         	var end=$("#endyear").val();
         	var objcode=$("#objectcode").val();
-        	var season=$("#season").val();
-        	window.open("targetdatamanage/bar_gragh.jsp?archcode="+archcode+"&objcode="+objcode+"&type=t&season="+season,"bar_gragh");
+        	window.open("targetdatamanage/bar_gragh.jsp?archcode="+archcode+"&objcode="+objcode+"&type=h","bar_gragh");
         	//window.open("targetdatamanage/bar_gragh.jsp?archcode="+archcode+"&objcode="+objcode+"&startyear="+start+"&endyear="+end,"bar_gragh");
         }
    }

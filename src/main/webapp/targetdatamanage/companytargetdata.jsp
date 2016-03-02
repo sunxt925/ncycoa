@@ -22,6 +22,19 @@
 <form id="formarch" name="formarch" action="objresult.htm?getTable"  method="post">
 <table>
 	<tbody><tr>
+	
+	<td>
+	<div>
+		<label for="indexname">指标体系: </label>
+	   	<input id="archcode" name="archcode" type="hidden" value="${archcode}">
+		<input id="indexname" name="indexname" type="text" style="width:150px;background-color:white;" value="${archname}">
+		<a id="indexsel" href="#" class="easyui-linkbutton l-btn l-btn-plain" data-options="plain:true,iconCls:'icon-search'" >
+		 <span >选择</span></a>
+		 <input type="submit"  value="查询"/>
+		 
+	</div> 
+	</td>
+	
 	<td>
 	<div>
 		<label for="yearsel">年度: </label>
@@ -42,7 +55,7 @@
 	<td>
 	<div>
 		<label for="periodsel">季度: </label>
-		<input id="periodsel" name="season" class="easyui-combobox combobox-f combo-f" style="width: 80px; display: none;" data-options="data:[{value:'Q01',text:'一季度'},{value:'Q02',text:'二季度'},{value:'Q03',text:'三季度',selected:true},{value:'Q04',text:'四季度'}],valueField:'value',textField:'text',onSelect:onPeriodChanged">
+		<input id="periodsel" name="season" class="easyui-combobox combobox-f combo-f" style="width: 80px; display: none;" data-options="data:[{value:'Q01',text:'一季度'},{value:'Q02',text:'二季度'},{value:'Q03',text:'三季度'},{value:'Q04',text:'四季度'}],valueField:'value',textField:'text',onSelect:onPeriodChanged">
 
 		<input type="hidden" class="combo-value" value="M03">
 		<script type="text/javascript">
@@ -54,20 +67,11 @@
 			}
 		}
 		</script>
+	<input type="button" id="update"  value="提交"/>
 	</div>
 	</td>
 	
-	<td>
-	<div>
-		<label for="indexname">指标体系: </label>
-	   	<input id="archcode" name="archcode" type="hidden" value="${archcode}">
-		<input id="indexname" name="indexname" type="text" style="width:150px;background-color:white;" readonly="readonly">
-		<a id="indexsel" href="#" class="easyui-linkbutton l-btn l-btn-plain" data-options="plain:true,iconCls:'icon-search'" >
-		 <span >选择</span></a>
-		 <input type="submit"  value="查询"/>
-		 <input type="button" id="update"  value="提交"/>
-	</div> 
-	</td>
+	
 	</tr>
 </tbody>
 </table>

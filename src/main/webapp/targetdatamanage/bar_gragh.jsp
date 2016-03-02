@@ -35,9 +35,18 @@ String basePath = request.getScheme()+"://"+
 <%
   UserInfo u=(UserInfo)request.getSession().getAttribute("UserInfo");
   String archcode = request.getParameter("archcode");
-  String startyear = request.getParameter("startyear");
-  String endyear = request.getParameter("endyear");
-  String result=ResultService.getDataByYears(archcode,startyear,endyear);
+  String objcode = request.getParameter("objcode");
+  String startyear ="1";
+   String endyear = "1";
+ // String startyear = request.getParameter("startyear");
+ // String endyear = request.getParameter("endyear");
+  String season=request.getParameter("season");
+  String result="";
+  if(request.getParameter("type").equals("t")){
+	  result=ResultService.getDataByYears(archcode,objcode,startyear,endyear,season);
+  }else{
+	  result=ResultService.getDataBySeasons(archcode,objcode,startyear,endyear);
+  }
   System.out.println(result);
   String names=result.split(";")[0];
   String scores=result.split(";")[1];
@@ -55,7 +64,7 @@ String basePath = request.getScheme()+"://"+
         var myChart = echarts.init(document.getElementById('main'));
         var option = {
         			    title : {
-        			        text: '员工综合绩效展示',
+        			        text: '目标得分展示',
         			        subtext: '南充烟草'
         			    },
         			    tooltip : {
@@ -63,6 +72,7 @@ String basePath = request.getScheme()+"://"+
         			    },
         			    legend: {
 							data:['目标体系总分同比展示']
+        			    //data:names
         			    },
         			    toolbox: {
         			        show : true,

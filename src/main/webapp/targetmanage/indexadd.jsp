@@ -106,7 +106,7 @@
 	 
 </script>
 </head>
-<body style="overflow-x:hidden">
+<body style="overflow-x:hidden" onload="init()">
 <form id="formobj" name="formobj" action="objindexitem.htm?save_item"  method="post" >
 <input type="hidden" id="btn_sub" class="btn_sub"/> 
 <input style="display:none" type="button" id="btn_ok" onclick="ret()"/> 
@@ -136,6 +136,48 @@
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
+<%-- 	<c:if test="${item.isImportant==1}"> --%>
+<!-- 	<tr> -->
+<!-- 		<td align="right"><label class="Validform_label">重点指标</label></td> -->
+<!-- 		<td class="value"> -->
+<!-- 		<select class="inputxt" id="isImportant" name="isImportant" style="width:156px;"> -->
+<!-- 			<option value="1"  selected="selected">是</option> -->
+<!-- 			<option value="0">否</option> -->
+<!-- 		</select> -->
+<!-- 		<span class="Validform_checktip"></span> -->
+<!-- 		</td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td align="right" width="70px"><label class="Validform_label">警戒线</label></td> -->
+<%-- 		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="minline" name="minline" value="${item.minline}"> --%>
+<!-- 		<span class="Validform_checktip"></span> -->
+<!-- 		</td> -->
+<!-- 	</tr> -->
+<%-- 	</c:if> --%>
+	<c:if test="${item.isImportant==0}">
+	<tr>
+		<td align="right"><label class="Validform_label">重点指标</label></td>
+		<td class="value">
+		<input type="radio" name="isImportant" value="1" />是
+        <input type="radio" name="isImportant" value="0" checked="checked"/>否
+		</td>
+	</tr>
+	</c:if>
+	<c:if test="${item.isImportant==1}">
+	<tr>
+		<td align="right"><label class="Validform_label">重点指标</label></td>
+		<td class="value">
+		<input type="radio" name="isImportant" value="1" checked="checked"/>是
+        <input type="radio" name="isImportant" value="0" />否
+		</td>
+	</tr>
+	</c:if>
+	<tr id="line">
+		<td align="right" width="70px"><label class="Validform_label">警戒线</label></td>
+		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="minline" name="minline" value="${item.minline}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label">计分周期</label></td>
 		<td class="value">
@@ -155,7 +197,27 @@
 </form>
 
 <script type="text/javascript">
-
+function init(){
+	var p1=$("input[name='isImportant']:checked").val();
+    if(p1=="0"){
+   	 //$("tr[id='tr1']").attr("hidden","true");
+   	 //$("tr[id='tr1']").attr("style","display:none");
+   	 $("tr[id='line']").attr("style","display:none");
+    }else if(p1=="1"){
+   	 
+   	 $("tr[id='line']").attr("style","");
+    }
+}
+$("input[name='isImportant']").change(function(){
+	   var p1=$("input[name='isImportant']:checked").val();
+	   
+	     if(p1=="0"){
+	    	 $("tr[id='line']").attr("style","display:none");
+	     }else if(p1=="1"){
+	    	 
+	    	 $("tr[id='line']").attr("style","");
+	     }
+});
 </script>
 <table style="display: none">
 	<tbody id="add_participant_table_template">

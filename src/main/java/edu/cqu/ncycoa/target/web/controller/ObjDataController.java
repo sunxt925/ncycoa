@@ -1,5 +1,6 @@
 package edu.cqu.ncycoa.target.web.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -157,6 +158,15 @@ public class ObjDataController {
 		mav.setViewName("targetdatamanage/tshow_c");
 		return mav;
 	}
+	@RequestMapping(params="hshow_c") //公司同比展示
+	public ModelAndView hshow_c(HttpServletRequest request, HttpServletResponse response){
+		
+		ModelAndView mav = new ModelAndView();
+		//items筛选出公司类体系
+		//mav.addObject("class","S");
+		mav.setViewName("targetdatamanage/hshow_c");
+		return mav;
+	}
 	
 	//点击选择指标体系后
 	@RequestMapping(params="getArch")
@@ -173,11 +183,18 @@ public class ObjDataController {
 	}
 	//选择年份，季度，指标体系之后：
 	@RequestMapping(params="getTable")
-	public ModelAndView getTableList(String archcode,HttpServletRequest request, HttpServletResponse response){
+	public ModelAndView getTableList(String archcode,String indexname,HttpServletRequest request, HttpServletResponse response){
 //		String year=request.getParameter("year");
 //		String season=request.getParameter("season");
 //		String archcode=request.getParameter("archcode");
-		System.out.println(archcode);
+		try {
+			indexname=new String(indexname.getBytes("iso-8859-1"), "gbk");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println(indexname);
 		String jpql="FROM ObjIndexItem as o where o.IsParent='0' and o.IndexCode LIKE '"+archcode.substring(0, 7)+"%' and o.IsLast='1'";
 		List<ObjIndexItem> items=systemService.readEntitiesByJPQL(jpql, ObjIndexItem.class);
 		
@@ -191,6 +208,7 @@ public class ObjDataController {
 		mav.addObject("indexList", items);
 		mav.addObject("objList",objs);
 		mav.addObject("archcode",archcode);
+		mav.addObject("archname",indexname);
 		//mav.addObject("resultList",results);
 		System.out.println(items.size());
 		if(archcode.startsWith("C"))
@@ -246,6 +264,11 @@ public class ObjDataController {
 					tr.setPlanValue(planvs[i]);
 					tr.setRealValue(realvs[i]);
 					tr.setScore(scores[i]);
+					ObjIndexItem oii=systemService.findEntityById(item.getIndexCode().split(",")[0], ObjIndexItem.class);
+					if(oii.getIsImportant().equals("1")){
+						if(Integer.parseInt(scores[i])<Integer.parseInt(oii.getMinline())) //越过警戒线 需要整改
+							;
+					}
 					if(totalScores.size()<=i){
 						totalScores.add(Long.parseLong(scores[i]));
 					}else {

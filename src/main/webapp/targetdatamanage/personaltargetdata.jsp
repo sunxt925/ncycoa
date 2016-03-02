@@ -24,6 +24,18 @@
 	<tbody><tr>
 	<td>
 	<div>
+		<label for="indexname">指标体系: </label>
+	   	<input id="archcode" name="archcode" type="hidden" value="${archcode}">
+		<input id="indexname" name="indexname" type="text" style="width:150px;background-color:white;" readonly="readonly">
+		<a id="indexsel" href="#" class="easyui-linkbutton l-btn l-btn-plain" data-options="plain:true,iconCls:'icon-search'" >
+		 <span >选择</span></a>
+		 <input type="submit"  value="查询"/>
+		 
+	</div> 
+	</td>
+	
+	<td>
+	<div>
 		<label for="yearsel">年度: </label>
 		<input id="yearsel" name="year" class="easyui-combobox combobox-f combo-f" style="width: 80px; display: none;" data-options="data:[{text:'2016',value:2016,selected:true}],valueField:'value',textField:'text',onSelect:onYearChanged">
 		<input type="hidden"  class="combo-value" value="2016">
@@ -54,20 +66,11 @@
 			}
 		}
 		</script>
+		<input type="button" id="update"  value="提交"/>
 	</div>
 	</td>
 	
-	<td>
-	<div>
-		<label for="indexname">指标体系: </label>
-	   	<input id="archcode" name="archcode" type="hidden" value="${archcode}">
-		<input id="indexname" name="indexname" type="text" style="width:150px;background-color:white;" readonly="readonly">
-		<a id="indexsel" href="#" class="easyui-linkbutton l-btn l-btn-plain" data-options="plain:true,iconCls:'icon-search'" >
-		 <span >选择</span></a>
-		 <input type="submit"  value="查询"/>
-		 <input type="button" id="update"  value="提交"/>
-	</div> 
-	</td>
+	
 	</tr>
 </tbody>
 </table>

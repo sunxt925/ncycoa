@@ -108,7 +108,6 @@
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
-	
 	<tr id="tr1">
 	<td align="right"><label class="Validform_label">选项定义</label></td>
 		<td class="value"><textarea class="inputxt" name="indexOption" style="overflow-x:hidden;width:400px;height:100px">${evaluDefine.indexOption}</textarea>

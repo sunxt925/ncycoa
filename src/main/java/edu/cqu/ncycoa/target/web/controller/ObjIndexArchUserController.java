@@ -42,6 +42,20 @@ public class ObjIndexArchUserController {
 	@Resource(name="systemService")
 	SystemService systemService;
 	
+	@RequestMapping(params="getObjByArch")
+	public ModelAndView getObjList(HttpServletRequest request, HttpServletResponse response){
+		String arch=request.getParameter("arch");
+		arch=arch.substring(0,arch.length()-1);
+		System.out.println("'"+arch+"'");
+		String jpql="FROM ObjIndexArchUser as o where o.IndexArchCode='"+arch+"'";
+		List<ObjIndexArchUser> items=systemService.readEntitiesByJPQL(jpql, ObjIndexArchUser.class);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("objList", items);
+		mav.setViewName("targetdatamanage/selectobj");
+		return mav;
+	}
+	
 	@RequestMapping(params="indexarchuserlist_c")
 	public ModelAndView indexarchuserlist_c(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mav = new ModelAndView();

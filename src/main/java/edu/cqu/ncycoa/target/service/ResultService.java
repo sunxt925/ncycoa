@@ -65,31 +65,63 @@ public class ResultService extends AbstractBaseDaoImpl{
 		}
 	}
 	
-	public static String getDataByYears(String archcode,String startyear,String endyear){
+	public static String getDataByYears(String archcode,String objcode,String startyear,String endyear,String season){
 		archcode=archcode.substring(0, 7);
+		objcode=objcode.substring(0,objcode.length()-1);
 		String objs="";
 		String scores="";
+		String years="";
 		try {
 			DBObject db = new DBObject();
 
-			String sql = "select * from TBM_OBJTOTALSCORE where arch_code like '" + archcode + "%'";
+			String sql = "select * from TBM_OBJTOTALSCORE where arch_code like '" + archcode + "%' and obj_code='"+objcode+"' and season='"+season+"'";
 			System.out.println(sql);
 			DataTable dt = db.runSelectQuery(sql);
 			if (dt != null && dt.getRowsCount() >= 0) {
 				for (int i = 0; i < dt.getRowsCount(); i++) {
 					DataRow r = dt.get(i);
-					objs=objs+r.getString("OBJ_CODE")+",";
+					//objs=objs+r.getString("OBJ_CODE")+",";
+					years=years+r.getString("YEAR")+",";
 					scores=scores+r.getString("TOTALSCORE")+",";
 				}
 			}
-			objs=objs.substring(0, objs.length()-1);
+			//objs=objs.substring(0, objs.length()-1);
+			years=years.substring(0,years.length()-1);
 			scores=scores.substring(0,scores.length()-1);
-			return objs+";"+scores;
+			return years+";"+scores;
 		} catch (Exception e) {
 			return null;
 		}
 	}
 	
+	public static String getDataBySeasons(String archcode,String objcode,String startyear,String endyear){
+		archcode=archcode.substring(0, 7);
+		objcode=objcode.substring(0,objcode.length()-1);
+		String objs="";
+		String scores="";
+		String seasons="";
+		try {
+			DBObject db = new DBObject();
+
+			String sql = "select * from TBM_OBJTOTALSCORE where arch_code like '" + archcode + "%' and obj_code='"+objcode+"'";
+			System.out.println(sql);
+			DataTable dt = db.runSelectQuery(sql);
+			if (dt != null && dt.getRowsCount() >= 0) {
+				for (int i = 0; i < dt.getRowsCount(); i++) {
+					DataRow r = dt.get(i);
+					//objs=objs+r.getString("OBJ_CODE")+",";
+					seasons=seasons+r.getString("SEASON")+",";
+					scores=scores+r.getString("TOTALSCORE")+",";
+				}
+			}
+			//objs=objs.substring(0, objs.length()-1);
+			seasons=seasons.substring(0,seasons.length()-1);
+			scores=scores.substring(0,scores.length()-1);
+			return seasons+";"+scores;
+		} catch (Exception e) {
+			return null;
+		}
+	}
 	
 
 }
