@@ -71,7 +71,6 @@
 			}
 		});	 
 		  $('#addBtn').bind('click', function(){ 
-			
 	 	 	 var tr =  $("#add_participant_table_template tr").clone();
 		 	 $("#add_participant_table").append(tr);
 		 	 resetTrNum('add_participant_table');
@@ -121,16 +120,29 @@
 	<tr>
 		<td align="right" width="70px"><label class="Validform_label">指标选择：</label></td>
 		<td class="value" width="700px">
-	   	<input id="archcode" name="archcode" type="hidden" value="${archcode}">
-		<input id="indexname" name="indexName" type="text" style="width:150px;background-color:white;" value="${archname}">
+	   	<input id="archcode" name="archcode" type="hidden" value="${item.parentIndexCode}">
+		<input id="indexname" name="indexName" type="text" style="width:150px;background-color:white;" value="${item.indexName}">
 		<a id="indexsel" href="#" class="easyui-linkbutton l-btn l-btn-plain" data-options="plain:true,iconCls:'icon-search'" >
 		 <span >选择</span></a>
-		 <input type="submit"  value="查询"/>
+<!-- 		 <input type="submit"  value="查询"/> -->
 	</td>
 	</tr>
 	<tr>
 		<td align="right" width="70px"><label class="Validform_label">指标描述</label></td>
 		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="indexDesc" name="indexDesc" value="${item.indexDesc}">
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr >
+		<td align="right"><label class="Validform_label">计分周期</label></td>
+		<td class="value">
+		<select class="inputxt" id="scorePeriod" name="scorePeriod" style="width:156px;">
+			<option value="M00">月度</option>
+			<option value="S00">季度</option>
+			<option value="H00">半年</option>
+			<option value="Y00">年度</option>
+			<option value="D00">随机抽查</option>
+		</select>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -200,24 +212,16 @@
 	</c:choose>
 	<tr id="et">
 		<td align="right" width="70px"><label class="Validform_label">考核时段</label></td>
-		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="examTime" name="examTime" value="${item.examTime}">
-		<span class="Validform_checktip"></span>
-		</td>
-	</tr>
-
-	<tr >
-		<td align="right"><label class="Validform_label">计分周期</label></td>
-		<td class="value">
-		<select class="inputxt" id="scorePeriod" name="scorePeriod" style="width:156px;">
-			<option value="M00">月度</option>
-			<option value="S00">季度</option>
-			<option value="H00">半年</option>
-			<option value="Y00">年度</option>
-			<option value="D00">随机抽查</option>
+		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="examTime1" name="examTime1" value="${item.examTime}">
+		<select class="inputxt" id="examTime" name="examTime" style="width:156px;">
+			
+			
 		</select>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
+
+	
 	
 </table>
 <div style="width: 690px; height: 1px;"></div>
@@ -225,6 +229,22 @@
 </form>
 
 <script type="text/javascript">
+$('#scorePeriod').change(function(){ 
+	var opt=$('#scorePeriod').val();
+	var objSelectNow=document.getElementById("examTime");
+	if(opt=="M00"){
+		var inner="<option value='M01'>1月</option><option value='M02'>2月</option><option value='M03'>3月</option><option value='M04'>4月</option><option value='M05'>5月</option><option value='M06'>6月</option><option value='M07'>7月</option><option value='M08'>8月</option><option value='M09'>9月</option><option value='M10'>10月</option><option value='M11'>11月</option><option value='M12'>12月</option><option value='M00'>全年</option>"
+	}else if(opt=="S00"){
+		var inner="<option value='S01'>1季度</option><option value='S02'>2季度</option><option value='S03'>3季度</option><option value='S04'>4季度</option><option value='S00'>全年</option>";
+	}else if(opt=="H00"){
+		var inner="<option value='H01'>上半年</option><option value='H02'>下半年</option><option value='H00'>全年</option>";
+	}else if(opt=="Y00"){
+		var inner="<option value='Y00'>全年</option>";
+	}
+	
+	objSelectNow.innerHTML=inner;
+	}) 
+
 function init(){
 	var p1=$("input[name='alarmFlag']:checked").val();
     if(p1=="0"){

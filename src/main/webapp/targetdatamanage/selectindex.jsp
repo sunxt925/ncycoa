@@ -26,14 +26,16 @@
            rownumbers="false" fitColumns="true" singleSelect="true">
        	<thead >
            	<tr >
-           	<th data-options="field:'archcode',width:100" hidden="true">对象编码</th>
-               <th data-options="field:'archname',width:100">对象名称</th>
+           	<th data-options="field:'archcode',width:100" hidden="true">指标编码</th>
+           	<th data-options="field:'time',width:100" hidden="true">指标编码</th>
+               <th data-options="field:'archname',width:100">指标名称</th>
                </tr>
              </thead>
              <tbody>
               <c:forEach items="${indexList}" var="item">   
              <tr> 
-              <td hidden="true">${item.indexCode}		 </td>  
+              <td hidden="true">${item.indexCode}		 </td> 
+               <td hidden="true">${item.scorePeriod}		 </td>
              <td>${item.indexName}		 </td>  
 	    </tr>
 	     </c:forEach>  

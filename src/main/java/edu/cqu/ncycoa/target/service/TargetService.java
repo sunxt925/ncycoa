@@ -23,6 +23,7 @@ import edu.cqu.ncycoa.common.util.dao.TypedQueryBuilder;
 import edu.cqu.ncycoa.dao.AbstractBaseDaoImpl;
 import edu.cqu.ncycoa.safety.domain.Accident;
 import edu.cqu.ncycoa.target.domain.ObjIndexItem;
+import edu.cqu.ncycoa.target.domain.TargetResult;
 
 public class TargetService extends AbstractBaseDaoImpl{
 	
@@ -336,5 +337,25 @@ private int count=0;
 				e.printStackTrace();
 			}
 			
+		}
+
+		public static long getResultIDByObj(TargetResult targetResult) {
+			// TODO Auto-generated method stub
+			long result = -1;
+			try {
+				DBObject db = new DBObject();
+				String sql = "select * from TBM_OBJRESULT t where t.arch_code='"+targetResult.getArchCode()+"' and t.index_code='"+targetResult.getIndexCode()+"' AND t.season='"+targetResult.getSeason()+"' and t.obj_code='"+targetResult.getObjectCode()+"'";
+
+				//db.run(sql);
+				DataTable dt = db.runSelectQuery(sql);
+				if (dt != null&& dt.getRowsCount() >= 1) {
+					DataRow r = dt.get(0);
+					result=Long.parseLong(r.getString("Result_ID"));
+					System.out.println(result);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return result;
 		}
 }

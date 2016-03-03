@@ -43,6 +43,11 @@ String basePath = request.getScheme()+"://"+
 		<input id="objname" name="objname" type="text" style="width:150px;background-color:white;" readonly="readonly">
 		<a id="objsel" href="#" class="easyui-linkbutton l-btn l-btn-plain" data-options="plain:true,iconCls:'icon-search'" >
 		 <span >选择</span></a>
+		   <label for="objname">指标选择: </label>
+	   	<input id="indexitemcode" name="indexitemcode" type="hidden" value="${indexcode}">
+		<input id="indexitemname" name="indexitemname" type="text" style="width:150px;background-color:white;" readonly="readonly">
+		<a id="indexitemsel" href="#" class="easyui-linkbutton l-btn l-btn-plain" data-options="plain:true,iconCls:'icon-search'" >
+		 <span >选择</span></a>
 		 
 <!--        <span> 年度选择：</span><input id="startyear" name="startyear" class="easyui-textbox"> -->
 <!--        <input id="endyear" name="endyear" class="easyui-textbox"> -->
@@ -75,10 +80,11 @@ String basePath = request.getScheme()+"://"+
         } */
         if($("#archcode").val()!=""&&$("#startyear").val()!=""&&$("#endyear").val()!=""){
         	var archcode=$("#archcode").val();
+        	var indexcode=$("#indexitemcode").val();
         	var start=$("#startyear").val();
         	var end=$("#endyear").val();
         	var objcode=$("#objectcode").val();
-        	window.open("targetdatamanage/bar_gragh.jsp?archcode="+archcode+"&objcode="+objcode+"&type=h","bar_gragh");
+        	window.open("targetdatamanage/bar_gragh.jsp?archcode="+archcode+"&objcode="+objcode+"&indexcode="+indexcode+"&type=h","bar_gragh");
         	//window.open("targetdatamanage/bar_gragh.jsp?archcode="+archcode+"&objcode="+objcode+"&startyear="+start+"&endyear="+end,"bar_gragh");
         }
    }
@@ -94,6 +100,15 @@ String basePath = request.getScheme()+"://"+
         $("#objsel").click(function(){
         	var code=$("#archcode").val();
         	createwindow('选择体系','objindexarchuser.htm?getObjByArch&arch='+code,500,500,returnobjValue );
+    	    });
+        
+        $("#indexitemsel").click(function(){
+        	if($("#objectcode").val()==""){
+            	alert("请选择对象");
+            }else{
+            	var code=$("#archcode").val();
+            	createwindow('选择对象','objindexarchuser.htm?getIndexByArch&arch='+code,500,500,returnindexValue );
+            }
     	    });
         
         function returnorgValue(data){
@@ -113,6 +128,17 @@ String basePath = request.getScheme()+"://"+
         	$('#objname').val(org.archname);
         	
         }   
+        
+function returnindexValue(data){
+        	
+        	var org = data.code;
+        	
+        	$('#indexitemcode').val(org.archcode);
+        	$('#indexitemname').val(org.archname);
+        	//$('#examTime').val(org.time);
+        	//changeIndex();
+        	
+        }
             
         function createwindow(title, url, width, height,func) {
         	

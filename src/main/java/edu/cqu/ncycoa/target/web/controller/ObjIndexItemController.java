@@ -327,7 +327,7 @@ public class ObjIndexItemController {
 		String id = request.getParameter("id"); 
 		ObjIndexItem item = systemService.findEntityById(id, ObjIndexItem.class);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("targetmanage/indexadd");
+		mav.setViewName("targetmanage/indexaddfromarch");
 		mav.addObject("item",item);
 		//mav.addObject("orgname",CodeDictionary.syscode_traslate("base_org","orgcode", "orgname", notice.getDepart()));
 		return mav;

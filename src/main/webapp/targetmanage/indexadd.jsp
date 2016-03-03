@@ -143,6 +143,9 @@
 	<tr>
 		<td align="right" width="70px"><label class="Validform_label">所属机构</label></td>
 		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="belongOrgcode" name="belongOrgcode" value="${item.belongOrgcode}">
+		<input class="inputxt" style="width:150px;display:none" id="belongOrgname" name="belongOrgname" value="${item.belongOrgcode}">
+		<a id="btn_selectorg" href="#" class="easyui-linkbutton"
+				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -162,7 +165,47 @@
 <div style="width: 690px; height: 1px;"></div>
 <input type="submit" id="sub"  style="display:none">
 </form>
+<script type="text/javascript">
+function createwindow(title, url, width, height,func) {
+	//alert("creat");
+	$.dialog({
+			id:'CLHG1976D',
+			data:func,
+			content : 'url:' + url,
+			lock : true,
+			width : width,
+			height : height,
+			title : title,
+			zIndex :2000,
+			opacity : 0.3,
+			cache : false,
+			ok : function() {
+				$('#btn_ok', this.iframe.contentWindow.document).click();
+				return true;
+			},
+			cancelVal : '关闭',
+			cancel : true/* 为true等价于function(){} */
+		});
+}
+$("#btn_selectorg").click(function(){
+      var url="";
+         url="indexmanage/selectunit.jsp";
+         createwindow('选择对象',url,800,600,returnobjValue);
+   
+});
 
+function returnobjValue(data){
+	var org = data.code;
+	var codes="";
+	var names=""
+	if(org.length>1){
+		alert("请选择单一部门！");
+	}else{
+		$('#belongOrgcode').val(org[0].orgcode);
+		$('#belongOrgname').val(org[0].orgname);
+	}
+}
+</script>
 
 <table style="display: none">
 	<tbody id="add_participant_table_template">

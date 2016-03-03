@@ -49,12 +49,13 @@ String basePath = request.getScheme()+"://"+
 		<input id="indexitemname" name="indexitemname" type="text" style="width:150px;background-color:white;" readonly="readonly">
 		<a id="indexitemsel" href="#" class="easyui-linkbutton l-btn l-btn-plain" data-options="plain:true,iconCls:'icon-search'" >
 		 <span >选择</span></a>
-	<label >季度选择: </label>
+	<label >时间选择: </label>
+		<input id="examTime" name="examTime" type="hidden" value="${examTime}">
 	 <select class="inputxt" id="season" name="season" style="width:156px;">
-		<option value="S01">一季度</option>
-		<option value="S02">二季度</option>
-		<option value="S03">三季度</option>
-		<option value="S04">四季度</option>
+<!-- 		<option value="S01">一季度</option> -->
+<!-- 		<option value="S02">二季度</option> -->
+<!-- 		<option value="S03">三季度</option> -->
+<!-- 		<option value="S04">四季度</option> -->
 		</select>
 <!--        <span> 年度选择：</span><input id="startyear" name="startyear" class="easyui-textbox"> -->
 <!--        <input id="endyear" name="endyear" class="easyui-textbox"> -->
@@ -72,6 +73,22 @@ String basePath = request.getScheme()+"://"+
 	
     </body>
     <script type="text/javascript">
+
+    function changeIndex(){
+    	var opt=$('#examTime').val().substring(0,3);
+    	var objSelectNow=document.getElementById("season");
+    	if(opt=="M00"){
+    		var inner="<option value='M01'>1月</option><option value='M02'>2月</option><option value='M03'>3月</option><option value='M04'>4月</option><option value='M05'>5月</option><option value='M06'>6月</option><option value='M07'>7月</option><option value='M08'>8月</option><option value='M09'>9月</option><option value='M10'>10月</option><option value='M11'>11月</option><option value='M12'>12月</option>"
+    	}else if(opt=="S00"){
+    		var inner="<option value='S01'>1季度</option><option value='S02'>2季度</option><option value='S03'>3季度</option><option value='S04'>4季度</option>";
+    	}else if(opt=="H00"){
+    		var inner="<option value='H01'>上半年</option><option value='H02'>下半年</option>";
+    	}else if(opt=="Y00"){
+    		var inner="<option value='Y00'>全年</option>";
+    	}
+    	
+    	objSelectNow.innerHTML=inner;
+    } 
     function getShow(){
         var startyear=$("#startyear").val();
         var endyear=$("#endyear").val();
@@ -104,14 +121,21 @@ String basePath = request.getScheme()+"://"+
     	    });
         
         $("#objsel").click(function(){
-        	var code=$("#archcode").val();
-        	createwindow('选择对象','objindexarchuser.htm?getObjByArch&arch='+code,500,500,returnobjValue );
+        	if($("#archcode").val()==""){
+            	alert("请选择体系");
+            }else{        	
+            	var code=$("#archcode").val();
+            	createwindow('选择对象','objindexarchuser.htm?getObjByArch&arch='+code,500,500,returnobjValue );
+            }
     	    });
         
         $("#indexitemsel").click(function(){
-        
-        	var code=$("#archcode").val();
-        	createwindow('选择对象','objindexarchuser.htm?getIndexByArch&arch='+code,500,500,returnindexValue );
+        	if($("#objectcode").val()==""){
+            	alert("请选择对象");
+            }else{
+            	var code=$("#archcode").val();
+            	createwindow('选择对象','objindexarchuser.htm?getIndexByArch&arch='+code,500,500,returnindexValue );
+            }
     	    });
         
         function returnorgValue(data){
@@ -137,6 +161,8 @@ String basePath = request.getScheme()+"://"+
         	
         	$('#indexitemcode').val(org.archcode);
         	$('#indexitemname').val(org.archname);
+        	$('#examTime').val(org.time);
+        	changeIndex();
         	
         }   
             
