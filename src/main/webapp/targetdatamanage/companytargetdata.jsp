@@ -9,15 +9,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>ÄÏ³äÑÌ²Ý×¨Âô¾Ö</title>
 </head>
-<link rel="stylesheet" type="text/css" href="../jscomponent/easyui/themes/default/easyui.css">
-<link rel="stylesheet" type="text/css" href="../jscomponent/easyui/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/icon.css">
 <style type="text/css">
 *{font-size:12px; font-family:Î¢ÈíÑÅºÚ,ÐÂËÎÌå}
 </style>
-<script type="text/javascript" src="../jscomponent/jquery/jquery-1.8.0.min.js"></script>
-<script type="text/javascript" src="../jscomponent/easyui/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="../jscomponent/easyui/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" src="../jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
+<script type="text/javascript" src="jscomponent/jquery/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="jscomponent/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
 <body style="width:100%;height:100%;margin:0 3px;padding:0;overflow:hidden">
 <table>
 	<tbody><tr>
@@ -69,34 +69,84 @@
 </tbody>
 </table>
 <div class="table_all">
-	<table id="dg" class="easyui-datagrid" style="width:700px;float:left;
+
+	<table id="dg" class="easyui-datagrid" style="float:left;
 	            url="get_users.php"
 	            toolbar="#toolbar" pagination="false"
 	            rownumbers="false" fitColumns="true" singleSelect="true">
-	        <thead>
-	            <tr>
+	        <thead >
+	            <tr >
 	                <th rowspan="2" field="firstname" >Ö¸±ê±àÂë</th>
 	                <th rowspan="2" field="lastname" >Ö¸±êÃû³Æ</th>
+	                <%
+	                	for(int i=0;i<10;i++){
+	                		%><th colspan="3" >¶ÔÏóÒ»</th> <%
+	                	}
+	                %>
+	                
 	            </tr>
+	           <tr>
+	            <%
+	                	for(int i=0;i<10;i++){
+	                		%> 
+	            <th>¼Æ»®Öµ</th> <th >Íê³ÉÖµ</th>  <th >µÃ·Ö</th> 
+	             <%
+	                	}
+	                %> </tr>
+	           
 	        </thead>
 	    </table>
-	<table id="target" class="easyui-datagrid" style="width:700px;
-	            url="get_users.php"
-	            toolbar="#toolbar" pagination="false"
-	            rownumbers="false" fitColumns="true" singleSelect="true" >
-	        <thead>
-	            <tr>
-	              <th colspan="3" >¶ÔÏóÒ»</th> 
-		<c:forEach items="${items}" var="item">         
+	   <c:forEach items="${items}" var="item">         
 		    <th colspan="3" >${item.indexCode}</th>				
 	    </c:forEach>    
-	            </tr>
-	            <tr>
-	            <th>¼Æ»®Öµ</th> <th >Íê³ÉÖµ</th>  <th >µÃ·Ö</th> 
-	            </tr>
-	            
-	        </thead>
-	  </table>
+	    
     </div>
+ <script type="text/javascript">
+$("#indexsel").click(function(){
+	createwindow('Ñ¡ÔñÌåÏµ','objresult.htm?getArch&class=C',500,500,returnorgValue );
+    });
+    
+function returnorgValue(data){
+	var org = data.code;
+	var codes="";
+	var names=""
+	if(org.length>1){
+		for(var i=0;i<org.length;i++){
+			codes+=org[i].orgcode;
+			codes+=",";
+			names+=org[i].orgname;
+			names+=",";
+		}
+		$('#manageDepart').val(codes);
+		$('#apporgName').val(names);
+	}else{
+		$('#manageDepart').val(org[0].orgcode);
+		$('#apporgName').val(org[0].orgname);
+	}
+}    
+    
+function createwindow(title, url, width, height,func) {
+	
+	$.dialog({
+			id:'CLHG1976D',
+			data:func,
+			content : 'url:' + url,
+			lock : true,
+			width : width,
+			height : height,
+			title : title,
+			zIndex :2000,
+			opacity : 0.3,
+			cache : false,
+			ok : function() {
+				$('#btn_ok', this.iframe.contentWindow.document).click();
+				return true;
+			},
+			cancelVal : '¹Ø±Õ',
+			cancel : true/* ÎªtrueµÈ¼ÛÓÚfunction(){} */
+		});
+}
+ </script>
 </body>
+
 </html>
