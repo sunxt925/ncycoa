@@ -66,6 +66,57 @@
 				function modpass(){
 				    createwindow("修改密码", "passmod.jsp");
 				}
+				
+				function createwindow(title, url,width,height) {
+					width =  width ? width : 800;
+					height = height ? height : 600;
+					if(width=="100%" || height=="100%"){
+						width = document.body.offsetWidth;
+						height =document.body.offsetHeight-100;
+					}
+					
+					if(typeof(windowapi) == 'undefined'){
+						$.dialog({
+							content: 'url:' + url,
+							lock : true,
+							width:width,
+							height:height,
+							title:title,
+							opacity : 0.3,
+							cache:false,
+						    ok: function(){
+						    	iframe = this.iframe.contentWindow;
+								if(!saveObj()){
+									return false;
+								}
+								return true;
+						    },
+						    cancelVal: '关闭',
+						    cancel: true /*为true等价于function(){}*/
+						});
+					}else{
+						W.$.dialog({
+							content: 'url:'+url,
+							lock : true,
+							width:width,
+							height:height,
+							parent:windowapi,
+							title:title,
+							opacity : 0.3,
+							cache:false,
+						    ok: function(){
+						    	iframe = this.iframe.contentWindow;
+								if(!saveObj()){
+									return false;
+								}
+								return true;
+						    },
+						    cancelVal: '关闭',
+						    cancel: true /*为true等价于function(){}*/
+						});
+					}
+					
+				}
 				</script>
 				</div>
 				<div style="float: left; margin-left: 18px;">
