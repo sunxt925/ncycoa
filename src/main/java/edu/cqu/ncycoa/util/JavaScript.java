@@ -28,6 +28,7 @@ public class JavaScript {
     }
 
 	public static boolean isTrueOrFalse(String sbt, String planv, String realv) {
+		System.out.println(sbt);
 		List<MapJ> all = new ArrayList<MapJ>();  
         all.add(new MapJ("P",planv));  
         all.add(new MapJ("R",realv));

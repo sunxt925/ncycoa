@@ -464,9 +464,11 @@ public class ObjIndexItemController {
 				systemService.addEntity(item);
 			}else{
 			try {
-				item.setEnabled(1);
+				item.setEnabled(t.getEnabled());
 				item.setIsParent("0");
-				item.setParentIndexCode("-1");
+			    item.setParentIndexCode(t.getParentIndexCode());
+			    item.setIsLast(t.getIsLast());
+			    item.setMemo(t.getMemo());
 				MyBeanUtils.copyBeanNotNull2Bean(item, t);
 				
 				systemService.saveEntity(t);
@@ -483,7 +485,7 @@ public class ObjIndexItemController {
 			item.setEnabled(1);
 			item.setIsLast("1");
 			item.setIsParent("0");
-			item.setParentIndexCode("-1");
+			//item.setParentIndexCode("-1");
 			systemService.addEntity(item);
 		}
 		j.setMsg(message);

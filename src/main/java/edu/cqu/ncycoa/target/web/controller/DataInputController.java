@@ -20,11 +20,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.druid.sql.visitor.functions.If;
+
 import edu.cqu.ncycoa.common.service.SystemService;
 import edu.cqu.ncycoa.target.domain.ObjIndexArchUser;
 import edu.cqu.ncycoa.target.domain.ObjIndexItem;
 import edu.cqu.ncycoa.target.domain.TargetResult;
 import edu.cqu.ncycoa.target.service.TargetService;
+import edu.cqu.ncycoa.util.JavaScript;
 import edu.cqu.ncycoa.util.SystemUtils;
 
 @Controller
@@ -657,7 +660,7 @@ public class DataInputController {
 			}
 			sb.append("</tr></thead><tbody>");
 			for(ObjIndexItem item:indexs){
-				sb.append("<tr><td><input  type=\"hidden\" value=\""+item.getExamFlag()+"\" name=\"examflag\"><input  type=\"hidden\" value=\""+item.getExamTime()+"\" name=\"examtime\">"+item.getIndexName()+"</td>");
+				sb.append("<tr><td><input  type=\"hidden\" value=\""+item.getValueFunc()+"\" name=\"valuefunc\"><input  type=\"hidden\" value=\""+item.getExamFlag()+"\" name=\"examflag\"><input  type=\"hidden\" value=\""+item.getExamTime()+"\" name=\"examtime\">"+item.getIndexName()+"</td>");
 				for(ObjIndexArchUser para : objs){
 					//sb.append("<td>"++"</td>");
 					//if(para.getObjectcode()==)
@@ -667,9 +670,9 @@ public class DataInputController {
 						if(tr.get(k).getIndexCode().equals(item.getIndexCode()) && tr.get(k).getObjectCode().equals(para.getObjectcode())){
 							m=1;
 							if("".equals(tr.get(k).getPlanValue()) || tr.get(k).getPlanValue()==null)
-								sb.append(" <input type=\"text\" style=\"width:100px;\"  value=\"没有计划值\">");
+								sb.append(" <input type=\"text\" name=\"planvalue\" style=\"width:100px;\"  value=\"没有计划值\">");
 							else {
-								sb.append(" <input type=\"text\" style=\"width:100px;\"  value=\""+tr.get(k).getPlanValue()+"\">");
+								sb.append(" <input type=\"text\" name=\"planvalue\" style=\"width:100px;\"  value=\""+tr.get(k).getPlanValue()+"\">");
 								
 							}
 							if("".equals(tr.get(k).getRealValue()) || tr.get(k).getRealValue()==null)
@@ -685,7 +688,7 @@ public class DataInputController {
 						
 					}
 					if(m==0){
-						sb.append(" <input type=\"text\" style=\"width:100px;\" value=\" 没有计划值\">");
+						sb.append(" <input type=\"text\" name=\"planvalue\" style=\"width:100px;\" value=\" 没有计划值\">");
 						sb.append("</div><div><span style=\"width:50px;\"> 完成值</span> <input type=\"text\" name=\"completenumber\" style=\"width:100px;\"></div></td>");	
 						
 					}
@@ -743,6 +746,8 @@ public class DataInputController {
 			String[] indexcode=request.getParameterValues("indexCode");
 			String[] indexname=request.getParameterValues("indexName");
 			String[] completeValue = request.getParameterValues("completenumber");
+			String[] planValue = request.getParameterValues("planvalue");
+			String[] valueFunc = request.getParameterValues("valuefunc");
 		/*	String jpql3="FROM TargetResult as o where o.season = '"+season+"' and o.ArchCode='"+archCode.substring(0, 7)+"'";
 			List<TargetResult> objs_res=systemService.readEntitiesByJPQL(jpql3, TargetResult.class);
 			*/TargetResult t = new TargetResult();
@@ -763,6 +768,17 @@ public class DataInputController {
 					}
 					long id=TargetService.getResultIDByObj(targetResult);
 					targetResult.setRealValue(completeValue[count++]);
+					//判断是否报警 by SXT
+					if(valueFunc[count-1]!=null&&valueFunc[count-1]!=""){
+						if(JavaScript.isTrueOrFalse(valueFunc[count-1],planValue[count-1],completeValue[count-1])){
+						//if(JavaScript.isTrueOrFalse("P-R>5","10","4")){
+							System.out.println("该指标报警");
+							targetResult.setAlarmFlag("1");
+						}else{
+							targetResult.setAlarmFlag("0");
+						}
+					}
+					//
 					if(id!=-1){
 						targetResult.setID(id);
 						 t = systemService.findEntityById(id, TargetResult.class);
