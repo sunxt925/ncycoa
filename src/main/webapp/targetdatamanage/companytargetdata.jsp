@@ -19,6 +19,7 @@
 <script type="text/javascript" src="jscomponent/easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
 <body style="width:100%;height:100%;margin:0 3px;padding:0;overflow:hidden">
+<form id="formarch" name="formarch" action="objresult.htm?getTable"  method="post">
 <table>
 	<tbody><tr>
 	<td>
@@ -60,14 +61,16 @@
 	<div>
 		<label for="indexname">指标: </label>
 	   	<input id="indexcode" name="indexcode" type="hidden">
-		<input id="indexname" name="indexcode" type="text" style="width:150px;background-color:white;" readonly="readonly">
+		<input id="indexname" name="indexname" type="text" style="width:150px;background-color:white;" readonly="readonly">
 		<a id="indexsel" href="#" class="easyui-linkbutton l-btn l-btn-plain" data-options="plain:true,iconCls:'icon-search'" >
-		<span >选择</span></a>
+		 <span >选择</span></a>
+		 <input type="submit"  value="查询"/>
 	</div> 
 	</td>
 	</tr>
 </tbody>
 </table>
+</form>
 <div class="table_all">
 
 	<table id="dg" class="easyui-datagrid" style="float:left;
@@ -78,11 +81,10 @@
 	            <tr >
 	                <th rowspan="2" field="firstname" >指标编码</th>
 	                <th rowspan="2" field="lastname" >指标名称</th>
-	                <%
-	                	for(int i=0;i<10;i++){
-	                		%><th colspan="3" >对象一</th> <%
-	                	}
-	                %>
+	                <c:forEach items="${objcodes}" var="item">         
+		    <th colspan="3" >${item}</th>				
+	    </c:forEach>   
+	               
 	                
 	            </tr>
 	           <tr>
@@ -107,22 +109,13 @@ $("#indexsel").click(function(){
     });
     
 function returnorgValue(data){
+	
 	var org = data.code;
-	var codes="";
-	var names=""
-	if(org.length>1){
-		for(var i=0;i<org.length;i++){
-			codes+=org[i].orgcode;
-			codes+=",";
-			names+=org[i].orgname;
-			names+=",";
-		}
-		$('#manageDepart').val(codes);
-		$('#apporgName').val(names);
-	}else{
-		$('#manageDepart').val(org[0].orgcode);
-		$('#apporgName').val(org[0].orgname);
-	}
+	alert(org.archname);
+	
+	$('#indexcode').val(org.archcode);
+	$('#indexname').val(org.archname);
+	
 }    
     
 function createwindow(title, url, width, height,func) {
