@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html;charset=gb2312"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -6,6 +7,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="jscomponent/easyui/demo/demo.css">
 <style type="text/css">
 *{font-size:12px; font-family:微软雅黑,新宋体}
 </style>
@@ -16,16 +18,38 @@
 </head>
 <body style="width:100%;height:100%;margin:0 3px;padding:0;overflow:hidden">
 <div >
-	<table id="dg" class="easyui-datagrid" style="width:61px;float:left;
+
+
+	<table id="dg" class="easyui-datagrid" style="width:150px;float:left;
            url="get_users.php"
            toolbar="#toolbar" pagination="false"
            rownumbers="false" fitColumns="true" singleSelect="true">
        	<thead >
            	<tr >
-               <th field="firstname" >体系名称</th>
+           	<th data-options="field:'archcode',width:100" hidden="true">体系编码</th>
+               <th data-options="field:'archname',width:100">体系名称</th>
                </tr>
              </thead>
+             <tbody>
+              <c:forEach items="${archList}" var="item">   
+             <tr> 
+              <td hidden="true">${item.indexCode}		 </td>  
+             <td>${item.indexName}		 </td>  
+	    </tr>
+	     </c:forEach>  
+             </tbody>
+              
          </table>
+         
+         <input type="button" id="btn_ok" style="display: none" onclick="ret()">
+         <script type="text/javascript">
+	   function ret(){
+	    	var api = frameElement.api;
+	    	var row = $('#dg').datagrid('getSelected');
+	    	(api.data)({code:(row)});
+	    	//alert(row.archcode);
+	    }
+	</script>
  </div>
  
 	                

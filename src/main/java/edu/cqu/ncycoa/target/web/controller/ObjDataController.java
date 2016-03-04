@@ -78,17 +78,18 @@ public class ObjDataController {
 	}
 	//选择年份，季度，指标体系之后：
 	@RequestMapping(params="getTable")
-	public ModelAndView getTableList(HttpServletRequest request, HttpServletResponse response){
-		String year=request.getParameter("year");
-		String season=request.getParameter("season");
-		String archcode=request.getParameter("archcode");
-		
+	public ModelAndView getTableList(String indexcode,HttpServletRequest request, HttpServletResponse response){
+//		String year=request.getParameter("year");
+//		String season=request.getParameter("season");
+//		String archcode=request.getParameter("archcode");
+		String archcode=indexcode;
+		System.out.println("archcode here:"+archcode);
 		String jpql="FROM ObjIndexItem as o where o.IsParent='0' and o.IndexCode LIKE '"+archcode+"%' and o.IsLast='1'";
 		List<ObjIndexItem> items=systemService.readEntitiesByJPQL(jpql, ObjIndexItem.class);
 		
 		//String jpql2="FROM ObjIndexItem as o where o.IsParent='0' and o.IndexCode LIKE '"+archcode+"%' and o.IsLast='1'";
 		List<String> objcodes=ResultService.getObjCodesByArch(archcode);
-		
+		System.out.println(objcodes);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("indexList", items);
 		mav.addObject("objcodes",objcodes);
