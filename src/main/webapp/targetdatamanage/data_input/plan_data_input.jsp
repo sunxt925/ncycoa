@@ -140,17 +140,50 @@ function select(indexname,indexCode){
       	 //alert(count);
       	  if(type=="M"){
       		
-        	  for(var i=1;i<=4;i++){
+        	  for(var i=1;i<=12;i++){
         		  tr=$("<tr></tr>");
-        		  
-        		  $("<td align=center width=30px >"+"M0"+i+"<input type=\"hidden\" name=\"time\" value=\""+"M0"+i+"\"></td>").appendTo(tr);
-        		  for(var j=0;j<count;j++)
+        		  if(i<10){
+        			  $("<td align=center width=30px >"+"M0"+i+"<input type=\"hidden\" name=\"time\" value=\""+"M0"+i+"\"></td>").appendTo(tr);
+             		 
+        		  }else{
+        			  $("<td align=center width=30px >"+"M"+i+"<input type=\"hidden\" name=\"time\" value=\""+"M"+i+"\"></td>").appendTo(tr);
+             		  
+        		  }
+        		 for(var j=0;j<count;j++)
         			  $("<td align=center width=50px><input name=\"plannumber\" align=center type=\"text\" ></td>").appendTo(tr);
         		  tr.appendTo(tbody);
         		  
         	  }
         	
-          } 
+          } else if(type=="S"){
+        	  for(var i=1;i<=4;i++){
+        		  tr=$("<tr></tr>");
+        		  $("<td align=center width=30px >"+"S0"+i+"<input type=\"hidden\" name=\"time\" value=\""+"S0"+i+"\"></td>").appendTo(tr);
+        		  for(var j=0;j<count;j++)
+        			  $("<td align=center width=50px><input name=\"plannumber\" align=center type=\"text\" ></td>").appendTo(tr);
+        		  tr.appendTo(tbody);
+        	  }
+          }else if(type=="H"){
+        	  for(var i=1;i<=2;i++){
+        		  tr=$("<tr></tr>");
+        		  $("<td align=center width=30px >"+"H0"+i+"<input type=\"hidden\" name=\"time\" value=\""+"H0"+i+"\"></td>").appendTo(tr);
+        		  for(var j=0;j<count;j++)
+        			  $("<td align=center width=50px><input name=\"plannumber\" align=center type=\"text\" ></td>").appendTo(tr);
+        		  tr.appendTo(tbody);
+        	  }
+          }else if(type=="Y"){
+        	  tr=$("<tr></tr>");
+    		  $("<td align=center width=30px >Y00<input type=\"hidden\" name=\"time\" value=\"Y00\"></td>").appendTo(tr);
+    		  for(var j=0;j<count;j++)
+    			  $("<td align=center width=50px><input name=\"plannumber\" align=center type=\"text\" ></td>").appendTo(tr);
+    		  tr.appendTo(tbody);
+          }else if(type=="D"){
+        	  tr=$("<tr></tr>");
+    		  $("<td align=center width=30px >D00<input type=\"hidden\" name=\"time\" value=\"D00\"></td>").appendTo(tr);
+    		  for(var j=0;j<count;j++)
+    			  $("<td align=center width=50px><input name=\"plannumber\" align=center type=\"text\" ></td>").appendTo(tr);
+    		  tr.appendTo(tbody);
+          }
       	  tbody.appendTo(table);
       	  
       	/*  trend.appendTo(table); */
