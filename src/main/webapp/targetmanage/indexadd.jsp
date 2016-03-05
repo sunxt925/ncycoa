@@ -142,8 +142,8 @@
 	</tr>
 	<tr>
 		<td align="right" width="70px"><label class="Validform_label">所属机构</label></td>
-		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="belongOrgcode" name="belongOrgcode" value="${item.belongOrgcode}">
-		<input class="inputxt" style="width:150px;display:none" id="belongOrgname" name="belongOrgname" value="${item.belongOrgcode}">
+		<td class="value" width="700px"><input class="inputxt" style="width:150px;display:none" id="belongOrgcode" name="belongOrgcode" value="${item.belongOrgcode}">
+		<input class="inputxt" style="width:150px" id="belongOrgname" name="belongOrgname" value="${item.belongOrgcode}">
 		<a id="btn_selectorg" href="#" class="easyui-linkbutton"
 				       data-options="iconCls:'icon-search',plain:true">选择</a>
 		<span class="Validform_checktip"></span>

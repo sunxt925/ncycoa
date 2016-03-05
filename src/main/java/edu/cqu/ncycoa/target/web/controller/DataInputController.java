@@ -2,6 +2,7 @@ package edu.cqu.ncycoa.target.web.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.druid.sql.visitor.functions.If;
+import com.common.StringUtil;
 
 import edu.cqu.ncycoa.common.service.SystemService;
 import edu.cqu.ncycoa.target.domain.ObjIndexArchUser;
@@ -85,14 +87,17 @@ public class DataInputController {
 	}
 	/**
 	 * 查询指标
+	 * @throws UnsupportedEncodingException 
 	 * */
 	//选择年份，季度，指标体系之后：
 		@RequestMapping(params="getplanTarget")
-		public ModelAndView getTableList(String archcode,HttpServletRequest request, HttpServletResponse response){
+		public ModelAndView getTableList(String archcode,String indexname,HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
 //			String year=request.getParameter("year");
 //			String season=request.getParameter("season");
-//			String archcode=request.getParameter("archcode");
+			
 			System.out.println(archcode);
+		//	String indexname =request.getParameter("indexname");
+			String str=new String(indexname.getBytes("ISO-8859-1"),"gb2312"); 
 			String jpql="FROM ObjIndexItem as o where o.IsParent='0' and o.IndexCode LIKE '"+archcode.substring(0, 7)+"%' and o.IsLast='1'";
 			List<ObjIndexItem> items=systemService.readEntitiesByJPQL(jpql, ObjIndexItem.class);
 			
@@ -105,7 +110,9 @@ public class DataInputController {
 			ModelAndView mav = new ModelAndView();
 			mav.addObject("indexList", items);
 			mav.addObject("objList",objs);
+			mav.addObject("flag","1");
 			mav.addObject("archcode",archcode);
+			mav.addObject("indexname",str);
 			//mav.addObject("resultList",results);
 			System.out.println(items.size());
 			
@@ -373,7 +380,7 @@ public class DataInputController {
 		     
 		   //拼列
 			 StringBuffer sb = new StringBuffer();
-			sb.append("<table id=\"plan_tb\" class=\"easyui-datagrid\" style=\"width:700px;height:250px;\" data-options=\"singleSelect:true,onClickRow:onClickRow\">");
+			sb.append("<table id=\"plan_tb\" class=\"easyui-datagrid\" style=\"width:700px;height:330px;\" data-options=\"singleSelect:true,onClickRow:onClickRow\">");
 			sb.append("<thead data-options=\"frozen:true\"><tr>");
 			sb.append("<th data-options=\"field:'time'\">时间段</th></tr></thead>");
 			sb.append("<thead><tr>");
@@ -389,12 +396,25 @@ public class DataInputController {
 			String[] houryear={"上半年","下半年"};
 			int count=0;
 			if(season.equals("M")){
-				for(int i=0;i<12;i++){
-					sb.append("<tr><td> <input  type=\"hidden\" name=\"time\" value=\"M"+i+"\" >"+months[i]+"</td>");
+				for(int i=1;i<=12;i++){
+					if(i<10){
+						sb.append("<tr><td> <input  type=\"hidden\" name=\"time\" value=\"M0"+i+"\" >"+months[i-1]+"</td>");
+						
+					}else{
+						sb.append("<tr><td> <input  type=\"hidden\" name=\"time\" value=\"M"+i+"\" >"+months[i-1]+"</td>");
+						
+					}
 					
 					for(ObjIndexArchUser para : objs){
 						if(objs_res.size()!=0) {
-							sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\""+objs_res.get(count++).getPlanValue()+"\"></td>");
+							if("".equals(objs_res.get(count).getPlanValue()) || objs_res.get(count).getPlanValue()==null ){
+								sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\"\"></td>");
+								count++;
+							}else {
+								sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\""+objs_res.get(count++).getPlanValue()+"\"></td>");
+								
+							}
+							
 						}else {
 							sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\"\"></td>");
 
@@ -404,12 +424,18 @@ public class DataInputController {
 					
 				}
 			}else if(season.equals("S")) {
-				for(int i=0;i<4;i++){
-					sb.append("<tr><td> <input  type=\"hidden\" name=\"time\" value=\"S"+i+"\">"+seasons[i]+"</td>");
+				for(int i=1;i<=4;i++){
+					sb.append("<tr><td> <input  type=\"hidden\" name=\"time\" value=\"S0"+i+"\">"+seasons[i-1]+"</td>");
 					
 					for(ObjIndexArchUser para : objs){
 						if(objs_res.size()!=0) {
-							sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\""+objs_res.get(count++).getPlanValue()+"\"></td>");
+							if("".equals(objs_res.get(count).getPlanValue()) || objs_res.get(count).getPlanValue()==null ){
+								sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\"\"></td>");
+								count++;
+							}else {
+								sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\""+objs_res.get(count++).getPlanValue()+"\"></td>");
+
+							}
 						}else {
 							sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\"\"></td>");
 
@@ -420,12 +446,18 @@ public class DataInputController {
 				}
 
 			}else if(season.equals("H")) {
-				for(int i=0;i<2;i++){
-					sb.append("<tr><td> <input  type=\"hidden\" name=\"time\" value=\"S"+i+"\" >"+houryear[i]+"</td>");
+				for(int i=1;i<=2;i++){
+					sb.append("<tr><td> <input  type=\"hidden\" name=\"time\" value=\"H0"+i+"\" >"+houryear[i-1]+"</td>");
 					
 					for(ObjIndexArchUser para : objs){
 						if(objs_res.size()!=0) {
-							sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\""+objs_res.get(count++).getPlanValue()+"\"></td>");
+							if("".equals(objs_res.get(count).getPlanValue()) || objs_res.get(count).getPlanValue()==null ){
+								sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\"\"></td>");
+								count++;
+							}else {
+								sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\""+objs_res.get(count++).getPlanValue()+"\"></td>");
+
+							}
 						}else {
 							sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\"\"></td>");
 
@@ -436,11 +468,17 @@ public class DataInputController {
 				}
 
 			}else if(season.equals("Y")) {
-				sb.append("<tr><td> <input  type=\"hidden\" name=\"time\" value=\"Y01\" >全年</td>");
+				sb.append("<tr><td> <input  type=\"hidden\" name=\"time\" value=\"Y00\" >全年</td>");
 				
 				for(ObjIndexArchUser para : objs){
 					if(objs_res.size()!=0) {
-						sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\""+objs_res.get(count++).getPlanValue()+"\"></td>");
+						if("".equals(objs_res.get(count).getPlanValue()) || objs_res.get(count).getPlanValue()==null ){
+							sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\"\"></td>");
+							count++;
+						}else {
+							sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\""+objs_res.get(count++).getPlanValue()+"\"></td>");
+
+						}
 					}else {
 						sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\"\"></td>");
 
@@ -537,6 +575,81 @@ public class DataInputController {
 				return mav;
 				
 			}
+			
+			/**
+			 * 查询月份
+			 * @param request
+			 * @param response
+			 * @throws IOException
+			 */
+			@RequestMapping(params="getcompleteseason")
+			public void getcompleteSeason(HttpServletRequest request, HttpServletResponse response) throws IOException{
+			String archcode=request.getParameter("archcode");
+			  String jpql3="FROM ObjIndexItem as o where o.ParentIndexCode = '"+archcode+"'";
+			   List<ObjIndexItem> objs_res=systemService.readEntitiesByJPQL(jpql3, ObjIndexItem.class); 
+	
+			   int m=0,s=0,h=0,y=0,d=0;
+			   for(ObjIndexItem item:objs_res){
+				   if(item.getMemo().equals("月度")&&m==0){
+					   m=1;
+				   }else if (item.getMemo().equals("季度")&&s==0) {
+				
+					   s=1;
+				   }else if (item.getMemo().equals("半年")&&h==0) {
+					   
+					   h=1;
+				   }else if (item.getMemo().equals("年度")&&y==0) {
+					  
+					   y=1;
+				   }else if (item.getMemo().equals("随机")&&d==0) {
+					   
+					   d=1;
+					}
+			   }
+			   StringBuffer sb = new StringBuffer();
+				sb.append("<table id=\"compl_season\" class=\"easyui-datagrid\" style=\"width:200px;height:510px;\" data-options=\"singleSelect:true\">");
+				sb.append("<thead><tr>");
+				sb.append("<th data-options=\"field:'itemid'\">时间</th></tr></thead>");
+				sb.append(" <tbody>");
+				if(m==1){
+					for(int i=1;i<=9;i++)
+						sb.append(" <tr><td><a href=\"#\" onclick=\"cid_M(this.innerHTML)\">M0"+i+"</a> </td></tr>");
+					for(int i=10;i<=12;i++)
+						sb.append(" <tr><td><a href=\"#\" onclick=\"cid_M(this.innerHTML)\">M"+i+"</a> </td></tr>");	
+				}
+				if(s==1){
+					for(int i=1;i<=4;i++)
+						sb.append(" <tr><td><a href=\"#\" onclick=\"cid_M(this.innerHTML)\">S0"+i+"</a> </td></tr>");
+				
+				}
+				if(h==1){
+					for(int i=1;i<=2;i++)
+						sb.append(" <tr><td><a href=\"#\" onclick=\"cid_M(this.innerHTML)\">H0"+i+"</a> </td></tr>");
+				
+				}
+				if(y==1){
+					sb.append(" <tr><td><a href=\"#\" onclick=\"cid_M(this.innerHTML)\">Y00</a> </td></tr>");
+					
+				}
+				if(d==1){
+					sb.append(" <tr><td><a href=\"#\" onclick=\"cid_M(this.innerHTML)\">D00</a> </td></tr>");	
+				}
+				sb.append(" </tbody> </table>");
+				JSONArray jsonArray=new JSONArray();
+				JSONObject jsonObject=new JSONObject();   
+				 jsonObject=new JSONObject();
+				jsonObject.put("table",sb.toString());
+				jsonArray.add(jsonObject);
+				
+				response.setCharacterEncoding("gb2312");
+				response.setContentType("text/plain;charset=gb2312");
+				response.setHeader("Cache-Control", "no-store");
+				PrintWriter out=response.getWriter();
+				out.print(jsonArray.toString());
+				out.flush();
+				out.close();
+				
+			}	
 		/**
 		 * 查询完成对象
 		 * @throws IOException 
@@ -669,15 +782,23 @@ public class DataInputController {
 					for(int k=0;k<tr.size();k++){
 						if(tr.get(k).getIndexCode().equals(item.getIndexCode()) && tr.get(k).getObjectCode().equals(para.getObjectcode())){
 							m=1;
-							if("".equals(tr.get(k).getPlanValue()) || tr.get(k).getPlanValue()==null)
-								sb.append(" <input type=\"text\" name=\"planvalue\" style=\"width:100px;\"  value=\"没有计划值\">");
+							if("".equals(tr.get(k).getPlanValue()) || tr.get(k).getPlanValue()==null){
+
+								sb.append(" <input type=\"text\" name=\"planvalue\" style=\"width:100px;\"  value=\"没有计划值\" readonly=\"readonly\" >");}
+
 							else {
 								sb.append(" <input type=\"text\" name=\"planvalue\" style=\"width:100px;\"  value=\""+tr.get(k).getPlanValue()+"\">");
 								
 							}
-							if("".equals(tr.get(k).getRealValue()) || tr.get(k).getRealValue()==null)
-								sb.append("</div><div><span style=\"width:50px;\"> 完成值</span> <input type=\"text\" name=\"completenumber\" value=\"\" style=\"width:100px;\"></div></td>");	
-							
+							if("".equals(tr.get(k).getRealValue()) || tr.get(k).getRealValue()==null){
+								if("".equals(tr.get(k).getPlanValue()) || tr.get(k).getPlanValue()==null){
+									sb.append("</div><div><span style=\"width:50px;\"> 完成值</span> <input type=\"text\" id=\"completeinput\" name=\"completenumber\" value=\"\"  readonly=\"readonly\" style=\"width:100px; \"></div></td>");	
+									
+								}else {
+									sb.append("</div><div><span style=\"width:50px;\"> 完成值</span> <input type=\"text\" name=\"completenumber\" value=\"\" style=\"width:100px;\"></div></td>");	
+									
+								}
+									}
 							else{
 								sb.append("</div><div><span style=\"width:50px;\"> 完成值</span> <input type=\"text\" name=\"completenumber\" value=\""+tr.get(k).getRealValue()+"\" style=\"width:100px;\"></div></td>");	
 								
@@ -730,7 +851,7 @@ public class DataInputController {
 	 * */
 		@RequestMapping(params="savecomplateobj")
 		public ModelAndView savecomplateObj(HttpServletRequest request, HttpServletResponse response) throws IOException{
-			//request.setCharacterEncoding("gb2312");
+			response.setCharacterEncoding("gb2312");
 			
 			
 		//	String nameString = new String(request.getParameter("name").getBytes("ISO-8859-1"),"gb2312");
@@ -758,9 +879,9 @@ public class DataInputController {
 					targetResult.setArchCode(archCode.trim());
 					targetResult.setSeason(season.trim());
 					targetResult.setIndexCode(indexcode[i].trim());
-					targetResult.setIndexName(new String(indexname[i].getBytes("ISO-8859-1"),"gb2312"));
+					targetResult.setIndexName(indexname[i].trim());
 					targetResult.setObjectCode(objectCode[j].trim());
-					targetResult.setObjName(new String(objectName[j].getBytes("ISO-8859-1"),"gb2312"));
+					targetResult.setObjName(objectName[j].trim());
 					if(examtime[i]!=null&&examtime[i].trim().equals(season.trim()))
 						targetResult.setExamFlag(examflag[i].trim());
 					else {
@@ -994,7 +1115,7 @@ public class DataInputController {
 		}
 		@RequestMapping(params="getscoreobjbytype2")
 		public void getscoreobjbyType2(HttpServletRequest request, HttpServletResponse response) throws IOException{
-			response.setCharacterEncoding("gb2312");
+			//response.setCharacterEncoding("gb2312");
 			  String archcode=request.getParameter("archcode").trim();
 			 String jpql3="FROM TargetResult as o where o.examFlag='1' and  o.ArchCode='"+archcode+"' order by o.season,o.objectCode";
 	         List<TargetResult> objs_res=systemService.readEntitiesByJPQL(jpql3, TargetResult.class);

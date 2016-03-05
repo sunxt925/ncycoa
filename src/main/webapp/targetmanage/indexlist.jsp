@@ -181,7 +181,7 @@ int per_page = u.getPerpage_full();
 					<td>${item.stdIndexCode}</td>
 					<td>${item.stdItemName}</td>
 					<td>${item.appSystem}</td>
-					<td>${item.belongOrgcode}</td>
+					<td>${item.belongOrgname}</td>
 					<td>${item.memo}</td>
 					<td><a  href="#"  onclick="modify('${item.stdIndexCode}')" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">ÐÞ¸Ä</a>
 	<a  href="#"  onclick="del('${item.stdIndexCode}')" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">É¾³ý</a></td>

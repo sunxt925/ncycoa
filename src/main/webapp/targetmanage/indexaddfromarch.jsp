@@ -120,7 +120,7 @@
 	<tr>
 		<td align="right" width="70px"><label class="Validform_label">÷∏±Í—°‘Ò£∫</label></td>
 		<td class="value" width="700px">
-		<input id="indexCode" name="indexCode"  value="${item.indexCode}">
+		<input id="indexCode" name="indexCode" type="hidden"  value="${item.indexCode}">
 	   	<input id="archcode" name="archcode" type="hidden" value="${item.parentIndexCode}">
 		<input id="indexname" name="indexName" type="text" style="width:150px;background-color:white;" value="${item.indexName}">
 		<a id="indexsel" href="#" class="easyui-linkbutton l-btn l-btn-plain" data-options="plain:true,iconCls:'icon-search'" >

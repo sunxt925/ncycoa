@@ -25,6 +25,9 @@ public class ObjIndexDefine {
 	@Column(name="BelongOrgcode")  //市公司	区县公司BelongOrgcode
 	private String BelongOrgcode = "";
 	
+	@Column(name="BelongOrgname")  //市公司	区县公司BelongOrgcode
+	private String BelongOrgname = "";
+	
 	@Column(name="memo")
 	private String memo = "";
 
@@ -74,6 +77,14 @@ public class ObjIndexDefine {
 
 	public void setMemo(String memo) {
 		this.memo = memo;
+	}
+
+	public String getBelongOrgname() {
+		return BelongOrgname;
+	}
+
+	public void setBelongOrgname(String belongOrgname) {
+		BelongOrgname = belongOrgname;
 	}
 	
 	

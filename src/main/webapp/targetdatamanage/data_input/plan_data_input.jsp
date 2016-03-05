@@ -61,7 +61,8 @@
 		<div class="pdi_choose_target">
 			<label for="indexname">指标体系: </label>
 		   	<input id="archcode" name="archcode" type="hidden" value="${archcode}">
-			<input id="indexname" name="indexname" class="easyui-textbox" type="text" style="width:150px;background-color:white;" readonly="readonly">
+		   	
+			<input id="indexname" name="indexname" class="easyui-textbox" type="text" style="width:150px;background-color:white;" readonly="readonly" value="${indexname}">
 			 <a id="indexsel" href="#" class="easyui-linkbutton l-btn l-btn-plain" data-options="plain:true,iconCls:'icon-search'" >
 			 <span >选择</span></a> 	  
 		</div>
@@ -82,7 +83,7 @@
 </div>
 <div class="pdi_content" style="width:900px;">
 	<div class="pdi_view_target" style="width:233px;float:left;"> 
-	
+	<c:if test="${flag == 1}">
 	<table class="easyui-datagrid" >    
     <thead>    
         <tr>    
@@ -102,6 +103,7 @@
 	   </c:forEach>     
     </tbody>
     </table>
+    </c:if>
 	</div>
 	<div class="pdi_input_target" style="float:left;margin-top: 6px;">
 	<form id="formsave" action="datainput.htm?saveplanobj" method="post" >     
@@ -118,6 +120,7 @@
 function onClickRow() {
 	
 }
+
 function check(){
 	var archcode = document.getElementById("archcode").value.trim();
 	if(archcode==""){
