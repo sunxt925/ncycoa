@@ -284,6 +284,30 @@ ComponentUtil cu=new ComponentUtil();
 		
 		
 	<script>
+	
+	$('#TBM_INDEXITEM\\.ISPARENT').change(function(){
+		if($('#TBM_INDEXITEM\\.ISPARENT').val()=='0'){
+			$('#TBM_INDEXITEM\\.VALUECOMPUTINGTYPE').parent().parent().hide();
+			$('#TBM_INDEXITEM\\.VALUEFUNC').parent().parent().hide();
+			$('#TBM_INDEXITEM\\.VALUEUNIT').parent().parent().hide();
+			$('#TBM_INDEXITEM\\.SCOREFUNCTYPE').parent().parent().hide();
+			$('#TBM_INDEXITEM\\.SCOREFUNC').parent().parent().hide();
+			$('#TBM_INDEXITEM\\.SCOREPERIOD').parent().parent().hide();
+			
+			$('#TBM_INDEXITEM\\.ISPARENT').val('1');
+		}else{
+			$('#TBM_INDEXITEM\\.VALUECOMPUTINGTYPE').parent().parent().show();
+			$('#TBM_INDEXITEM\\.VALUEFUNC').parent().parent().show();
+			$('#TBM_INDEXITEM\\.VALUEUNIT').parent().parent().show();
+			$('#TBM_INDEXITEM\\.SCOREFUNCTYPE').parent().parent().show();
+			$('#TBM_INDEXITEM\\.SCOREFUNC').parent().parent().show();
+			$('#TBM_INDEXITEM\\.SCOREPERIOD').parent().parent().show();
+			$('#paratable').show();
+			
+			$('#TBM_INDEXITEM\\.ISPARENT').val('0');
+		}
+		
+	})
 	   function ret(){
 		   var api = frameElement.api;
 	    	
@@ -295,15 +319,24 @@ ComponentUtil cu=new ComponentUtil();
 	    	
 	    	if(sumbit_check())
 	   	    {
-	    		if(document.getElementById("TBM_INDEXITEM.VALIDBEGINDATE").value!=""&&document.getElementById("TBM_INDEXITEM.VALIDENDDATE").value!=""&&document.getElementById("TBM_INDEXITEM.VALIDBEGINDATE").value<document.getElementById("TBM_INDEXITEM.VALIDENDDATE").value){
-	    			
-	    			 document.all("Submit").click();
-	    			
-	    			 
-	   	   	         (api.data)({code:"refresh"});
-	    		}else{
-	    			alert("日期字段为空或者有误");
+	    		if($('#TBM_INDEXITEM\\.ISPARENT').val() == '1'){
+	    			$('#TBM_INDEXITEM\\.SCOREFUNCTYPE').val('一般函数型');
+	    			$('#TBM_INDEXITEM\\.VALUECOMPUTINGTYPE').val('子项汇总型');
 	    		}
+	    		if($('#TBM_INDEXITEM\\.SCOREFUNCTYPE').val()==''||$('#TBM_INDEXITEM\\.VALUECOMPUTINGTYPE').val()==''){
+	    			alert('请设置指标值计算类型和记分函数类别')
+	    		}else{
+	    			if(document.getElementById("TBM_INDEXITEM.VALIDBEGINDATE").value!=""&&document.getElementById("TBM_INDEXITEM.VALIDENDDATE").value!=""&&document.getElementById("TBM_INDEXITEM.VALIDBEGINDATE").value<document.getElementById("TBM_INDEXITEM.VALIDENDDATE").value){
+		    			document.all("Submit").click();
+		    			
+		    			 
+		   	   	         (api.data)({code:"refresh"});
+		    		}else{
+		    			alert("日期字段为空或者有误");
+		    		}
+	    		}
+	    		
+	    		
 	   	      
 	   	    }
 	   }
