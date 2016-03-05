@@ -55,6 +55,11 @@
 </div>
 <div class="pdi_input_target" id="content" style="float:right;margin-top: 6px;margin-right:424px;"></div>
 <div class="pdi_content">
+<div id="completeseason" class="pdi_view_target" style="width:210px;height:641px;float:left;">
+	
+		
+	</div>
+
 <form id="formsave" action="datainput.htm?savescoreobj" method="post" >  
 <div id="score" >
 </div>
@@ -95,6 +100,39 @@ function savescore() {
     });
 
 	} 
+	
+function cid_M(season){
+
+	var tagettable=$(".pdi_input_target");
+	var type;
+	var archcode = document.getElementById("archcode").value.trim();
+	if(archcode==""){
+		alert("请选择体系");
+	}else{
+		//$("#comple_tab").attr('src','complete_datagrid.jsp?season=' + season + '&archcode=' + archcode );
+		var ajaxCallUrl="datainput.htm?getscoreobjbytype2";
+		  $.ajax({
+		    type:"post",
+		    traditional:true,
+		    url:ajaxCallUrl,  
+		        data:{archcode:archcode,type:season},
+		        success:function(data){ 
+		         
+		          var p=eval(data);
+		         // alert(p[0].table);
+		          var ddd=document.getElementById("score");
+		          ddd.innerHTML="";
+		          $('#score').append(p[0].table);
+		          $('#score_tb').datagrid({ url:null});
+		        
+		              
+		        },
+		        error: function(request) {
+		            alert("Connection error");
+		        }
+		    });
+	}
+}
 $("#indexsel").click(function(){
 	//	alert("dsa");
 		/*  createwindow('选择体系','objresult.htm?getArch&class=C',500,500,returnorgvalue );  */
@@ -113,8 +151,31 @@ function returnorgValue(data){
 		var tagettable=$(".pdi_content");
 		
 		var archcode = document.getElementById("archcode").value.trim();
+		//sxt
+		var ajaxCallUrl="datainput.htm?getObjNamebyscore";
+		  $.ajax({
+		    type:"post",
+		    traditional:true,
+		    url:ajaxCallUrl,  
+		        data:{archcode:archcode},
+		        success:function(data){ 
+		         
+		          var p=eval(data);
+		         // alert(p[0].table);
+		          var ddd=document.getElementById("completeseason");
+		          ddd.innerHTML="";
+		          $('#completeseason').append(p[0].table);
+		          $('#compl_season').datagrid({ url:null});
+		        
+		              
+		        },
+		        error: function(request) {
+		            alert("Connection error");
+		        }
+		    });
+		//sxt end
 			//$("#comple_tab").attr('src','complete_datagrid.jsp?season=' + season + '&archcode=' + archcode );
-			 var ajaxCallUrl="datainput.htm?getscoreobjbytype2";
+		/* 	 var ajaxCallUrl="datainput.htm?getscoreobjbytype2";
 			  $.ajax({
 			    type:"post",
 			    traditional:true,
@@ -134,7 +195,7 @@ function returnorgValue(data){
 			        error: function(request) {
 			            alert("Connection error");
 			        }
-			    });
+			    }); */
 		
 	}    
 	    

@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.Inflater;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -381,6 +382,7 @@ public class DataInputController {
 		   //拼列
 			 StringBuffer sb = new StringBuffer();
 			sb.append("<table id=\"plan_tb\" class=\"easyui-datagrid\" style=\"width:700px;height:330px;\" data-options=\"singleSelect:true,onClickRow:onClickRow\">");
+
 			sb.append("<thead data-options=\"frozen:true\"><tr>");
 			sb.append("<th data-options=\"field:'time'\">时间段</th></tr></thead>");
 			sb.append("<thead><tr>");
@@ -479,7 +481,7 @@ public class DataInputController {
 							sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\""+objs_res.get(count++).getPlanValue()+"\"></td>");
 
 						}
-					}else {
+					                    }else {
 						sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\"\"></td>");
 
 					}
@@ -787,7 +789,8 @@ public class DataInputController {
 								sb.append(" <input type=\"text\" name=\"planvalue\" style=\"width:100px;\"  value=\"没有计划值\" readonly=\"readonly\" >");}
 
 							else {
-								sb.append(" <input type=\"text\" name=\"planvalue\" style=\"width:100px;\"  value=\""+tr.get(k).getPlanValue()+"\">");
+								sb.append(" <input type=\"text\" style=\"width:100px;background:#95B8E7;\"  readonly=\"readonly\"   value=\""+tr.get(k).getPlanValue()+"\">");
+
 								
 							}
 							if("".equals(tr.get(k).getRealValue()) || tr.get(k).getRealValue()==null){
@@ -882,11 +885,19 @@ public class DataInputController {
 					targetResult.setIndexName(indexname[i].trim());
 					targetResult.setObjectCode(objectCode[j].trim());
 					targetResult.setObjName(objectName[j].trim());
-					if(examtime[i]!=null&&examtime[i].trim().equals(season.trim()))
-						targetResult.setExamFlag(examflag[i].trim());
-					else {
-						targetResult.setExamFlag("0");
+					if(t.getExamFlag().equals("0") || t.getExamFlag().equals("0") ){
+						
+					}else {
+						if(examtime[i]!=null&&examtime[i].trim().equals(season.trim()))
+							targetResult.setExamFlag(examflag[i].trim());
+						else {
+							targetResult.setExamFlag("0");
+						}
+						if(examtime[i].contains("00")){
+							targetResult.setExamFlag("1");
+						}
 					}
+					
 					long id=TargetService.getResultIDByObj(targetResult);
 					targetResult.setRealValue(completeValue[count++]);
 					//判断是否报警 by SXT
@@ -1113,15 +1124,56 @@ public class DataInputController {
 		        out.close();
 			return;
 		}
+		/***
+		 * 显示对象名
+		 * @param request
+		 * @param response
+		 * @throws IOException
+		 */
+		@RequestMapping(params="getObjNamebyscore")
+		public void getObjNamebyscore(HttpServletRequest request, HttpServletResponse response) throws IOException{
+			String archcode=request.getParameter("archcode");
+			List<ObjIndexArchUser> objs = null;
+		
+			String jpql2="FROM ObjIndexArchUser as o where  o.IndexArchCode='"+archcode+"'" ;
+			 //对象，列
+			 objs=systemService.readEntitiesByJPQL(jpql2, ObjIndexArchUser.class);
+	
+			   
+			   StringBuffer sb = new StringBuffer();
+				sb.append("<table id=\"compl_season\" class=\"easyui-datagrid\" style=\"width:200px;height:510px;\" data-options=\"singleSelect:true\">");
+				sb.append("<thead><tr>");
+				sb.append("<th data-options=\"field:'itemid'\">对象</th></tr></thead>");
+				sb.append(" <tbody>");
+				for(ObjIndexArchUser oa:objs){
+					sb.append(" <tr><td><a href=\"#\" onclick=\"cid_M(this.innerHTML)\">"+oa.getUniIndexCode()+"</a> </td></tr>");
+				}
+				sb.append(" </tbody> </table>");
+				JSONArray jsonArray=new JSONArray();
+				JSONObject jsonObject=new JSONObject();   
+				 jsonObject=new JSONObject();
+				jsonObject.put("table",sb.toString());
+				jsonArray.add(jsonObject);
+				
+				response.setCharacterEncoding("gb2312");
+				response.setContentType("text/plain;charset=gb2312");
+				response.setHeader("Cache-Control", "no-store");
+				PrintWriter out=response.getWriter();
+				out.print(jsonArray.toString());
+				out.flush();
+				out.close();
+		}
 		@RequestMapping(params="getscoreobjbytype2")
 		public void getscoreobjbyType2(HttpServletRequest request, HttpServletResponse response) throws IOException{
 			//response.setCharacterEncoding("gb2312");
 			  String archcode=request.getParameter("archcode").trim();
-			 String jpql3="FROM TargetResult as o where o.examFlag='1' and  o.ArchCode='"+archcode+"' order by o.season,o.objectCode";
+			  String obj=request.getParameter("type").trim();
+			 String jpql3="FROM TargetResult as o where o.examFlag='1' and  o.ArchCode='"+archcode+"' and o.objName='"+obj+"' order by o.objectCode,o.IndexCode,o.season";
 	         List<TargetResult> objs_res=systemService.readEntitiesByJPQL(jpql3, TargetResult.class);
-	       //拼表格，拼列
+	         
+	         //拼表格，拼列
 			  StringBuffer sb = new StringBuffer();
-		      sb.append("<table id=\"score_tb\"  style=\"width:700px;height:250px;\" data-options=\"singleSelect:true,onClickRow:onClickRow\">");
+		      sb.append("<table id=\"score_tb\"  style=\"width:700px;height:500px;\" data-options=\"singleSelect:true,onClickRow:onClickRow\">");
 		      sb.append("<thead data-options=\"frozen:true\"><tr>");
 		      sb.append("<th data-options=\"field:'indexname'\">指标</th>"
 		      		+ "<th data-options=\"field:'objs'\">对象名</th>"
