@@ -115,6 +115,7 @@ public class ContractManagementController {
 	public void save(ContractInfo contract, HttpServletRequest request, HttpServletResponse response) {
 		AjaxResultJson j = new AjaxResultJson();
 		String message;
+		System.out.println(contract.getContractValue());
 		if (contract.getId() != null) {
 			message = "合同更新成功";
 			ContractInfo t = systemService.findEntityById(contract.getId(), ContractInfo.class);
@@ -364,7 +365,14 @@ public class ContractManagementController {
 		String taskId = request.getParameter("taskId");
 		UserInfo userinfo = (UserInfo)request.getSession().getAttribute("UserInfo");
 		List<Task> groupTaskList=processEngine.getTaskService().createTaskQuery().taskAssignee(userinfo.getStaffcode()).orderByTaskCreateTime().desc().list();
-		Task task = groupTaskList.get(0);
+		Task task = null;
+		for(Task t : groupTaskList){
+			if(t.getId().equals(taskId)){
+				task = t;
+				break;
+			}
+		}
+		
 		//Task task = processEngine.getTaskService().createTaskQuery().taskId(taskId).singleResult();
 		String processDefId = task.getProcessDefinitionId();
 		String pi = task.getProcessInstanceId();

@@ -45,11 +45,13 @@ public class ResultService extends AbstractBaseDaoImpl{
 	}
 
 	public static List<String> getObjCodesByArch(String archcode) {
+		archcode=archcode.substring(0, 7);
 		List<String> resultList=new ArrayList<String>();
 		try {
 			DBObject db = new DBObject();
 
 			String sql = "select object_code from TBM_OBJINDEXARCHUSER where  indexarch_code = '" + archcode + "'";
+			System.out.println(sql);
 			DataTable dt = db.runSelectQuery(sql);
 			if (dt != null && dt.getRowsCount() >= 0) {
 				for (int i = 0; i < dt.getRowsCount(); i++) {

@@ -1,6 +1,7 @@
 package edu.cqu.ncycoa.target.web.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import edu.cqu.ncycoa.common.dto.AjaxResultJson;
 import edu.cqu.ncycoa.common.service.SystemService;
+import edu.cqu.ncycoa.target.domain.ObjIndexArchUser;
 import edu.cqu.ncycoa.target.domain.ObjIndexItem;
 import edu.cqu.ncycoa.target.domain.TargetResult;
 import edu.cqu.ncycoa.target.service.ResultService;
@@ -83,16 +85,17 @@ public class ObjDataController {
 //		String season=request.getParameter("season");
 //		String archcode=request.getParameter("archcode");
 		String archcode=indexcode;
-		System.out.println("archcode here:"+archcode);
-		String jpql="FROM ObjIndexItem as o where o.IsParent='0' and o.IndexCode LIKE '"+archcode+"%' and o.IsLast='1'";
+		String jpql="FROM ObjIndexItem as o where o.IsParent='0' and o.IndexCode LIKE '"+archcode.substring(0, 7)+"%' and o.IsLast='1'";
 		List<ObjIndexItem> items=systemService.readEntitiesByJPQL(jpql, ObjIndexItem.class);
 		
-		//String jpql2="FROM ObjIndexItem as o where o.IsParent='0' and o.IndexCode LIKE '"+archcode+"%' and o.IsLast='1'";
-		List<String> objcodes=ResultService.getObjCodesByArch(archcode);
-		System.out.println(objcodes);
+		String jpql2="FROM ObjIndexArchUser as o where o.IndexArchCode='"+archcode.substring(0, 7)+"'";
+		List<ObjIndexArchUser> objs=systemService.readEntitiesByJPQL(jpql2, ObjIndexArchUser.class);
+		//List<String> objcodes=ResultService.getObjCodesByArch(archcode);
+		//System.out.println(objcodes);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("indexList", items);
-		mav.addObject("objcodes",objcodes);
+		mav.addObject("objList",objs);
+		System.out.println(items.size());
 		mav.setViewName("targetdatamanage/companytargetdata");
 		return mav;
 	}

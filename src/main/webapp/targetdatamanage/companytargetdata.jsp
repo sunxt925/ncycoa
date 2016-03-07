@@ -78,30 +78,36 @@
 	            toolbar="#toolbar" pagination="false"
 	            rownumbers="false" fitColumns="true" singleSelect="true">
 	        <thead >
-	            <tr >
-	                <th rowspan="2" field="firstname" >指标编码</th>
-	                <th rowspan="2" field="lastname" >指标名称</th>
-	                <c:forEach items="${objcodes}" var="item">         
-		    <th colspan="3" >${item}</th>				
-	    </c:forEach>   
-	               
-	                
+				<tr>
+					<th rowspan="2" field="firstname">指标编码</th>
+					<th rowspan="2" field="lastname">指标名称</th>
+					<c:forEach items="${objList}" var="item">
+						<th  colspan="3">${item.uniIndexCode}</th>
+					</c:forEach>
+				</tr>
+				
+				<tr>
+				<c:forEach items="${objList}" var="item">
+						<th field="pvalue">计划值</th> <th field="rvalue">完成值</th>  <th field="score">得分</th>
+					</c:forEach>
 	            </tr>
-	           <tr>
-	            <%
-	                	for(int i=0;i<10;i++){
-	                		%> 
-	            <th>计划值</th> <th >完成值</th>  <th >得分</th> 
-	             <%
-	                	}
-	                %> </tr>
 	           
 	        </thead>
-	    </table>
-	   <c:forEach items="${items}" var="item">         
-		    <th colspan="3" >${item.indexCode}</th>				
+	        <tbody>
+	        <c:forEach items="${indexList}" var="item">         
+		    <tr>
+		    <td>${item.indexCode}</td>
+		    <td>${item.indexName}</td>
+<%-- 		    <td>${objlist.size()}</td> --%>
+		    <c:forEach items="${objList}" var="item">
+						<td><input style="width: 50px" id="pv" name="pv" value="" ></td> 
+						<td><input style="width: 50px" id="rv" name="rv" value="" ></td>  
+						<td><input style="width: 50px" id="score" name="score" value="" ></td>
+					</c:forEach>
+		    </tr>				
 	    </c:forEach>    
-	    
+	        </tbody>
+	    </table>
     </div>
  <script type="text/javascript">
 $("#indexsel").click(function(){

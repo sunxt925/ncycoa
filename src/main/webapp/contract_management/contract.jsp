@@ -383,7 +383,7 @@
 	</tr>
 	<tr>
 		<td align="right"><label class="Validform_label"> ╨ом╛╫П╤Н </label></td>
-		<td class="value"><input class="easyui-numberbox" id="contractValue" name="contractValue" value="${contract.contractValue}" style="width: 151px" datatype="s2-50">
+		<td class="value"><input class="inputxt" id="contractValue" name="contractValue" value="${contract.contractValue}" style="width: 151px">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
