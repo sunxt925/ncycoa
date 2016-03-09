@@ -55,10 +55,10 @@ public class ContractInfo {
 	private String contractObject; 		// 合同标的
 	
 	@Column(name="BUDGET_VALUE")
-	private BigDecimal budgetValue;   // 预算资金
+	private String budgetValue;   // 预算资金
 	
 	@Column(name="CONTRACT_VALUE")
-	private BigDecimal contractValue;   // 合同金额
+	private String contractValue;   // 合同金额
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name="SIGNING_DATE")
@@ -255,11 +255,12 @@ public class ContractInfo {
 		this.contractObject = contractObject;
 	}
 
-	public BigDecimal getContractValue() {
+
+	public String getContractValue() {
 		return contractValue;
 	}
 
-	public void setContractValue(BigDecimal contractValue) {
+	public void setContractValue(String contractValue) {
 		this.contractValue = contractValue;
 	}
 
@@ -359,11 +360,13 @@ public class ContractInfo {
 		this.caigouleader = caigouleader;
 	}
 
-	public BigDecimal getBudgetValue() {
+	
+
+	public String getBudgetValue() {
 		return budgetValue;
 	}
 
-	public void setBudgetValue(BigDecimal budgetValue) {
+	public void setBudgetValue(String budgetValue) {
 		this.budgetValue = budgetValue;
 	}
 

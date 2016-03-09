@@ -13,7 +13,7 @@ public class TargetResult {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="RESULT_ID")
-	private String ID = "";
+	private Long ID;
 	
 	@Column(name="INDEX_CODE")
 	private String IndexCode = "";	
@@ -38,11 +38,11 @@ public class TargetResult {
 	@Column(name="MEMO")
 	private String Memo = "";
 
-	public String getID() {
+	public Long getID() {
 		return ID;
 	}
 
-	public void setID(String iD) {
+	public void setID(Long iD) {
 		ID = iD;
 	}
 

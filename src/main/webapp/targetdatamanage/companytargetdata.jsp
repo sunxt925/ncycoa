@@ -72,7 +72,7 @@
 </table>
 </form>
 <div class="table_all">
-
+<form id="datatable" name="datatable" action="objresult.htm?save"  method="post">
 	<table id="dg" class="easyui-datagrid" style="float:left;
 	            url="get_users.php"
 	            toolbar="#toolbar" pagination="false"
@@ -83,6 +83,7 @@
 					<th rowspan="2" field="lastname">指标名称</th>
 					<c:forEach items="${objList}" var="item">
 						<th  colspan="3">${item.uniIndexCode}</th>
+						
 					</c:forEach>
 				</tr>
 				
@@ -94,20 +95,23 @@
 	           
 	        </thead>
 	        <tbody>
-	        <c:forEach items="${indexList}" var="item">         
+	        <c:forEach items="${indexList}" var="item" varStatus="status">         
 		    <tr>
-		    <td>${item.indexCode}</td>
+		    <td><input style="width: 50px" id="result[${ status.index}].indexCode" name="result[${ status.index}].indexCode" value="${item.indexCode}"></td>
 		    <td>${item.indexName}</td>
 <%-- 		    <td>${objlist.size()}</td> --%>
 		    <c:forEach items="${objList}" var="item">
-						<td><input style="width: 50px" id="pv" name="pv" value="" ></td> 
-						<td><input style="width: 50px" id="rv" name="rv" value="" ></td>  
-						<td><input style="width: 50px" id="score" name="score" value="" ></td>
+		    <input style="display:none; width: 50px" id="result[${ status.index}].objectCode" name="result[${ status.index}].objectCode" value="${item.objectcode}">
+						<td><input style="width: 50px" id="result[${ status.index}].planValue" name="result[${ status.index}].planValue" value="" ></td> 
+						<td><input style="width: 50px" id="result[${ status.index}].realValue" name="result[${ status.index}].realValue" value="" ></td>  
+						<td><input style="width: 50px" id="result[${ status.index}].score" name="result[${ status.index}].score" value="" ></td>
 					</c:forEach>
 		    </tr>				
 	    </c:forEach>    
+	    <input type="submit"  value="提交"/>
 	        </tbody>
 	    </table>
+	</form>
     </div>
  <script type="text/javascript">
 $("#indexsel").click(function(){
@@ -117,7 +121,7 @@ $("#indexsel").click(function(){
 function returnorgValue(data){
 	
 	var org = data.code;
-	alert(org.archname);
+	//alert(org.archname);
 	
 	$('#indexcode').val(org.archcode);
 	$('#indexname').val(org.archname);

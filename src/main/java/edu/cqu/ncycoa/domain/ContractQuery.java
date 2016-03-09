@@ -27,7 +27,7 @@ public class ContractQuery {
 	
 	private String contractObject; 		// 合同标的
 	
-	private BigDecimal contractValue;   // 合同金额
+	private String contractValue;   // 合同金额
 	
 	private Date signingDate;			// 合同签订时间
 	
@@ -147,13 +147,21 @@ public class ContractQuery {
 		this.contractObject = contractObject;
 	}
 
-	public BigDecimal getContractValue() {
+	
+
+	public String getContractValue() {
 		return contractValue;
 	}
 
-	public void setContractValue(BigDecimal contractValue) {
+
+
+
+	public void setContractValue(String contractValue) {
 		this.contractValue = contractValue;
 	}
+
+
+
 
 	public Date getSigningDate() {
 		return signingDate;

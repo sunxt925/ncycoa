@@ -377,7 +377,7 @@
 	</tr> --%>
 	<tr>
 		<td align="right"><label class="Validform_label"> Ô¤Ëã×Ê½ð </label></td>
-		<td class="value"><input class="easyui-numberbox" id="budgetValue" name="budgetValue" value="${contract.budgetValue}" style="width: 151px" datatype="s2-50">
+		<td class="value"><input class="inputxt" id="budgetValue" name="budgetValue" value="${contract.budgetValue}" style="width: 151px" >
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>

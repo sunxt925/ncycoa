@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSONArray;
+
 import edu.cqu.ncycoa.common.dto.AjaxResultJson;
 import edu.cqu.ncycoa.common.service.SystemService;
 import edu.cqu.ncycoa.target.domain.ObjIndexArchUser;
 import edu.cqu.ncycoa.target.domain.ObjIndexItem;
+import edu.cqu.ncycoa.target.domain.ResultModel;
 import edu.cqu.ncycoa.target.domain.TargetResult;
 import edu.cqu.ncycoa.target.service.ResultService;
 import edu.cqu.ncycoa.target.service.TargetService;
@@ -102,11 +105,47 @@ public class ObjDataController {
 	
 	@RequestMapping(params = "save")
 	@ResponseBody
-	public void save_item(TargetResult item, HttpServletRequest request, HttpServletResponse response) {
+	public void save_item(ResultModel model, HttpServletRequest request, HttpServletResponse response) {
 	//	String classT=request.getParameter("class");
+		System.out.println(JSONArray.toJSON(model));
 		AjaxResultJson j = new AjaxResultJson();
 		String message;
-		if (item.getID() != null) {
+		for(TargetResult item:model.getResult()){
+			
+			if (item.getID() != null) {
+				message = "更新成功";
+				TargetResult t = systemService.findEntityById(item.getID(), TargetResult.class);
+				if(t==null){
+					message = "添加成功";
+					systemService.addEntity(item);
+				}else{
+					try {
+						MyBeanUtils.copyBeanNotNull2Bean(item, t);
+						systemService.saveEntity(t);
+						systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
+
+					} catch (Exception e) {
+						message = "更新失败";
+					}
+				}
+			} else {
+				message = "添加成功";
+				String[] objcodes=item.getObjectCode().split(",");
+				String[] planvs=item.getPlanValue().split(",");
+				String[] realvs=item.getRealValue().split(",");
+				String[] scores=item.getScore().split(",");
+				for(int i=0;i<objcodes.length;i++){
+					TargetResult tr=new TargetResult();
+					tr.setIndexCode(item.getIndexCode().split(",")[0]);
+					tr.setObjectCode(objcodes[i]);
+					tr.setPlanValue(planvs[i]);
+					tr.setRealValue(realvs[i]);
+					tr.setScore(scores[i]);
+					systemService.addEntity(tr);
+				}
+			}
+		}
+		/*if (item.getID() != null) {
 			message = "更新成功";
 			TargetResult t = systemService.findEntityById(item.getID(), TargetResult.class);
 			if(t==null){
@@ -125,8 +164,8 @@ public class ObjDataController {
 		} else {
 			message = "添加成功";
 			systemService.addEntity(item);
-		}
-		j.setMsg(message);
+		}*/
+		//j.setMsg(message);
 		SystemUtils.jsonResponse(response, j);
 	}
 	
