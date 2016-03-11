@@ -175,6 +175,7 @@ public class ObjIndexArchUserController {
 				systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 			}
 		} else {
+			System.out.println("test G:"+notice.getObjectcode());
 			if(notice.getObjectcode().contains(",")){
 				String[] objcodes=notice.getObjectcode().split(",");
 				String[] objnames=notice.getUniIndexCode().split(",");
@@ -186,6 +187,12 @@ public class ObjIndexArchUserController {
 					t.setUniIndexCode(objnames[i]);
 					systemService.addEntity(t);
 				}
+			}else{
+				ObjIndexArchUser t=new ObjIndexArchUser();
+				MyBeanUtils.copyBeanNotNull2Bean(notice, t);
+				t.setObjectcode(notice.getObjectcode());
+				t.setUniIndexCode(notice.getUniIndexCode());
+				systemService.addEntity(t);
 			}
 			message = "Ìí¼Ó³É¹¦";
 			
