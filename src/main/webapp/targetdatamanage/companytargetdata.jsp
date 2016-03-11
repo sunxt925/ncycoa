@@ -25,8 +25,8 @@
 	<td>
 	<div>
 		<label for="yearsel">年度: </label>
-		<input id="yearsel" class="easyui-combobox combobox-f combo-f" style="width: 80px; display: none;" data-options="data:[{text:'2016',value:2016,selected:true}],valueField:'value',textField:'text',onSelect:onYearChanged">
-		<input type="hidden" class="combo-value" value="2016">
+		<input id="yearsel" name="year" class="easyui-combobox combobox-f combo-f" style="width: 80px; display: none;" data-options="data:[{text:'2016',value:2016,selected:true}],valueField:'value',textField:'text',onSelect:onYearChanged">
+		<input type="hidden"  class="combo-value" value="2016">
 		<script type="text/javascript">
 		function onYearChanged(record){
 			var period = $('#periodsel').combobox('getValue');
@@ -42,7 +42,7 @@
 	<td>
 	<div>
 		<label for="periodsel">季度: </label>
-		<input id="periodsel" class="easyui-combobox combobox-f combo-f" style="width: 80px; display: none;" data-options="data:[{value:'Q01',text:'一季度'},{value:'Q02',text:'二季度'},{value:'Q03',text:'三季度',selected:true},{value:'Q04',text:'四季度'}],valueField:'value',textField:'text',onSelect:onPeriodChanged">
+		<input id="periodsel" name="season" class="easyui-combobox combobox-f combo-f" style="width: 80px; display: none;" data-options="data:[{value:'Q01',text:'一季度'},{value:'Q02',text:'二季度'},{value:'Q03',text:'三季度',selected:true},{value:'Q04',text:'四季度'}],valueField:'value',textField:'text',onSelect:onPeriodChanged">
 
 		<input type="hidden" class="combo-value" value="M03">
 		<script type="text/javascript">
@@ -59,20 +59,21 @@
 	
 	<td>
 	<div>
-		<label for="indexname">指标: </label>
-	   	<input id="indexcode" name="indexcode" type="hidden">
+		<label for="indexname">指标体系: </label>
+	   	<input id="archcode" name="archcode" type="hidden" value="${archcode}">
 		<input id="indexname" name="indexname" type="text" style="width:150px;background-color:white;" readonly="readonly">
 		<a id="indexsel" href="#" class="easyui-linkbutton l-btn l-btn-plain" data-options="plain:true,iconCls:'icon-search'" >
 		 <span >选择</span></a>
 		 <input type="submit"  value="查询"/>
+		 <input type="button" id="update"  value="提交"/>
 	</div> 
 	</td>
 	</tr>
 </tbody>
 </table>
-</form>
+<!-- </form> -->
 <div class="table_all">
-<form id="datatable" name="datatable" action="objresult.htm?save"  method="post">
+<!-- <form id="datatable" name="datatable" action="objresult.htm?save"  method="post"> -->
 	<table id="dg" class="easyui-datagrid" style="float:left;
 	            url="get_users.php"
 	            toolbar="#toolbar" pagination="false"
@@ -108,12 +109,19 @@
 					</c:forEach>
 		    </tr>				
 	    </c:forEach>    
-	    <input type="submit"  value="提交"/>
+	    
 	        </tbody>
 	    </table>
+	        </div>
 	</form>
-    </div>
+
  <script type="text/javascript">
+$("#update").click(function(){
+	var form=$("#formarch");
+	form.attr("action","objresult.htm?save");
+	form.submit();
+    });
+    
 $("#indexsel").click(function(){
 	createwindow('选择体系','objresult.htm?getArch&class=C',500,500,returnorgValue );
     });
@@ -123,7 +131,7 @@ function returnorgValue(data){
 	var org = data.code;
 	//alert(org.archname);
 	
-	$('#indexcode').val(org.archcode);
+	$('#archcode').val(org.archcode);
 	$('#indexname').val(org.archname);
 	
 }    

@@ -65,6 +65,31 @@ public class ResultService extends AbstractBaseDaoImpl{
 		}
 	}
 	
+	public static String getDataByYears(String archcode,String startyear,String endyear){
+		archcode=archcode.substring(0, 7);
+		String objs="";
+		String scores="";
+		try {
+			DBObject db = new DBObject();
+
+			String sql = "select * from TBM_OBJTOTALSCORE where arch_code like '" + archcode + "%'";
+			System.out.println(sql);
+			DataTable dt = db.runSelectQuery(sql);
+			if (dt != null && dt.getRowsCount() >= 0) {
+				for (int i = 0; i < dt.getRowsCount(); i++) {
+					DataRow r = dt.get(i);
+					objs=objs+r.getString("OBJ_CODE")+",";
+					scores=scores+r.getString("TOTALSCORE")+",";
+				}
+			}
+			objs=objs.substring(0, objs.length()-1);
+			scores=scores.substring(0,scores.length()-1);
+			return objs+";"+scores;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
 	
 
 }
