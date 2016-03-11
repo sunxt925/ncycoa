@@ -38,9 +38,9 @@ String basePath = request.getScheme()+"://"+
 		<a id="indexsel" href="#" class="easyui-linkbutton l-btn l-btn-plain" data-options="plain:true,iconCls:'icon-search'" >
 		 <span >选择</span></a>
 		 
-       <span> 年度选择：</span><input id="startyear" name="startyear" class="easyui-textbox">
+       <span> 年度选择：</span><input id="startyear" name="startyear">
        <input id="endyear" name="endyear" class="easyui-textbox">
-       <input type="button" onclick="getShow()">查看
+       <input type="button" onclick="getShow()" value="查看">
     </div>
     
     <div data-options="region:'center',split:true" style="padding:5px;background:#fff;">
