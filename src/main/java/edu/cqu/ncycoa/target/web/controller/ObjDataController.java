@@ -92,6 +92,28 @@ public class ObjDataController {
 		mav.setViewName("targetdatamanage/dataview_c");
 		return mav;
 	}
+	@RequestMapping(params="result_viewd") //公司结果
+	public ModelAndView result_viewd(HttpServletRequest request, HttpServletResponse response){
+		
+//		String jpql="FROM TargetResult as o where o.IndexArchCode like '"+archcode.substring(0, 7)+"'";
+//		List<ObjIndexArchUser> results=systemService.readEntitiesByJPQL(jpql, TargetResult.class);
+		ModelAndView mav = new ModelAndView();
+		//items筛选出公司类体系
+		//mav.addObject("class","S");
+		mav.setViewName("targetdatamanage/dataview_d");
+		return mav;
+	}
+	@RequestMapping(params="result_viewp") //公司结果
+	public ModelAndView result_views(HttpServletRequest request, HttpServletResponse response){
+		
+//		String jpql="FROM TargetResult as o where o.IndexArchCode like '"+archcode.substring(0, 7)+"'";
+//		List<ObjIndexArchUser> results=systemService.readEntitiesByJPQL(jpql, TargetResult.class);
+		ModelAndView mav = new ModelAndView();
+		//items筛选出公司类体系
+		//mav.addObject("class","S");
+		mav.setViewName("targetdatamanage/dataview_s");
+		return mav;
+	}
 	
 	@RequestMapping(params="total_viewc") //公司总分
 	public ModelAndView total_viewc(HttpServletRequest request, HttpServletResponse response){
@@ -150,7 +172,13 @@ public class ObjDataController {
 		mav.addObject("archcode",archcode);
 		//mav.addObject("resultList",results);
 		System.out.println(items.size());
-		mav.setViewName("targetdatamanage/companytargetdata");
+		if(archcode.startsWith("C"))
+			mav.setViewName("targetdatamanage/companytargetdata");
+		else if (archcode.startsWith("D")) {
+			mav.setViewName("targetdatamanage/departmenttargetdata");
+		}else{
+			mav.setViewName("targetdatamanage/personaltargetdata");
+		}
 		return mav;
 	}
 	
@@ -241,16 +269,53 @@ public class ObjDataController {
 	}
 	
 	@SuppressWarnings("unchecked")
-	@RequestMapping(params="dgdata")
+	@RequestMapping(params="dgdata_c")
 	@ResponseBody
-	public void dgData(TargetResult supplier, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
+	public void dgData_c(TargetResult supplier, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
 		QueryDescriptor<TargetResult> cq = new QueryDescriptor<TargetResult>(TargetResult.class, dg);
 		CommonService commonService = SystemUtils.getCommonService(request);
 		
 		//查询条件组装器
 		TypedQueryBuilder<TargetResult> tqBuilder = QueryUtils.getTQBuilder(supplier, request.getParameterMap());
 		//只能看自己部门的供应商
-		//tqBuilder.addRestriction(new TQRestriction( "manage_depart", "like", "%"+SupplierDao.getOneDepart()+"%"));
+		tqBuilder.addRestriction(new TQRestriction( "arch_code", "like", "C%"));
+		if (StringUtils.isNotEmpty(dg.getSort())) {
+			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
+		}
+		cq.setTqBuilder(tqBuilder);
+		commonService.getDataGridReturn(cq, true);
+		TagUtil.datagrid(response, dg);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(params="dgdata_d")
+	@ResponseBody
+	public void dgData_d(TargetResult supplier, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
+		QueryDescriptor<TargetResult> cq = new QueryDescriptor<TargetResult>(TargetResult.class, dg);
+		CommonService commonService = SystemUtils.getCommonService(request);
+		
+		//查询条件组装器
+		TypedQueryBuilder<TargetResult> tqBuilder = QueryUtils.getTQBuilder(supplier, request.getParameterMap());
+		//只能看自己部门的供应商
+		tqBuilder.addRestriction(new TQRestriction( "arch_code", "like", "D%"));
+		if (StringUtils.isNotEmpty(dg.getSort())) {
+			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
+		}
+		cq.setTqBuilder(tqBuilder);
+		commonService.getDataGridReturn(cq, true);
+		TagUtil.datagrid(response, dg);
+	}
+	@SuppressWarnings("unchecked")
+	@RequestMapping(params="dgdata_s")
+	@ResponseBody
+	public void dgData_s(TargetResult supplier, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
+		QueryDescriptor<TargetResult> cq = new QueryDescriptor<TargetResult>(TargetResult.class, dg);
+		CommonService commonService = SystemUtils.getCommonService(request);
+		
+		//查询条件组装器
+		TypedQueryBuilder<TargetResult> tqBuilder = QueryUtils.getTQBuilder(supplier, request.getParameterMap());
+		//只能看自己部门的供应商
+		tqBuilder.addRestriction(new TQRestriction( "arch_code", "like", "S%"));
 		if (StringUtils.isNotEmpty(dg.getSort())) {
 			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
 		}
