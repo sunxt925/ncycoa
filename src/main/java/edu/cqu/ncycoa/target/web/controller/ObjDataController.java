@@ -126,7 +126,28 @@ public class ObjDataController {
 		mav.setViewName("targetdatamanage/totalview_c");
 		return mav;
 	}
-	
+	@RequestMapping(params="total_viewd") //部门总分
+	public ModelAndView total_viewd(HttpServletRequest request, HttpServletResponse response){
+		
+//		String jpql="FROM TargetResult as o where o.IndexArchCode like '"+archcode.substring(0, 7)+"'";
+//		List<ObjIndexArchUser> results=systemService.readEntitiesByJPQL(jpql, TargetResult.class);
+		ModelAndView mav = new ModelAndView();
+		//items筛选出公司类体系
+		//mav.addObject("class","S");
+		mav.setViewName("targetdatamanage/totalview_d");
+		return mav;
+	}
+	@RequestMapping(params="total_views") //个人总分
+	public ModelAndView total_views(HttpServletRequest request, HttpServletResponse response){
+		
+//		String jpql="FROM TargetResult as o where o.IndexArchCode like '"+archcode.substring(0, 7)+"'";
+//		List<ObjIndexArchUser> results=systemService.readEntitiesByJPQL(jpql, TargetResult.class);
+		ModelAndView mav = new ModelAndView();
+		//items筛选出公司类体系
+		//mav.addObject("class","S");
+		mav.setViewName("targetdatamanage/totalview_s");
+		return mav;
+	}
 	@RequestMapping(params="tshow_c") //公司同比展示
 	public ModelAndView tshow_c(HttpServletRequest request, HttpServletResponse response){
 		
@@ -326,15 +347,54 @@ public class ObjDataController {
 	
 	
 	@SuppressWarnings("unchecked")
-	@RequestMapping(params="totaldgdata")
+	@RequestMapping(params="totaldgdata_c")
 	@ResponseBody
-	public void dgDataTotal(TotalScore supplier, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
+	public void dgDataTotal_c(TotalScore supplier, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
 		QueryDescriptor<TotalScore> cq = new QueryDescriptor<TotalScore>(TotalScore.class, dg);
 		CommonService commonService = SystemUtils.getCommonService(request);
 		
 		//查询条件组装器
 		TypedQueryBuilder<TotalScore> tqBuilder = QueryUtils.getTQBuilder(supplier, request.getParameterMap());
 		//只能看自己部门的供应商
+		tqBuilder.addRestriction(new TQRestriction( "arch_code", "like", "C%"));
+		//tqBuilder.addRestriction(new TQRestriction( "manage_depart", "like", "%"+SupplierDao.getOneDepart()+"%"));
+		if (StringUtils.isNotEmpty(dg.getSort())) {
+			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
+		}
+		cq.setTqBuilder(tqBuilder);
+		commonService.getDataGridReturn(cq, true);
+		TagUtil.datagrid(response, dg);
+	}
+	@SuppressWarnings("unchecked")
+	@RequestMapping(params="totaldgdata_d")
+	@ResponseBody
+	public void dgDataTotal_d(TotalScore supplier, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
+		QueryDescriptor<TotalScore> cq = new QueryDescriptor<TotalScore>(TotalScore.class, dg);
+		CommonService commonService = SystemUtils.getCommonService(request);
+		
+		//查询条件组装器
+		TypedQueryBuilder<TotalScore> tqBuilder = QueryUtils.getTQBuilder(supplier, request.getParameterMap());
+		//只能看自己部门的供应商
+		tqBuilder.addRestriction(new TQRestriction( "arch_code", "like", "D%"));
+		//tqBuilder.addRestriction(new TQRestriction( "manage_depart", "like", "%"+SupplierDao.getOneDepart()+"%"));
+		if (StringUtils.isNotEmpty(dg.getSort())) {
+			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
+		}
+		cq.setTqBuilder(tqBuilder);
+		commonService.getDataGridReturn(cq, true);
+		TagUtil.datagrid(response, dg);
+	}
+	@SuppressWarnings("unchecked")
+	@RequestMapping(params="totaldgdata_s")
+	@ResponseBody
+	public void dgDataTotal_s(TotalScore supplier, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
+		QueryDescriptor<TotalScore> cq = new QueryDescriptor<TotalScore>(TotalScore.class, dg);
+		CommonService commonService = SystemUtils.getCommonService(request);
+		
+		//查询条件组装器
+		TypedQueryBuilder<TotalScore> tqBuilder = QueryUtils.getTQBuilder(supplier, request.getParameterMap());
+		//只能看自己部门的供应商
+		tqBuilder.addRestriction(new TQRestriction( "arch_code", "like", "S%"));
 		//tqBuilder.addRestriction(new TQRestriction( "manage_depart", "like", "%"+SupplierDao.getOneDepart()+"%"));
 		if (StringUtils.isNotEmpty(dg.getSort())) {
 			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));

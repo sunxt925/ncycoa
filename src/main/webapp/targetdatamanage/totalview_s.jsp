@@ -15,7 +15,7 @@
 </style>
 </head>
 <body>
-	<h:datagrid actionUrl="objresult.htm?totaldgdata_c" fit="true" fitColumns="true" queryMode="group" name="objresultlist">
+	<h:datagrid actionUrl="objresult.htm?totaldgdata_s" fit="true" fitColumns="true" queryMode="group" name="objresultlist">
 		<h:dgColumn field="ID" title="id" hidden="true"></h:dgColumn>
      	<h:dgColumn field="archCode" title="体系编码" dictionary="tbm_objindex,index_code,index_name"></h:dgColumn>
 		<h:dgColumn field="objectCode" title="对象编码" dictionary="tbm_objindexarchuser,object_code,uniindex_code"></h:dgColumn>
