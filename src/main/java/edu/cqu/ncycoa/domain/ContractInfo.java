@@ -123,6 +123,11 @@ public class ContractInfo {
 	@Column(name="OTHERFILE")
 	private String otherfile;//其他文件
 	
+	@Column(name="FINALLYAUDITTIME")
+	private Date finallyAuditTime;//最终审核时间
+	
+	@Column(name="INPUTDATE")
+	private Date inputDate;//合同录入日期
 	
 	public String getContent() {
 		return content;
@@ -408,6 +413,22 @@ public class ContractInfo {
 
 	public void setOtherfile(String otherfile) {
 		this.otherfile = otherfile;
+	}
+
+	public Date getFinallyAuditTime() {
+		return finallyAuditTime;
+	}
+
+	public void setFinallyAuditTime(Date finallyAuditTime) {
+		this.finallyAuditTime = finallyAuditTime;
+	}
+
+	public Date getInputDate() {
+		return inputDate;
+	}
+
+	public void setInputDate(Date inputDate) {
+		this.inputDate = inputDate;
 	}
 
 	

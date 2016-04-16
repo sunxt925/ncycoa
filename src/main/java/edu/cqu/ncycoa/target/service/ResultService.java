@@ -103,7 +103,7 @@ public class ResultService extends AbstractBaseDaoImpl{
 		try {
 			DBObject db = new DBObject();
 
-			String sql = "select * from TBM_OBJTOTALSCORE where arch_code like '" + archcode + "%' and obj_code='"+objcode+"'";
+			String sql = "select * from TBM_OBJTOTALSCORE where arch_code like '" + archcode + "%' and obj_code='"+objcode+"' order by season";
 			System.out.println(sql);
 			DataTable dt = db.runSelectQuery(sql);
 			if (dt != null && dt.getRowsCount() >= 0) {

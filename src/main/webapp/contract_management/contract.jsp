@@ -435,6 +435,25 @@
 	</tr>
 	
 	<tr>
+		<td align="right"><label class="Validform_label"> 承办部门领导</label></td>
+		<td class="value">
+		   <input class="inputxt" id="chengbanleadername" name="chengbanleadername" >
+		                                  <input type="hidden" id="chengbanleader" name="chengbanleader"  value="${contract.chengbanleader}">
+		                                  <a id="btn_selectobject1" href="#">选择</a>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 采购部门领导</label></td>
+		<td class="value">
+		  <input class="inputxt" id="caigouleadername" name="caigouleadername" datatype="s2-50">
+		                                  <input type="hidden" id="caigouleader" name="caigouleader"  value="${contract.caigouleader}">
+		                                  
+		                                  <a id="btn_selectobject2" href="#">选择</a>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
 		<td align="right"><label class="Validform_label"> 上传合同 </label></td>
 		<td class="value"><input class="inputxt" id="contractFilePath" name="contractFilePath" value="${contract.contractFilePath}">
 		 <a id="btn_uploadfile" href="#"    class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">上传文件</a>
@@ -462,10 +481,39 @@ function returnFile(data){
 	$('#contractFilePath').val(data.code);
    
 }
+
+function returnobjValue1(data){
+
+	var array = data.code;
+	var staffcodes=array[0].staffcode;
+	var staffnames=array[0].staffname;
+	
+	$('#chengbanleader').val(staffcodes);
+	$('#chengbanleadername').val(staffnames);
+	
+}
+function returnobjValue2(data){
+
+	var array = data.code;
+	var staffcodes=array[0].staffcode;
+	var staffnames=array[0].staffname;
+	
+	$('#caigouleader').val(staffcodes);
+	$('#caigouleadername').val(staffnames);
+	
+}
 function returnFile2(data){
 	$('#otherfile').val(data.code);
    
 }
+$("#btn_selectobject1").click(function(){
+	
+	createwindow('选择人员','indexmanage/selectstaff.jsp',500,500,returnobjValue1 );
+    });
+$("#btn_selectobject2").click(function(){
+	
+	createwindow('选择人员','indexmanage/selectstaff.jsp',500,500,returnobjValue2 );
+    });
 function createwindow(title, url, width, height,func) {
 	
 	$.dialog({

@@ -7,7 +7,6 @@ import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -115,7 +114,7 @@ public class ContractManagementController {
 	public void save(ContractInfo contract, HttpServletRequest request, HttpServletResponse response) {
 		AjaxResultJson j = new AjaxResultJson();
 		String message;
-		System.out.println(contract.getContractValue());
+	//	System.out.println(contract.getContractValue());
 		if (contract.getId() != null) {
 			message = "合同更新成功";
 			ContractInfo t = systemService.findEntityById(contract.getId(), ContractInfo.class);
@@ -128,8 +127,14 @@ public class ContractManagementController {
 			}
 		} else {
 			message = "合同添加成功";
+			contract.setInputDate(new Date());
 			contract.setStatus((short)0);
 			contract.setAppDate(new Date());
+			contract.setPartyA("四川省烟草公司南充市公司");
+			contract.setPartyB(contract.getPartyName());
+			if(contract.getCaigouleader()==null||contract.getCaigouleader().equals("")){
+				contract.setCaigouleader(contract.getChengbanleader());
+			}
 			systemService.addEntity(contract);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		
@@ -158,7 +163,7 @@ public class ContractManagementController {
 		String message;
 		String id = request.getParameter("id");
 		String type=request.getParameter("type");
-		
+		//IdentityService identityService=processEngine.getIdentityService();
 		ContractInfo contractInfo = systemService.findEntityById(Long.parseLong(id), ContractInfo.class);
 		
 		String processID = ContractInfo.class.getSimpleName();
@@ -251,9 +256,11 @@ public class ContractManagementController {
 			contractInfo.setAppDepart(userinfo.getOrgCode());
 		}
 		
+		
 		contractInfo.setStatus((short)1);//修改提交状态
 		contractInfo.setProcessInstanceId(processinstanceid);//存入流程实例号
 		systemService.saveEntity(contractInfo);
+		
 		IdentityService identityService=processEngine.getIdentityService();
 		identityService.setAuthenticatedUserId(((UserInfo)request.getSession().getAttribute("UserInfo")).getStaffcode());
 		List<Task> tasks = processEngine.getTaskService().createTaskQuery().taskAssignee(userinfo.getStaffcode()).processInstanceId(processinstanceid).orderByDueDate().desc().list();
@@ -265,7 +272,6 @@ public class ContractManagementController {
 			paras_tmp.put("outcome", true);
 			processEngine.getTaskService().complete(task_tmp.get(0).getId(),paras_tmp);
 		}
-		
 		message = "审核完成";
 		j.setMsg(message);
 		SystemUtils.jsonResponse(response, j);
@@ -298,7 +304,8 @@ public class ContractManagementController {
 		if(null != contractInfo.getCode() && !contractInfo.getCode().equals("")){
 			message = "已经执行修改，无法再次修改";
 		}else{
-			contractInfo.setCode(getContractcode(type));
+			contractInfo.setCode(getContractcode(type,contractInfo));
+			contractInfo.setFinallyAuditTime(new Date());
 			systemService.saveEntity(contractInfo);
 			message = "修改完成";
 		}
@@ -306,17 +313,17 @@ public class ContractManagementController {
 		SystemUtils.jsonResponse(response, j);
 	}
 	//生成合同编码
-	private String getContractcode(String type){
+	private String getContractcode(String type,ContractInfo contract){
 		
 		StringBuilder sbBuilder  =new StringBuilder();
 		Calendar c_f = Calendar.getInstance();
 		c_f.setTime(new Date());
 		sbBuilder.append(c_f.get(Calendar.YEAR)+"");
 		sbBuilder.append("51");
-		sbBuilder.append("00");
+		sbBuilder.append("13");
 		sbBuilder.append("00");
 		sbBuilder.append(type);
-		
+		sbBuilder.append(contract.getType());
 		String sDate = c_f.get(Calendar.YEAR)+"-01-01";
 		String eDate = c_f.get(Calendar.YEAR)+"-12-31";
 		SimpleDateFormat DATE = new SimpleDateFormat("yyyy-MM-dd");
@@ -325,10 +332,10 @@ public class ContractManagementController {
 		TypedQueryBuilder<ContractInfo> tqBuilder = new TypedQueryBuilder<ContractInfo>(ContractInfo.class,"e");
 		try {
 			if(null!=sDate && !sDate.equals("")){
-				tqBuilder.addRestriction(new TQRestriction("signingDate", ">=",DATE.parse(sDate)));
+				tqBuilder.addRestriction(new TQRestriction("finallyAuditTime", ">=",DATE.parse(sDate)));
 			}
 			if(null!=eDate && !eDate.equals("")){
-			tqBuilder.addRestriction(new TQRestriction("signingDate", "<=",DATE.parse(eDate)));
+			tqBuilder.addRestriction(new TQRestriction("finallyAuditTime", "<=",DATE.parse(eDate)));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -337,7 +344,8 @@ public class ContractManagementController {
 		
 		List<ContractInfo> contractInfos = systemService.getQueryRes(tqBuilder);
 		
-		int count  = contractInfos.size();
+		int count  = contractInfos.size()+1;
+		
 		String endnum="";
 		if(count<10){
 			endnum = "00"+count;
@@ -436,6 +444,8 @@ public class ContractManagementController {
 		mav.addObject("outcomelist", list);
 		mav.addObject("taskId",taskId);
 		mav.addObject("comments", accomment);
+		mav.addObject("relevantDepartment_disp",CodeDictionary.syscode_traslate("base_org", "orgcode", "orgname", contractInfo.getRelevantDepartment()));
+		
 		return mav;
 	}
 	
@@ -447,13 +457,20 @@ public class ContractManagementController {
 		String message = "";
 		String id = request.getParameter("id");
 		
-		String chengbanleader = request.getParameter("chengbanleader");
-		String caigouleader = request.getParameter("caigouleader");
+	//	String chengbanleader = request.getParameter("chengbanleader");
+	//	String caigouleader = request.getParameter("caigouleader");
 		ContractInfo contractInfo = systemService.findEntityById(Long.parseLong(id), ContractInfo.class);
 		
+		List<String> auditleader = new ArrayList<String>();
+		if(contractInfo.getChengbanleader()!=null && !contractInfo.getChengbanleader().equals("")){
+			auditleader.add(contractInfo.getChengbanleader());
+		}
+		if(contractInfo.getCaigouleader()!=null && !contractInfo.getCaigouleader().equals("")){
+			auditleader.add(contractInfo.getCaigouleader());
+		}
+		paras.put("fenguanauditGroup",auditleader);
 		
-		
-		if(chengbanleader!=null && !chengbanleader.equals("")){
+		/*if(chengbanleader!=null && !chengbanleader.equals("")){
 			List<String> auditleader = new ArrayList<String>();
 			auditleader.add(chengbanleader);
 			contractInfo.setChengbanleader(chengbanleader);
@@ -465,9 +482,9 @@ public class ContractManagementController {
 			}
 			
 			paras.put("fenguanauditGroup",auditleader);
-		}
+		}*/
        
-        systemService.saveEntity(contractInfo);
+       // systemService.saveEntity(contractInfo);
 		
 		String taskId = request.getParameter("taskId");
 		String outcome = request.getParameter("outcome"); 
@@ -520,6 +537,7 @@ public class ContractManagementController {
 		if(flag){
 			contractInfo.setStatus((short)2);
 			systemService.saveEntity(contractInfo);
+			
 		}
 		try {
 			message = "合同审批提交成功";
@@ -705,6 +723,16 @@ public class ContractManagementController {
 				map.put("d7", c_f.get(Calendar.DAY_OF_MONTH)+"");
 			}
 		}
+		
+		if(contractInfo.getChengbanleader()==null||contractInfo.getChengbanleader().equals("")){
+		
+			map.put("comment5", " ");
+			map.put("chief5", " ");
+			map.put("y5", " ");
+			map.put("m5", " ");
+			map.put("d5", " ");
+		}
+		
 		return map;
 	}
 	
@@ -744,7 +772,7 @@ public class ContractManagementController {
 		if (StringUtils.isNotEmpty(dg.getSort())) {
 			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
 		}
-		tqBuilder.addOrder(new TQOrder("signingDate", false));
+		tqBuilder.addOrder(new TQOrder("inputDate", true));
 		cq.setTqBuilder(tqBuilder);
 		commonService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dg);

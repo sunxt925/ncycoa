@@ -46,7 +46,7 @@ public class ObjIndexItem implements Comparable<ObjIndexItem>{
 	private String ValueUnit = ""; 
 	@Column(name="SCORE_FUNC") //得分函数 没用
 	private String ScoreFunc = "";
-	@Column(name="SCORE_PERIOD")  //周期、类别：月度，半年，季度，年度
+	@Column(name="SCORE_PERIOD")  //周期、类别：月度，半年，季度，年度  M00、S00、H00、Y00、D00  D00：随机抽查指标
 	private String ScorePeriod = "";
 	  //默认得分 没用
 	@Column(name="SCORE_DEFAULT")
@@ -86,7 +86,23 @@ public class ObjIndexItem implements Comparable<ObjIndexItem>{
 	private String version; //版本号
 	@Column(name="OBJ_INDEXNO")
 	private String objIndexNo;  //流水号 ：体系code+version S01.V01 之后可能用于存单独S01
-
+	
+	
+	//新加
+	@Column(name="PublicFlag")  //公开为1，私有为0 
+	private String PublicFlag = "";
+	
+	@Column(name="BelongOrgcode")  //市公司	区县公司BelongOrgcode
+	private String BelongOrgcode = "";
+	
+	@Column(name="ALARMFLAG")  //1 报警 0 不报警
+	private String alarmFlag = "";  
+	
+	@Column(name="EXAMFLAG")  //1 报警 0 不报警
+	private String examFlag = ""; 
+	
+	@Column(name="EXAMTIME")  //M01表示每年1月为考核时段
+	private String examTime = ""; 
 	
 //	public ObjIndexItem parent;
 //	public List<ObjIndexItem> children = new ArrayList<ObjIndexItem>();
@@ -347,6 +363,56 @@ public class ObjIndexItem implements Comparable<ObjIndexItem>{
 
 	public void setMinline(String minline) {
 		this.minline = minline;
+	}
+
+
+	public String getPublicFlag() {
+		return PublicFlag;
+	}
+
+
+	public void setPublicFlag(String publicFlag) {
+		PublicFlag = publicFlag;
+	}
+
+
+	public String getBelongOrgcode() {
+		return BelongOrgcode;
+	}
+
+
+	public void setBelongOrgcode(String belongOrgcode) {
+		BelongOrgcode = belongOrgcode;
+	}
+
+
+	public String getAlarmFlag() {
+		return alarmFlag;
+	}
+
+
+	public void setAlarmFlag(String alarmFlag) {
+		this.alarmFlag = alarmFlag;
+	}
+
+
+	public String getExamFlag() {
+		return examFlag;
+	}
+
+
+	public void setExamFlag(String examFlag) {
+		this.examFlag = examFlag;
+	}
+
+
+	public String getExamTime() {
+		return examTime;
+	}
+
+
+	public void setExamTime(String examTime) {
+		this.examTime = examTime;
 	}
 	
 

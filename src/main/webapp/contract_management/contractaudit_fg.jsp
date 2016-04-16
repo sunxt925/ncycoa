@@ -78,24 +78,125 @@ $(function() {
 		</td>
 	</tr>
 	
+
+	
 	<tr>
 		<td align="right"><label class="Validform_label"> 合同类别 </label></td>
 		<td class="value">
+		
 		<c:if test="${contract.type == 0 || contract.type == null}">
-		<label>工程合同</label>
+		<label>其他合同</label>
 		</c:if>
 		<c:if test="${contract.type == 1}">
-		<label>采购合同</label>
+		<label>买卖合同</label>
 			
 		</c:if>
 		<c:if test="${contract.type == 2}">
-		<label>维修合同</label>
+		<label>租赁合同</label>
+		</c:if>
+		<c:if test="${contract.type == 3}">
+		<label>仓储合同</label>
+		</c:if>
+		<c:if test="${contract.type == 4}">
+		<label>技术合同</label>
+		</c:if>
+		<c:if test="${contract.type == 5}">
+		<label>建设施工(维修)合同</label>
+		</c:if>
+		<c:if test="${contract.type == 6}">
+		<label>承揽合同</label>
+		</c:if>
+		<c:if test="${contract.type == 7}">
+		<label>委托合同</label>
+		</c:if>
+		<c:if test="${contract.type == 8}">
+		<label>赠与合同</label>
+		</c:if>
+		<c:if test="${contract.type == 9}">
+		<label>运输合同</label>
+		</c:if>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	
+	
+	<tr>
+		<td align="right"><label class="Validform_label"> 实施方式</label></td>
+		<td class="value">
+		
+		<c:if test="${contract.contactMethod == 0 || contract.contactMethod == null}">
+		<label>公开招标</label>
+		</c:if>
+		<c:if test="${contract.contactMethod == 1}">
+		<label>邀请招标</label>
+			
+		</c:if>
+		<c:if test="${contract.contactMethod == 2}">
+		<label>竞争性谈判</label>
+		</c:if>
+		<c:if test="${contract.contactMethod == 3}">
+		<label>询价</label>
+		</c:if>
+		<c:if test="${contract.contactMethod == 4}">
+		<label>单一来源</label>
 		</c:if>
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
 	
 	<tr>
+		<td align="right"><label class="Validform_label"> 审批事项</label></td>
+		<td class="value">
+		
+		<c:if test="${contract.auditctx == 0 || contract.auditctx == null}">
+		<label>签订主合同</label>
+		</c:if>
+		<c:if test="${contract.auditctx == 1}">
+		<label>签订补充协议</label>
+			
+		</c:if>
+		<c:if test="${contract.auditctx == 2}">
+		<label>签订变更协议</label>
+		</c:if>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 合同内容 </label></td>
+		<td class="value">
+		<label>${contract.content}</label>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 合同对方名称 </label></td>
+		<td class="value">
+		<label>${contract.partyName}</label>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 合同对方住所 </label></td>
+		<td class="value">
+		<label>${contract.partyaddress}</label>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 合同对方类型 </label></td>
+		<td class="value">
+		<label>${contract.partyType}</label>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><label class="Validform_label"> 合同对方资本 </label></td>
+		<td class="value">
+		<label>${contract.partyRegValue}</label>
+		<span class="Validform_checktip"></span>
+		</td>
+	</tr>
+	<%-- <tr>
 		<td align="right"><label class="Validform_label"> 甲方 </label></td>
 		<td class="value">
 		<label>${contract.partyA}</label>
@@ -110,7 +211,7 @@ $(function() {
 		<label>${contract.partyB}</label>
 		<span class="Validform_checktip"></span>
 		</td>
-	</tr>
+	</tr> --%>
 	
 	<tr>
 		<td align="right"><label class="Validform_label"> 合同金额 </label></td>
@@ -182,7 +283,7 @@ $(function() {
 					   <tr>
 					     <td><textarea name="comment" id="comment" style="width: 400px;height: 100px">同意</textarea></td>
 					   </tr>
-					    <tr>
+					  <!--   <tr>
 		                 <td align="left"><label class="Validform_label"> 承办部门分管领导 </label>
 		                                  <input class="inputxt" id="chengbanleadername" name="chengbanleadername">
 		                                  <input type="hidden" id="chengbanleader" name="chengbanleader">
@@ -198,7 +299,7 @@ $(function() {
 		                                  <a id="btn_selectobject2" href="#">选择</a>
 		                 </td>
 		                    
-	                   </tr>
+	                   </tr> -->
 					   <tr>
 					   <td>
 					  
@@ -229,22 +330,24 @@ $(function() {
 </form>
 <script type="text/javascript">
 function sub(val){
-	if(val=="true"){
+	/* if(val=="true"){
 		var chengbanleadername = $('#chengbanleadername').val();
 		var caigouleadername = $('#caigouleadername').val();
-		if(chengbanleadername==""){
+		if(chengbanleadername==""&&caigouleadername==""){
 			alert('请选择分管领导');
 		}else{
 			$('#outcome').val(val);
 			$('#formobj').submit();
 			ret();
 		}
-	}else{
+	//}else{
 		$('#outcome').val(val);
 		$('#formobj').submit();
 		ret();
-	}
-	
+	} */
+	$('#outcome').val(val);
+	$('#formobj').submit();
+	ret();
 	
 }
 function ret(){
