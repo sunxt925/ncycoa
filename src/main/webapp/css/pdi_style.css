@@ -1,0 +1,56 @@
+@CHARSET "UTF-8";
+body{
+	width:100%;height:100%;margin:0 3px;padding:0;overflow:hidden;
+}
+.pdi_choose{
+	margin-top:10px;
+}
+.pdi_choosefield{
+/* 	width:900px; */
+}
+.pdi_choose_target{
+	width: 294px;
+    float: left;
+}
+.pdi_choose_year{
+	width:232px;
+	float:left;
+	line-height: 28px;
+}
+.pdi_query{
+
+	margin-top:3px;
+	width:66px;
+	
+}
+*{font-size:13px; font-family:微软雅黑,新宋体}
+.pdi_content{
+	background:#000;
+	display:block;
+}
+.pdi_view_target{
+	float:left;
+	width:300px;
+	border:2px solid #000;
+	
+}
+.cid_a{
+	 position: relative; text-decoration: none; border-bottom: 1px dotted #ccc; padding-bottom: 5px;
+}
+.cid_a a:hover{
+	border-bottom: 1px solid #ccc;
+	
+}
+.pdi_input_target{
+	width:600px;
+}
+.pdi_view_targetul ul{
+	
+}
+.pdi_view_targetul ul  li{
+	list-style-type:none; 
+	margin:0px;
+	background:#CCC;
+}
+.pdi_view_targetul ul  li a{ display:block; width: 100%; background:#ccc; }  
+.pdi_view_targetul ul  li a:hover{ background:#999; }
