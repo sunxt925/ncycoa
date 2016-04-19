@@ -121,7 +121,7 @@ function select(indexname,indexCode){
         	  num++;
         	  if(num>=2 && p.length-num>0){
         			//alert(num);
-        	  	$("<td align=center width=100px name=\"objcode\" data-options=\"field:'"+value['obj']+"'\">"+value['obj']+"</td>").appendTo(tr);
+        	  	$("<td align=center width=100px  data-options=\"field:'"+value['obj']+"'\">"+value['obj']+"<input type=\"hidden\" name=\"objcode\" value=\""+value['obj']+"\"></td>").appendTo(tr);
         	  }
         	  if(num==1){
         		   type = value['objtype'];
@@ -143,7 +143,7 @@ function select(indexname,indexCode){
         	  for(var i=1;i<=4;i++){
         		  tr=$("<tr></tr>");
         		  
-        		  $("<td align=center width=30px name=\"time\">M0"+i+"</td>").appendTo(tr);
+        		  $("<td align=center width=30px >"+"M0"+i+"<input type=\"hidden\" name=\"time\" value=\""+"M0"+i+"\"></td>").appendTo(tr);
         		  for(var j=0;j<count;j++)
         			  $("<td align=center width=50px><input name=\"plannumber\" align=center type=\"text\" ></td>").appendTo(tr);
         		  tr.appendTo(tbody);

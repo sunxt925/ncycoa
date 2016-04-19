@@ -148,12 +148,13 @@ public class DataInputController {
 		 * */
 		 
 			@RequestMapping(params="saveplanobj")
-			public void saveplanObj(HttpServletRequest request, HttpServletResponse response) throws IOException{
+			public ModelAndView saveplanObj(HttpServletRequest request, HttpServletResponse response) throws IOException{
 //				TargetResult 
-				List<TargetResult> TargetResults = new ArrayList();
+				//List<TargetResult> TargetResults = new ArrayList();
+				String message="";
 				String indexCode=request.getParameter("indexCode");
-				String archCode=request.getParameter("archcode");
-				String[] objectCode=request.getParameterValues("objCode");
+				String archCode=request.getParameter("archCode");
+				String[] objectCode=request.getParameterValues("objcode");
 				String[] time=request.getParameterValues("time");
 				String[] planValue = request.getParameterValues("plannumber");
 				int count=0;
@@ -165,10 +166,24 @@ public class DataInputController {
 						targetResult.setSeason(time[i]);
 						targetResult.setObjectCode(objectCode[j]);
 						targetResult.setPlanValue(planValue[count++]);
+						try {
+							//保存到数据库中
+						systemService.saveEntity(targetResult);
+						 message = "更新成功";
+						System.out.println(message);
+						}catch (Exception e) {
+							 message = "更新失败";
+							System.out.println(message);
+						}
+						//TargetResults.add(targetResult);
 						
 					}
 				}
 				
+				ModelAndView mav = new ModelAndView();
+				mav.addObject("message", message);	
+				mav.setViewName("targetdatamanage/data_input/plan_data_input");
+				return mav;
 				
 			}
 		/**
