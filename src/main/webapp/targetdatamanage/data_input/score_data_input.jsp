@@ -27,7 +27,7 @@
 <body id="div_shade">
  
 <div class="pdi_choose">
-<form id="forminput" name="forminput" action="datainput.htm?getcompleteTarget"  method="post">
+<form id="forminput" name="forminput" action="datainput.htm?getscoreTarget"  method="post">
 	<!-- <p>请选择指标体系和年份:</p> -->
 	<fieldset class="pdi_choosefield">
 			<legend>选择指标体系和年份</legend>
@@ -115,7 +115,7 @@ function cid_M(season){
 	if(archcode==""){
 		alert("请选择体系");
 	}else{
-	var ajaxCallUrl="datainput.htm?getcompleteobjbytype";
+	var ajaxCallUrl="datainput.htm?getscoreobjbytype";
 	$.ajax({
 		type:"post",
 		traditional:true,
@@ -124,7 +124,7 @@ function cid_M(season){
         success:function(data){ 
          
         	var p=eval(data);
-        	 var form=$("<form id=\"formsave\" name=\"formsave\" action=\"datainput.htm?savecomplateobj\"  method=\"post\"></form>");
+        	 var form=$("<form id=\"formsave\" name=\"formsave\" action=\"datainput.htm?savescoreobj\"  method=\"post\"></form>");
              form.appendTo(tagettable);
         	  var table=$("<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" class=\"easyui-datagrid\">");
               table.appendTo(form);
@@ -156,7 +156,7 @@ function cid_M(season){
             	  for(var i=0;i<res_count;i++)
             		  {
             		 // alert(p[5].obj_res[i].realValue);
-            		  completenums[i]=p[5].obj_res[i].realValue;
+            		  completenums[i]=p[5].obj_res[i].score;
             		  }
             		 
               }
@@ -170,10 +170,10 @@ function cid_M(season){
                 	
      			 	if(completenums.length>1){
      			 		
-     				  $("<td align=center width=50px><input name=\"completenumber\" align=center type=\"text\" value='"+completenums[com_count++] +"'></td>").appendTo(tr);
+     				  $("<td align=center width=50px><input name=\"scorenumber\" align=center type=\"text\" value='"+completenums[com_count++] +"'></td>").appendTo(tr);
      				
      				 }else{
-     					 $("<td align=center width=50px><input name=\"completenumber\" align=center type=\"text\" value=''></td>").appendTo(tr);	
+     					 $("<td align=center width=50px><input name=\"scorenumber\" align=center type=\"text\" value=''></td>").appendTo(tr);	
      			 	}
      			 
      			 }
