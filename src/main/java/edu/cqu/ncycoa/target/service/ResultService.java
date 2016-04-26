@@ -65,16 +65,17 @@ public class ResultService extends AbstractBaseDaoImpl{
 		}
 	}
 	
-	public static String getDataByYears(String archcode,String objcode,String startyear,String endyear,String season){
+	public static String getDataByYears(String archcode,String objcode,String indexcode,String startyear,String endyear,String season){
 		archcode=archcode.substring(0, 7);
 		objcode=objcode.substring(0,objcode.length()-1);
+		indexcode=indexcode.substring(0,indexcode.length()-1);
 		String objs="";
 		String scores="";
 		String years="";
 		try {
 			DBObject db = new DBObject();
 
-			String sql = "select * from TBM_OBJTOTALSCORE where arch_code like '" + archcode + "%' and obj_code='"+objcode+"' and season='"+season+"'";
+			String sql = "select * from TBM_OBJRESULT where arch_code like '" + archcode + "%' and obj_code='"+objcode+"'and index_code='"+indexcode+"' and season='"+season+"'";
 			System.out.println(sql);
 			DataTable dt = db.runSelectQuery(sql);
 			if (dt != null && dt.getRowsCount() >= 0) {
@@ -82,7 +83,7 @@ public class ResultService extends AbstractBaseDaoImpl{
 					DataRow r = dt.get(i);
 					//objs=objs+r.getString("OBJ_CODE")+",";
 					years=years+r.getString("YEAR")+",";
-					scores=scores+r.getString("TOTALSCORE")+",";
+					scores=scores+r.getString("REAL_VALUE")+",";
 				}
 			}
 			//objs=objs.substring(0, objs.length()-1);

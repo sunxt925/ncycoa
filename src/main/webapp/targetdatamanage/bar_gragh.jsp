@@ -36,6 +36,7 @@ String basePath = request.getScheme()+"://"+
   UserInfo u=(UserInfo)request.getSession().getAttribute("UserInfo");
   String archcode = request.getParameter("archcode");
   String objcode = request.getParameter("objcode");
+  String indexcode = request.getParameter("indexcode");
   String startyear ="1";
    String endyear = "1";
  // String startyear = request.getParameter("startyear");
@@ -43,7 +44,7 @@ String basePath = request.getScheme()+"://"+
   String season=request.getParameter("season");
   String result="";
   if(request.getParameter("type").equals("t")){
-	  result=ResultService.getDataByYears(archcode,objcode,startyear,endyear,season);
+	  result=ResultService.getDataByYears(archcode,objcode,indexcode,startyear,endyear,season);
   }else{
 	  result=ResultService.getDataBySeasons(archcode,objcode,startyear,endyear);
   }

@@ -56,6 +56,20 @@ public class ObjIndexArchUserController {
 		return mav;
 	}
 	
+	@RequestMapping(params="getIndexByArch")
+	public ModelAndView getIndexByArch(HttpServletRequest request, HttpServletResponse response){
+		String arch=request.getParameter("arch");
+		arch=arch.substring(0,arch.length()-1);
+		System.out.println("'"+arch+"'");
+		String jpql="FROM ObjIndexItem as o where o.ParentIndexCode='"+arch+"'";
+		List<ObjIndexItem> items=systemService.readEntitiesByJPQL(jpql, ObjIndexItem.class);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("indexList", items);
+		mav.setViewName("targetdatamanage/selectindex");
+		return mav;
+	}
+	
 	@RequestMapping(params="indexarchuserlist_c")
 	public ModelAndView indexarchuserlist_c(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mav = new ModelAndView();

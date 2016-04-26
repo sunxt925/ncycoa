@@ -43,12 +43,18 @@ String basePath = request.getScheme()+"://"+
 		<input id="objname" name="objname" type="text" style="width:150px;background-color:white;" readonly="readonly">
 		<a id="objsel" href="#" class="easyui-linkbutton l-btn l-btn-plain" data-options="plain:true,iconCls:'icon-search'" >
 		 <span >选择</span></a>
+		 
+   <label for="objname">指标选择: </label>
+	   	<input id="indexitemcode" name="indexitemcode" type="hidden" value="${indexcode}">
+		<input id="indexitemname" name="indexitemname" type="text" style="width:150px;background-color:white;" readonly="readonly">
+		<a id="indexitemsel" href="#" class="easyui-linkbutton l-btn l-btn-plain" data-options="plain:true,iconCls:'icon-search'" >
+		 <span >选择</span></a>
 	<label >季度选择: </label>
 	 <select class="inputxt" id="season" name="season" style="width:156px;">
-		<option value="Q01">一季度</option>
-		<option value="Q02">二季度</option>
-		<option value="Q03">三季度</option>
-		<option value="Q04">四季度</option>
+		<option value="S01">一季度</option>
+		<option value="S02">二季度</option>
+		<option value="S03">三季度</option>
+		<option value="S04">四季度</option>
 		</select>
 <!--        <span> 年度选择：</span><input id="startyear" name="startyear" class="easyui-textbox"> -->
 <!--        <input id="endyear" name="endyear" class="easyui-textbox"> -->
@@ -72,20 +78,19 @@ String basePath = request.getScheme()+"://"+
        
         if($("#archcode").val()==""){
         	alert("请选择体系");
-        }
-       /*  if($("#startyear").val()==""){
-        	alert("请选择起始年度");
-        }
-        if($("#endyear").val()==""){
-        	alert("请选择结束年度");
-        } */
+        }else if($("#objectcode").val()==""){
+        	alert("请选择对象");
+        }else if($("#indexitemcode").val()==""){
+        	alert("请选择指标");
+        } 
         if($("#archcode").val()!=""&&$("#startyear").val()!=""&&$("#endyear").val()!=""){
         	var archcode=$("#archcode").val();
+        	var indexcode=$("#indexitemcode").val();
         	var start=$("#startyear").val();
         	var end=$("#endyear").val();
         	var objcode=$("#objectcode").val();
         	var season=$("#season").val();
-        	window.open("targetdatamanage/bar_gragh.jsp?archcode="+archcode+"&objcode="+objcode+"&type=t&season="+season,"bar_gragh");
+        	window.open("targetdatamanage/bar_gragh.jsp?archcode="+archcode+"&objcode="+objcode+"&indexcode="+indexcode+"&type=t&season="+season,"bar_gragh");
         	//window.open("targetdatamanage/bar_gragh.jsp?archcode="+archcode+"&objcode="+objcode+"&startyear="+start+"&endyear="+end,"bar_gragh");
         }
    }
@@ -100,7 +105,13 @@ String basePath = request.getScheme()+"://"+
         
         $("#objsel").click(function(){
         	var code=$("#archcode").val();
-        	createwindow('选择体系','objindexarchuser.htm?getObjByArch&arch='+code,500,500,returnobjValue );
+        	createwindow('选择对象','objindexarchuser.htm?getObjByArch&arch='+code,500,500,returnobjValue );
+    	    });
+        
+        $("#indexitemsel").click(function(){
+        
+        	var code=$("#archcode").val();
+        	createwindow('选择对象','objindexarchuser.htm?getIndexByArch&arch='+code,500,500,returnindexValue );
     	    });
         
         function returnorgValue(data){
@@ -118,6 +129,14 @@ String basePath = request.getScheme()+"://"+
         	
         	$('#objectcode').val(org.archcode);
         	$('#objname').val(org.archname);
+        	
+        }   
+        function returnindexValue(data){
+        	
+        	var org = data.code;
+        	
+        	$('#indexitemcode').val(org.archcode);
+        	$('#indexitemname').val(org.archname);
         	
         }   
             
