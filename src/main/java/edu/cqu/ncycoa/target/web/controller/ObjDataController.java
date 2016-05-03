@@ -158,7 +158,7 @@ public class ObjDataController {
 		mav.setViewName("targetdatamanage/tshow_c");
 		return mav;
 	}
-	@RequestMapping(params="hshow_c") //公司同比展示
+	@RequestMapping(params="hshow_c") //公司环比展示
 	public ModelAndView hshow_c(HttpServletRequest request, HttpServletResponse response){
 		
 		ModelAndView mav = new ModelAndView();

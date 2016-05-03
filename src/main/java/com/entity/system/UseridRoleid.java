@@ -1,9 +1,8 @@
 package com.entity.system;
 
-import com.common.Format;
 import com.db.DBObject;
-import com.common.*;
-import com.db.*;
+import com.db.DataRow;
+import com.db.DataTable;
 public class UseridRoleid {
 	private String user_code;
 	
@@ -14,6 +13,38 @@ public class UseridRoleid {
 	public UseridRoleid()
 	{
 		
+	}
+	
+	
+	public static boolean isSuperAdmin(String staffcode){
+		
+		try
+		{
+			//System.out.println(usercode);
+			DBObject db = new DBObject();
+			boolean issuperadmin = false;
+			String base_sql="select user_code,s.staffcode,issuperuser,rolecode from system_user s inner JOIN system_role_member srm on srm.staffcode=s.staffcode where user_code='"+staffcode.substring(staffcode.length()-6, staffcode.length())+"' order by user_code";
+			//System.out.println(base_sql);
+			//String base_sql = "select user_code,s.staffcode,issuperuser,rolecode,level_code from system_user s inner JOIN system_role_member srm  inner JOIN system_menu_privillege smp on smp.role_id=srm.rolecode  on srm.staffcode=s.staffcode where user_code='"+usercode+"'";
+
+			//String sql_run = Format.getFySql(base_sql, pageno, perpage);
+			DataTable dataTable = db.runSelectQuery(base_sql);
+			for(int i=0;i<dataTable.getRowsCount();i++){
+				DataRow row = dataTable.get(i);
+				if(row.getString("rolecode").equals("007")||row.getString("rolecode").equals("004")){
+					issuperadmin = true;
+					break;
+				}
+				
+			}
+			
+			return issuperadmin;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	public DataTable getUseridRoleid(String usercode)

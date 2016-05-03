@@ -39,7 +39,10 @@ import com.common.WordUtils;
 import com.dao.system.StaffDao;
 import com.dao.system.UnitDao;
 import com.entity.index.AllMeritCollection;
+import com.entity.system.StaffInfo;
+import com.entity.system.SystemRole;
 import com.entity.system.UserInfo;
+import com.entity.system.UseridRoleid;
 
 import edu.cqu.ncycoa.common.dto.AjaxResultJson;
 import edu.cqu.ncycoa.common.dto.DataGrid;
@@ -114,6 +117,7 @@ public class ContractManagementController {
 	public void save(ContractInfo contract, HttpServletRequest request, HttpServletResponse response) {
 		AjaxResultJson j = new AjaxResultJson();
 		String message;
+		UserInfo userInfo = (UserInfo)request.getSession().getAttribute("UserInfo");
 	//	System.out.println(contract.getContractValue());
 		if (contract.getId() != null) {
 			message = "合同更新成功";
@@ -132,6 +136,8 @@ public class ContractManagementController {
 			contract.setAppDate(new Date());
 			contract.setPartyA("四川省烟草公司南充市公司");
 			contract.setPartyB(contract.getPartyName());
+
+			contract.setApplyUserCode(userInfo.getStaffcode());
 			if(contract.getCaigouleader()==null||contract.getCaigouleader().equals("")){
 				contract.setCaigouleader(contract.getChengbanleader());
 			}
@@ -244,7 +250,8 @@ public class ContractManagementController {
 		paras.put("director", UnitDao.getCityAudit());
 		
 		//1151130100140446,1151130100140040,1151130100140051,1151130100140070,1151130100140005
-		
+		IdentityService identityService=processEngine.getIdentityService();
+		identityService.setAuthenticatedUserId(((UserInfo)request.getSession().getAttribute("UserInfo")).getStaffcode());
 		processEngine.getRuntimeService().startProcessInstanceByKey(processID, objId, paras);
 		String processinstanceid = processEngine.getRuntimeService().
 				createProcessInstanceQuery().processInstanceBusinessKey(objId,processID).list().get(0).getProcessInstanceId();
@@ -261,8 +268,7 @@ public class ContractManagementController {
 		contractInfo.setProcessInstanceId(processinstanceid);//存入流程实例号
 		systemService.saveEntity(contractInfo);
 		
-		IdentityService identityService=processEngine.getIdentityService();
-		identityService.setAuthenticatedUserId(((UserInfo)request.getSession().getAttribute("UserInfo")).getStaffcode());
+	
 		List<Task> tasks = processEngine.getTaskService().createTaskQuery().taskAssignee(userinfo.getStaffcode()).processInstanceId(processinstanceid).orderByDueDate().desc().list();
 		processEngine.getTaskService().complete(tasks.get(0).getId());
 		
@@ -767,12 +773,20 @@ public class ContractManagementController {
 	public void dgData(ContractInfo contract, DataGrid dg, HttpServletRequest request, HttpServletResponse response) {
 		QueryDescriptor<ContractInfo> cq = new QueryDescriptor<ContractInfo>(ContractInfo.class, dg);
 		CommonService commonService = SystemUtils.getCommonService(request);
+		
+		UserInfo userInfo = (UserInfo)request.getSession().getAttribute("UserInfo");
 		//查询条件组装器
 		TypedQueryBuilder<ContractInfo> tqBuilder = QueryUtils.getTQBuilder(contract, request.getParameterMap());
 		if (StringUtils.isNotEmpty(dg.getSort())) {
 			tqBuilder.addOrder(new TQOrder(tqBuilder.getRootAlias() + "." + dg.getSort(), dg.getOrder().equals("asc")));
 		}
 		tqBuilder.addOrder(new TQOrder("inputDate", true));
+	
+		
+		if(!UseridRoleid.isSuperAdmin(userInfo.getStaffcode())){
+			tqBuilder.addRestriction("applyUserCode", "=", userInfo.getStaffcode());
+		}
+		
 		cq.setTqBuilder(tqBuilder);
 		commonService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dg);

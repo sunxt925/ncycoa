@@ -129,6 +129,9 @@ public class ContractInfo {
 	@Column(name="INPUTDATE")
 	private Date inputDate;//合同录入日期
 	
+	@Column(name="APPLYUSERCODE")
+	private String applyUserCode;//提交用户编码
+	
 	public String getContent() {
 		return content;
 	}
@@ -429,6 +432,14 @@ public class ContractInfo {
 
 	public void setInputDate(Date inputDate) {
 		this.inputDate = inputDate;
+	}
+
+	public String getApplyUserCode() {
+		return applyUserCode;
+	}
+
+	public void setApplyUserCode(String applyUserCode) {
+		this.applyUserCode = applyUserCode;
 	}
 
 	

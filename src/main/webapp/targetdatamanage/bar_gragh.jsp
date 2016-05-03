@@ -36,20 +36,32 @@ String basePath = request.getScheme()+"://"+
   UserInfo u=(UserInfo)request.getSession().getAttribute("UserInfo");
   String archcode = request.getParameter("archcode");
   String objcode = request.getParameter("objcode");
+  String indexcode = request.getParameter("indexcode");
   String startyear ="1";
    String endyear = "1";
  // String startyear = request.getParameter("startyear");
  // String endyear = request.getParameter("endyear");
   String season=request.getParameter("season");
   String result="";
+  String names="";
+  String scores="";
   if(request.getParameter("type").equals("t")){
-	  result=ResultService.getDataByYears(archcode,objcode,startyear,endyear,season);
+	  result=ResultService.getDataByYears(archcode,objcode,indexcode,startyear,endyear,season);
   }else{
-	  result=ResultService.getDataBySeasons(archcode,objcode,startyear,endyear);
+	  result=ResultService.getDataBySeasons(archcode,objcode,startyear,endyear,indexcode);
   }
   System.out.println(result);
-  String names=result.split(";")[0];
-  String scores=result.split(";")[1];
+  if(result.equals(";")){
+	  System.out.println("无数据");%>
+	  <body>
+	  <div id="main" style="height:400px;"><h2>没有查到相关数据</h2></div>
+	  </body>
+	  <% 
+  }else{
+	  System.out.println(result);
+	  names=result.split(";")[0];
+	  scores=result.split(";")[1];
+  
  %>
  <body>
     <div id="main" style="height:400px;"></div>
@@ -132,4 +144,5 @@ String basePath = request.getScheme()+"://"+
         myChart.setOption(option);
     </script>
 </body>
+<% } %>
 </html>
