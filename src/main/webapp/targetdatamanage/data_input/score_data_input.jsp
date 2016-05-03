@@ -8,7 +8,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/default/easyui.css">
-<link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/default/datalist.css">
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/icon.css">
 <link rel="stylesheet" type="text/css" href="css/pdi_style.css">
 <script type="text/javascript" src="jscomponent/jquery/jquery-1.8.0.min.js"></script>
@@ -31,14 +30,7 @@
 	<!-- <p>ÇëÑ¡ÔñÖ¸±êÌåÏµºÍÄê·Ý:</p> -->
 	<fieldset class="pdi_choosefield">
 			<legend>Ñ¡ÔñÖ¸±êÌåÏµºÍÄê·Ý</legend>
-		<div class="pdi_choose_target">
-			<label for="indexname">Ö¸±êÌåÏµ: </label>
-		   	<input id="archcode" name="archcode" type="hidden" value="${archcode}">
-			<input id="indexname" name="indexname" class="easyui-textbox" type="text" style="width:150px;background-color:white;" readonly="readonly">
-			 <a id="indexsel" href="#" class="easyui-linkbutton l-btn l-btn-plain" data-options="plain:true,iconCls:'icon-search'" >
-			 <span >Ñ¡Ôñ</span></a> 	  
-		</div>
-		<div class="pdi_choose_year">
+			<div class="pdi_choose_year">
 		<label for="yearsel">Äê¶È: </label>
 		<input id="yearsel" type="number" name="year"   class="easyui-textbox pdi_input_year"  value="2016">
 			<!-- <input id="yearsel" name="year" class="easyui-combobox combobox-f combo-f" style="width: 80px; display: none;" data-options="data:[{text:'2016',value:2016,selected:true}],valueField:'value',textField:'text',onSelect:onYearChanged">
@@ -46,6 +38,14 @@
 			 -->
 			
 	</div>
+		<div class="pdi_choose_target">
+			<label for="indexname">Ö¸±êÌåÏµ: </label>
+		   	<input id="archcode" name="archcode" type="hidden" value="${archcode}">
+			<input id="indexname" name="indexname" class="easyui-textbox" type="text" style="width:150px;background-color:white;" readonly="readonly">
+			 <a id="indexsel" href="#" class="easyui-linkbutton l-btn l-btn-plain" data-options="plain:true,iconCls:'icon-search'" >
+			 <span >Ñ¡Ôñ</span></a> 	  
+		</div>
+		
 	<!--  <input type="submit"  class="pdi_query" value="²éÑ¯"/>  -->
 	</fieldset>
 	
@@ -55,150 +55,55 @@
 </div>
 <div class="pdi_input_target" id="content" style="float:right;margin-top: 6px;margin-right:424px;"></div>
 <div class="pdi_content">
-	<div class="pdi_view_target" style="width:210px;height:641px">
-	 <table class="easyui-datagrid"  style="width:210px;height:641px">
-        <thead>
-            <tr>
-                <th data-options="field:'itemid',width:200">Ê±¼ä</th>
-               
-            </tr>
-        </thead>
-        <tbody>
-        	 <c:forEach begin="1" end="9" var="item" >
-        	   <tr><td><a href="#" onclick="cid_M(this.innerHTML)">M0${item}</a> </td></tr>
-		      </c:forEach>
-	        <tr><td ><a href="#" onclick="cid_M(this.innerHTML)">M10</a> </td></tr>
-	        <tr><td><a href="#"  onclick="cid_M(this.innerHTML)">M11</a> </td></tr>
-       	    <tr><td><a href="#"  onclick="cid_M(this.innerHTML)">M12</a> </td></tr>
-       	     <c:forEach begin="1" end="4" var="item" >
-        	   <tr><td><a href="#"  onclick="cid_M(this.innerHTML)">S0${item}</a> </td></tr>
-		      </c:forEach>
-		       <c:forEach begin="1" end="2" var="item" >
-        	   <tr><td><a href="#"  onclick="cid_M(this.innerHTML)">H0${item}</a> </td></tr>
-		      </c:forEach>
-		      <tr><td><a href="#"  onclick="cid_M(this.innerHTML)">Y00</a> </td></tr>
-		      <tr><td><a href="#"  onclick="cid_M(this.innerHTML)">D00</a> </td></tr>
-        </tbody>
-    </table>
-		
-	</div>
-	
+<form id="formsave" action="datainput.htm?savescoreobj" method="post">  
+<div id="score" >
 </div>
+ </form>
+<!--  <div>
+ <table id="score_tb" class="easyui-datagrid" style="width:700px;height:250px;" data-options="singleSelect:true,onClickRow:onClickRow">
+ <thead data-options="frozen:true">
+ <tr>
+ <th data-options="field:'indexname'">Ö¸±ê</th>
+ <th data-options="field:'time'">Ê±¼ä¶Î</th>
+ </tr>
+ </thead>
+ <thead>
+ <tr>
+ <th data-options="field:'obj1'">¶ÔÏóÒ»</th>
+ <th data-options="field:'obj2'">¶ÔÏó¶þ</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr><td>Ö¸±êÒ»</td>
+ <td>M01</td>
+ <td>
+ 	<div align="right"><span>¼Æ»®Öµ</span><input type="text" style="width:100px;"></div><br/>
+ 	<div align="right"><span>Íê³ÉÖµ</span><input type="text" style="width:100px;"></div><br/>
+ 	<div align="right"><span>µÃ·Ö</span><input type="text" style="width:100px;"></div>
+ </td>
+ <td>
+ 	<div align="right"><span>¼Æ»®Öµ</span><input type="text" style="width:100px;"></div><br/>
+ 	<div align="right"><span>Íê³ÉÖµ</span><input type="text" style="width:100px;"></div><br/>
+ 	<div align="right"><span>µÃ·Ö</span><input type="text" style="width:100px;"></div>
+ </td></tr>
+ </tbody>
+ </table>
+ </div> -->
+</div>
+
 <input type="hidden" value="${message}" id="message"> 
 </body>
 <script type="text/javascript">
+function onClickRow() {
+	
+}
 $(document).ready(function(){ 
 	var message=document.getElementById("message");
 	if(message.value!=""){
 		alert(message.value);
 	}
 });
-function cid_M(season){
 
-	var tagettable=$(".pdi_input_target");
-	//var season=this.innerHTML;
-	//alert(season);
-	var type;
-	/* if(season.indexOf("M")>-1){
-		type="M";
-	}else if(season.indexOf("S")>-1){
-		type="S";
-	}else if(season.indexOf("H")>-1){
-		type="H";
-	}else if(season.indexOf("Y")>-1){
-		type="Y";
-	}else if(season.indexOf("D")>-1){
-		type="D";
-	} */
-	document.getElementById('content').innerHTML = "";
-	var archcode = document.getElementById("archcode").value.trim();
-	if(archcode==""){
-		alert("ÇëÑ¡ÔñÌåÏµ");
-	}else{
-	var ajaxCallUrl="datainput.htm?getscoreobjbytype";
-	$.ajax({
-		type:"post",
-		traditional:true,
-		url:ajaxCallUrl,  
-        data:{archcode:archcode,type:season},
-        success:function(data){ 
-         
-        	var p=eval(data);
-        	 var form=$("<form id=\"formsave\" name=\"formsave\" action=\"datainput.htm?savescoreobj\"  method=\"post\"></form>");
-             form.appendTo(tagettable);
-        	  var table=$("<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" class=\"easyui-datagrid\">");
-              table.appendTo(form);
-              var thead = $("<thead></thead>");
-              var tr=$("<tr></tr>");
-              thead.appendTo(table);
-              tr.appendTo(thead);
-             // var count = 0;
-              var type ;
-              $("<th align=center width=100px data-options=\"field:'code'\">Ê±¼ä¶Î</th>").appendTo(tr); 
-              var obj_count = p[0].obj_count;
-             
-              for(var i=0;i<obj_count;i++){
-         
-               $("<td align=center width=100px data-options=\"field:'"+p[1].objs[i].uniIndexCode+"'\">"+p[1].objs[i].uniIndexCode+"<input type='hidden' name='objectcode' value='"+p[1].objs[i].objectcode+"'></td>").appendTo(tr);
-                 
-              }
-              tr.appendTo(thead);
-              thead.appendTo(table);
-              tr=null;
-             var tbody = $("<tbody></tbody>");
-             tbody.appendTo(table);
-              var index_count = p[2].index_count;
-           	
-              var completenums=new Array();
-              var res_count=p[4].res_count;
-              var com_count=0;
-              if(res_count!=0){
-            	  for(var i=0;i<res_count;i++)
-            		  {
-            		 // alert(p[5].obj_res[i].realValue);
-            		  completenums[i]=p[5].obj_res[i].score;
-            		  }
-            		 
-              }
-              for(var i=0;i<index_count;i++){
-            	  tr=$("<tr></tr>");
-            	//  alert(p[3].indexs[i].indexName);
-                  $("<td align=center width=100px data-options=\"field:'"+p[3].indexs[i].indexName+"'\">"+p[3].indexs[i].indexName+"<input type=\"hidden\" name=\"indexcode\" value=\""+p[3].indexs[i].indexCode+"\"></td>").appendTo(tr);
-                 
-                  for(var j=0;j<obj_count;j++)
-     			 	{
-                	
-     			 	if(completenums.length>1){
-     			 		
-     				  $("<td align=center width=50px><input name=\"scorenumber\" align=center type=\"text\" value='"+completenums[com_count++] +"'></td>").appendTo(tr);
-     				
-     				 }else{
-     					 $("<td align=center width=50px><input name=\"scorenumber\" align=center type=\"text\" value=''></td>").appendTo(tr);	
-     			 	}
-     			 
-     			 }
-     				  tr.appendTo(tbody);
-                 }
-
-              tbody.appendTo(table);
-            
-            	/*  trend.appendTo(table); */
-                $("</table>").appendTo(form);
-                 $("<input class='com_submit' type=\"submit\" value=\"Ìá½»\">").appendTo(form);
-                form.appendTo(tagettable);
-                $("<input type=\"hidden\" name=\"season\" value=\""+season+"\">").appendTo(form);
-                form.appendTo(tagettable);
-                $("<input type=\"hidden\" name=\"archCode\" value=\""+archcode+"\">").appendTo(form); 
-                form.appendTo(tagettable);
-               // alert(obj_count); 
-              
-        },
-        error: function(request) {
-            alert("Connection error");
-        }
-    });
-	}
-}
 $("#indexsel").click(function(){
 	//	alert("dsa");
 		/*  createwindow('Ñ¡ÔñÌåÏµ','objresult.htm?getArch&class=C',500,500,returnorgvalue );  */
@@ -211,6 +116,32 @@ function returnorgValue(data){
 		
 		$('#archcode').val(org.archcode);
 		$('#indexname').val(org.archname);
+		
+		var tagettable=$(".pdi_content");
+		
+		var archcode = document.getElementById("archcode").value.trim();
+			//$("#comple_tab").attr('src','complete_datagrid.jsp?season=' + season + '&archcode=' + archcode );
+			 var ajaxCallUrl="datainput.htm?getscoreobjbytype1";
+			  $.ajax({
+			    type:"post",
+			    traditional:true,
+			    url:ajaxCallUrl,  
+			        data:{archcode:archcode},
+			        success:function(data){ 
+			         
+			          var p=eval(data);
+			          alert(p[0].table);
+			          var ddd=document.getElementById("score");
+			          ddd.innerHTML="";
+			          $('#score').append(p[0].table);
+			          $('#score_tb').datagrid();
+			        
+			              
+			        },
+			        error: function(request) {
+			            alert("Connection error");
+			        }
+			    });
 		
 	}    
 	    
@@ -229,12 +160,14 @@ function returnorgValue(data){
 				cache : false,
 				ok : function() {
 					$('#btn_ok', this.iframe.contentWindow.document).click();
+					
 					return true;
 				},
 				cancelVal : '¹Ø±Õ',
 				cancel : true/* ÎªtrueµÈ¼ÛÓÚfunction(){} */
 			});
 	}
+	
 	$.parser.parse();
 
 		  </script>

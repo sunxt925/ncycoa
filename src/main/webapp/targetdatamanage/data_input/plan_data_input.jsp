@@ -14,12 +14,47 @@
 <script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="jscomponent/easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="jscomponent/lhgdialog/lhgdialog.min.js?skin=iblue"></script>
-
+<script type="text/javascript">     
+       /*  $(function () {      
+            $('#plandata').datagrid({      
+                title: 'My Title',      
+                width: 600,      
+                height: 350,      
+                dataType: 'json',      
+                url: 'GetAjaxData.ashx?action=GetUserList2',      
+                columns: [[]],      
+                pagination: true,      
+                pageSize: 5,                //每页记录数      
+                pageList: [5, 10, 15, 20, 30, 50], //分页记录数数组      
+                onLoadSuccess: function (data, param) {      
+                          
+                }      
+            });      
+        });   */    
+    </script>  
+<style>
+    .btn1 {
+    font-size: 9pt;
+    color: #003399;
+    border: 1px #003399 solid;
+    color: #006699;
+    border-bottom: #93bee2 1px solid;
+    border-left: #93bee2 1px solid;
+    border-right: #93bee2 1px solid;
+    border-top: #93bee2 1px solid;
+    background-image: url(../images/bluebuttonbg.gif);
+    background-color: #e8f4ff;
+    cursor: hand;
+    font-style: normal;
+    width: 60px;
+    height: 22px;
+}
+</style> 
 </head>
 
 <body>
 <div class="pdi_choose">
-<form id="forminput" name="forminput" action="datainput.htm?getplanTarget"  method="post">
+<form id="forminput" name="forminput" action="datainput.htm?getplanTarget"  method="post" onsubmit="return check()">
 	<!-- <p>请选择指标体系和年份:</p> -->
 	<fieldset class="pdi_choosefield">
 			<legend>选择指标体系和年份</legend>
@@ -69,7 +104,15 @@
     </table>
 	</div>
 	<div class="pdi_input_target" style="float:left;margin-top: 6px;">
-	
+	<form id="formsave" action="datainput.htm?saveplanobj" method="post">     
+    <div>
+    
+    <table class="easyui-datagrid" id="plandata"> </table>
+    </div> 
+    <div style="margin-top:30px;">
+     <input id="submit" type="submit" value="提交" class="btn1" style="display:none;" onmouseover="this.style.background='##F4F4F4';"
+ onmouseout="this.style.background='#F0FFF0'"></div> 
+    </form>  
 	</div>
 </div>
 <!-- <table class="easyui-datagrid">    
@@ -92,168 +135,51 @@
 <input type="hidden" value="${message}" id="message"> 
 </body>
 <script type="text/javascript">
+function check(){
+	var archcode = document.getElementById("archcode").value.trim();
+	if(archcode==""){
+		alert("请选择体系");
+		return false;
+	}else{
+		return true;
+	}
+}
 $(document).ready(function(){ 
 	var message=document.getElementById("message");
 	if(message.value!=""){
 		alert(message.value);
 	}
+	
 });
+
 function select(indexname,indexCode){
 	/* alert(indexname);
 	alert(indexCode); */
-	var tagettable=$(".pdi_input_target");
+	//var tagettable=$("#plandata");
 	var archcode = document.getElementById("archcode").value;
-	var ajaxCallUrl="datainput.htm?getplanobj";
+	var ajaxCallUrl="datainput.htm?getplanobj1";
+//	alert(indexCode);
 	$.ajax({
 		type:"post",
 		traditional:true,
 		url:ajaxCallUrl,  
-        data:{indexname:indexname,archcode:archcode},
+        data:{indexname:indexname,archcode:archcode,indexCode:indexCode},
         success:function(data){ 
-          var p=eval(data);
-          tagettable.html("");
-          var form=$("<form id=\"formsave\" name=\"formsave\" action=\"datainput.htm?saveplanobj\"  method=\"post\"></form>");
-          form.appendTo(tagettable);
-          var table=$("<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" class=\"easyui-datagrid\">");
-          table.appendTo(form);
-          var thead = $("<thead></thead>");
-          var tr=$("<tr></tr>");
-          thead.appendTo(table);
-          tr.appendTo(thead);
-          var count = 0;
-          var type ;
-          var obj_result=0;
-          var plannums=new Array();
-          var i=0;
-      	  $("<th align=center width=100px data-options=\"field:'code'\">时间段</th>").appendTo(tr); 
-  		
-  		 var num = 0;
-  		 type = p[0].objtype;
- 	  	  obj_result=p[1].obj_count;
- 	  	  for(var i=0;i<obj_result;i++)
- 	  		{
- 	  		  plannums[i]=p[2].obj_res[i].planValue;
- 	  		//  alert(plannums[i]);
- 	  		}
- 	  	 count = p[p.length-1].count;
- 	  //	 alert("coubnt"+count);
- 	  	 for(var i=0;i<count;i++){
- 	  		// alert(p[3].obj[i].objectcode);
- 	  		$("<td align=center width=100px  data-options=\"field:'"+ p[3].obj[i].uniIndexCode+"'\">"+p[3].obj[i].uniIndexCode+"<input type=\"hidden\" name=\"objcode\" value=\""+p[3].obj[i].objectcode+"\"></td>").appendTo(tr);
- 		      
- 	  	 }
-        
-        
-          tr.appendTo(thead);
-          thead.appendTo(table);
-          tr=null;
-         var tbody = $("<tbody></tbody>");
-         tbody.appendTo(table);
-      	// alert(type);
-      	 //alert(count);
-      	  if(type=="M"){
-      		var com_count=0;
-        	  for(var i=1;i<=12;i++){
-        		  tr=$("<tr></tr>");
-        		  if(i<10){
-        			  $("<td align=center width=30px >"+"M0"+i+"<input type=\"hidden\" name=\"time\" value=\""+"M0"+i+"\"></td>").appendTo(tr);
-             		 
-        		  }else{
-        			  $("<td align=center width=30px >"+"M"+i+"<input type=\"hidden\" name=\"time\" value=\""+"M"+i+"\"></td>").appendTo(tr);
-             		  
-        		  }
-        		 for(var j=0;j<count;j++)
-        			 {
-        			 if(plannums.length>1){
-        				  $("<td align=center width=50px><input name=\"plannumber\" align=center type=\"text\" value='"+plannums[com_count++] +"'></td>").appendTo(tr);
-        		        	
-        			 }else{
-        				 $("<td align=center width=50px><input name=\"plannumber\" align=center type=\"text\" value=''></td>").appendTo(tr);
-     		        	
-        			 }
-        			 
-        			 }
-        				  tr.appendTo(tbody);
-        		  
-        	  }
-        	
-          } else if(type=="S"){
-        	  var com_count=0;
-        	// alert(plannums.length);
-        	  for(var i=1;i<=4;i++){
-        		  tr=$("<tr></tr>");
-        		  $("<td align=center width=30px >"+"S0"+i+"<input type=\"hidden\" name=\"time\" value=\""+"S0"+i+"\"></td>").appendTo(tr);
-        		  for(var j=0;j<count;j++)
-        		  {
-         			 if(plannums.length>1){
-        			  $("<td align=center width=50px><input name=\"plannumber\" align=center type=\"text\" value='"+plannums[com_count++] +"' ></td>").appendTo(tr);
-         			 }
-         			else{
-       				 $("<td align=center width=50px><input name=\"plannumber\" align=center type=\"text\" value=''></td>").appendTo(tr);
-    		        	
-       			 }
-        		  }
-        			  tr.appendTo(tbody);
-        	  }
-          }else if(type=="H"){
-        	  var com_count=0;
-        	  for(var i=1;i<=2;i++){
-        		  tr=$("<tr></tr>");
-        		  $("<td align=center width=30px >"+"H0"+i+"<input type=\"hidden\" name=\"time\" value=\""+"H0"+i+"\"></td>").appendTo(tr);
-        		  for(var j=0;j<count;j++)
-        		  {
-         			 if(plannums.length>1){
-        			  $("<td align=center width=50px><input name=\"plannumber\" align=center type=\"text\" value='"+plannums[com_count++] +"' ></td>").appendTo(tr);
-         			 }
-         			else{
-       				 $("<td align=center width=50px><input name=\"plannumber\" align=center type=\"text\" value=''></td>").appendTo(tr);
-    		        	
-       			 }
-        		  }
-        		  tr.appendTo(tbody);
-        	  }
-          }else if(type=="Y"){
-        	  var com_count=0;
-        	  tr=$("<tr></tr>");
-    		  $("<td align=center width=30px >Y00<input type=\"hidden\" name=\"time\" value=\"Y00\"></td>").appendTo(tr);
-    		  for(var j=0;j<count;j++)
-    		  {
-     			 if(plannums.length>1){
-    			  $("<td align=center width=50px><input name=\"plannumber\" align=center type=\"text\" value='"+plannums[com_count++] +"' ></td>").appendTo(tr);
-     			 }
-     			else{
-   				 $("<td align=center width=50px><input name=\"plannumber\" align=center type=\"text\" value=''></td>").appendTo(tr);
-		        	
-   			 }
-    		  }
-    		  tr.appendTo(tbody);
-          }else if(type=="D"){
-        	  var com_count=0;
-        	  tr=$("<tr></tr>");
-    		  $("<td align=center width=30px >D00<input type=\"hidden\" name=\"time\" value=\"D00\"></td>").appendTo(tr);
-    		  for(var j=0;j<count;j++)
-    		  {
-     			 if(plannums.length>1){
-    			  $("<td align=center width=50px><input name=\"plannumber\" align=center type=\"text\" value='"+plannums[com_count++] +"' ></td>").appendTo(tr);
-     			 }
-     			else{
-   				 $("<td align=center width=50px><input name=\"plannumber\" align=center type=\"text\" ></td>").appendTo(tr);
-		        	
-   			 }
-    		  }
-    		  tr.appendTo(tbody);
-          }
-      	  tbody.appendTo(table);
-      	  
-      	/*  trend.appendTo(table); */
-          $("</table>").appendTo(form);
-          $("<input type=\"submit\" value=\"提交\">").appendTo(form);
-          form.appendTo(tagettable);
-          $("<input type=\"hidden\" name=\"indexCode\" value=\""+indexCode+"\">").appendTo(form);
-          form.appendTo(tagettable);
-          $("<input type=\"hidden\" name=\"archCode\" value=\""+archcode+"\">").appendTo(form);
-          form.appendTo(tagettable);
-         /*  $("<input type=\"submit\" value=\"提交\">").appendTo(tagettable); */
+        	 var p=eval(data);
+             var columns=eval(p[0].colum);
+           //  alert(columns);
+             var url=eval(p[1].url);
+            // alert(url);
+              $('#plandata').datagrid({ 
+                width:600,
+                  height:350,
+                  singleSelect:true,
+               	 iconCls:'icon-edit',
+                  columns:columns,   
+              }).datagrid("loadData", url); 
+              
+              document.getElementById("submit").style.display='block';
+              
         },
         error: function(request) {
             alert("Connection error");
@@ -262,66 +188,7 @@ function select(indexname,indexCode){
 }
 			$("#inputsubmit").click(function(){
 				 alert("success");
-				/* var tagettable=$(".pdi_input_target");
-				var indexname=this.innerHTML;
-				var archcode = document.getElementById("archcode").value;
-				var ajaxCallUrl="datainput.htm?getplanobj";
-				$.ajax({
-					type:"post",
-					traditional:true,
-					url:ajaxCallUrl,  
-	                data:{indexname:indexname,archcode:archcode},
-	                success:function(data){ 
-	                  var p=eval(data);
-	                  tagettable.html("");
-	                  var table=$("<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" class=\"easyui-datagrid\">");
-	                  table.appendTo(tagettable);
-	                  var thead = $("<thead></thead>");
-	                  var tr=$("<tr></tr>");
-	                  tr.appendTo(table);
-	                  var count = 0;
-	                  var type ;
-	              	  $("<th align=center width=100px data-options=\"field:'code'\">时间段</th>").appendTo(tr); 
-	          		
-	          		 var num = 0;
-	                  $(p).each(function(key,value){
-	                	  num++;
-	                	  if(num>=2 && p.length-num>0){
-	                			//alert(num);
-	                	  	$("<td align=center width=100px data-options=\"field:'"+value['obj']+"'\">"+value['obj']+"</td>").appendTo(tr);
-	                	  }
-	                	  if(num==1){
-	                		   type = value['objtype'];
-	                		 // type=new String(type.getBytes("iso-8859-1"),"GB2312");
-	                		   //type =encodeURIComponent(type);
-	                	  	  //alert(type);
-	                	  }
-	                	  if(num==p.length){count = value['count'];}
-	                  });
-	                  tr.appendTo(table);
-	                  tr=null;
-	                 
-	              	// alert(type);
-	              	 //alert(count);
-	              	  if(type=="M"){
-	              		
-		            	  for(var i=1;i<=4;i++){
-		            		  tr=$("<tr></tr>");
-		            		  $("<td align=center width=30px>M0"+i+"</td>").appendTo(tr);
-		            		  for(var j=0;j<count;j++)
-		            			  $("<td align=center width=50px><input align=center type=\"number\" ></td>").appendTo(tr);
-		            		  tr.appendTo(table);
-		            	  }
-		            	
-		              } 
-	              	 trend.appendTo(table);
-		              $("</table>").appendTo(tagettable);
-	                  
-	                },
-	                error: function(request) {
-	                    alert("Connection error");
-	                }
-	            }); */
+				
 			});
 		
 		  $("#indexsel").click(function(){
