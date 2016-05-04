@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=gbk">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/icon.css">
@@ -59,7 +59,7 @@
 <div id="score" >
 </div>
  </form>
-<!--  <div>
+ <!-- <div>
  <table id="score_tb" class="easyui-datagrid" style="width:700px;height:250px;" data-options="singleSelect:true,onClickRow:onClickRow">
  <thead data-options="frozen:true">
  <tr>
@@ -121,7 +121,7 @@ function returnorgValue(data){
 		
 		var archcode = document.getElementById("archcode").value.trim();
 			//$("#comple_tab").attr('src','complete_datagrid.jsp?season=' + season + '&archcode=' + archcode );
-			 var ajaxCallUrl="datainput.htm?getscoreobjbytype1";
+			 var ajaxCallUrl="datainput.htm?getscoreobjbytype2";
 			  $.ajax({
 			    type:"post",
 			    traditional:true,
@@ -130,11 +130,11 @@ function returnorgValue(data){
 			        success:function(data){ 
 			         
 			          var p=eval(data);
-			          alert(p[0].table);
+			         // alert(p[0].table);
 			          var ddd=document.getElementById("score");
 			          ddd.innerHTML="";
 			          $('#score').append(p[0].table);
-			          $('#score_tb').datagrid();
+			          $('#score_tb').datagrid({ url:null});
 			        
 			              
 			        },

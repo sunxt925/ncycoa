@@ -44,6 +44,12 @@ public class TargetResult {
 	@Column(name="ISALARM")  //是否报警 1 报警 0 不报警
 	private String isAlarm = "";
 	
+	@Column(name="INDEXNAME")  //
+	private String indexName = "";
+	
+	@Column(name="OBJNAME")  //
+	private String objName = "";
+	
 	//备注
 	@Column(name="MEMO")
 	private String Memo = "";
@@ -150,6 +156,22 @@ public class TargetResult {
 
 	public void setIsAlarm(String isAlarm) {
 		this.isAlarm = isAlarm;
+	}
+
+	public String getIndexName() {
+		return indexName;
+	}
+
+	public void setIndexName(String indexName) {
+		this.indexName = indexName;
+	}
+
+	public String getObjName() {
+		return objName;
+	}
+
+	public void setObjName(String objName) {
+		this.objName = objName;
 	}
 	
 	

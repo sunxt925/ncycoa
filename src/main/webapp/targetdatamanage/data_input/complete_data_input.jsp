@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/icon.css">
@@ -85,12 +85,15 @@
 	</div>
 	     
 	<!-- ÖÐ -->
-	<form id="formsave" action="datainput.htm?savecomplateobj" method="post">  
+	<form id="formsave" action="datainput.htm?savecomplateobj" method="post"> 
+	<!-- <input type="text" name="name" value="ÄãºÃ">
+	<input type="submit" value="sub"> -->
+	
 <div id="complete" >
 
 <!-- <iframe id="comple_tab" frameborder="0" scrolling="no" style="width:100%;height:99.5%;border:0px none;"></iframe>
  --></div>
- </form>
+  </form>
 </div>
 
 <input type="hidden" value="${message}" id="message"> 
