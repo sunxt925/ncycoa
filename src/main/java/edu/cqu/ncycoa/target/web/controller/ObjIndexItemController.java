@@ -1,5 +1,6 @@
 package edu.cqu.ncycoa.target.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -109,8 +110,15 @@ public class ObjIndexItemController {
 		String classT=request.getParameter("class");
 		System.out.println("class="+classT);
 		String jpql="FROM ObjIndexDefine as o where o.memo='"+classT+"'";
+		String orgcode=SystemUtils.getSessionUser().getOrgCode();
 		List<ObjIndexDefine> items=systemService.readEntitiesByJPQL(jpql, ObjIndexDefine.class);
-		
+		List<ObjIndexDefine> rmitems=new ArrayList<ObjIndexDefine>();
+		for(ObjIndexDefine oid:items){
+			if(oid.getPublicFlag().equals("0")&&oid.getBelongOrgcode()!=orgcode){
+				rmitems.add(oid);
+			}
+		}
+		items.removeAll(rmitems);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("indexList", items);
 		mav.setViewName("targetmanage/selectindex");
@@ -328,6 +336,17 @@ public class ObjIndexItemController {
 		ObjIndexItem item = systemService.findEntityById(id, ObjIndexItem.class);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("targetmanage/indexaddfromarch");
+		mav.addObject("item",item);
+		//mav.addObject("orgname",CodeDictionary.syscode_traslate("base_org","orgcode", "orgname", notice.getDepart()));
+		return mav;
+	}
+	
+	@RequestMapping(params="update_itemdef")
+    public ModelAndView update_idef(HttpServletRequest request, HttpServletResponse response){
+		String id = request.getParameter("id"); 
+		ObjIndexDefine item = systemService.findEntityById(id, ObjIndexDefine.class);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("targetmanage/indexadd");
 		mav.addObject("item",item);
 		//mav.addObject("orgname",CodeDictionary.syscode_traslate("base_org","orgcode", "orgname", notice.getDepart()));
 		return mav;

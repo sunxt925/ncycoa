@@ -141,6 +141,7 @@ public class ContractManagementController {
 			if(contract.getCaigouleader()==null||contract.getCaigouleader().equals("")){
 				contract.setCaigouleader(contract.getChengbanleader());
 			}
+			
 			systemService.addEntity(contract);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		

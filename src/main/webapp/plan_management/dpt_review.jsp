@@ -25,7 +25,7 @@
 		function onYearChanged(record){
 			var period = $('#periodsel').combobox('getValue');
 			if(period){
-				$("#userdg").attr('src','plan-management.htm?dpts&month=' + period +'&year=' + record.value);
+				$("#dptdg").attr('src','plan-management.htm?dpts&month=' + period +'&year=' + record.value);
 			}
 		}
 		</script>
@@ -38,9 +38,10 @@
 		<input id='periodsel' class="easyui-combobox" style="width:80px;" data-options="data:<%=PlanHelper.getPeriodJson() %>,valueField:'value',textField:'text',onSelect:onPeriodChanged" />
 		<script type="text/javascript">
 		function onPeriodChanged(record){
+			alert(record.value);
 			var year = $('#yearsel').combobox('getValue');
 			if(year){
-				$("#userdg").attr('src','plan-management.htm?dpts&month=' + record.value + '&year=' + year);
+				$("#dptdg").attr('src','plan-management.htm?dpts&month=' + record.value + '&year=' + year);
 			}
 		}
 		</script>
