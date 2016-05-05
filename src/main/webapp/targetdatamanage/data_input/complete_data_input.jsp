@@ -96,21 +96,37 @@
   </form>
 </div>
 
-<input type="hidden" value="${message}" id="message"> 
-
+ 
+<input id="type" value="${type}" type="hidden">
 </body>
 <script type="text/javascript">
 function onClickRow() {
 	
 }
 
+function savecompete() { 
+	var formid="formsave";
+	var ajaxCallUrl="datainput.htm?savecomplateobj";
+	var str_data = $("#" + formid + " input").map(function() {
+		return ($(this).attr("name") + '=' + $(this).val());
+	}).get().join("&");
+	$.ajax({
+        cache: true,
+        type: "POST",
+        url:ajaxCallUrl,
+        data:str_data,// 你的formid
+        async: false,
+        error: function(request) {
+            alert("Connection error");
+        },
+        success: function(data) {
+           alert("更新成功");
+           
+        }
+    });
 
-$(document).ready(function(){ 
-	var message=document.getElementById("message");
-	if(message.value!=""){
-		alert(message.value);
-	}
-});
+	} 
+
 function cid_M(season){
 
 	var tagettable=$(".pdi_input_target");
@@ -146,7 +162,9 @@ function cid_M(season){
 $("#indexsel").click(function(){
 	//	alert("dsa");
 		/*  createwindow('选择体系','objresult.htm?getArch&class=C',500,500,returnorgvalue );  */
-		 createwindow('选择体系','datainput.htm?getArch&class=C',500,500,returnorgValue );
+	 var type=$("#type").val();
+	
+	 createwindow('选择体系','datainput.htm?getArch&class='+type,500,500,returnorgValue );
 	    });
 function returnorgValue(data){
 	  

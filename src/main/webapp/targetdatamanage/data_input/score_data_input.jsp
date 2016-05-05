@@ -55,59 +55,52 @@
 </div>
 <div class="pdi_input_target" id="content" style="float:right;margin-top: 6px;margin-right:424px;"></div>
 <div class="pdi_content">
-<form id="formsave" action="datainput.htm?savescoreobj" method="post">  
+<form id="formsave" action="datainput.htm?savescoreobj" method="post" >  
 <div id="score" >
 </div>
  </form>
- <!-- <div>
- <table id="score_tb" class="easyui-datagrid" style="width:700px;height:250px;" data-options="singleSelect:true,onClickRow:onClickRow">
- <thead data-options="frozen:true">
- <tr>
- <th data-options="field:'indexname'">指标</th>
- <th data-options="field:'time'">时间段</th>
- </tr>
- </thead>
- <thead>
- <tr>
- <th data-options="field:'obj1'">对象一</th>
- <th data-options="field:'obj2'">对象二</th>
- </tr>
- </thead>
- <tbody>
- <tr><td>指标一</td>
- <td>M01</td>
- <td>
- 	<div align="right"><span>计划值</span><input type="text" style="width:100px;"></div><br/>
- 	<div align="right"><span>完成值</span><input type="text" style="width:100px;"></div><br/>
- 	<div align="right"><span>得分</span><input type="text" style="width:100px;"></div>
- </td>
- <td>
- 	<div align="right"><span>计划值</span><input type="text" style="width:100px;"></div><br/>
- 	<div align="right"><span>完成值</span><input type="text" style="width:100px;"></div><br/>
- 	<div align="right"><span>得分</span><input type="text" style="width:100px;"></div>
- </td></tr>
- </tbody>
- </table>
- </div> -->
+
 </div>
 
-<input type="hidden" value="${message}" id="message"> 
+
 </body>
 <script type="text/javascript">
 function onClickRow() {
 	
 }
-$(document).ready(function(){ 
-	var message=document.getElementById("message");
-	if(message.value!=""){
-		alert(message.value);
-	}
-});
+function check(){
+	var message=$("");
+}
 
+
+function savescore() { 
+	var formid="formsave";
+	var ajaxCallUrl="datainput.htm?savescoreobj";
+	var str_data = $("#" + formid + " input").map(function() {
+		return ($(this).attr("name") + '=' + $(this).val());
+	}).get().join("&");
+	$.ajax({
+        cache: true,
+        type: "POST",
+        url:ajaxCallUrl,
+        data:str_data,// 你的formid
+        async: false,
+        error: function(request) {
+            alert("Connection error");
+        },
+        success: function(data) {
+           alert("更新成功");
+           
+        }
+    });
+
+	} 
 $("#indexsel").click(function(){
 	//	alert("dsa");
 		/*  createwindow('选择体系','objresult.htm?getArch&class=C',500,500,returnorgvalue );  */
-		 createwindow('选择体系','datainput.htm?getArch&class=C',500,500,returnorgValue );
+	 var type=$("#type").val();
+	
+	 createwindow('选择体系','datainput.htm?getArch&class='+type,500,500,returnorgValue );
 	    });
 function returnorgValue(data){
 	  

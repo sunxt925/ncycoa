@@ -36,7 +36,9 @@ public class DataInputController {
 	@RequestMapping(params="planinput")
 	public ModelAndView planInput(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mav = new ModelAndView();
-		System.out.println("data");
+		String type = request.getParameter("class");
+		mav.addObject("type", type);
+		System.out.println(type);
 		//items筛选出公司类体系
 		mav.setViewName("targetdatamanage/data_input/plan_data_input");		
 		return mav;
@@ -44,6 +46,8 @@ public class DataInputController {
 	@RequestMapping(params="completeinput")
 	public ModelAndView compelteInput(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mav = new ModelAndView();
+		String type = request.getParameter("class");
+		mav.addObject("type", type);
 		System.out.println("data");
 		//items筛选出公司类体系
 		mav.setViewName("targetdatamanage/data_input/complete_data_input");		
@@ -52,6 +56,8 @@ public class DataInputController {
 	@RequestMapping(params="scoreinput")
 	public ModelAndView scoreinput(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mav = new ModelAndView();
+		String type = request.getParameter("class");
+		mav.addObject("type", type);
 		System.out.println("data");
 		//items筛选出公司类体系
 		mav.setViewName("targetdatamanage/data_input/score_data_input");		
@@ -99,13 +105,9 @@ public class DataInputController {
 			mav.addObject("archcode",archcode);
 			//mav.addObject("resultList",results);
 			System.out.println(items.size());
-			if(archcode.startsWith("C"))
+			
 				mav.setViewName("targetdatamanage/data_input/plan_data_input");
-			else if (archcode.startsWith("D")) {
-				mav.setViewName("targetdatamanage/departmenttargetdata");
-			}else{
-				mav.setViewName("targetdatamanage/personaltargetdata");
-			}
+			
 			return mav;
 		}
 		/**
@@ -133,13 +135,8 @@ public class DataInputController {
 				mav.addObject("archcode",archcode);
 				//mav.addObject("resultList",results);
 				System.out.println(items.size());
-				if(archcode.startsWith("C"))
 					mav.setViewName("targetdatamanage/data_input/complete_data_input");
-				else if (archcode.startsWith("D")) {
-					mav.setViewName("targetdatamanage/departmenttargetdata");
-				}else{
-					mav.setViewName("targetdatamanage/personaltargetdata");
-				}
+				
 				return mav;
 			}
 		/**
@@ -339,13 +336,143 @@ public class DataInputController {
 		          jsonObject=new JSONObject();
 		          jsonObject.put("url", url);
 		          jsonArray.add(jsonObject);
-		        PrintWriter out=response.getWriter();
-		        out.print(jsonArray);
-		        out.flush();
-		        out.close();
+		          response.setCharacterEncoding("gb2312");
+		          response.setContentType("text/plain;charset=gb2312");
+		          response.setHeader("Cache-Control", "no-store");
+		          PrintWriter out=response.getWriter();
+		          out.print(jsonArray);
+		          out.flush();
+		          out.close();
 		        
 		        
 			
+		}
+		@RequestMapping(params="getplanobj2")
+		public void getplanObj2(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		//需要的数据；
+			 String archcode=request.getParameter("archcode").trim();
+			 String jpql2="FROM ObjIndexArchUser as o where o.IndexArchCode='"+archcode.substring(0, 7)+"' order by o.objectcode";
+		     List<ObjIndexArchUser> objs=systemService.readEntitiesByJPQL(jpql2, ObjIndexArchUser.class);
+		     //需要历史数据
+		     String season="";
+		     int timecol=0;
+		     String indexname=request.getParameter("indexname");
+		     String indexCode=request.getParameter("indexCode");
+		     if(indexname.contains("月度")){season="M"; timecol=12;}
+		     else if(indexname.contains("季度")){season="S"; timecol=4;}
+		     else if(indexname.contains("半年度")){season="H"; timecol=2;}
+		     else if(indexname.contains("年度")){season="Y";timecol=2;}
+		     else{season="D";}
+		     //历史数据
+		     String jpql3="FROM TargetResult as o where o.season LIKE '"+season+"%' and  o.ArchCode='"+archcode.substring(0, 7)+"' order by o.season,o.objectCode";
+		     List<TargetResult> objs_res=systemService.readEntitiesByJPQL(jpql3, TargetResult.class);  
+		     
+		   //拼列
+			 StringBuffer sb = new StringBuffer();
+			sb.append("<table id=\"plan_tb\" class=\"easyui-datagrid\" style=\"width:700px;height:250px;\" data-options=\"singleSelect:true,onClickRow:onClickRow\">");
+			sb.append("<thead data-options=\"frozen:true\"><tr>");
+			sb.append("<th data-options=\"field:'time'\">时间段</th></tr></thead>");
+			sb.append("<thead><tr>");
+			//sb.append("<th data-options=\"field:'objcode',hidden:true\"></th>");
+			for (ObjIndexArchUser para : objs) {
+				sb.append("<th data-options=\"field:'para_").append(para.getObjectcode()).append("',width:160,align:'right',editor:{type:'numberbox',options:{precision:2}}\">");
+				sb.append(para.getUniIndexCode()).append("</th>");
+			}
+			sb.append("</tr></head><tbody>");
+			//拼行
+			String[] months={"一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"};
+			String[] seasons={"一季度","二季度","三季度","四季度"};
+			String[] houryear={"上半年","下半年"};
+			int count=0;
+			if(season.equals("M")){
+				for(int i=0;i<12;i++){
+					sb.append("<tr><td> <input  type=\"hidden\" name=\"time\" value=\"M"+i+"\" >"+months[i]+"</td>");
+					
+					for(ObjIndexArchUser para : objs){
+						if(objs_res.size()!=0) {
+							sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\""+objs_res.get(count++).getPlanValue()+"\"></td>");
+						}else {
+							sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\"\"></td>");
+
+						}
+					}
+					sb.append("</tr>");
+					
+				}
+			}else if(season.equals("S")) {
+				for(int i=0;i<4;i++){
+					sb.append("<tr><td> <input  type=\"hidden\" name=\"time\" value=\"S"+i+"\">"+seasons[i]+"</td>");
+					
+					for(ObjIndexArchUser para : objs){
+						if(objs_res.size()!=0) {
+							sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\""+objs_res.get(count++).getPlanValue()+"\"></td>");
+						}else {
+							sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\"\"></td>");
+
+						}
+					}
+					sb.append("</tr>");
+					
+				}
+
+			}else if(season.equals("H")) {
+				for(int i=0;i<2;i++){
+					sb.append("<tr><td> <input  type=\"hidden\" name=\"time\" value=\"S"+i+"\" >"+houryear[i]+"</td>");
+					
+					for(ObjIndexArchUser para : objs){
+						if(objs_res.size()!=0) {
+							sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\""+objs_res.get(count++).getPlanValue()+"\"></td>");
+						}else {
+							sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\"\"></td>");
+
+						}
+					}
+					sb.append("</tr>");
+					
+				}
+
+			}else if(season.equals("Y")) {
+				sb.append("<tr><td> <input  type=\"hidden\" name=\"time\" value=\"Y01\" >全年</td>");
+				
+				for(ObjIndexArchUser para : objs){
+					if(objs_res.size()!=0) {
+						sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\""+objs_res.get(count++).getPlanValue()+"\"></td>");
+					}else {
+						sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\"\"></td>");
+
+					}
+				}
+				sb.append("</tr>");
+
+			}else {
+
+			}
+			sb.append("</tbody></table><div>");
+			for (ObjIndexArchUser para : objs) {
+				sb.append("<input  type=\"hidden\" value=\""+para.getObjectcode()+"\" name=\"objcode\">");
+				//sb.append("<input  type=\"hidden\" value=\""+para.getUniIndexCode()+"\" name=\"objectname\">");
+				}
+			
+				sb.append("<input  type=\"hidden\" value=\""+indexCode+"\" name=\"indexCode\">");
+				sb.append("<input  type=\"hidden\" value=\""+indexname+"\" name=\"indexName\">");
+			
+			sb.append("</div>");
+			sb.append("<div style=\"margin-left:235px;margin-top:20px;\">"
+					+ "<input  type=\"hidden\" value=\""+archcode+"\" name=\"archCode\">"
+					+ "<input id=\"submit\" type=\"button\" value=\"提交\" class=\"btn1\" onclick=\"saveplan();\" ></div>");
+			JSONArray jsonArray=new JSONArray();
+			JSONObject jsonObject=new JSONObject();   
+			 jsonObject=new JSONObject();
+			jsonObject.put("table",sb.toString());
+			jsonArray.add(jsonObject);
+			
+			response.setCharacterEncoding("gb2312");
+			response.setContentType("text/plain;charset=gb2312");
+			response.setHeader("Cache-Control", "no-store");
+			PrintWriter out=response.getWriter();
+			out.print(jsonArray.toString());
+			out.flush();
+			out.close();
 		}
 		/**
 		 * 保存计划值
@@ -360,13 +487,14 @@ public class DataInputController {
 				String archCode=request.getParameter("archCode");
 				String[] objectCode=request.getParameterValues("objcode");
 				String[] time=request.getParameterValues("time");
+				
 				String[] planValue = request.getParameterValues("plannumber");
 				/*String jpql3="FROM TargetResult as o  where  o.ArchCode='"+archCode.substring(0, 7)+"'";
 				List<TargetResult> objs_res=systemService.readEntitiesByJPQL(jpql3, TargetResult.class);
 				*/int count=0;
 				TargetResult t = new TargetResult();
 				System.out.println("start");
-				for(int i=0;i<time.length;i++){
+				for(int i=0;i<time.length/2;i++){
 					for(int j=0;j<objectCode.length ;j++){
 						TargetResult targetResult = new TargetResult();
 						targetResult.setArchCode(archCode.trim());
@@ -577,7 +705,7 @@ public class DataInputController {
 			sb.append("</div>");
 			sb.append("<div style=\"margin-left:235px;margin-top:20px;\"><input  type=\"hidden\" value=\""+types+"\" name=\"season\">"
 					+ "<input  type=\"hidden\" value=\""+archcode+"\" name=\"archCode\">"
-					+ "<input id=\"submit\" type=\"submit\" value=\"提交\" class=\"btn1\"></div>");
+					+ "<input id=\"submit\" type=\"button\" value=\"提交\" class=\"btn1\" onclick=\"savecompete();\" ></div>");
 			JSONArray jsonArray=new JSONArray();
 			JSONObject jsonObject=new JSONObject();   
 			 jsonObject=new JSONObject();
@@ -890,7 +1018,7 @@ public class DataInputController {
 		      }
 		      sb.append("</div><div style=\"margin-left:235px;margin-top:20px;\">"
 			            + "<input  type=\"hidden\" value=\""+archcode+"\" name=\"archCode\">"
-			            + "<input id=\"submit\" type=\"submit\" value=\"提交\" class=\"btn1\"></div>");
+			            + "<input id=\"submit\" type=\"button\" value=\"提交\" class=\"btn1\" onclick=\"savescore();\"></div>");
 		      JSONArray jsonArray=new JSONArray();
 		      JSONObject jsonObject=new JSONObject();   
 		      jsonObject=new JSONObject();

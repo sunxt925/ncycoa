@@ -52,7 +52,7 @@
 </style> 
 </head>
 
-<body>
+<body >
 <div class="pdi_choose">
 <form id="forminput" name="forminput" action="datainput.htm?getplanTarget"  method="post" onsubmit="return check()">
 	<!-- <p>请选择指标体系和年份:</p> -->
@@ -104,37 +104,20 @@
     </table>
 	</div>
 	<div class="pdi_input_target" style="float:left;margin-top: 6px;">
-	<form id="formsave" action="datainput.htm?saveplanobj" method="post">     
-    <div>
+	<form id="formsave" action="datainput.htm?saveplanobj" method="post" >     
+    <div id="plandata">
     
-    <table class="easyui-datagrid" id="plandata"> </table>
+  
     </div> 
-    <div style="margin-top:30px;">
-     <input id="submit" type="submit" value="提交" class="btn1" style="display:none;" onmouseover="this.style.background='##F4F4F4';"
- onmouseout="this.style.background='#F0FFF0'"></div> 
     </form>  
 	</div>
 </div>
-<!-- <table class="easyui-datagrid">    
-    <thead>    
-        <tr>    
-            <th data-options="field:'code'">Code</th>    
-            <th data-options="field:'name'">Name</th>    
-            <th data-options="field:'price'">Price</th>    
-        </tr>    
-    </thead>    
-    <tbody>    
-        <tr>    
-            <td>001</td><td>name1</td><td>2323</td>    
-        </tr>    
-        <tr>    
-            <td>002</td><td>name2</td><td>4612</td>    
-        </tr>    
-    </tbody>    
-</table>    --> 
-<input type="hidden" value="${message}" id="message"> 
+<input id="type" value="${type}" type="hidden">
 </body>
 <script type="text/javascript">
+function onClickRow() {
+	
+}
 function check(){
 	var archcode = document.getElementById("archcode").value.trim();
 	if(archcode==""){
@@ -144,20 +127,35 @@ function check(){
 		return true;
 	}
 }
-$(document).ready(function(){ 
-	var message=document.getElementById("message");
-	if(message.value!=""){
-		alert(message.value);
-	}
-	
-});
 
+function saveplan() { 
+	var formid="formsave";
+	var ajaxCallUrl="datainput.htm?saveplanobj";
+	var str_data = $("#" + formid + " input").map(function() {
+		return ($(this).attr("name") + '=' + $(this).val());
+	}).get().join("&");
+	$.ajax({
+        cache: true,
+        type: "POST",
+        url:ajaxCallUrl,
+        data:str_data,// 你的formid
+        async: false,
+        error: function(request) {
+            alert("Connection error");
+        },
+        success: function(data) {
+           alert("更新成功");
+           
+        }
+    });
+
+	} 
 function select(indexname,indexCode){
 	/* alert(indexname);
 	alert(indexCode); */
 	//var tagettable=$("#plandata");
 	var archcode = document.getElementById("archcode").value;
-	var ajaxCallUrl="datainput.htm?getplanobj1";
+	var ajaxCallUrl="datainput.htm?getplanobj2";
 //	alert(indexCode);
 	$.ajax({
 		type:"post",
@@ -166,19 +164,30 @@ function select(indexname,indexCode){
         data:{indexname:indexname,archcode:archcode,indexCode:indexCode},
         success:function(data){ 
         	 var p=eval(data);
-             var columns=eval(p[0].colum);
+        	// var p=eval(data);
+	        //  alert(p[0].table);
+	          var ddd=document.getElementById("plandata");
+	          ddd.innerHTML="";
+	          $('#plandata').append(p[0].table);
+	          $('#plan_tb').datagrid();
+        	 
+        	 
+        	 
+        	 
+            /*  var columns=eval(p[0].colum);
            //  alert(columns);
-             var url=eval(p[1].url);
+             var url=eval(p[1].url); */
+             
             // alert(url);
-              $('#plandata').datagrid({ 
+            /*   $('#plandata').datagrid({ 
                 width:600,
                   height:350,
                   singleSelect:true,
                	 iconCls:'icon-edit',
                   columns:columns,   
-              }).datagrid("loadData", url); 
+              }).datagrid("loadData", url);  */
               
-              document.getElementById("submit").style.display='block';
+             // document.getElementById("submit").style.display='block';
               
         },
         error: function(request) {
@@ -194,7 +203,11 @@ function select(indexname,indexCode){
 		  $("#indexsel").click(function(){
 			//	
 				/*  createwindow('选择体系','objresult.htm?getArch&class=C',500,500,returnorgvalue );  */
-				 createwindow('选择体系','datainput.htm?getArch&class=C',500,500,returnorgValue );
+			
+				 var type=$("#type").val();
+				//alert(type);
+				
+				 createwindow('选择体系','datainput.htm?getArch&class='+type,500,500,returnorgValue );
 			    });
 		  function returnorgValue(data){
 			  
