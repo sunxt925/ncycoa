@@ -339,6 +339,9 @@ public class DataInputController {
 		          jsonObject=new JSONObject();
 		          jsonObject.put("url", url);
 		          jsonArray.add(jsonObject);
+		          response.setCharacterEncoding("gb2312");
+					response.setContentType("text/plain;charset=gb2312");
+					response.setHeader("Cache-Control", "no-store");
 		        PrintWriter out=response.getWriter();
 		        out.print(jsonArray);
 		        out.flush();
@@ -400,6 +403,7 @@ public class DataInputController {
 				
 				ModelAndView mav = new ModelAndView();
 				mav.addObject("message", message);	
+				//mav.setViewName("datainput.htm?getplanTarget");
 				mav.setViewName("targetdatamanage/data_input/plan_data_input");
 				return mav;
 				

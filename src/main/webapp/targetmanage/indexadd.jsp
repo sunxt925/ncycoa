@@ -128,7 +128,7 @@
 		<td class="value" width="700px">
 		<select id="appSystem" name="appSystem">
 		<option value="目标系统" selected="selected">目标系统</option>
-		<option value="绩效系统">绩效系统</option>
+<!-- 		<option value="绩效系统">绩效系统</option> -->
 		</select>
 		<span class="Validform_checktip"></span>
 		</td>

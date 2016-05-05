@@ -307,7 +307,7 @@ int per_page = u.getPerpage_full();
    
     function modify(para){
     	//alert("11");
-    	var u="./objindexitem.htm?update_item&id="+para;
+    	var u="./objindexitem.htm?update_itemdef&id="+para;
     	createwindow("ÐÞ¸Ä",u,800,650);
     }
     function createalert(content){

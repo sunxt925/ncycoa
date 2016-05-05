@@ -51,20 +51,26 @@
 			btnReset : "#btn_reset",
 			ajaxPost : true,
 			callback : function(data) {
-				var win = frameElement.api.opener;
-				if (data.success == true) {
-					frameElement.api.close();
-					win.tip(data.msg);
-					
-				} else {
-					if (data.responseText == ''|| data.responseText == undefined){
-						$("#formobj").html(data.msg);
-					}else{
-						$("#formobj").html(data.responseText);
+				
+				//alert($('#chengbanleader').val()==""&&$('#caigouleader').val()=="");
+				if($('#chengbanleader').val()==""&&$('#caigouleader').val()==""){
+					alert('请填写分管领导');
+				}else{
+					var win = frameElement.api.opener;
+					if (data.success == true) {
+						frameElement.api.close();
+						win.tip(data.msg);
+						
+					} else {
+						if (data.responseText == ''|| data.responseText == undefined){
+							$("#formobj").html(data.msg);
+						}else{
+							$("#formobj").html(data.responseText);
+						}
+						return false;
 					}
-					return false;
+					win.reloadTable();
 				}
-				win.reloadTable();
 			}
 		});
 		
@@ -446,7 +452,7 @@
 	<tr>
 		<td align="right"><label class="Validform_label"> 采购部门领导</label></td>
 		<td class="value">
-		  <input class="inputxt" id="caigouleadername" name="caigouleadername" datatype="s2-50">
+		  <input class="inputxt" id="caigouleadername" name="caigouleadername" >
 		                                  <input type="hidden" id="caigouleader" name="caigouleader"  value="${contract.caigouleader}">
 		                                  
 		                                  <a id="btn_selectobject2" href="#">选择</a>

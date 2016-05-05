@@ -212,7 +212,8 @@
 	</c:choose>
 	<tr id="et">
 		<td align="right" width="70px"><label class="Validform_label">考核时段</label></td>
-		<td class="value" width="700px"><input class="inputxt" style="width:150px;" id="examTime1" name="examTime1" value="${item.examTime}">
+		<td class="value" width="700px">
+<%-- 		<input class="inputxt" style="width:150px;" id="examTime1" name="examTime1" value="${item.examTime}"> --%>
 		<select class="inputxt" id="examTime" name="examTime" style="width:156px;">
 			
 			
@@ -246,6 +247,7 @@ $('#scorePeriod').change(function(){
 	}) 
 
 function init(){
+	//alert("${item.scorePeriod}");
 	var p1=$("input[name='alarmFlag']:checked").val();
     if(p1=="0"){
    	 //$("tr[id='tr1']").attr("hidden","true");
@@ -263,6 +265,39 @@ function init(){
    	 
    	 $("tr[id='et']").attr("style","");
     }
+    
+/*     var sel = document.getElementById("scorePeriod");
+    var sp="${item.scorePeriod}"; */
+    
+    var opt="${item.scorePeriod}";
+	var objSelectNow=document.getElementById("examTime");
+	if(opt=="M00"){
+		var inner="<option value='M01'>1月</option><option value='M02'>2月</option><option value='M03'>3月</option><option value='M04'>4月</option><option value='M05'>5月</option><option value='M06'>6月</option><option value='M07'>7月</option><option value='M08'>8月</option><option value='M09'>9月</option><option value='M10'>10月</option><option value='M11'>11月</option><option value='M12'>12月</option><option value='M00'>全年</option>"
+	}else if(opt=="S00"){
+		var inner="<option value='S01'>1季度</option><option value='S02'>2季度</option><option value='S03'>3季度</option><option value='S04'>4季度</option><option value='S00'>全年</option>";
+	}else if(opt=="H00"){
+		var inner="<option value='H01'>上半年</option><option value='H02'>下半年</option><option value='H00'>全年</option>";
+	}else if(opt=="Y00"){
+		var inner="<option value='Y00'>全年</option>";
+	}
+	
+	objSelectNow.innerHTML=inner;
+    $("#scorePeriod option[value='${item.scorePeriod}']").attr("selected","true");
+    $("#examTime option[value='${item.examTime}']").attr("selected","true");
+ /*    if(sp=="M00"){
+    	alert(sel.options[0].checked);
+    	sel.options[0].value="123";
+    }else if(sp=="S00"){
+    	sel.options[1].selected="true";
+    }else if(sp=="H00"){
+    	sel.options[2].checked=checked;
+    }else if(sp=="Y00"){
+    	sel.options[3].checked=checked;
+    }else{
+    	sel.options[4].checked=checked;
+    } */
+    //scorePeriod
+   // $("option[value='${item.scorePeriod}']").attr("checked","checked");
 }
 $("input[name='alarmFlag']").change(function(){
 	   var p1=$("input[name='alarmFlag']:checked").val();
