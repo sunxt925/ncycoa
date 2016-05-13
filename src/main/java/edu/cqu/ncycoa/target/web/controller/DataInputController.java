@@ -378,7 +378,7 @@ public class DataInputController {
 		     
 		   //拼列
 			 StringBuffer sb = new StringBuffer();
-			sb.append("<table id=\"plan_tb\" class=\"easyui-datagrid\" style=\"width:700px;height:250px;\" data-options=\"singleSelect:true,onClickRow:onClickRow\">");
+			sb.append("<table id=\"plan_tb\" class=\"easyui-datagrid\" style=\"width:700px;height:350px;\" data-options=\"singleSelect:true,onClickRow:onClickRow\">");
 			sb.append("<thead data-options=\"frozen:true\"><tr>");
 			sb.append("<th data-options=\"field:'time'\">时间段</th></tr></thead>");
 			sb.append("<thead><tr>");
@@ -477,7 +477,7 @@ public class DataInputController {
 							sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\""+objs_res.get(count++).getPlanValue()+"\"></td>");
 
 						}
-					}else {
+					                    }else {
 						sb.append("<td><input name=\"plannumber\" style=\"width:90px;\" type=\"text\" value=\"\"></td>");
 
 					}
@@ -605,7 +605,7 @@ public class DataInputController {
 					}
 			   }
 			   StringBuffer sb = new StringBuffer();
-				sb.append("<table id=\"compl_season\" class=\"easyui-datagrid\" style=\"width:200px;height:250px;\" data-options=\"singleSelect:true\">");
+				sb.append("<table id=\"compl_season\" class=\"easyui-datagrid\" style=\"width:200px;height:510px;\" data-options=\"singleSelect:true\">");
 				sb.append("<thead><tr>");
 				sb.append("<th data-options=\"field:'itemid'\">时间</th></tr></thead>");
 				sb.append(" <tbody>");
