@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gbk">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="jscomponent/easyui/themes/icon.css">
@@ -62,7 +62,7 @@
 
 </div>
 
-
+<input id="type" value="${type}" type="hidden">
 </body>
 <script type="text/javascript">
 function onClickRow() {
@@ -99,7 +99,7 @@ $("#indexsel").click(function(){
 	//	alert("dsa");
 		/*  createwindow('选择体系','objresult.htm?getArch&class=C',500,500,returnorgvalue );  */
 	 var type=$("#type").val();
-	
+	//alert(type);
 	 createwindow('选择体系','datainput.htm?getArch&class='+type,500,500,returnorgValue );
 	    });
 function returnorgValue(data){

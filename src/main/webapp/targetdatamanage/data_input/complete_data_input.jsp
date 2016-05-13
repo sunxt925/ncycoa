@@ -56,31 +56,8 @@
 </div>
 <div class="pdi_input_target" id="content" style="float:right;margin-top: 6px;margin-right:424px;"></div>
 <div class="pdi_content">
-	<div class="pdi_view_target" style="width:210px;height:641px;float:left;">
-	 <table class="easyui-datagrid"  style="width:210px;height:641px">
-        <thead>
-            <tr>
-                <th data-options="field:'itemid',width:200">时间</th>
-               
-            </tr>
-        </thead>
-        <tbody>
-        	 <c:forEach begin="1" end="9" var="item" >
-        	   <tr><td><a href="#" onclick="cid_M(this.innerHTML)">M0${item}</a> </td></tr>
-		      </c:forEach>
-	        <tr><td ><a href="#" onclick="cid_M(this.innerHTML)">M10</a> </td></tr>
-	        <tr><td><a href="#"  onclick="cid_M(this.innerHTML)">M11</a> </td></tr>
-       	    <tr><td><a href="#"  onclick="cid_M(this.innerHTML)">M12</a> </td></tr>
-       	     <c:forEach begin="1" end="4" var="item" >
-        	   <tr><td><a href="#"  onclick="cid_M(this.innerHTML)">S0${item}</a> </td></tr>
-		      </c:forEach>
-		       <c:forEach begin="1" end="2" var="item" >
-        	   <tr><td><a href="#"  onclick="cid_M(this.innerHTML)">H0${item}</a> </td></tr>
-		      </c:forEach>
-		      <tr><td><a href="#"  onclick="cid_M(this.innerHTML)">Y00</a> </td></tr>
-		      <tr><td><a href="#"  onclick="cid_M(this.innerHTML)">D00</a> </td></tr>
-        </tbody>
-    </table>
+	<div id="completeseason" class="pdi_view_target" style="width:210px;height:641px;float:left;">
+	
 		
 	</div>
 	     
@@ -100,8 +77,11 @@
 <input id="type" value="${type}" type="hidden">
 </body>
 <script type="text/javascript">
+var text;
 function onClickRow() {
-	
+	if(text.indexOf("没有计划值") > 0 ){
+		alert("请输入计划值");
+	}
 }
 
 function savecompete() { 
@@ -145,12 +125,12 @@ function cid_M(season){
 		        success:function(data){ 
 		         
 		          var p=eval(data);
-		          
+		          text=p[0].table;
 		          var ddd=document.getElementById("complete");
 		          ddd.innerHTML="";
 		          $('#complete').append(p[0].table);
 		          $('#compl_tb').datagrid();
-		        
+		        	
 		              
 		        },
 		        error: function(request) {
@@ -173,6 +153,33 @@ function returnorgValue(data){
 		
 		$('#archcode').val(org.archcode);
 		$('#indexname').val(org.archname);
+		
+var tagettable=$(".pdi_content");
+		
+		var archcode = document.getElementById("archcode").value.trim();
+			//$("#comple_tab").attr('src','complete_datagrid.jsp?season=' + season + '&archcode=' + archcode );
+			 var ajaxCallUrl="datainput.htm?getcompleteseason";
+			  $.ajax({
+			    type:"post",
+			    traditional:true,
+			    url:ajaxCallUrl,  
+			        data:{archcode:archcode},
+			        success:function(data){ 
+			         
+			          var p=eval(data);
+			         // alert(p[0].table);
+			          var ddd=document.getElementById("completeseason");
+			          ddd.innerHTML="";
+			          $('#completeseason').append(p[0].table);
+			          $('#compl_season').datagrid({ url:null});
+			        
+			              
+			        },
+			        error: function(request) {
+			            alert("Connection error");
+			        }
+			    });
+		
 		
 	}    
 	    
