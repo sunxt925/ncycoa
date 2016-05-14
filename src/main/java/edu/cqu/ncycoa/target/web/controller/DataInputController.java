@@ -876,15 +876,19 @@ public class DataInputController {
 					targetResult.setIndexName(indexname[i].trim());
 					targetResult.setObjectCode(objectCode[j].trim());
 					targetResult.setObjName(objectName[j].trim());
+					if(t.getExamFlag().equals("0") || t.getExamFlag().equals("0") ){
+						
+					}else {
+						if(examtime[i]!=null&&examtime[i].trim().equals(season.trim()))
+							targetResult.setExamFlag(examflag[i].trim());
+						else {
+							targetResult.setExamFlag("0");
+						}
+						if(examtime[i].contains("00")){
+							targetResult.setExamFlag("1");
+						}
+					}
 					
-					if(examtime[i]!=null&&examtime[i].trim().equals(season.trim()))
-						targetResult.setExamFlag(examflag[i].trim());
-					else {
-						targetResult.setExamFlag("0");
-					}
-					if(examtime[i].contains("00")){
-						targetResult.setExamFlag("1");
-					}
 					long id=TargetService.getResultIDByObj(targetResult);
 					targetResult.setRealValue(completeValue[count++]);
 					if(id!=-1){
@@ -1100,13 +1104,70 @@ public class DataInputController {
 		        out.close();
 			return;
 		}
+		/***
+		 * 显示对象名
+		 * @param request
+		 * @param response
+		 * @throws IOException
+		 */
+		@RequestMapping(params="getObjNamebyscore")
+		public void getObjNamebyscore(HttpServletRequest request, HttpServletResponse response) throws IOException{
+			//response.setCharacterEncoding("gb2312");
+			  String archcode=request.getParameter("archcode").trim();
+			 String jpql3="FROM TargetResult as o where o.examFlag='1' and  o.ArchCode='"+archcode+"' order by o.objectCode,o.IndexCode,o.season";
+	         List<TargetResult> objs_res=systemService.readEntitiesByJPQL(jpql3, TargetResult.class);
+	         
+	         StringBuffer sb = new StringBuffer();
+				sb.append("<table id=\"score_index\" class=\"easyui-datagrid\" style=\"width:200px;height:510px;\" data-options=\"singleSelect:true\">");
+				sb.append("<thead><tr>");
+				sb.append("<th data-options=\"field:'objname'\">对象名</th></tr></thead>");
+				sb.append(" <tbody>");
+/*				if(m==1){
+					for(int i=1;i<=9;i++)
+						sb.append(" <tr><td><a href=\"#\" onclick=\"cid_M(this.innerHTML)\">M0"+i+"</a> </td></tr>");
+					for(int i=10;i<=12;i++)
+						sb.append(" <tr><td><a href=\"#\" onclick=\"cid_M(this.innerHTML)\">M"+i+"</a> </td></tr>");	
+				}
+				if(s==1){
+					for(int i=1;i<=4;i++)
+						sb.append(" <tr><td><a href=\"#\" onclick=\"cid_M(this.innerHTML)\">S0"+i+"</a> </td></tr>");
+				
+				}
+				if(h==1){
+					for(int i=1;i<=2;i++)
+						sb.append(" <tr><td><a href=\"#\" onclick=\"cid_M(this.innerHTML)\">H0"+i+"</a> </td></tr>");
+				
+				}
+				if(y==1){
+					sb.append(" <tr><td><a href=\"#\" onclick=\"cid_M(this.innerHTML)\">Y00</a> </td></tr>");
+					
+				}
+				if(d==1){
+					sb.append(" <tr><td><a href=\"#\" onclick=\"cid_M(this.innerHTML)\">D00</a> </td></tr>");	
+				}*/
+				sb.append(" </tbody> </table>");
+				JSONArray jsonArray=new JSONArray();
+				JSONObject jsonObject=new JSONObject();   
+				 jsonObject=new JSONObject();
+				jsonObject.put("table",sb.toString());
+				jsonArray.add(jsonObject);
+				
+				response.setCharacterEncoding("gb2312");
+				response.setContentType("text/plain;charset=gb2312");
+				response.setHeader("Cache-Control", "no-store");
+				PrintWriter out=response.getWriter();
+				out.print(jsonArray.toString());
+				out.flush();
+				out.close();
+		}
 		@RequestMapping(params="getscoreobjbytype2")
 		public void getscoreobjbyType2(HttpServletRequest request, HttpServletResponse response) throws IOException{
 			//response.setCharacterEncoding("gb2312");
 			  String archcode=request.getParameter("archcode").trim();
 			 String jpql3="FROM TargetResult as o where o.examFlag='1' and  o.ArchCode='"+archcode+"' order by o.objectCode,o.IndexCode,o.season";
 	         List<TargetResult> objs_res=systemService.readEntitiesByJPQL(jpql3, TargetResult.class);
-	       //拼表格，拼列
+	         
+	         //拼表格，拼列
 			  StringBuffer sb = new StringBuffer();
 		      sb.append("<table id=\"score_tb\"  style=\"width:700px;height:500px;\" data-options=\"singleSelect:true,onClickRow:onClickRow\">");
 		      sb.append("<thead data-options=\"frozen:true\"><tr>");
