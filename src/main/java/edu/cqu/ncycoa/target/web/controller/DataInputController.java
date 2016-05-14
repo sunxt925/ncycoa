@@ -783,7 +783,7 @@ public class DataInputController {
 							if("".equals(tr.get(k).getPlanValue()) || tr.get(k).getPlanValue()==null)
 								sb.append(" <input type=\"text\" style=\"width:100px;\"  value=\"没有计划值\" readonly=\"readonly\" >");
 							else {
-								sb.append(" <input type=\"text\" style=\"width:100px;\"  value=\""+tr.get(k).getPlanValue()+"\">");
+								sb.append(" <input type=\"text\" style=\"width:100px;background:#95B8E7;\"  readonly=\"readonly\"   value=\""+tr.get(k).getPlanValue()+"\">");
 								
 							}
 							if("".equals(tr.get(k).getRealValue()) || tr.get(k).getRealValue()==null){
