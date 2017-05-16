@@ -29,7 +29,7 @@
 	
 		<h:dgColumn field="contractValue" title="合同金额" query="true"></h:dgColumn>
 		<h:dgColumn field="contractObject" title="合同标的" ></h:dgColumn>
-		<h:dgColumn field="signingDate" title="签订日期" dateFormatter="yyyy-MM-dd" query="true"></h:dgColumn>
+		<h:dgColumn field="signingDate" title="签订日期" dateFormatter="yyyy-MM-dd" query="true" queryMode="scope"></h:dgColumn>
 		<h:dgColumn field="implementationStage" title="执行情况" ></h:dgColumn>
 		<h:dgColumn field="finishingDate" dateFormatter="yyyy-MM-dd" title="完成日期"></h:dgColumn>
 		<h:dgColumn field="renewal" title="续签" ></h:dgColumn>
@@ -50,8 +50,8 @@
 <script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("input[name='inputDate_begin']").attr("class","easyui-datebox");
-		$("input[name='inputDate_end']").attr("class","easyui-datebox");
+		$("input[name='signingDate_begin']").attr("class","easyui-datebox");
+		$("input[name='signingDate_end']").attr("class","easyui-datebox");
 	});
 	function commitcontract(id,flag){
 		if(flag == "0"){
@@ -109,10 +109,12 @@
 			tip('不能同时删除多条记录，请勾选一条记录');
 			return;
 		}
-		if(rows[0].status == 1){
+		/**
+		**  xiaoteng 审核过程中发起人可修改 注释掉
+		**if(rows[0].status == 1){
 			$.dialog.alert("合同正在审核,不能修改!");
 			return;
-		}
+		} */
 		if(actionUrl.indexOf("?") == -1) {
 			actionUrl += '?id='+ rows[0].id;
 		} else {

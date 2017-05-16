@@ -58,18 +58,22 @@ UserInfo UserInfo=(UserInfo)request.getSession().getAttribute("UserInfo");
 <%
 	for (Task task : taskService.createTaskQuery().taskAssignee(staffcode).orderByTaskCreateTime().desc().list()) {
 		pageContext.setAttribute("task", task);
+		String instanceid=task.getProcessInstanceId();
 		TaskFormData formData = formService.getTaskFormData(task.getId());
 		String formKey = formData.getFormKey();
-		String ownercode=taskService.getVariable(task.getId(), "owner").toString();
-		StaffInfo staffinfo=new StaffInfo(ownercode);
-		String ownername=staffinfo.getName();
+		ProcessInstance instance=;
+ 		//String startid=instance.getStartUserId();
+		//if(startid!=null){
+		//StaffInfo user=new StaffInfo(startid);
+		//staffname=user.getName();
+		//} 
 %>									        
 			<tr><%
 //String url=taskurl+"?id="+task.getId()
 %>
 			    <td>${task.id}</td>
 			    <td>${task.name}</td>
-			    <td><%=ownername %></td>
+			    <td><%=instanceid %></td>
 			    <td><a href="#" class="easyui-linkbutton"
 				        data-options="iconCls:'icon-add',plain:true" 
 				        onclick="view('<%=formKey%>','<%=task.getId()%>')">查看任务</a>

@@ -73,6 +73,13 @@
 				}
 			}
 		});
+		$("#name").blur(function(){
+			if($(this).val().trim()==""){
+				$("#showerror").text("合同名称不能为空！");
+			}else{
+				$("#showerror").text("");
+			}
+		});
 		
 		$('#addBtn').bind('click', function(){   
 	 		 var tr =  $("#add_participant_table_template tr").clone();
@@ -101,7 +108,9 @@
 
 	<tr>
 		<td align="right"><label class="Validform_label"> 合同名称 </label></td>
-		<td class="value"><input class="inputxt" id="name" name="name" value="${contract.name}" datatype="s2-50">
+		<td class="value"><input class="inputxt" id="name" name="name" value="${contract.name}" >
+		<label id="showerror">  </label>
+		
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>
@@ -340,7 +349,7 @@
     </tr>
     <tr>
 		<td align="right"><label class="Validform_label"> 合同内容 </label></td>
-		<td class="value"><input class="inputxt" id="content" name="content" value="${contract.content}">
+		<td class="value"><input class="inputxt" id="content" name="content" value="${contract.content}" datatype="s2-50">
 		<span class="Validform_checktip"></span>
 		</td>
 	</tr>

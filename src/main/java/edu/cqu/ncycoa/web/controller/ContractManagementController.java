@@ -10,8 +10,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -468,7 +470,7 @@ public class ContractManagementController {
 	//	String caigouleader = request.getParameter("caigouleader");
 		ContractInfo contractInfo = systemService.findEntityById(Long.parseLong(id), ContractInfo.class);
 		
-		List<String> auditleader = new ArrayList<String>();
+		Set<String> auditleader = new HashSet<String>();
 		if(contractInfo.getChengbanleader()!=null && !contractInfo.getChengbanleader().equals("")){
 			auditleader.add(contractInfo.getChengbanleader());
 		}
@@ -855,8 +857,9 @@ public class ContractManagementController {
 		String type = request.getParameter("type");
 		String sDate = request.getParameter("sDate");
 		String eDate = request.getParameter("eDate");
+		String depart = request.getParameter("depart");
 		SimpleDateFormat DATE = new SimpleDateFormat("yyyy-MM-dd");
-		
+		System.out.println(depart);
 		//查询条件组装器
 		TypedQueryBuilder<ContractInfo> tqBuilder = new TypedQueryBuilder<ContractInfo>(ContractInfo.class,"e");
 		if(null!=sDate && !sDate.equals("")){
@@ -865,7 +868,14 @@ public class ContractManagementController {
 		if(null!=eDate && !eDate.equals("")){
 		tqBuilder.addRestriction(new TQRestriction("signingDate", "<=",DATE.parse(eDate)));
 		}
-		tqBuilder.addRestriction(new TQRestriction("type", "in",type));
+		if(null!=type && !type.equals("")){
+			tqBuilder.addRestriction(new TQRestriction("type", "=",type));
+			}
+		if(null!=depart && !depart.equals("")){
+			tqBuilder.addRestriction(new TQRestriction("relevantDepartment", "=",depart));
+			}
+		//System.out.println(type);
+		//tqBuilder.addRestriction(new TQRestriction("type", "in",type));
 		List<ContractInfo> contractInfos = systemService.getQueryRes(tqBuilder);
 	    response.setContentType("multipart/form-data"); 
 	    response.setHeader("Content-Disposition", "attachment;fileName="+Util.getName()+".xls");  

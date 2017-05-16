@@ -1,0 +1,185 @@
+[ERROR][2017-03-16 13:16:39,435][com.mascloud.util.InitConnect]SDK登录异常
+java.lang.NullPointerException
+	at com.mascloud.model.HttpModel.signInfosToString(HttpModel.java:160)
+	at com.mascloud.model.HttpModel.toString(HttpModel.java:153)
+	at com.mascloud.util.InitConnect.initConnect(InitConnect.java:38)
+	at com.mascloud.sdkservice.impl.SDKClientImpl.login(SDKClientImpl.java:266)
+	at com.mascloud.sdkclient.Client.login(Client.java:69)
+	at edu.cqu.ncycoa.common.service.Demo.main(Demo.java:20)
+[INFO][2017-03-16 13:16:39,438][com.mascloud.sdkservice.impl.SDKClientImpl]身份认证失败...
+[ERROR][2017-03-16 13:17:13,465][com.mascloud.util.InitConnect]SDK登录异常
+java.lang.NullPointerException
+	at com.mascloud.model.HttpModel.signInfosToString(HttpModel.java:160)
+	at com.mascloud.model.HttpModel.toString(HttpModel.java:153)
+	at com.mascloud.util.InitConnect.initConnect(InitConnect.java:38)
+	at com.mascloud.sdkservice.impl.SDKClientImpl.login(SDKClientImpl.java:266)
+	at com.mascloud.sdkclient.Client.login(Client.java:69)
+	at edu.cqu.ncycoa.common.service.Demo.main(Demo.java:20)
+[INFO][2017-03-16 13:17:13,468][com.mascloud.sdkservice.impl.SDKClientImpl]身份认证失败...
+[ERROR][2017-03-16 13:21:20,120][com.mascloud.util.InitConnect]SDK登录异常
+java.lang.NullPointerException
+	at com.mascloud.model.HttpModel.signInfosToString(HttpModel.java:160)
+	at com.mascloud.model.HttpModel.toString(HttpModel.java:153)
+	at com.mascloud.util.InitConnect.initConnect(InitConnect.java:38)
+	at com.mascloud.sdkservice.impl.SDKClientImpl.login(SDKClientImpl.java:266)
+	at com.mascloud.sdkclient.Client.login(Client.java:69)
+	at edu.cqu.ncycoa.common.service.Demo.main(Demo.java:20)
+[INFO][2017-03-16 13:21:20,123][com.mascloud.sdkservice.impl.SDKClientImpl]身份认证失败...
+[ERROR][2017-03-16 14:45:51,041][com.mascloud.util.InitConnect]SDK登录异常
+java.lang.NullPointerException
+	at com.mascloud.model.HttpModel.signInfosToString(HttpModel.java:160)
+	at com.mascloud.model.HttpModel.toString(HttpModel.java:153)
+	at com.mascloud.util.InitConnect.initConnect(InitConnect.java:38)
+	at com.mascloud.sdkservice.impl.SDKClientImpl.login(SDKClientImpl.java:266)
+	at com.mascloud.sdkclient.Client.login(Client.java:69)
+	at edu.cqu.ncycoa.common.service.Demo.main(Demo.java:20)
+[INFO][2017-03-16 14:45:51,054][com.mascloud.sdkservice.impl.SDKClientImpl]身份认证失败...
+[ERROR][2017-03-16 14:46:05,998][com.mascloud.util.InitConnect]SDK登录异常
+java.lang.NullPointerException
+	at com.mascloud.model.HttpModel.signInfosToString(HttpModel.java:160)
+	at com.mascloud.model.HttpModel.toString(HttpModel.java:153)
+	at com.mascloud.util.InitConnect.initConnect(InitConnect.java:38)
+	at com.mascloud.sdkservice.impl.SDKClientImpl.login(SDKClientImpl.java:266)
+	at com.mascloud.sdkclient.Client.login(Client.java:69)
+	at edu.cqu.ncycoa.common.service.Demo.main(Demo.java:20)
+[INFO][2017-03-16 14:46:06,001][com.mascloud.sdkservice.impl.SDKClientImpl]身份认证失败...
+[ERROR][2017-03-16 14:47:00,574][com.mascloud.util.InitConnect]SDK登录异常
+java.lang.NullPointerException
+	at com.mascloud.model.HttpModel.signInfosToString(HttpModel.java:160)
+	at com.mascloud.model.HttpModel.toString(HttpModel.java:153)
+	at com.mascloud.util.InitConnect.initConnect(InitConnect.java:38)
+	at com.mascloud.sdkservice.impl.SDKClientImpl.login(SDKClientImpl.java:266)
+	at com.mascloud.sdkclient.Client.login(Client.java:69)
+	at edu.cqu.ncycoa.common.service.Demo.main(Demo.java:22)
+[INFO][2017-03-16 14:47:00,577][com.mascloud.sdkservice.impl.SDKClientImpl]身份认证失败...
+[ERROR][2017-03-16 14:47:52,259][com.mascloud.util.InitConnect]SDK登录异常
+java.lang.NullPointerException
+	at com.mascloud.model.HttpModel.signInfosToString(HttpModel.java:160)
+	at com.mascloud.model.HttpModel.toString(HttpModel.java:153)
+	at com.mascloud.util.InitConnect.initConnect(InitConnect.java:38)
+	at com.mascloud.sdkservice.impl.SDKClientImpl.login(SDKClientImpl.java:266)
+	at com.mascloud.sdkclient.Client.login(Client.java:69)
+	at edu.cqu.ncycoa.common.service.Demo.main(Demo.java:22)
+[INFO][2017-03-16 14:47:52,262][com.mascloud.sdkservice.impl.SDKClientImpl]身份认证失败...
+[ERROR][2017-03-16 16:53:55,159][com.mascloud.util.InitConnect]SDK登录异常
+java.lang.NullPointerException
+	at com.mascloud.model.HttpModel.signInfosToString(HttpModel.java:160)
+	at com.mascloud.model.HttpModel.toString(HttpModel.java:153)
+	at com.mascloud.util.InitConnect.initConnect(InitConnect.java:38)
+	at com.mascloud.sdkservice.impl.SDKClientImpl.login(SDKClientImpl.java:266)
+	at com.mascloud.sdkclient.Client.login(Client.java:69)
+	at edu.cqu.ncycoa.common.service.Demo.main(Demo.java:22)
+[INFO][2017-03-16 16:53:55,167][com.mascloud.sdkservice.impl.SDKClientImpl]身份认证失败...
+[ERROR][2017-03-16 16:53:59,196][com.mascloud.util.InitConnect]SDK登录异常
+java.lang.NullPointerException
+	at com.mascloud.model.HttpModel.signInfosToString(HttpModel.java:160)
+	at com.mascloud.model.HttpModel.toString(HttpModel.java:153)
+	at com.mascloud.util.InitConnect.initConnect(InitConnect.java:38)
+	at com.mascloud.sdkservice.impl.SDKClientImpl.login(SDKClientImpl.java:266)
+	at com.mascloud.sdkclient.Client.login(Client.java:69)
+	at edu.cqu.ncycoa.common.service.Demo.main(Demo.java:22)
+[INFO][2017-03-16 16:53:59,199][com.mascloud.sdkservice.impl.SDKClientImpl]身份认证失败...
+[INFO][2017-03-16 18:41:56,537][com.mascloud.util.InitConnect]登录请求结果：HttpModel [secretKey=WEef9tJUdGGV, ecId=25245, url=failover:(tcp://112.33.7.12:7002,tcp://112.33.1.41:7002)?nested.wireFormat.maxInactivityDuration=120000&initialReconnectDelay=2000&timeout=3000&randomize=false, loginuserId=c1cafec7-bc22-43cf-b1ef-916fa7e1c9f7, jmsUserName=c1cafec7-bc22-43cf-b1ef-916fa7e1c9f7, jmsPassWord=WEef9tJUdGGV, status=0000,signInfos={[signNo=dM9L3lWM,prodType=4,smsBand=1000]}]
+[INFO][2017-03-16 18:44:18,513][com.mascloud.util.InitConnect]登录请求结果：HttpModel [secretKey=acPgkHJuBEGs, ecId=25245, url=failover:(tcp://112.33.7.12:7002,tcp://112.33.1.41:7002)?nested.wireFormat.maxInactivityDuration=120000&initialReconnectDelay=2000&timeout=3000&randomize=false, loginuserId=c1cafec7-bc22-43cf-b1ef-916fa7e1c9f7, jmsUserName=c1cafec7-bc22-43cf-b1ef-916fa7e1c9f7, jmsPassWord=acPgkHJuBEGs, status=0000,signInfos={[signNo=dM9L3lWM,prodType=4,smsBand=1000]}]
+[INFO][2017-03-16 18:44:19,322][org.apache.activemq.transport.failover.FailoverTransport]Successfully connected to tcp://112.33.7.12:7002?wireFormat.maxInactivityDuration=120000
+[INFO][2017-03-16 18:44:20,282][com.mascloud.sdkservice.impl.SDKClientImpl]参数初始化成功...
+[INFO][2017-03-16 18:44:20,338][com.mascloud.jms.Sender]批次号: d064b83b-61d1-4bda-a3cf-1c92441e0d70,号码数量：1,已经推送至审核层
+[INFO][2017-03-16 18:45:26,214][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13527379510], submitDate=null, receiveDate=null, errorCode=null, msgGroup=d064b83b-61d1-4bda-a3cf-1c92441e0d70, reportStatus=CM:0000]
+[INFO][2017-03-16 18:45:27,462][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13527379510], submitDate=null, receiveDate=null, errorCode=CM:3000, msgGroup=d064b83b-61d1-4bda-a3cf-1c92441e0d70, reportStatus=CM:3000]
+[WARN][2017-03-18 00:10:18,642][org.apache.activemq.transport.failover.FailoverTransport]Transport (tcp:///112.33.7.12:7002@50065) failed, reason:  , attempting to automatically reconnect
+java.net.SocketException: Software caused connection abort: recv failed
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.read(Unknown Source)
+	at java.net.SocketInputStream.read(Unknown Source)
+	at org.apache.activemq.transport.tcp.TcpBufferedInputStream.fill(TcpBufferedInputStream.java:50)
+	at org.apache.activemq.transport.tcp.TcpTransport$2.fill(TcpTransport.java:609)
+	at org.apache.activemq.transport.tcp.TcpBufferedInputStream.read(TcpBufferedInputStream.java:58)
+	at org.apache.activemq.transport.tcp.TcpTransport$2.read(TcpTransport.java:594)
+	at java.io.DataInputStream.readInt(Unknown Source)
+	at org.apache.activemq.openwire.OpenWireFormat.unmarshal(OpenWireFormat.java:275)
+	at org.apache.activemq.transport.tcp.TcpTransport.readCommand(TcpTransport.java:221)
+	at org.apache.activemq.transport.tcp.TcpTransport.doRun(TcpTransport.java:213)
+	at org.apache.activemq.transport.tcp.TcpTransport.run(TcpTransport.java:196)
+	at java.lang.Thread.run(Unknown Source)
+[INFO][2017-03-19 14:12:53,925][com.mascloud.util.InitConnect]登录请求结果：HttpModel [secretKey=mrWdz7g1OxFW, ecId=25245, url=failover:(tcp://112.33.7.12:7002,tcp://112.33.1.41:7002)?nested.wireFormat.maxInactivityDuration=120000&initialReconnectDelay=2000&timeout=3000&randomize=false, loginuserId=c1cafec7-bc22-43cf-b1ef-916fa7e1c9f7, jmsUserName=c1cafec7-bc22-43cf-b1ef-916fa7e1c9f7, jmsPassWord=mrWdz7g1OxFW, status=0000,signInfos={[signNo=dM9L3lWM,prodType=4,smsBand=1000]}]
+[INFO][2017-03-19 14:12:54,456][org.apache.activemq.transport.failover.FailoverTransport]Successfully connected to tcp://112.33.7.12:7002?wireFormat.maxInactivityDuration=120000
+[INFO][2017-03-19 14:12:55,256][com.mascloud.sdkservice.impl.SDKClientImpl]参数初始化成功...
+[INFO][2017-03-19 14:12:55,666][com.mascloud.jms.Sender]批次号: 93591a1c-8d5d-4603-a7de-0d0273b7ba1b,号码数量：1,已经推送至审核层
+[INFO][2017-03-19 14:13:04,365][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=13527379510, submitDate=1703191417, receiveDate=1703191417, errorCode=DB:0140, msgGroup=93591a1c-8d5d-4603-a7de-0d0273b7ba1b, reportStatus=DB:0140]
+[INFO][2017-03-19 14:14:26,135][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13527379510], submitDate=null, receiveDate=null, errorCode=null, msgGroup=93591a1c-8d5d-4603-a7de-0d0273b7ba1b, reportStatus=CM:0000]
+[INFO][2017-03-19 14:14:26,851][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13527379510], submitDate=null, receiveDate=null, errorCode=CM:3000, msgGroup=93591a1c-8d5d-4603-a7de-0d0273b7ba1b, reportStatus=CM:3000]
+[INFO][2017-03-20 10:34:38,639][com.mascloud.util.InitConnect]登录请求结果：HttpModel [secretKey=5X1bt2duAH9y, ecId=25245, url=failover:(tcp://112.33.7.12:7002,tcp://112.33.1.41:7002)?nested.wireFormat.maxInactivityDuration=120000&initialReconnectDelay=2000&timeout=3000&randomize=false, loginuserId=c1cafec7-bc22-43cf-b1ef-916fa7e1c9f7, jmsUserName=c1cafec7-bc22-43cf-b1ef-916fa7e1c9f7, jmsPassWord=5X1bt2duAH9y, status=0000,signInfos={[signNo=dM9L3lWM,prodType=4,smsBand=1000]}]
+[INFO][2017-03-20 10:34:38,921][org.apache.activemq.transport.failover.FailoverTransport]Successfully connected to tcp://112.33.7.12:7002?wireFormat.maxInactivityDuration=120000
+[INFO][2017-03-20 10:34:39,732][com.mascloud.sdkservice.impl.SDKClientImpl]参数初始化成功...
+[INFO][2017-03-20 10:34:40,175][com.mascloud.jms.Sender]批次号: 688d85e9-7117-408b-9f48-59fc9c056669,号码数量：1,已经推送至审核层
+[INFO][2017-03-20 10:34:50,726][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=13551917871, submitDate=1703201039, receiveDate=1703201039, errorCode=DELIVRD, msgGroup=688d85e9-7117-408b-9f48-59fc9c056669, reportStatus=DELIVRD]
+[INFO][2017-03-20 10:56:21,754][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13551917871], submitDate=null, receiveDate=null, errorCode=null, msgGroup=688d85e9-7117-408b-9f48-59fc9c056669, reportStatus=CM:0000]
+[INFO][2017-03-20 10:56:21,755][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13551917871], submitDate=null, receiveDate=null, errorCode=CM:3000, msgGroup=688d85e9-7117-408b-9f48-59fc9c056669, reportStatus=CM:3000]
+[INFO][2017-03-20 11:19:55,255][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=15881767766, submitDate=1703201124, receiveDate=1703201124, errorCode=DELIVRD, msgGroup=323413c7-e2ad-479b-9d96-553c15279622, reportStatus=DELIVRD]
+[INFO][2017-03-20 11:20:03,921][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=15881767766, submitDate=1703201124, receiveDate=1703201124, errorCode=DELIVRD, msgGroup=9bb639ef-73ce-4c0e-b995-a4d7869728cd, reportStatus=DELIVRD]
+[INFO][2017-03-20 11:20:24,542][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=15881767766, submitDate=1703201125, receiveDate=1703201125, errorCode=DELIVRD, msgGroup=7f13c80e-9ee5-4044-b12d-50906619b437, reportStatus=DELIVRD]
+[INFO][2017-03-20 11:21:41,998][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[15881767766], submitDate=null, receiveDate=null, errorCode=null, msgGroup=323413c7-e2ad-479b-9d96-553c15279622, reportStatus=CM:0000]
+[INFO][2017-03-20 11:21:51,437][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[15881767766], submitDate=null, receiveDate=null, errorCode=null, msgGroup=9bb639ef-73ce-4c0e-b995-a4d7869728cd, reportStatus=CM:0000]
+[INFO][2017-03-20 11:22:11,089][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[15881767766], submitDate=null, receiveDate=null, errorCode=null, msgGroup=7f13c80e-9ee5-4044-b12d-50906619b437, reportStatus=CM:0000]
+[INFO][2017-03-20 15:51:34,592][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=13508277267, submitDate=1703201556, receiveDate=1703201556, errorCode=DELIVRD, msgGroup=220ff0b5-d011-4acf-b0d8-40b627d93d1e, reportStatus=DELIVRD]
+[INFO][2017-03-20 15:53:13,888][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13508277267], submitDate=null, receiveDate=null, errorCode=null, msgGroup=220ff0b5-d011-4acf-b0d8-40b627d93d1e, reportStatus=CM:0000]
+[INFO][2017-03-20 15:56:38,621][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=13990816355, submitDate=1703201600, receiveDate=1703201600, errorCode=DELIVRD, msgGroup=71f11b32-6411-4add-9071-142ea4f107e9, reportStatus=DELIVRD]
+[INFO][2017-03-20 15:58:20,836][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13990816355], submitDate=null, receiveDate=null, errorCode=null, msgGroup=71f11b32-6411-4add-9071-142ea4f107e9, reportStatus=CM:0000]
+[INFO][2017-03-20 16:14:02,041][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=13698283308, submitDate=1703201617, receiveDate=1703201617, errorCode=DELIVRD, msgGroup=db949ded-2c42-4247-919a-b6f9e21a4ea8, reportStatus=DELIVRD]
+[INFO][2017-03-20 16:14:31,525][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=13698283308, submitDate=1703201619, receiveDate=1703201619, errorCode=DELIVRD, msgGroup=904e15e2-7c6f-4f46-9806-fb3082b7b1d8, reportStatus=DELIVRD]
+[INFO][2017-03-20 16:15:33,809][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13698283308], submitDate=null, receiveDate=null, errorCode=null, msgGroup=db949ded-2c42-4247-919a-b6f9e21a4ea8, reportStatus=CM:0000]
+[INFO][2017-03-20 16:15:48,252][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13698283308], submitDate=null, receiveDate=null, errorCode=null, msgGroup=904e15e2-7c6f-4f46-9806-fb3082b7b1d8, reportStatus=CM:0000]
+[INFO][2017-03-20 16:16:12,434][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13698283308], submitDate=null, receiveDate=null, errorCode=CM:3000, msgGroup=904e15e2-7c6f-4f46-9806-fb3082b7b1d8, reportStatus=CM:3000]
+[INFO][2017-03-20 16:17:16,978][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=13696232888, submitDate=1703201621, receiveDate=1703201621, errorCode=DELIVRD, msgGroup=3c9ad13c-9341-4210-a339-d1fe5ecd6972, reportStatus=DELIVRD]
+[INFO][2017-03-20 16:17:35,177][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=13890801288, submitDate=1703201621, receiveDate=1703201621, errorCode=DELIVRD, msgGroup=7491a1bb-3699-44d7-b43b-88df6660fc35, reportStatus=DELIVRD]
+[INFO][2017-03-20 16:17:49,767][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=13696232888, submitDate=1703201621, receiveDate=1703201621, errorCode=DELIVRD, msgGroup=2e45d345-e176-4179-b146-779aa84df731, reportStatus=DELIVRD]
+[INFO][2017-03-20 16:18:38,363][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=13890801288, submitDate=1703201622, receiveDate=1703201622, errorCode=DELIVRD, msgGroup=cd773dd6-a116-493a-a1be-18a5977ec892, reportStatus=DELIVRD]
+[INFO][2017-03-20 16:18:39,360][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=13696232888, submitDate=1703201622, receiveDate=1703201622, errorCode=DELIVRD, msgGroup=cd773dd6-a116-493a-a1be-18a5977ec892, reportStatus=DELIVRD]
+[INFO][2017-03-20 16:18:54,903][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13890801288, 13696232888], submitDate=null, receiveDate=null, errorCode=null, msgGroup=3c9ad13c-9341-4210-a339-d1fe5ecd6972, reportStatus=CM:0000]
+[INFO][2017-03-20 16:18:55,432][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13890801288], submitDate=null, receiveDate=null, errorCode=CM:3000, msgGroup=3c9ad13c-9341-4210-a339-d1fe5ecd6972, reportStatus=CM:3000]
+[INFO][2017-03-20 16:18:55,433][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13696232888], submitDate=null, receiveDate=null, errorCode=CM:3000, msgGroup=3c9ad13c-9341-4210-a339-d1fe5ecd6972, reportStatus=CM:3000]
+[INFO][2017-03-20 16:19:09,201][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13890801288, 13696232888], submitDate=null, receiveDate=null, errorCode=null, msgGroup=7491a1bb-3699-44d7-b43b-88df6660fc35, reportStatus=CM:0000]
+[INFO][2017-03-20 16:19:09,201][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13890801288], submitDate=null, receiveDate=null, errorCode=CM:3000, msgGroup=7491a1bb-3699-44d7-b43b-88df6660fc35, reportStatus=CM:3000]
+[INFO][2017-03-20 16:19:09,202][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13696232888], submitDate=null, receiveDate=null, errorCode=CM:3000, msgGroup=7491a1bb-3699-44d7-b43b-88df6660fc35, reportStatus=CM:3000]
+[INFO][2017-03-20 16:19:23,707][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13890801288, 13696232888], submitDate=null, receiveDate=null, errorCode=null, msgGroup=2e45d345-e176-4179-b146-779aa84df731, reportStatus=CM:0000]
+[INFO][2017-03-20 16:19:24,396][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13696232888], submitDate=null, receiveDate=null, errorCode=CM:3000, msgGroup=2e45d345-e176-4179-b146-779aa84df731, reportStatus=CM:3000]
+[INFO][2017-03-20 16:19:54,284][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=13890801288, submitDate=1703201623, receiveDate=1703201623, errorCode=DELIVRD, msgGroup=37823933-7eab-435d-b708-f1f1d6d34857, reportStatus=DELIVRD]
+[INFO][2017-03-20 16:20:12,169][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13890801288], submitDate=null, receiveDate=null, errorCode=CM:3000, msgGroup=cd773dd6-a116-493a-a1be-18a5977ec892, reportStatus=CM:3000]
+[INFO][2017-03-20 16:21:02,755][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13890801288, 13696232888], submitDate=null, receiveDate=null, errorCode=null, msgGroup=37823933-7eab-435d-b708-f1f1d6d34857, reportStatus=CM:0000]
+[INFO][2017-03-20 16:21:39,713][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13890801288], submitDate=null, receiveDate=null, errorCode=CM:3000, msgGroup=37823933-7eab-435d-b708-f1f1d6d34857, reportStatus=CM:3000]
+[INFO][2017-03-21 09:03:11,929][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=13890801288, submitDate=1703210908, receiveDate=1703210908, errorCode=DELIVRD, msgGroup=789bbe1f-4119-4253-be6a-41b0c908bdde, reportStatus=DELIVRD]
+[INFO][2017-03-21 09:04:12,947][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13890801288], submitDate=null, receiveDate=null, errorCode=null, msgGroup=789bbe1f-4119-4253-be6a-41b0c908bdde, reportStatus=CM:0000]
+[INFO][2017-03-21 09:04:21,402][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13890801288], submitDate=null, receiveDate=null, errorCode=CM:3000, msgGroup=789bbe1f-4119-4253-be6a-41b0c908bdde, reportStatus=CM:3000]
+[INFO][2017-03-21 09:42:02,041][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=13508277267, submitDate=1703210946, receiveDate=1703210946, errorCode=DELIVRD, msgGroup=ea7705f8-dfe7-4a9b-bc6c-e6baf83a5633, reportStatus=DELIVRD]
+[INFO][2017-03-21 09:43:30,232][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13508277267], submitDate=null, receiveDate=null, errorCode=null, msgGroup=ea7705f8-dfe7-4a9b-bc6c-e6baf83a5633, reportStatus=CM:0000]
+[INFO][2017-03-21 11:01:49,096][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=18382936666, submitDate=1703211106, receiveDate=1703211106, errorCode=DELIVRD, msgGroup=6c1d1dbf-f0df-4a82-aa65-ea57837843cb, reportStatus=DELIVRD]
+[INFO][2017-03-21 11:01:51,160][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=13808272018, submitDate=1703211105, receiveDate=1703211105, errorCode=DELIVRD, msgGroup=6c1d1dbf-f0df-4a82-aa65-ea57837843cb, reportStatus=DELIVRD]
+[INFO][2017-03-21 11:01:57,297][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=18382936666, submitDate=1703211106, receiveDate=1703211106, errorCode=DELIVRD, msgGroup=25189c76-af01-419f-84b1-feba82ea4c30, reportStatus=DELIVRD]
+[INFO][2017-03-21 11:03:14,010][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13808272018, 18382936666], submitDate=null, receiveDate=null, errorCode=null, msgGroup=6c1d1dbf-f0df-4a82-aa65-ea57837843cb, reportStatus=CM:0000]
+[INFO][2017-03-21 11:03:14,799][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13808272018], submitDate=null, receiveDate=null, errorCode=CM:3000, msgGroup=6c1d1dbf-f0df-4a82-aa65-ea57837843cb, reportStatus=CM:3000]
+[INFO][2017-03-21 11:03:24,365][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13808272018], submitDate=null, receiveDate=null, errorCode=CM:3000, msgGroup=25189c76-af01-419f-84b1-feba82ea4c30, reportStatus=CM:3000]
+[INFO][2017-03-21 11:05:03,349][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=13808272018, submitDate=1703211110, receiveDate=1703211110, errorCode=DELIVRD, msgGroup=55f7c427-d256-4609-a5c0-45661e319688, reportStatus=DELIVRD]
+[INFO][2017-03-21 11:06:20,054][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13808272018], submitDate=null, receiveDate=null, errorCode=null, msgGroup=55f7c427-d256-4609-a5c0-45661e319688, reportStatus=CM:0000]
+[INFO][2017-03-21 11:06:47,580][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13808272018], submitDate=null, receiveDate=null, errorCode=null, msgGroup=ee247704-4962-4fd3-82bf-43fd2f9981ee, reportStatus=CM:0000]
+[INFO][2017-03-21 17:11:25,931][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=13890801288, submitDate=1703211715, receiveDate=1703211715, errorCode=DELIVRD, msgGroup=90c8ce63-29ee-4f11-96e7-3ffa0ca45a53, reportStatus=DELIVRD]
+[INFO][2017-03-21 17:11:40,666][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=13890801288, submitDate=1703211715, receiveDate=1703211715, errorCode=DELIVRD, msgGroup=100464c5-ce14-414f-9116-f34250c7da2b, reportStatus=DELIVRD]
+[INFO][2017-03-21 17:12:37,458][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=13890801288, submitDate=1703211717, receiveDate=1703211717, errorCode=DELIVRD, msgGroup=6ca74351-8a4a-4503-8231-e6b173b1ce3b, reportStatus=DELIVRD]
+[INFO][2017-03-21 17:12:56,146][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=13890801288, submitDate=1703211716, receiveDate=1703211716, errorCode=DELIVRD, msgGroup=1860c115-1044-4203-8cc9-b8d064027b76, reportStatus=DELIVRD]
+[INFO][2017-03-21 17:13:10,373][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13890801288], submitDate=null, receiveDate=null, errorCode=null, msgGroup=90c8ce63-29ee-4f11-96e7-3ffa0ca45a53, reportStatus=CM:0000]
+[INFO][2017-03-21 17:13:23,392][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13890801288], submitDate=null, receiveDate=null, errorCode=null, msgGroup=100464c5-ce14-414f-9116-f34250c7da2b, reportStatus=CM:0000]
+[INFO][2017-03-21 17:14:14,436][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13890801288], submitDate=null, receiveDate=null, errorCode=null, msgGroup=6ca74351-8a4a-4503-8231-e6b173b1ce3b, reportStatus=CM:0000]
+[INFO][2017-03-21 17:14:31,475][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13890801288], submitDate=null, receiveDate=null, errorCode=null, msgGroup=1860c115-1044-4203-8cc9-b8d064027b76, reportStatus=CM:0000]
+[INFO][2017-03-21 17:15:24,887][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=13909075075, submitDate=1703211719, receiveDate=1703211719, errorCode=DELIVRD, msgGroup=ccfc7c75-de90-40a0-b5bf-8e3a3e35736a, reportStatus=DELIVRD]
+[INFO][2017-03-21 17:16:50,832][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=13890801288, submitDate=1703211720, receiveDate=1703211720, errorCode=DELIVRD, msgGroup=31ff6328-d9c2-48f2-969f-a01b24d824e6, reportStatus=DELIVRD]
+[INFO][2017-03-21 17:17:01,839][com.mascloud.jms.StatusReportReceiver]StatusReportModel: StatusReportModel [mobile=13890801288, submitDate=1703211721, receiveDate=1703211721, errorCode=DELIVRD, msgGroup=cc65c54b-ec9f-418f-bddf-49fb1969b425, reportStatus=DELIVRD]
+[INFO][2017-03-21 17:17:03,903][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13909075075], submitDate=null, receiveDate=null, errorCode=null, msgGroup=ccfc7c75-de90-40a0-b5bf-8e3a3e35736a, reportStatus=CM:0000]
+[INFO][2017-03-21 17:18:28,353][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13890801288], submitDate=null, receiveDate=null, errorCode=null, msgGroup=31ff6328-d9c2-48f2-969f-a01b24d824e6, reportStatus=CM:0000]
+[INFO][2017-03-21 17:18:41,908][com.mascloud.jms.SubmitReportReceiver]SubmitReportModel: SubmitReportModel [mobiles=[13890801288], submitDate=null, receiveDate=null, errorCode=null, msgGroup=cc65c54b-ec9f-418f-bddf-49fb1969b425, reportStatus=CM:0000]
+[WARN][2017-03-21 22:39:32,342][org.apache.activemq.transport.failover.FailoverTransport]Transport (tcp:///112.33.7.12:7002@62420) failed, reason:  , attempting to automatically reconnect
+java.io.EOFException
+	at java.io.DataInputStream.readInt(Unknown Source)
+	at org.apache.activemq.openwire.OpenWireFormat.unmarshal(OpenWireFormat.java:275)
+	at org.apache.activemq.transport.tcp.TcpTransport.readCommand(TcpTransport.java:221)
+	at org.apache.activemq.transport.tcp.TcpTransport.doRun(TcpTransport.java:213)
+	at org.apache.activemq.transport.tcp.TcpTransport.run(TcpTransport.java:196)
+	at java.lang.Thread.run(Unknown Source)

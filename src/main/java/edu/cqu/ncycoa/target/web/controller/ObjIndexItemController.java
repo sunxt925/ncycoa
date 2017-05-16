@@ -312,7 +312,8 @@ public class ObjIndexItemController {
 			return;
 		}
 		
-		systemService.removeEntities(ids, ObjIndexItem.class);
+		//systemService.removeEntities(ids, ObjIndexItem.class);
+		systemService.removeEntities(ids, ObjIndexDefine.class);
 		message = "É¾³ý³É¹¦";
 		j.setMsg(message);
 		SystemUtils.jsonResponse(response, j);

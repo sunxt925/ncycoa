@@ -262,7 +262,6 @@ int per_page = u.getPerpage_full();
           spCodesTemp += (","+$(this).val());
          }
         });
-        
     	var actionUrl="./objindexitem.htm?del&id="+spCodesTemp;
     	$.dialog.confirm('É¾³ý',function(){
    		 $.get(actionUrl,function(data){
@@ -287,7 +286,7 @@ int per_page = u.getPerpage_full();
     }
     function del(para)
     {
-    	var actionUrl="./objindexitem.htm?del_arch&id="+para;
+    	var actionUrl="./objindexitem.htm?del&id="+para;
     	var rows = null;
     	 $.dialog.confirm('É¾³ý',function(){
     		 

@@ -28,7 +28,7 @@
 		<h:dgColumn field="partyB" title="乙方" ></h:dgColumn>
 		<h:dgColumn field="contractValue" title="合同金额" query="true"></h:dgColumn>
 		<h:dgColumn field="contractObject" title="合同标的" ></h:dgColumn>
-		<h:dgColumn field="signingDate" title="签订日期" dateFormatter="yyyy-MM-dd" query="true"></h:dgColumn>
+		<h:dgColumn field="signingDate" title="签订日期" dateFormatter="yyyy-MM-dd" query="true"  queryMode="scope"></h:dgColumn>
 		<h:dgColumn field="implementationStage" title="执行情况" ></h:dgColumn>
 		<h:dgColumn field="finishingDate" dateFormatter="yyyy-MM-dd" title="完成日期"></h:dgColumn>
 		<h:dgColumn field="renewal" title="续签" ></h:dgColumn>
@@ -46,8 +46,8 @@
 <script type="text/javascript" src="jscomponent/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("input[name='inputDate_begin']").attr("class","easyui-datebox");
-		$("input[name='inputDate_end']").attr("class","easyui-datebox");
+		$("input[name='signingDate_begin']").attr("class","easyui-datebox");
+		$("input[name='signingDate_end']").attr("class","easyui-datebox");
 	});
 	function commitcontract(id,flag){
 		if(flag == "0"){
@@ -111,7 +111,7 @@
 		createwindow(title, actionUrl, width, height);
 	}
 	function returnValue2(data){
-		window.location.href="contract-management.htm?exportExcel&sDate="+data.sDate+"&eDate="+data.eDate;
+		window.location.href="contract-management.htm?exportExcel&depart="+data.depart+"&type="+data.type+"&sDate="+data.sDate+"&eDate="+data.eDate;
 		$.dialog({id:'choose01'}).close();
 	}
 	function exportExcel(title, actionUrl, gname, width, height){

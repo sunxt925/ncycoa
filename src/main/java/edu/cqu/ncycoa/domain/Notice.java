@@ -33,7 +33,7 @@ public class Notice {
 	@Column(name="AUTHOR")
 	private String author;   // 发布人
 	
-	@Column(name="CONTENT")
+	@Column(name="CONTENT", length=4000)
 	private String content;   // 内容
 
 	public Long getId() {

@@ -2,6 +2,7 @@ package edu.cqu.ncycoa.common.service;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.UUID;
 
 import javax.xml.namespace.QName;
 import javax.xml.rpc.ServiceException;
@@ -11,6 +12,8 @@ import org.apache.axis.client.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.mascloud.sdkclient.Client;
+
 @org.springframework.stereotype.Service("WebServiceImpl")
 @Transactional
 public class WebServiceImpl {
@@ -19,104 +22,25 @@ public class WebServiceImpl {
     private static final String account = "ncycgs"; 
     private static final String password = "ncycgs"; 
     
-	public static String SendMessage(String phone,String content) {  
-        try {  
-            Service service = new Service();  
-            Call call = (Call) service.createCall();  
-            call.setTargetEndpointAddress(new java.net.URL(  
-                    SERVICE_ENDPOINT));  
-            //下面名字查询的http://127.0.0.1:8080/WebServiceTest/services/HelloServices?wsdl文件里有 
-            QName qn=new QName("http://webservice.service.imas.vicare.com",  
-                    "sendSms");
-            call.setOperationName(qn);  
-            call.setReturnType(org.apache.axis.Constants.XSD_STRING);  
-            call.addParameter("servicecode", org.apache.axis.Constants.XSD_STRING,  
-                    javax.xml.rpc.ParameterMode.IN);
-            call.addParameter("account", org.apache.axis.Constants.XSD_STRING,  
-                    javax.xml.rpc.ParameterMode.IN);
-            call.addParameter("password", org.apache.axis.Constants.XSD_STRING,  
-                    javax.xml.rpc.ParameterMode.IN);
-            call.addParameter("phone", org.apache.axis.Constants.XSD_STRING,  
-                    javax.xml.rpc.ParameterMode.IN);
-            call.addParameter("content", org.apache.axis.Constants.XSD_STRING,  
-                    javax.xml.rpc.ParameterMode.IN);
-            try {  
-                //远程调用发布的方法  
-                String ret =  (String) call.invoke(new Object[] {servicecode,account,password,phone,content});   
-                return ret;  
-            } catch (IOException e) {  
-                e.printStackTrace();  
-            }  
-        } catch (MalformedURLException e) {  
-            e.printStackTrace();  
-        } catch (ServiceException e) {  
-            e.printStackTrace();  
-        }
-		return null;  
+	public static String SendMessage(String phone,String content) { 
+		String res= "";
+		try {
+			final Client client =  Client.getInstance();
+			// 正式环境IP，登录验证URL，用户名，密码，集团客户名称
+			client.login("http://mas.ecloud.10086.cn/app/sdk/login", "ncyc", "aA@12345678","四川省烟草公司南充市公司");
+			// 测试环境IP
+			String[] phones = phone.split(","); 
+			//client.login("http://112.33.1.13/app/sdk/login", "ncyc", "aA@12345678","四川省烟草公司南充市公司");
+			int sendResult = client. sendDSMS (phones,
+					content, "",  1,"dM9L3lWM", UUID.randomUUID().toString(),true);
+			System.out.println("推送结果: " + sendResult);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+        return res;
     } 
-	public String deliver(String taskId,String phone) {  
-        try {  
-            Service service = new Service();  
-            Call call = (Call) service.createCall();  
-            call.setTargetEndpointAddress(new java.net.URL(  
-                    SERVICE_ENDPOINT));  
-            //下面名字查询的http://127.0.0.1:8080/WebServiceTest/services/HelloServices?wsdl文件里有 
-            QName qn=new QName("http://webservice.service.imas.vicare.com",  
-                    "deliver");
-            call.setOperationName(qn);  
-            call.setReturnType(org.apache.axis.Constants.XSD_STRING);  
-            call.addParameter("servicecode", org.apache.axis.Constants.XSD_STRING,  
-                    javax.xml.rpc.ParameterMode.IN);
-            call.addParameter("taskId", org.apache.axis.Constants.XSD_STRING,  
-                    javax.xml.rpc.ParameterMode.IN);
-            call.addParameter("phone", org.apache.axis.Constants.XSD_STRING,  
-                    javax.xml.rpc.ParameterMode.IN);
-            try {  
-                //远程调用发布的方法  
-                String ret =  (String) call.invoke(new Object[] {servicecode,taskId,phone});   
-                return ret;  
-            } catch (IOException e) {  
-                e.printStackTrace();  
-            }  
-        } catch (MalformedURLException e) {  
-            e.printStackTrace();  
-        } catch (ServiceException e) {  
-            e.printStackTrace();  
-        }
-		return null;  
-    } 
-	public String receiveMsg() {  
-        try {  
-            Service service = new Service();  
-            Call call = (Call) service.createCall();  
-            call.setTargetEndpointAddress(new java.net.URL(  
-                    SERVICE_ENDPOINT));  
-            //下面名字查询的http://127.0.0.1:8080/WebServiceTest/services/HelloServices?wsdl文件里有 
-            QName qn=new QName("http://webservice.service.imas.vicare.com",  
-                    "receiveMsg");
-            call.setOperationName(qn);  
-            call.setReturnType(org.apache.axis.Constants.XSD_STRING);  
-            call.addParameter("servicecode", org.apache.axis.Constants.XSD_STRING,  
-                    javax.xml.rpc.ParameterMode.IN);
-            call.addParameter("account", org.apache.axis.Constants.XSD_STRING,  
-                    javax.xml.rpc.ParameterMode.IN);
-            call.addParameter("password", org.apache.axis.Constants.XSD_STRING,  
-                    javax.xml.rpc.ParameterMode.IN);
-            try {  
-                //远程调用发布的方法  
-                String ret =  (String) call.invoke(new Object[] {servicecode,account,password});   
-                return ret;  
-            } catch (IOException e) {  
-                e.printStackTrace();  
-            }  
-        } catch (MalformedURLException e) {  
-            e.printStackTrace();  
-        } catch (ServiceException e) {  
-            e.printStackTrace();  
-        }
-		return null;  
-    } 
-//	public static void main(String[] args){
-//		SendMessage("15086909277","machao");
-//	}
+	
+	
 }

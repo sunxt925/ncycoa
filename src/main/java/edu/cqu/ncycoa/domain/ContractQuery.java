@@ -43,10 +43,16 @@ public class ContractQuery {
 	    Map<String, String> type_map = new HashMap<String, String>();
 	    Map<String, String> method_map = new HashMap<String, String>();
 		{
-			type_map.put("0", "工程合同");
-			type_map.put("1", "采购合同");
-			type_map.put("2", "维修合同");
-			type_map.put("3", "其他合同");
+			type_map.put("0", "其他合同");
+			type_map.put("1", "买卖合同");
+			type_map.put("2", "租赁合同");
+			type_map.put("3", "仓储合同");
+			type_map.put("4", "技术合同");
+			type_map.put("5", "建设施工(维修)合同");
+			type_map.put("6", "承揽合同");
+			type_map.put("7", "委托合同");
+			type_map.put("8", "赠与合同");
+			type_map.put("9", "运输合同");
 			method_map.put("0","公开招标");
 			method_map.put("1","邀请招标");
 			method_map.put("2","竞争性谈判");
@@ -64,7 +70,7 @@ public class ContractQuery {
 			if(null!=contractQuery.getContactMethod()&&!contractQuery.getContactMethod().equals("")){
 				contractQuery.setContactMethod(method_map.get(contractInfo.getContactMethod()));
 			}else{
-				contractQuery.setContactMethod(contractInfo.getContactMethod());
+				contractQuery.setContactMethod(method_map.get(contractInfo.getContactMethod()));
 			}
 			contractQuery.setPartyA(contractInfo.getPartyA());
 			contractQuery.setPartyB(contractInfo.getPartyB());

@@ -900,8 +900,9 @@ public class DataInputController {
 					
 					long id=TargetService.getResultIDByObj(targetResult);
 					targetResult.setRealValue(completeValue[count++]);
+					targetResult.setAlarmFlag("0");
 					//判断是否报警 by SXT
-					if(valueFunc[count-1]!=null&&valueFunc[count-1]!=""){
+					/*if(valueFunc[count-1]!=null&&valueFunc[count-1]!=""){
 						if(JavaScript.isTrueOrFalse(valueFunc[count-1],planValue[count-1],completeValue[count-1])){
 						//if(JavaScript.isTrueOrFalse("P-R>5","10","4")){
 							System.out.println("该指标报警");
@@ -909,7 +910,7 @@ public class DataInputController {
 						}else{
 							targetResult.setAlarmFlag("0");
 						}
-					}
+					}*/
 					//
 					if(id!=-1){
 						targetResult.setID(id);

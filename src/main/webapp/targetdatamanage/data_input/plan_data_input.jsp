@@ -68,7 +68,7 @@
 		</div>
 		<div class="pdi_choose_year">
 		<label for="yearsel">Äê¶È: </label>
-		<input id="yearsel" type="number" name="year"   class="easyui-textbox pdi_input_year"  value="2016">
+		<input id="yearsel" type="number" name="year"   class="easyui-textbox pdi_input_year"  value="">
 			<!-- <input id="yearsel" name="year" class="easyui-combobox combobox-f combo-f" style="width: 80px; display: none;" data-options="data:[{text:'2016',value:2016,selected:true}],valueField:'value',textField:'text',onSelect:onYearChanged">
 			<input type="hidden"  class="combo-value" value="2016">
 			 -->

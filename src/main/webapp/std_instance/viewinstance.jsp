@@ -59,6 +59,7 @@ SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
     <tr>
     <th data-options="field:'instanceid',width:50" align="center">实例ID</th>
     <th data-options="field:'instancename',width:50" align="center">流程名称</th>
+     <th data-options="field:'name',width:100" align="center">实例名称</th>
     <th data-options="field:'initstaffname',width:50" align="center">发起人</th>
     <th data-options="field:'initdate',width:50" align="center">发起时间</th>
     <th data-options="field:'enddate',width:50" align="center">结束时间</th>
@@ -69,7 +70,10 @@ SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
 <%
 for (HistoricProcessInstance processInstance : historyService.createHistoricProcessInstanceQuery().orderByProcessInstanceStartTime().desc().list()) {
 	pageContext.setAttribute("processInstance", processInstance);
-	String flowname="",staffname="";
+	String flowname="",staffname="",instancename="";
+	instancename=processInstance.getName();
+	if(instancename==null)
+		instancename="";
 	String startid=processInstance.getStartUserId();
 	if(startid!=null){
 		StaffInfo user=new StaffInfo(startid);
@@ -88,6 +92,7 @@ for (HistoricProcessInstance processInstance : historyService.createHistoricProc
 			    <td><%=processInstance.getId() %></td>
 
 			    <td><%=flowname%></td>
+			    <td><%=instancename%></td>
 			    <td><%=staffname%></td>
 			    <td><%=sdf.format(processInstance.getStartTime())%></td>
 			    <td><%=endtime%></td>
@@ -105,6 +110,7 @@ for (HistoricProcessInstance processInstance : historyService.createHistoricProc
 			    <td><%=processInstance.getId() %></td>
 
 			    <td><%=flowname%></td>
+			    <td><%=instancename%></td>
 			    <td><%=staffname%></td>
 			    <td><%=sdf.format(processInstance.getStartTime())%></td>
 			    <td><%=endtime%></td>
@@ -123,6 +129,7 @@ for (HistoricProcessInstance processInstance : historyService.createHistoricProc
 			    <td><%=processInstance.getId() %></td>
 
 			    <td><%=flowname%></td>
+			    <td><%=instancename%></td>
 			    <td><%=staffname%></td>
 			    <td><%=sdf.format(processInstance.getStartTime())%></td>
 			    <td><%=endtime%></td>
